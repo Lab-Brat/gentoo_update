@@ -26,6 +26,6 @@ if [[ ${#not_installed[@]} -gt 0 ]]; then
   emerge --verbose "${not_installed[@]}"
   echo "Installation completed."
 else
-  echo "All programs are already installed."
+  echo "All dependencies are already installed."
 fi
 
