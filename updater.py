@@ -24,5 +24,8 @@ def updater():
     # ensure dependencies are installed
     run_bash_script(f"{current_path}/bash_scripts/dependencies.sh")
 
+    # sync with Gentoo repositories
+    run_bash_script(f"{current_path}/bash_scripts/sync_repo.sh")
+
     # Updater Secure Mode (default): Update GLSA only
     run_bash_script(f"{current_path}/bash_scripts/glsa-check.sh")
