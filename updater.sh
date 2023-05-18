@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# ---------------------- VARIABLES ----------------------- #
+UPGRADE_MODE='safe'
+
+
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
 function install_dependencies() {
     # List of programs that the updater will be using
@@ -71,8 +75,31 @@ function sync_tree() {
 }
 
 
+# ----------------- FULL_SYSTEM_UPGRADE ------------------ #
+function upgrade() {
+    # Update @world
+    if [[ $UPGRADE_MODE == 'skip' ]]; then
+	echo "Running Upgrade: Skipping Errors"
+        emerge  --verbose --update --newuse --deep \
+		--keep-going @world
+    elif [[ $UPGRADE_MODE == 'safe' ]]; then
+	echo "Running Upgrade: Check Pretend First"
+	emerge  --verbose --update --newuse --deep \
+		--pretend @world
+	# re-run if pretend didn't find any errors
+    elif [[ $UPGRADE_MODE == 'autofix' ]]; then
+	echo "Running Upgrade: Full Upgrade"
+	# parse errors and try to fix them
+	echo "Beep Beep Boop Bop"
+    else 
+	echo "Invalid Upgrade Mode"
+    fi
+}
+
+
 # --------------------- RUN_PROGRAM ---------------------- #
 install_dependencies
 update_security
 sync_tree
+upgrade
 
