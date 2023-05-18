@@ -2,6 +2,9 @@
 
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE='safe'
+TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
+UPGRADE_REPORT="./_logs/upgrade_report$TIMESTAMP"
+echo "Upgrade Report: $UPGRADE_REPORT"
 
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
@@ -49,7 +52,7 @@ function update_security() {
     	echo "No affected GLSAs found."
     else
     	echo "Affected GLSAs found. Applying updates..."
-    	glsa-check -f affected
+    	glsa-check -f affected | tee -a "$UPGRADE_REPORT"
     	echo "Updates applied."
     fi
 }
@@ -59,18 +62,18 @@ function update_security() {
 function sync_tree() {
     # Update main Portage tree
     echo "Syncing Portage Tree"
-    emerge --sync
+    emerge --sync | tee -a "$UPGRADE_REPORT"
     
     # Update layman overlays if layman is installed
     if command -v layman >/dev/null 2>&1 ; then
 	echo "Syncting layman overlays"
-        layman -S
+        layman -S | tee -a "$UPGRADE_REPORT"
     fi
     
     # Update the eix cache if eix is installed
     if command -v eix >/dev/null 2>&1 ; then
 	echo "Updating eix binary cache"
-        eix-update
+        eix-update | tee -a "$UPGRADE_REPORT"
     fi
 }
 
@@ -81,11 +84,13 @@ function upgrade() {
     if [[ $UPGRADE_MODE == 'skip' ]]; then
 	echo "Running Upgrade: Skipping Errors"
         emerge  --verbose --update --newuse --deep \
-		--keep-going @world
+		--keep-going --color y @world | \
+		tee -a "$UPGRADE_REPORT"
     elif [[ $UPGRADE_MODE == 'safe' ]]; then
 	echo "Running Upgrade: Check Pretend First"
 	emerge  --verbose --update --newuse --deep \
-		--pretend @world
+		--pretend --color y @world | \
+		tee -a "$UPGRADE_REPORT"
 	# re-run if pretend didn't find any errors
     elif [[ $UPGRADE_MODE == 'autofix' ]]; then
 	echo "Running Upgrade: Full Upgrade"
