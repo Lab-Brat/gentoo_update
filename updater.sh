@@ -122,9 +122,23 @@ function config_update() {
 }
 
 
+# ----------------------- CLEAN_UP ----------------------- #
+function clean_up() {
+  echo "Cleaning packages that are not part of the tree..."
+  emerge --verbose --depclean | tee -a $UPGRADE_REPORT
+
+  echo "Checking reverse dependencies..."
+  revdep-rebuild | tee -a $UPGRADE_REPORT
+
+  echo "Clean source code..."
+  eclean -d distfiles | tee -a $UPGRADE_REPORT
+}
+
+
 # --------------------- RUN_PROGRAM ---------------------- #
 install_dependencies
 update_security
 sync_tree
 upgrade
 config_update
+clean_up
