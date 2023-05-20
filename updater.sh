@@ -2,6 +2,7 @@
 
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE='safe'
+CONFIG_UPDATE_MODE='merge'
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 UPGRADE_REPORT="./_logs/upgrade_report$TIMESTAMP"
 echo "Upgrade Report: $UPGRADE_REPORT"
@@ -102,9 +103,28 @@ function upgrade() {
 }
 
 
+# ---------------- UPDATE_CONFIGURATIONS ----------------- #
+function config_update() {
+  update_mode=${CONFIG_UPDATE_MODE:-merge}
+  
+  # Perform the update based on the update mode
+  if [[ "$update_mode" == "merge" ]]; then
+      dispatch-conf -a
+  elif [[ "$update_mode" == "preview" ]]; then
+      dispatch-conf -p
+  elif [[ "$update_mode" == "interactive" ]]; then
+      dispatch-conf
+  else
+      echo "Invalid update mode: $update_mode" >&2
+      echo "Please set UPDATE_MODE to 'merge', 'preview', or 'interactive'." >&2
+      exit 1
+  fi
+}
+
+
 # --------------------- RUN_PROGRAM ---------------------- #
 install_dependencies
 update_security
 sync_tree
 upgrade
-
+config_update
