@@ -3,8 +3,10 @@
 set -e
 
 # ---------------------- VARIABLES ----------------------- #
-UPGRADE_MODE=$"{$GENTOO_UPDATE_MODE:-safe}"
-CONFIG_UPDATE_MODE=$"{GENTOO_UPDATE_CONFIG_MODE:-merge}"
+UPGRADE_MODE=${GENTOO_UPDATE_MODE:-safe}
+CONFIG_UPDATE_MODE=${GENTOO_UPDATE_CONFIG_MODE:-merge}
+echo $UPGRADE_MODE
+echo $CONFIG_UPDATE_MODE
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 UPGRADE_REPORT="./_logs/upgrade_report$TIMESTAMP"
 echo "Upgrade Report: $UPGRADE_REPORT"
@@ -77,14 +79,15 @@ function sync_tree() {
 }
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
-upgrade_system() {
+upgrade() {
+  upgrade_mode=$UPGRADE_MODE
 	local emerge_options="--update --newuse --deep @world"
 	local emerge_command="emerge --verbose $emerge_options --color y"
 
-	if [[ $UPGRADE_MODE == 'skip' ]]; then
+	if [[ $upgrade_mode == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
 		$emerge_command | tee -a "$UPGRADE_REPORT"
-	elif [[ $UPGRADE_MODE == 'safe' ]]; then
+	elif [[ $upgrade_mode == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
 		if emerge --pretend $emerge_options; then
 			echo "emerge pretend was successful, upgrading..."
@@ -92,17 +95,18 @@ upgrade_system() {
 		else
 			echo "Command failed"
 		fi
-	elif [[ $UPGRADE_MODE == 'autofix' ]]; then
+	elif [[ $upgrade_mode == 'autofix' ]]; then
 		echo "Running Upgrade: Full Upgrade"
 		echo "Beep Beep Boop Bop"
 	else
 		echo "Invalid or undefined Upgrade Mode"
+    exit 1
 	fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
-	update_mode=${CONFIG_UPDATE_MODE:-merge}
+	update_mode=$CONFIG_UPDATE_MODE
 
 	# Perform the update based on the update mode
 	if [[ "$update_mode" == "merge" ]]; then
