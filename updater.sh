@@ -135,6 +135,27 @@ function clean_up() {
 }
 
 
+# -------------------- CHECK_RESTART --------------------- #
+function check_restart() {
+  echo "Checking is any service needs a restart"
+  needresart | tree -a $UPGRADE_REPORT
+}
+
+
+# -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
+function get_logs() {
+  echo "Getting important logs"
+  elogv -p -t -l 1000 | tee -a $UPGRADE_REPORT
+}
+
+
+# ----------------------- GET_NEWS ----------------------- #
+function get_news() {
+  echo "Getting important news"
+  eselect news read new | tee -a $UPGRADE_REPORT
+}
+
+
 # --------------------- RUN_PROGRAM ---------------------- #
 install_dependencies
 update_security
@@ -142,3 +163,11 @@ sync_tree
 upgrade
 config_update
 clean_up
+check_restart
+get_logs
+get_news
+
+
+echo "Upgrade complete!"
+echo "Upgrade report can be found at: $UPGRADE_REPORT"
+
