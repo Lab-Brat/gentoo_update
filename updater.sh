@@ -77,25 +77,26 @@ function sync_tree() {
 }
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
-function upgrade() {
-	# Update @world
+upgrade_system() {
+	local emerge_options="--update --newuse --deep @world"
+	local emerge_command="emerge --verbose $emerge_options --color y"
+
 	if [[ $UPGRADE_MODE == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-		emerge --verbose --update --newuse --deep \
-			--keep-going --color y @world |
-			tee -a "$UPGRADE_REPORT"
+		$emerge_command | tee -a "$UPGRADE_REPORT"
 	elif [[ $UPGRADE_MODE == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
-		emerge --verbose --update --newuse --deep \
-			--pretend --color y @world |
-			tee -a "$UPGRADE_REPORT"
-		# re-run if pretend didn't find any errors
+		if emerge --pretend $emerge_options; then
+			echo "emerge pretend was successful, upgrading..."
+			$emerge_command | tee -a "$UPGRADE_REPORT"
+		else
+			echo "Command failed"
+		fi
 	elif [[ $UPGRADE_MODE == 'autofix' ]]; then
 		echo "Running Upgrade: Full Upgrade"
-		# parse errors and try to fix them
 		echo "Beep Beep Boop Bop"
 	else
-		echo "Invalid Upgrade Mode"
+		echo "Invalid or undefined Upgrade Mode"
 	fi
 }
 
