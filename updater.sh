@@ -1,8 +1,10 @@
 #!/bin/bash
 
+set -e
+
 # ---------------------- VARIABLES ----------------------- #
-UPGRADE_MODE='safe'
-CONFIG_UPDATE_MODE='merge'
+UPGRADE_MODE=$"{$GENTOO_UPDATE_MODE:-safe}"
+CONFIG_UPDATE_MODE=$"{GENTOO_UPDATE_CONFIG_MODE:-merge}"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 UPGRADE_REPORT="./_logs/upgrade_report$TIMESTAMP"
 echo "Upgrade Report: $UPGRADE_REPORT"
