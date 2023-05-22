@@ -5,8 +5,6 @@ set -e
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE=${GENTOO_UPDATE_MODE:-safe}
 CONFIG_UPDATE_MODE=${GENTOO_UPDATE_CONFIG_MODE:-merge}
-echo $UPGRADE_MODE
-echo $CONFIG_UPDATE_MODE
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 UPGRADE_REPORT="./_logs/upgrade_report$TIMESTAMP"
 echo "Upgrade Report: $UPGRADE_REPORT"
@@ -137,7 +135,7 @@ function clean_up() {
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	echo "Checking is any service needs a restart"
-	needresart | tree -a $UPGRADE_REPORT
+	needrestart | tee -a $UPGRADE_REPORT
 }
 
 # -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
