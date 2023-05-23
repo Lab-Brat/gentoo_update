@@ -135,7 +135,7 @@ function clean_up() {
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	echo "Checking is any service needs a restart"
-	needrestart | tee -a $UPGRADE_REPORT
+	needrestart -r a | tee -a $UPGRADE_REPORT
 }
 
 # -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
