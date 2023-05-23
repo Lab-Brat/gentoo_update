@@ -79,7 +79,7 @@ function sync_tree() {
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
   upgrade_mode=$UPGRADE_MODE
-	local emerge_options="--update --newuse --deep @world"
+	local emerge_options="--update --newuse --deep --quiet-build y @world"
 	local emerge_command="emerge --verbose $emerge_options --color y"
 
 	if [[ $upgrade_mode == 'skip' ]]; then
@@ -123,7 +123,7 @@ function config_update() {
 # ----------------------- CLEAN_UP ----------------------- #
 function clean_up() {
 	echo "Cleaning packages that are not part of the tree..."
-	emerge --verbose --depclean | tee -a $UPGRADE_REPORT
+	emerge --depclean | tee -a $UPGRADE_REPORT
 
 	echo "Checking reverse dependencies..."
 	revdep-rebuild | tee -a $UPGRADE_REPORT
