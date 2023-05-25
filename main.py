@@ -21,5 +21,6 @@ def run_bash_script(script_path):
 
 
 # Run the updater
+### Since you are running the updater from python, you should create the commandline options flags with help documentation in python and pass them all into the shell script
 run_bash_script(f"{current_path}/updater.sh")
 
