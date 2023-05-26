@@ -7,8 +7,8 @@ set -e
 UPGRADE_MODE=${GENTOO_UPDATE_MODE:-safe}
 CONFIG_UPDATE_MODE=${GENTOO_UPDATE_CONFIG_MODE:-merge}
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-UPGRADE_REPORT="./_logs/upgrade_report$TIMESTAMP"
-echo "Upgrade Report: $UPGRADE_REPORT"
+UPGRADE_REPORT="./_logs/upgrade_report${TIMESTAMP}"
+
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
 function install_dependencies() {
@@ -30,8 +30,8 @@ function install_dependencies() {
 	# Filter the programs that are not installed
 	not_installed=()
 	for program in "${programs[@]}"; do
-		if ! command -v "$program" >/dev/null 2>&1; then
-			not_installed+=("$program")
+		if ! command -v "${program}" >/dev/null 2>&1; then
+			not_installed+=("${program}")
 		fi
 	done
 
@@ -53,12 +53,12 @@ function update_security() {
 	### Use long-form --list
 	glsa=$(glsa-check -l affected)
 
-	if [ -z "$glsa" ]; then
+	if [ -z "${glsa}" ]; then
 		echo "No affected GLSAs found."
 	else
 		echo "Affected GLSAs found. Applying updates..."
 		### Use long form --fix
-		glsa-check -f affected | tee -a "$UPGRADE_REPORT"
+		glsa-check -f affected | tee -a "${UPGRADE_REPORT}"
 		echo "Updates applied."
 	fi
 }
@@ -67,42 +67,45 @@ function update_security() {
 function sync_tree() {
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
-	### Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
-	emerge --sync | tee -a "$UPGRADE_REPORT"
+	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
+	emerge --sync | tee -a "${UPGRADE_REPORT}"
 
 	# Update layman overlays if layman is installed
 	if command -v layman >/dev/null 2>&1; then
 		echo "Syncting layman overlays"
-		layman -S | tee -a "$UPGRADE_REPORT"
+		layman -S | tee -a "${UPGRADE_REPORT}"
 	fi
 
 	# Update the eix cache if eix is installed
 	if command -v eix >/dev/null 2>&1; then
 		echo "Updating eix binary cache"
-		eix-update | tee -a "$UPGRADE_REPORT"
+		eix-update | tee -a "${UPGRADE_REPORT}"
 	fi
 }
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
-  upgrade_mode=$UPGRADE_MODE
+    upgrade_mode=$UPGRADE_MODE
 	local emerge_options="--update --newuse --deep --quiet-build y @world"
-	local emerge_command="emerge --verbose $emerge_options --color y"
+	local emerge_command="emerge --verbose ${emerge_options} --color y"
 
-	if [[ $upgrade_mode == 'skip' ]]; then
+	if [[ "${upgrade_mode}" == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-		$emerge_command | tee -a "$UPGRADE_REPORT"
-	elif [[ $upgrade_mode == 'safe' ]]; then
+		"${emerge_command}" | tee -a "${UPGRADE_REPORT}"
+
+	elif [[ "${upgrade_mode}" == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
-		if emerge --pretend $emerge_options; then
+		if emerge --pretend "${emerge_options}"; then
 			echo "emerge pretend was successful, upgrading..."
-			$emerge_command | tee -a "$UPGRADE_REPORT"
+			"${emerge_command}" | tee -a "${UPGRADE_REPORT}"
 		else
 			echo "Command failed"
 		fi
-	elif [[ $upgrade_mode == 'autofix' ]]; then
+		
+	elif [[ "${upgrade_mode}" == 'autofix' ]]; then
 		echo "Running Upgrade: Full Upgrade"
 		echo "Beep Beep Boop Bop"
+
 	else
 		echo "Invalid or undefined Upgrade Mode"
     exit 1
@@ -111,18 +114,18 @@ upgrade() {
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
-	### Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
-	update_mode=$CONFIG_UPDATE_MODE
+	### [done] Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
+	update_mode="${CONFIG_UPDATE_MODE}"
 
 	# Perform the update based on the update mode
-	if [[ "$update_mode" == "merge" ]]; then
+	if [[ "${update_mode}" == "merge" ]]; then
 		dispatch-conf -a
-	elif [[ "$update_mode" == "preview" ]]; then
+	elif [[ "${update_mode}" == "preview" ]]; then
 		dispatch-conf -p
-	elif [[ "$update_mode" == "interactive" ]]; then
+	elif [[ "${update_mode}" == "interactive" ]]; then
 		dispatch-conf
 	else
-		echo "Invalid update mode: $update_mode" >&2
+		echo "Invalid update mode: ${update_mode}" >&2
 		echo "Please set UPDATE_MODE to 'merge', 'preview', or 'interactive'." >&2
 		exit 1
 	fi
@@ -132,34 +135,34 @@ function config_update() {
 function clean_up() {
 	echo "Cleaning packages that are not part of the tree..."
 	### This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
-	emerge --depclean | tee -a $UPGRADE_REPORT
+	emerge --depclean | tee -a "${UPGRADE_REPORT}"
 
 	echo "Checking reverse dependencies..."
-	revdep-rebuild | tee -a $UPGRADE_REPORT
+	revdep-rebuild | tee -a "${UPGRADE_REPORT}"
 
 	echo "Clean source code..."
-	eclean -d distfiles | tee -a $UPGRADE_REPORT
+	eclean -d distfiles | tee -a "${UPGRADE_REPORT}"
 }
 
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	echo "Checking is any service needs a restart"
 	### Use long-form option flags
-	needrestart -r a | tee -a $UPGRADE_REPORT
+	needrestart -r a | tee -a "${UPGRADE_REPORT}"
 }
 
 # -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
 function get_logs() {
 	echo "Getting important logs"
 	### Use long-form option flags
-	elogv -p -t -l 1000 | tee -a $UPGRADE_REPORT
+	elogv -p -t -l 1000 | tee -a "${UPGRADE_REPORT}"
 }
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
 	echo "Getting important news"
 	### Use long-form option flags
-	eselect news read new | tee -a $UPGRADE_REPORT
+	eselect news read new | tee -a "${UPGRADE_REPORT}"
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
@@ -175,4 +178,4 @@ get_news
 
 echo "Upgrade complete!"
 ### Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
-echo "Upgrade report can be found at: $UPGRADE_REPORT"
+echo "Upgrade report can be found at: ${UPGRADE_REPORT}"
