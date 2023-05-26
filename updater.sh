@@ -2,6 +2,7 @@
 
 set -e
 
+### Move these to python and pass them in where through cmdline (e.g. UPGRADE_MODE=$1)
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE=${GENTOO_UPDATE_MODE:-safe}
 CONFIG_UPDATE_MODE=${GENTOO_UPDATE_CONFIG_MODE:-merge}
@@ -21,6 +22,8 @@ function install_dependencies() {
 		"equery"
 		"eix"
 		"glsa-check"
+		### Layman should be optional, not default - I'd split this list into "required_dependencies" and "optional_dependencies'
+		### I'd actually not do this here at all and instead have these come from the ebuild that is requirement for this project :)
 		"layman"
 	)
 
@@ -35,6 +38,7 @@ function install_dependencies() {
 	# Install the programs
 	if [[ ${#not_installed[@]} -gt 0 ]]; then
 		echo "Installing ${not_installed[@]}"
+		### See comment about about moving this into the ebuild for this script. You also don't want this in unattended mode - you want to pass `--ask`
 		emerge --verbose "${not_installed[@]}"
 		echo "Installation completed."
 	else
@@ -46,12 +50,14 @@ function install_dependencies() {
 # ------------------- SECURITY_UPDATES ------------------- #
 function update_security() {
 	# Check for GLSAs and install updates if necessary
+	### Use long-form --list
 	glsa=$(glsa-check -l affected)
 
 	if [ -z "$glsa" ]; then
 		echo "No affected GLSAs found."
 	else
 		echo "Affected GLSAs found. Applying updates..."
+		### Use long form --fix
 		glsa-check -f affected | tee -a "$UPGRADE_REPORT"
 		echo "Updates applied."
 	fi
@@ -61,6 +67,7 @@ function update_security() {
 function sync_tree() {
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
+	### Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
 	emerge --sync | tee -a "$UPGRADE_REPORT"
 
 	# Update layman overlays if layman is installed
@@ -104,6 +111,7 @@ upgrade() {
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
+	### Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
 	update_mode=$CONFIG_UPDATE_MODE
 
 	# Perform the update based on the update mode
@@ -123,6 +131,7 @@ function config_update() {
 # ----------------------- CLEAN_UP ----------------------- #
 function clean_up() {
 	echo "Cleaning packages that are not part of the tree..."
+	### This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
 	emerge --depclean | tee -a $UPGRADE_REPORT
 
 	echo "Checking reverse dependencies..."
@@ -135,18 +144,21 @@ function clean_up() {
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	echo "Checking is any service needs a restart"
+	### Use long-form option flags
 	needrestart -r a | tee -a $UPGRADE_REPORT
 }
 
 # -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
 function get_logs() {
 	echo "Getting important logs"
+	### Use long-form option flags
 	elogv -p -t -l 1000 | tee -a $UPGRADE_REPORT
 }
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
 	echo "Getting important news"
+	### Use long-form option flags
 	eselect news read new | tee -a $UPGRADE_REPORT
 }
 
@@ -162,4 +174,5 @@ get_logs
 get_news
 
 echo "Upgrade complete!"
+### Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
 echo "Upgrade report can be found at: $UPGRADE_REPORT"
