@@ -57,15 +57,15 @@ function install_dependencies() {
 # ------------------- SECURITY_UPDATES ------------------- #
 function update_security() {
 	# Check for GLSAs and install updates if necessary
-	### Use long-form --list
-	glsa=$(glsa-check -l affected)
+	### [done] Use long-form --list
+	glsa=$(glsa-check --list affected)
 
 	if [ -z "${glsa}" ]; then
 		echo "No affected GLSAs found."
 	else
 		echo "Affected GLSAs found. Applying updates..."
-		### Use long form --fix
-		glsa-check -f affected | tee -a "${UPGRADE_LOG}"
+		### [done] Use long form --fix
+		glsa-check --fix affected | tee --append "${UPGRADE_LOG}"
 		echo "Updates applied."
 	fi
 }
@@ -75,18 +75,18 @@ function sync_tree() {
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
 	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
-	emerge --sync | tee -a "${UPGRADE_LOG}"
+	emerge --sync | tee --append "${UPGRADE_LOG}"
 
 	# Update layman overlays if layman is installed
 	if command -v layman >/dev/null 2>&1; then
 		echo "Syncting layman overlays"
-		layman -S | tee -a "${UPGRADE_LOG}"
+		layman --sync-all | tee --append "${UPGRADE_LOG}"
 	fi
 
 	# Update the eix cache if eix is installed
 	if command -v eix >/dev/null 2>&1; then
 		echo "Updating eix binary cache"
-		eix-update | tee -a "${UPGRADE_LOG}"
+		eix-update | tee --append "${UPGRADE_LOG}"
 	fi
 }
 
@@ -97,13 +97,13 @@ upgrade() {
 
 	if [[ "${upgrade_mode}" == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-	  emerge --verbose --keep-going ${emerge_options} --color y | tee -a "${UPGRADE_LOG}"
+	  emerge --verbose --keep-going ${emerge_options} --color y | tee --append "${UPGRADE_LOG}"
 
 	elif [[ "${upgrade_mode}" == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
 		if emerge --pretend ${emerge_options}; then
 			echo "emerge pretend was successful, upgrading..."
-			emerge --verbose ${emerge_options} --color y | tee -a "${UPGRADE_LOG}"
+			emerge --verbose ${emerge_options} --color y | tee --append "${UPGRADE_LOG}"
 		else
 			echo "Command failed"
 		fi
@@ -121,6 +121,7 @@ upgrade() {
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
 	### [done] Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
+  ### will be replace by etc-update
 	update_mode="${CONFIG_UPDATE_MODE}"
 
 	# Perform the update based on the update mode
@@ -141,34 +142,34 @@ function config_update() {
 function clean_up() {
 	echo "Cleaning packages that are not part of the tree..."
 	### This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
-	emerge --depclean | tee -a "${UPGRADE_LOG}"
+	emerge --depclean | tee --append "${UPGRADE_LOG}"
 
 	echo "Checking reverse dependencies..."
-	revdep-rebuild | tee -a "${UPGRADE_LOG}"
+	revdep-rebuild | tee --append "${UPGRADE_LOG}"
 
 	echo "Clean source code..."
-	eclean -d distfiles | tee -a "${UPGRADE_LOG}"
+	eclean --deep distfiles | tee --append "${UPGRADE_LOG}"
 }
 
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	echo "Checking is any service needs a restart"
-	### Use long-form option flags
-	needrestart -r a | tee -a "${UPGRADE_LOG}"
+	### [done] Use long-form option flags <<< needrestart doesn't have a long-form option :(
+	needrestart -r a | tee --append "${UPGRADE_LOG}"
 }
 
 # -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
 function get_logs() {
-	echo "Getting important logs"
-	### Use long-form option flags
-	elogv -p -t -l 1000 | tee -a "${UPGRADE_LOG}"
+	echo "Getting elogs"
+	### Use long-form option flags <<< elogv can't be automated, will read logs manually
+	# elogv -p -t -l 1000 | tee --append "${UPGRADE_LOG}"
 }
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
 	echo "Getting important news"
-	### Use long-form option flags
-	eselect news read new | tee -a "${UPGRADE_LOG}"
+	### [done] Use long-form option flags
+	eselect news read new | tee --append "${UPGRADE_LOG}"
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
