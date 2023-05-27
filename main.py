@@ -30,5 +30,9 @@ UPGRADE_LOG_FILEPATH = f"/var/log/gentoo_updater"
 
 # Run the updater
 ### Since you are running the updater from python, you should create the commandline options flags with help documentation in python and pass them all into the shell script
-run_bash_script(f"{current_path}/updater.sh", UPGRADE_MODE, CONFIG_UPDATE_MODE, UPGRADE_LOG_FILEPATH)
-
+run_bash_script(
+    f"{current_path}/updater.sh",
+    UPGRADE_MODE,
+    CONFIG_UPDATE_MODE,
+    UPGRADE_LOG_FILEPATH,
+)

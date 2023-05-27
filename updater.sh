@@ -9,13 +9,11 @@ CONFIG_UPDATE_MODE="${2}"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 UPGRADE_LOG="${3}/upgrade-log_${TIMESTAMP}"
 
-
 # ----------------- CREATE_LOG_DIRECTORY ----------------- #
 if [[ ! -d "${3}" ]]; then
-  mkdir "${3}"
-  echo "Directory created: ${3}"
+	mkdir "${3}"
+	echo "Directory created: ${3}"
 fi
-
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
 function install_dependencies() {
@@ -92,12 +90,12 @@ function sync_tree() {
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
-  upgrade_mode=$UPGRADE_MODE
+	upgrade_mode=$UPGRADE_MODE
 	local emerge_options="--update --newuse --deep --quiet-build y @world"
 
 	if [[ "${upgrade_mode}" == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-	  emerge --verbose --keep-going ${emerge_options} --color y | tee --append "${UPGRADE_LOG}"
+		emerge --verbose --keep-going ${emerge_options} --color y | tee --append "${UPGRADE_LOG}"
 
 	elif [[ "${upgrade_mode}" == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
@@ -107,14 +105,14 @@ upgrade() {
 		else
 			echo "Command failed"
 		fi
-		
+
 	elif [[ "${upgrade_mode}" == 'autofix' ]]; then
 		echo "Running Upgrade: Full Upgrade"
 		echo "Beep Beep Boop Bop"
 
 	else
 		echo "Invalid or undefined Upgrade Mode"
-    exit 1
+		exit 1
 	fi
 }
 
@@ -132,7 +130,7 @@ function config_update() {
 		dispatch-conf
 	elif [[ "${update_mode}" == "ignore" ]]; then
 		echo "Ignoring configuration update for now..." | tee --append "${UPGRADE_LOG}"
-    echo "Please UPDATE IT MANUALLY LATER" | tee --append "${UPGRADE_LOG}"
+		echo "Please UPDATE IT MANUALLY LATER" | tee --append "${UPGRADE_LOG}"
 	else
 		echo "Invalid update mode: ${update_mode}" >&2 | tee --append "${UPGRADE_LOG}"
 		echo "Please set UPDATE_MODE to 'merge', 'interactive', 'dispatch' or 'ignore'." >&2
