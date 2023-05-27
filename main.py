@@ -25,7 +25,7 @@ def run_bash_script(script_path, *args):
 
 # Variable definitions
 UPGRADE_MODE = "safe"
-CONFIG_UPDATE_MODE = "merge"
+CONFIG_UPDATE_MODE = "ignore"
 UPGRADE_LOG_FILEPATH = f"/var/log/gentoo_updater"
 
 # Run the updater

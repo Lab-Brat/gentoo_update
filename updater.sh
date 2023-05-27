@@ -121,20 +121,21 @@ upgrade() {
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
 	### [done] Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
-  ### will be replace by etc-update
 	update_mode="${CONFIG_UPDATE_MODE}"
 
 	# Perform the update based on the update mode
 	if [[ "${update_mode}" == "merge" ]]; then
-		dispatch-conf -a
-	elif [[ "${update_mode}" == "preview" ]]; then
-		dispatch-conf -p
+		etc-update --automode -5 | tee --append "${UPGRADE_LOG}"
 	elif [[ "${update_mode}" == "interactive" ]]; then
+		etc-update
+	elif [[ "${update_mode}" == "dispatch" ]]; then
 		dispatch-conf
+	elif [[ "${update_mode}" == "ignore" ]]; then
+		echo "Ignoring configuration update for now..." | tee --append "${UPGRADE_LOG}"
+    echo "Please UPDATE IT MANUALLY LATER" | tee --append "${UPGRADE_LOG}"
 	else
-		echo "Invalid update mode: ${update_mode}" >&2
-		echo "Please set UPDATE_MODE to 'merge', 'preview', or 'interactive'." >&2
-		exit 1
+		echo "Invalid update mode: ${update_mode}" >&2 | tee --append "${UPGRADE_LOG}"
+		echo "Please set UPDATE_MODE to 'merge', 'interactive', 'dispatch' or 'ignore'." >&2
 	fi
 }
 
