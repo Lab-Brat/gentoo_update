@@ -7,15 +7,13 @@ set -e
 UPGRADE_MODE="${1}"
 CONFIG_UPDATE_MODE="${2}"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-UPGRADE_REPORT="${3}/upgrade_report${TIMESTAMP}"
+UPGRADE_LOG="${3}/upgrade-log_${TIMESTAMP}"
 
 
 # ----------------- CREATE_LOG_DIRECTORY ----------------- #
 if [[ ! -d "${3}" ]]; then
   mkdir "${3}"
   echo "Directory created: ${3}"
-else
-  echo "All Good!"
 fi
 
 
@@ -67,7 +65,7 @@ function update_security() {
 	else
 		echo "Affected GLSAs found. Applying updates..."
 		### Use long form --fix
-		glsa-check -f affected | tee -a "${UPGRADE_REPORT}"
+		glsa-check -f affected | tee -a "${UPGRADE_LOG}"
 		echo "Updates applied."
 	fi
 }
@@ -77,18 +75,18 @@ function sync_tree() {
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
 	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
-	emerge --sync | tee -a "${UPGRADE_REPORT}"
+	emerge --sync | tee -a "${UPGRADE_LOG}"
 
 	# Update layman overlays if layman is installed
 	if command -v layman >/dev/null 2>&1; then
 		echo "Syncting layman overlays"
-		layman -S | tee -a "${UPGRADE_REPORT}"
+		layman -S | tee -a "${UPGRADE_LOG}"
 	fi
 
 	# Update the eix cache if eix is installed
 	if command -v eix >/dev/null 2>&1; then
 		echo "Updating eix binary cache"
-		eix-update | tee -a "${UPGRADE_REPORT}"
+		eix-update | tee -a "${UPGRADE_LOG}"
 	fi
 }
 
@@ -100,13 +98,13 @@ upgrade() {
 
 	if [[ "${upgrade_mode}" == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-		"${emerge_command}" | tee -a "${UPGRADE_REPORT}"
+		"${emerge_command}" | tee -a "${UPGRADE_LOG}"
 
 	elif [[ "${upgrade_mode}" == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
 		if emerge --pretend "${emerge_options}"; then
 			echo "emerge pretend was successful, upgrading..."
-			"${emerge_command}" | tee -a "${UPGRADE_REPORT}"
+			"${emerge_command}" | tee -a "${UPGRADE_LOG}"
 		else
 			echo "Command failed"
 		fi
@@ -144,47 +142,47 @@ function config_update() {
 function clean_up() {
 	echo "Cleaning packages that are not part of the tree..."
 	### This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
-	emerge --depclean | tee -a "${UPGRADE_REPORT}"
+	emerge --depclean | tee -a "${UPGRADE_LOG}"
 
 	echo "Checking reverse dependencies..."
-	revdep-rebuild | tee -a "${UPGRADE_REPORT}"
+	revdep-rebuild | tee -a "${UPGRADE_LOG}"
 
 	echo "Clean source code..."
-	eclean -d distfiles | tee -a "${UPGRADE_REPORT}"
+	eclean -d distfiles | tee -a "${UPGRADE_LOG}"
 }
 
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	echo "Checking is any service needs a restart"
 	### Use long-form option flags
-	needrestart -r a | tee -a "${UPGRADE_REPORT}"
+	needrestart -r a | tee -a "${UPGRADE_LOG}"
 }
 
 # -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
 function get_logs() {
 	echo "Getting important logs"
 	### Use long-form option flags
-	elogv -p -t -l 1000 | tee -a "${UPGRADE_REPORT}"
+	elogv -p -t -l 1000 | tee -a "${UPGRADE_LOG}"
 }
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
 	echo "Getting important news"
 	### Use long-form option flags
-	eselect news read new | tee -a "${UPGRADE_REPORT}"
+	eselect news read new | tee -a "${UPGRADE_LOG}"
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
-#install_dependencies
-#update_security
-#sync_tree
-#upgrade
-#config_update
-#clean_up
-#check_restart
-#get_logs
-#get_news
+install_dependencies
+update_security
+sync_tree
+upgrade
+config_update
+clean_up
+check_restart
+get_logs
+get_news
 
 echo "Upgrade complete!"
-### Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
-echo "Upgrade report can be found at: ${UPGRADE_REPORT}"
+### [done] Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
+echo "Upgrade log can be found at: ${UPGRADE_LOG}"
