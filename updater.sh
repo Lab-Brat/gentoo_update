@@ -2,12 +2,21 @@
 
 set -e
 
-### Move these to python and pass them in where through cmdline (e.g. UPGRADE_MODE=$1)
+### [done] Move these to python and pass them in where through cmdline (e.g. UPGRADE_MODE=$1)
 # ---------------------- VARIABLES ----------------------- #
-UPGRADE_MODE=${GENTOO_UPDATE_MODE:-safe}
-CONFIG_UPDATE_MODE=${GENTOO_UPDATE_CONFIG_MODE:-merge}
+UPGRADE_MODE="${1}"
+CONFIG_UPDATE_MODE="${2}"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-UPGRADE_REPORT="./_logs/upgrade_report${TIMESTAMP}"
+UPGRADE_REPORT="${3}/upgrade_report${TIMESTAMP}"
+
+
+# ----------------- CREATE_LOG_DIRECTORY ----------------- #
+if [[ ! -d "${3}" ]]; then
+  mkdir "${3}"
+  echo "Directory created: ${3}"
+else
+  echo "All Good!"
+fi
 
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
@@ -166,15 +175,15 @@ function get_news() {
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
-install_dependencies
-update_security
-sync_tree
-upgrade
-config_update
-clean_up
-check_restart
-get_logs
-get_news
+#install_dependencies
+#update_security
+#sync_tree
+#upgrade
+#config_update
+#clean_up
+#check_restart
+#get_logs
+#get_news
 
 echo "Upgrade complete!"
 ### Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
