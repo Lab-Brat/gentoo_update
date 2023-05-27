@@ -92,19 +92,18 @@ function sync_tree() {
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
-    upgrade_mode=$UPGRADE_MODE
+  upgrade_mode=$UPGRADE_MODE
 	local emerge_options="--update --newuse --deep --quiet-build y @world"
-	local emerge_command="emerge --verbose ${emerge_options} --color y"
 
 	if [[ "${upgrade_mode}" == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-		"${emerge_command}" | tee -a "${UPGRADE_LOG}"
+	  emerge --verbose --keep-going ${emerge_options} --color y | tee -a "${UPGRADE_LOG}"
 
 	elif [[ "${upgrade_mode}" == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
-		if emerge --pretend "${emerge_options}"; then
+		if emerge --pretend ${emerge_options}; then
 			echo "emerge pretend was successful, upgrading..."
-			"${emerge_command}" | tee -a "${UPGRADE_LOG}"
+			emerge --verbose ${emerge_options} --color y | tee -a "${UPGRADE_LOG}"
 		else
 			echo "Command failed"
 		fi
