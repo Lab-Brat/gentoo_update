@@ -6,16 +6,8 @@ set -e
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE="${1}"
 CONFIG_UPDATE_MODE="${2}"
-TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-UPGRADE_LOG="${3}/upgrade-log_${TIMESTAMP}"
-OPTIONAL_DEPENDENCIES="${4}"
-DAEMON_RESTART="${5}"
-
-# ----------------- CREATE_LOG_DIRECTORY ----------------- #
-if [[ ! -d "${3}" ]]; then
-	mkdir "${3}"
-	echo "Directory created: ${3}"
-fi
+OPTIONAL_DEPENDENCIES="${3}"
+DAEMON_RESTART="${4}"
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
 function install_dependencies() {
@@ -76,7 +68,7 @@ function update_security() {
 	else
 		echo "Affected GLSAs found. Applying updates..."
 		### [done] Use long form --fix
-		glsa-check --fix affected | tee --append "${UPGRADE_LOG}"
+		glsa-check --fix affected
 		echo "Updates applied."
 	fi
 }
@@ -88,19 +80,19 @@ function sync_tree() {
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
 	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
-	emerge --sync | tee --append "${UPGRADE_LOG}"
+	emerge --sync
 
 	if [[ "${update_optional_dependencies}" == 'true' ]]; then
 		# Update layman overlays if layman is installed
 		if command -v layman >/dev/null 2>&1; then
 			echo "Syncting layman overlays"
-			layman --sync-all | tee --append "${UPGRADE_LOG}"
+			layman --sync-all
 		fi
 
 		# Update the eix cache if eix is installed
 		if command -v eix >/dev/null 2>&1; then
 			echo "Updating eix binary cache"
-			eix-update | tee --append "${UPGRADE_LOG}"
+			eix-update
 		fi
 	fi
 }
@@ -112,13 +104,13 @@ upgrade() {
 
 	if [[ "${upgrade_mode}" == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-		emerge --verbose --keep-going ${emerge_options} --color y | tee --append "${UPGRADE_LOG}"
+		emerge --verbose --keep-going ${emerge_options} --color y
 
 	elif [[ "${upgrade_mode}" == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
 		if emerge --pretend ${emerge_options}; then
 			echo "emerge pretend was successful, upgrading..."
-			emerge --verbose ${emerge_options} --color y | tee --append "${UPGRADE_LOG}"
+			emerge --verbose ${emerge_options} --color y
 		else
 			echo "Command failed"
 		fi
@@ -140,16 +132,16 @@ function config_update() {
 
 	# Perform the update based on the update mode
 	if [[ "${update_mode}" == "merge" ]]; then
-		etc-update --automode -5 | tee --append "${UPGRADE_LOG}"
+		etc-update --automode -5
 	elif [[ "${update_mode}" == "interactive" ]]; then
 		etc-update
 	elif [[ "${update_mode}" == "dispatch" ]]; then
 		dispatch-conf
 	elif [[ "${update_mode}" == "ignore" ]]; then
-		echo "Ignoring configuration update for now..." | tee --append "${UPGRADE_LOG}"
-		echo "Please UPDATE IT MANUALLY LATER" | tee --append "${UPGRADE_LOG}"
+		echo "Ignoring configuration update for now..."
+		echo "Please UPDATE IT MANUALLY LATER"
 	else
-		echo "Invalid update mode: ${update_mode}" >&2 | tee --append "${UPGRADE_LOG}"
+		echo "Invalid update mode: ${update_mode}" >&2
 		echo "Please set UPDATE_MODE to 'merge', 'interactive', 'dispatch' or 'ignore'." >&2
 	fi
 }
@@ -158,13 +150,13 @@ function config_update() {
 function clean_up() {
 	echo "Cleaning packages that are not part of the tree..."
 	### This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
-	emerge --depclean | tee --append "${UPGRADE_LOG}"
+	emerge --depclean
 
 	echo "Checking reverse dependencies..."
-	revdep-rebuild | tee --append "${UPGRADE_LOG}"
+	revdep-rebuild
 
 	echo "Clean source code..."
-	eclean --deep distfiles | tee --append "${UPGRADE_LOG}"
+	eclean --deep distfiles
 }
 
 # -------------------- CHECK_RESTART --------------------- #
@@ -174,10 +166,10 @@ function check_restart() {
 	if [[ "${restart}" == 'true' ]]; then
 		### [done] Use long-form option flags <<< needrestart doesn't have a long-form option :(
 		# automatically restart all services
-		needrestart -r a | tee --append "${UPGRADE_LOG}"
+		needrestart -r a
 	else
 		# list services that require a restart
-		needrestart -r l | tee --append "${UPGRADE_LOG}"
+		needrestart -r l
 	fi
 }
 
@@ -208,14 +200,14 @@ function get_logs() {
 				echo ">>> Log end <<<"
 				echo ""
 			fi
-		done | tee --append "${UPGRADE_LOG}"
+		done
 }
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
 	echo "Getting important news"
 	### [done] Use long-form option flags
-	eselect news read new | tee --append "${UPGRADE_LOG}"
+	eselect news read new
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
