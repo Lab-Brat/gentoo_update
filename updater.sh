@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -8,6 +8,7 @@ UPGRADE_MODE="${1}"
 CONFIG_UPDATE_MODE="${2}"
 OPTIONAL_DEPENDENCIES="${3}"
 DAEMON_RESTART="${4}"
+CLEAN="${5}"
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
 function install_dependencies() {
@@ -148,15 +149,20 @@ function config_update() {
 
 # ----------------------- CLEAN_UP ----------------------- #
 function clean_up() {
-	echo "Cleaning packages that are not part of the tree..."
-	### This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
-	emerge --depclean
+	clean="${CLEAN}"
+	if [[ "${clean}" == 'y' ]]; then
+		echo "Cleaning packages that are not part of the tree..."
+		### [done] This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
+		emerge --depclean
 
-	echo "Checking reverse dependencies..."
-	revdep-rebuild
+		echo "Checking reverse dependencies..."
+		revdep-rebuild
 
-	echo "Clean source code..."
-	eclean --deep distfiles
+		echo "Clean source code..."
+		eclean --deep distfiles
+	else
+		echo "Clean up is not enabled."
+	fi
 }
 
 # -------------------- CHECK_RESTART --------------------- #
@@ -176,7 +182,7 @@ function check_restart() {
 # ---------------------- GET_ELOGS ----------------------- #
 function get_logs() {
 	echo "Reading elogs"
-	### Use long-form option flags <<< elogv can't be automated, will read logs manually
+	### [done] Use long-form option flags
 	elog_dir="/var/log/portage/elog"
 
 	# Check if the elog directory exists

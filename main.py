@@ -96,14 +96,21 @@ def create_cli():
         "--optional-dependencies",
         default="n",
         choices=["y", "n"],
-        help="Set whether to install optional dependencies. Default: y",
+        help="Set whether to install optional dependencies. Default: n",
     )
     parser.add_argument(
         "-d",
         "--daemon-restart",
         default="n",
         choices=["y", "n"],
-        help="Set whether to restart services and daemons after an update. Default: y",
+        help="Set whether to restart services and daemons after an update. Default: n",
+    )
+    parser.add_argument(
+        "-e",
+        "--clean",
+        default="n",
+        choices=["y", "n"],
+        help="Set wether to clean orphaned packaged after an update. Default: n",
     )
 
     args = parser.parse_args()
@@ -120,6 +127,7 @@ def main():
         args.config_update_mode,
         args.optional_dependencies,
         args.daemon_restart,
+        args.clean,
     )
 
 
