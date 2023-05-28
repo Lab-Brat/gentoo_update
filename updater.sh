@@ -8,6 +8,7 @@ UPGRADE_MODE="${1}"
 CONFIG_UPDATE_MODE="${2}"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 UPGRADE_LOG="${3}/upgrade-log_${TIMESTAMP}"
+OPTIONAL_DEPENDENCIES="${4}"
 
 # ----------------- CREATE_LOG_DIRECTORY ----------------- #
 if [[ ! -d "${3}" ]]; then
@@ -17,26 +18,38 @@ fi
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
 function install_dependencies() {
+	install_optional_dependencies=$OPTIONAL_DEPENDENCIES
+
 	# List of programs that the updater will be using
-	programs=(
+	required_dependencies=(
 		"elogv"
-		"emaint"
-		"eclean"
 		"needrestart"
-		"euse"
-		"equery"
-		"eix"
+		"gentoolkit" # "eclean", "euse", "equery"
 		"glsa-check"
-		### Layman should be optional, not default - I'd split this list into "required_dependencies" and "optional_dependencies'
+		### [done] Layman should be optional, not default - I'd split this list into "required_dependencies" and "optional_dependencies'
 		### I'd actually not do this here at all and instead have these come from the ebuild that is requirement for this project :)
+	)
+
+	optional_dependencies=(
+		"eix"
 		"layman"
 	)
 
+	# Combine required and optional dependencies if needed
+	if [[ "${install_optional_dependencies}" == "true" ]]; then
+		all_dependencies=(
+			"${required_dependencies[@]}"
+			"${optional_dependencies[@]}"
+		)
+	else
+		all_dependencies="${required_dependencies[@]}"
+	fi
+
 	# Filter the programs that are not installed
 	not_installed=()
-	for program in "${programs[@]}"; do
-		if ! command -v "${program}" >/dev/null 2>&1; then
-			not_installed+=("${program}")
+	for dependency in "${all_dependencies[@]}"; do
+		if ! command -v "${dependency}" >/dev/null 2>&1; then
+			not_installed+=("${dependency}")
 		fi
 	done
 
@@ -44,7 +57,7 @@ function install_dependencies() {
 	if [[ ${#not_installed[@]} -gt 0 ]]; then
 		echo "Installing ${not_installed[@]}"
 		### See comment about about moving this into the ebuild for this script. You also don't want this in unattended mode - you want to pass `--ask`
-		emerge --verbose "${not_installed[@]}"
+		emerge --verbose --quiet-build y "${not_installed[@]}"
 		echo "Installation completed."
 	else
 		echo "All dependencies are already installed."
@@ -70,21 +83,25 @@ function update_security() {
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
+	update_optional_dependencies=$OPTIONAL_DEPENDENCIES
+
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
 	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
 	emerge --sync | tee --append "${UPGRADE_LOG}"
 
-	# Update layman overlays if layman is installed
-	if command -v layman >/dev/null 2>&1; then
-		echo "Syncting layman overlays"
-		layman --sync-all | tee --append "${UPGRADE_LOG}"
-	fi
+	if [[ "${update_optional_dependencies}" == 'true' ]]; then
+		# Update layman overlays if layman is installed
+		if command -v layman >/dev/null 2>&1; then
+			echo "Syncting layman overlays"
+			layman --sync-all | tee --append "${UPGRADE_LOG}"
+		fi
 
-	# Update the eix cache if eix is installed
-	if command -v eix >/dev/null 2>&1; then
-		echo "Updating eix binary cache"
-		eix-update | tee --append "${UPGRADE_LOG}"
+		# Update the eix cache if eix is installed
+		if command -v eix >/dev/null 2>&1; then
+			echo "Updating eix binary cache"
+			eix-update | tee --append "${UPGRADE_LOG}"
+		fi
 	fi
 }
 

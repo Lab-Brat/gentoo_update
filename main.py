@@ -26,7 +26,8 @@ def run_bash_script(script_path, *args):
 # Variable definitions
 UPGRADE_MODE = "safe"
 CONFIG_UPDATE_MODE = "ignore"
-UPGRADE_LOG_FILEPATH = f"/var/log/gentoo_updater"
+UPGRADE_LOG_FILEPATH = "/var/log/gentoo_updater"
+OPTIONAL_DEPENDENCIES = "true"
 
 # Run the updater
 ### Since you are running the updater from python, you should create the commandline options flags with help documentation in python and pass them all into the shell script
@@ -35,4 +36,5 @@ run_bash_script(
     UPGRADE_MODE,
     CONFIG_UPDATE_MODE,
     UPGRADE_LOG_FILEPATH,
+    OPTIONAL_DEPENDENCIES,
 )
