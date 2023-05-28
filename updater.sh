@@ -35,7 +35,7 @@ function install_dependencies() {
 			"${optional_dependencies[@]}"
 		)
 	else
-		all_dependencies="${required_dependencies[@]}"
+		all_dependencies=("${required_dependencies[@]}")
 	fi
 
 	# Filter the programs that are not installed
