@@ -28,7 +28,7 @@ function install_dependencies() {
 	)
 
 	# Combine required and optional dependencies if needed
-	if [[ "${install_optional_dependencies}" == "true" ]]; then
+	if [[ "${install_optional_dependencies}" == "y" ]]; then
 		all_dependencies=(
 			"${required_dependencies[@]}"
 			"${optional_dependencies[@]}"
@@ -82,7 +82,7 @@ function sync_tree() {
 	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
 	emerge --sync
 
-	if [[ "${update_optional_dependencies}" == 'true' ]]; then
+	if [[ "${update_optional_dependencies}" == 'y' ]]; then
 		# Update layman overlays if layman is installed
 		if command -v layman >/dev/null 2>&1; then
 			echo "Syncting layman overlays"
@@ -163,7 +163,7 @@ function clean_up() {
 function check_restart() {
 	restart="${DAEMON_RESTART}"
 	echo "Checking is any service needs a restart"
-	if [[ "${restart}" == 'true' ]]; then
+	if [[ "${restart}" == 'y' ]]; then
 		### [done] Use long-form option flags <<< needrestart doesn't have a long-form option :(
 		# automatically restart all services
 		needrestart -r a

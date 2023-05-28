@@ -2,6 +2,7 @@ import os
 import sys
 import shlex
 import logging
+import argparse
 import subprocess
 from datetime import datetime
 
@@ -69,18 +70,58 @@ def run_shell_script(script_path, *args):
             sys.exit(p.returncode)
 
 
-# Variable definitions
-UPGRADE_MODE = "safe"
-CONFIG_UPDATE_MODE = "ignore"
-OPTIONAL_DEPENDENCIES = "true"
-DAEMON_RESTART = "true"
-
 # Run the updater
-### Since you are running the updater from python, you should create the commandline options flags with help documentation in python and pass them all into the shell script
-run_shell_script(
-    f"{current_path}/updater.sh",
-    UPGRADE_MODE,
-    CONFIG_UPDATE_MODE,
-    OPTIONAL_DEPENDENCIES,
-    DAEMON_RESTART,
-)
+### [done] Since you are running the updater from python, you should create the commandline options flags with help documentation in python and pass them all into the shell script
+def create_cli():
+    parser = argparse.ArgumentParser(
+        description="Automate updates on Gentoo Linux."
+    )
+
+    parser.add_argument(
+        "-m",
+        "--upgrade-mode",
+        default="safe",
+        choices=["skip", "safe", "autofix"],
+        help="Set the upgrade mode. Default: safe",
+    )
+    parser.add_argument(
+        "-c",
+        "--config-update-mode",
+        default="ignore",
+        choices=["ignore", "merge", "interactive", "dispatch"],
+        help="Set the way new configuration are handled after an update. Default: ignore",
+    )
+    parser.add_argument(
+        "-o",
+        "--optional-dependencies",
+        default="n",
+        choices=["y", "n"],
+        help="Set whether to install optional dependencies. Default: y",
+    )
+    parser.add_argument(
+        "-d",
+        "--daemon-restart",
+        default="n",
+        choices=["y", "n"],
+        help="Set whether to restart services and daemons after an update. Default: y",
+    )
+
+    args = parser.parse_args()
+    return args
+
+
+def main():
+    args = create_cli()
+
+    # Run the updater
+    run_shell_script(
+        f"{current_path}/updater.sh",
+        args.upgrade_mode,
+        args.config_update_mode,
+        args.optional_dependencies,
+        args.daemon_restart,
+    )
+
+
+if __name__ == "__main__":
+    main()
