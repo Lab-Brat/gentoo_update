@@ -217,15 +217,42 @@ function get_news() {
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
+echo -e "\n{{ INSTALL DEPENDENCIES }}\n"
 install_dependencies
+echo ""
+
+echo -e "\n{{ GLSA UPDATES }}\n"
 update_security
+echo ""
+
+echo -e "\n{{ SYNC PORTAGE TREE }}\n"
 sync_tree
+echo ""
+
+echo -e "\n{{ FULL SYSTEM UPGRADE }}\n"
 upgrade
+echo ""
+
+echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
 config_update
+echo ""
+
+echo -e "\n{{ CLEAN UP }}\n"
 clean_up
+echo ""
+
+echo -e "\n{{ RESTART SERVICES }}\n"
 check_restart
+echo ""
+
+echo -e "\n{{ READ ELOGS }}\n"
 get_logs
+echo ""
+
+echo -e "\n{{ READ NEWS }}\n"
 get_news
+echo ""
+
 
 echo "Upgrade complete!"
 ### [done] Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
