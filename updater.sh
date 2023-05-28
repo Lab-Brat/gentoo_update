@@ -9,6 +9,7 @@ CONFIG_UPDATE_MODE="${2}"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 UPGRADE_LOG="${3}/upgrade-log_${TIMESTAMP}"
 OPTIONAL_DEPENDENCIES="${4}"
+DAEMON_RESTART="${5}"
 
 # ----------------- CREATE_LOG_DIRECTORY ----------------- #
 if [[ ! -d "${3}" ]]; then
@@ -169,9 +170,16 @@ function clean_up() {
 
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
+	restart="${DAEMON_RESTART}"
 	echo "Checking is any service needs a restart"
-	### [done] Use long-form option flags <<< needrestart doesn't have a long-form option :(
-	needrestart -r a | tee --append "${UPGRADE_LOG}"
+	if [[ "${restart}" == 'true' ]]; then
+		### [done] Use long-form option flags <<< needrestart doesn't have a long-form option :(
+		# automatically restart all services
+		needrestart -r a | tee --append "${UPGRADE_LOG}"
+	else
+		# list services that require a restart
+		needrestart -r l | tee --append "${UPGRADE_LOG}"
+	fi
 }
 
 # -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #

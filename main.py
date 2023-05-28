@@ -28,6 +28,7 @@ UPGRADE_MODE = "safe"
 CONFIG_UPDATE_MODE = "ignore"
 UPGRADE_LOG_FILEPATH = "/var/log/gentoo_updater"
 OPTIONAL_DEPENDENCIES = "true"
+DAEMON_RESTART = "true"
 
 # Run the updater
 ### Since you are running the updater from python, you should create the commandline options flags with help documentation in python and pass them all into the shell script
@@ -37,4 +38,5 @@ run_bash_script(
     CONFIG_UPDATE_MODE,
     UPGRADE_LOG_FILEPATH,
     OPTIONAL_DEPENDENCIES,
+    DAEMON_RESTART,
 )
