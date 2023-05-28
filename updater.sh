@@ -23,7 +23,6 @@ function install_dependencies() {
 
 	# List of programs that the updater will be using
 	required_dependencies=(
-		"elogv"
 		"needrestart"
 		"gentoolkit" # "eclean", "euse", "equery"
 		"glsa-check"
@@ -182,11 +181,34 @@ function check_restart() {
 	fi
 }
 
-# -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
+# ---------------------- GET_ELOGS ----------------------- #
 function get_logs() {
-	echo "Getting elogs"
+	echo "Reading elogs"
 	### Use long-form option flags <<< elogv can't be automated, will read logs manually
-	# elogv -p -t -l 1000 | tee --append "${UPGRADE_LOG}"
+	elog_dir="/var/log/portage/elog"
+
+	# Check if the elog directory exists
+	if [[ ! -d "${elog_dir}" ]]; then
+		echo "Elog directory does not exist."
+		return
+	fi
+
+	current_time=$(date +%s)
+	timeframe=24
+
+	# Find and print elogs that have been modified in the last 24 hours
+	find "${elog_dir}" -type f -mmin -$((60 * "${timeframe}")) -print0 |
+		while IFS= read -r -d '' file; do
+			modification_time=$(stat -c %Y "${file}")
+			if ((modification_time > (current_time - 60 * 60 * 24))); then
+				echo ""
+				echo ">>> Log filename: ${file}"
+				echo ">>> Log start <<<"
+				cat "${file}"
+				echo ">>> Log end <<<"
+				echo ""
+			fi
+		done | tee --append "${UPGRADE_LOG}"
 }
 
 # ----------------------- GET_NEWS ----------------------- #
