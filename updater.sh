@@ -111,7 +111,7 @@ upgrade() {
 		echo "Running Upgrade: Check Pretend First"
 		if emerge --pretend ${emerge_options}; then
 			echo "emerge pretend was successful, upgrading..."
-			emerge --verbose ${emerge_options} --color y
+			emerge --verbose "${emerge_options}" --color y
 		else
 			echo "Command failed"
 		fi
