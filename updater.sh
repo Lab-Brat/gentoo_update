@@ -2,36 +2,47 @@
 
 set -e
 
-### Move these to python and pass them in where through cmdline (e.g. UPGRADE_MODE=$1)
+### [done] Move these to python and pass them in where through cmdline (e.g. UPGRADE_MODE=$1)
 # ---------------------- VARIABLES ----------------------- #
-UPGRADE_MODE=${GENTOO_UPDATE_MODE:-safe}
-CONFIG_UPDATE_MODE=${GENTOO_UPDATE_CONFIG_MODE:-merge}
-TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-UPGRADE_REPORT="./_logs/upgrade_report$TIMESTAMP"
-echo "Upgrade Report: $UPGRADE_REPORT"
+UPGRADE_MODE="${1}"
+CONFIG_UPDATE_MODE="${2}"
+OPTIONAL_DEPENDENCIES="${3}"
+DAEMON_RESTART="${4}"
+CLEAN="${5}"
 
 # ----------------- INSTALL_DEPENDENCIES ----------------- #
 function install_dependencies() {
+	install_optional_dependencies=$OPTIONAL_DEPENDENCIES
+
 	# List of programs that the updater will be using
-	programs=(
-		"elogv"
-		"emaint"
-		"eclean"
+	required_dependencies=(
 		"needrestart"
-		"euse"
-		"equery"
-		"eix"
+		"gentoolkit" # "eclean", "euse", "equery"
 		"glsa-check"
-		### Layman should be optional, not default - I'd split this list into "required_dependencies" and "optional_dependencies'
+		### [done] Layman should be optional, not default - I'd split this list into "required_dependencies" and "optional_dependencies'
 		### I'd actually not do this here at all and instead have these come from the ebuild that is requirement for this project :)
+	)
+
+	optional_dependencies=(
+		"eix"
 		"layman"
 	)
 
+	# Combine required and optional dependencies if needed
+	if [[ "${install_optional_dependencies}" == "y" ]]; then
+		all_dependencies=(
+			"${required_dependencies[@]}"
+			"${optional_dependencies[@]}"
+		)
+	else
+		all_dependencies=("${required_dependencies[@]}")
+	fi
+
 	# Filter the programs that are not installed
 	not_installed=()
-	for program in "${programs[@]}"; do
-		if ! command -v "$program" >/dev/null 2>&1; then
-			not_installed+=("$program")
+	for dependency in "${all_dependencies[@]}"; do
+		if ! command -v "${dependency}" >/dev/null 2>&1; then
+			not_installed+=("${dependency}")
 		fi
 	done
 
@@ -39,7 +50,7 @@ function install_dependencies() {
 	if [[ ${#not_installed[@]} -gt 0 ]]; then
 		echo "Installing ${not_installed[@]}"
 		### See comment about about moving this into the ebuild for this script. You also don't want this in unattended mode - you want to pass `--ask`
-		emerge --verbose "${not_installed[@]}"
+		emerge --verbose --quiet-build y "${not_installed[@]}"
 		echo "Installation completed."
 	else
 		echo "All dependencies are already installed."
@@ -50,129 +61,199 @@ function install_dependencies() {
 # ------------------- SECURITY_UPDATES ------------------- #
 function update_security() {
 	# Check for GLSAs and install updates if necessary
-	### Use long-form --list
-	glsa=$(glsa-check -l affected)
+	### [done] Use long-form --list
+	glsa=$(glsa-check --list affected)
 
-	if [ -z "$glsa" ]; then
+	if [ -z "${glsa}" ]; then
 		echo "No affected GLSAs found."
 	else
 		echo "Affected GLSAs found. Applying updates..."
-		### Use long form --fix
-		glsa-check -f affected | tee -a "$UPGRADE_REPORT"
+		### [done] Use long form --fix
+		glsa-check --fix affected
 		echo "Updates applied."
 	fi
 }
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
+	update_optional_dependencies=$OPTIONAL_DEPENDENCIES
+
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
-	### Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
-	emerge --sync | tee -a "$UPGRADE_REPORT"
+	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
+	emerge --sync
 
-	# Update layman overlays if layman is installed
-	if command -v layman >/dev/null 2>&1; then
-		echo "Syncting layman overlays"
-		layman -S | tee -a "$UPGRADE_REPORT"
-	fi
+	if [[ "${update_optional_dependencies}" == 'y' ]]; then
+		# Update layman overlays if layman is installed
+		if command -v layman >/dev/null 2>&1; then
+			echo "Syncting layman overlays"
+			layman --sync-all
+		fi
 
-	# Update the eix cache if eix is installed
-	if command -v eix >/dev/null 2>&1; then
-		echo "Updating eix binary cache"
-		eix-update | tee -a "$UPGRADE_REPORT"
+		# Update the eix cache if eix is installed
+		if command -v eix >/dev/null 2>&1; then
+			echo "Updating eix binary cache"
+			eix-update
+		fi
 	fi
 }
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
-  upgrade_mode=$UPGRADE_MODE
+	upgrade_mode=$UPGRADE_MODE
 	local emerge_options="--update --newuse --deep --quiet-build y @world"
-	local emerge_command="emerge --verbose $emerge_options --color y"
 
-	if [[ $upgrade_mode == 'skip' ]]; then
+	if [[ "${upgrade_mode}" == 'skip' ]]; then
 		echo "Running Upgrade: Skipping Errors"
-		$emerge_command | tee -a "$UPGRADE_REPORT"
-	elif [[ $upgrade_mode == 'safe' ]]; then
+		emerge --verbose --keep-going ${emerge_options} --color y
+
+	elif [[ "${upgrade_mode}" == 'safe' ]]; then
 		echo "Running Upgrade: Check Pretend First"
-		if emerge --pretend $emerge_options; then
+		if emerge --pretend ${emerge_options}; then
 			echo "emerge pretend was successful, upgrading..."
-			$emerge_command | tee -a "$UPGRADE_REPORT"
+			emerge --verbose "${emerge_options}" --color y
 		else
 			echo "Command failed"
 		fi
-	elif [[ $upgrade_mode == 'autofix' ]]; then
+
+	elif [[ "${upgrade_mode}" == 'autofix' ]]; then
 		echo "Running Upgrade: Full Upgrade"
 		echo "Beep Beep Boop Bop"
+
 	else
 		echo "Invalid or undefined Upgrade Mode"
-    exit 1
+		exit 1
 	fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
-	### Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
-	update_mode=$CONFIG_UPDATE_MODE
+	### [done] Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
+	update_mode="${CONFIG_UPDATE_MODE}"
 
 	# Perform the update based on the update mode
-	if [[ "$update_mode" == "merge" ]]; then
-		dispatch-conf -a
-	elif [[ "$update_mode" == "preview" ]]; then
-		dispatch-conf -p
-	elif [[ "$update_mode" == "interactive" ]]; then
+	if [[ "${update_mode}" == "merge" ]]; then
+		etc-update --automode -5
+	elif [[ "${update_mode}" == "interactive" ]]; then
+		etc-update
+	elif [[ "${update_mode}" == "dispatch" ]]; then
 		dispatch-conf
+	elif [[ "${update_mode}" == "ignore" ]]; then
+		echo "Ignoring configuration update for now..."
+		echo "Please UPDATE IT MANUALLY LATER"
 	else
-		echo "Invalid update mode: $update_mode" >&2
-		echo "Please set UPDATE_MODE to 'merge', 'preview', or 'interactive'." >&2
-		exit 1
+		echo "Invalid update mode: ${update_mode}" >&2
+		echo "Please set UPDATE_MODE to 'merge', 'interactive', 'dispatch' or 'ignore'." >&2
 	fi
 }
 
 # ----------------------- CLEAN_UP ----------------------- #
 function clean_up() {
-	echo "Cleaning packages that are not part of the tree..."
-	### This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
-	emerge --depclean | tee -a $UPGRADE_REPORT
+	clean="${CLEAN}"
+	if [[ "${clean}" == 'y' ]]; then
+		echo "Cleaning packages that are not part of the tree..."
+		### [done] This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
+		emerge --depclean
 
-	echo "Checking reverse dependencies..."
-	revdep-rebuild | tee -a $UPGRADE_REPORT
+		echo "Checking reverse dependencies..."
+		revdep-rebuild
 
-	echo "Clean source code..."
-	eclean -d distfiles | tee -a $UPGRADE_REPORT
+		echo "Clean source code..."
+		eclean --deep distfiles
+	else
+		echo "Clean up is not enabled."
+	fi
 }
 
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
+	restart="${DAEMON_RESTART}"
 	echo "Checking is any service needs a restart"
-	### Use long-form option flags
-	needrestart -r a | tee -a $UPGRADE_REPORT
+	if [[ "${restart}" == 'y' ]]; then
+		### [done] Use long-form option flags <<< needrestart doesn't have a long-form option :(
+		# automatically restart all services
+		needrestart -r a
+	else
+		# list services that require a restart
+		needrestart -r l
+	fi
 }
 
-# -------------- GET_IMPORTANT_LOG_MESSAGES -------------- #
+# ---------------------- GET_ELOGS ----------------------- #
 function get_logs() {
-	echo "Getting important logs"
-	### Use long-form option flags
-	elogv -p -t -l 1000 | tee -a $UPGRADE_REPORT
+	echo "Reading elogs"
+	### [done] Use long-form option flags
+	elog_dir="/var/log/portage/elog"
+
+	# Check if the elog directory exists
+	if [[ ! -d "${elog_dir}" ]]; then
+		echo "Elog directory does not exist."
+		return
+	fi
+
+	current_time=$(date +%s)
+	timeframe=24
+
+	# Find and print elogs that have been modified in the last 24 hours
+	find "${elog_dir}" -type f -mmin -$((60 * "${timeframe}")) -print0 |
+		while IFS= read -r -d '' file; do
+			modification_time=$(stat -c %Y "${file}")
+			if ((modification_time > (current_time - 60 * 60 * 24))); then
+				echo ""
+				echo ">>> Log filename: ${file}"
+				echo ">>> Log start <<<"
+				cat "${file}"
+				echo ">>> Log end <<<"
+				echo ""
+			fi
+		done
 }
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
 	echo "Getting important news"
-	### Use long-form option flags
-	eselect news read new | tee -a $UPGRADE_REPORT
+	### [done] Use long-form option flags
+	eselect news read new
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
+echo -e "\n{{ INSTALL DEPENDENCIES }}\n"
 install_dependencies
+echo ""
+
+echo -e "\n{{ GLSA UPDATES }}\n"
 update_security
+echo ""
+
+echo -e "\n{{ SYNC PORTAGE TREE }}\n"
 sync_tree
+echo ""
+
+echo -e "\n{{ FULL SYSTEM UPGRADE }}\n"
 upgrade
+echo ""
+
+echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
 config_update
+echo ""
+
+echo -e "\n{{ CLEAN UP }}\n"
 clean_up
+echo ""
+
+echo -e "\n{{ RESTART SERVICES }}\n"
 check_restart
+echo ""
+
+echo -e "\n{{ READ ELOGS }}\n"
 get_logs
+echo ""
+
+echo -e "\n{{ READ NEWS }}\n"
 get_news
+echo ""
+
 
 echo "Upgrade complete!"
-### Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
-echo "Upgrade report can be found at: $UPGRADE_REPORT"
+### [done] Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
+echo "Upgrade log can be found at: ${UPGRADE_LOG}"
