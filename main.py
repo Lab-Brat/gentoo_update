@@ -67,10 +67,11 @@ def run_shell_script(script_path, *args):
             sys.exit(script_stream.returncode)
 
 
-# Run the updater
 def create_cli():
+    formatter = argparse.RawTextHelpFormatter
     parser = argparse.ArgumentParser(
-        description="Automate updates on Gentoo Linux."
+        description="Automate updates on Gentoo Linux.",
+        formatter_class=formatter
     )
 
     parser.add_argument(
@@ -78,35 +79,49 @@ def create_cli():
         "--upgrade-mode",
         default="safe",
         choices=["security", "full"],
-        help="Set the upgrade mode. Default: safe",
+        help="Set the upgrade mode.\n"
+        "Options:\n"
+        "* security: upgrade only security patches (GLSA)\n"
+        "* full: do a full @world upgrade\n"  
+        "Default: security\n"
+        ,
     )
     parser.add_argument(
         "-c",
         "--config-update-mode",
         default="ignore",
         choices=["ignore", "merge", "interactive", "dispatch"],
-        help="Set the way new configuration are handled after an update. Default: ignore",
+        help="Set the way new configuration are handled after an update.\n"
+        "Options:\n"
+        "* ignore: do not update configurations files at all.\n"
+        "* merge: automatically merge changes in configuration files.\n"
+        "* interactive: launch interactive etc-upgrade.\n"
+        "* dispatch: launch interactive dispatch-conf.\n"
+        "Default: ignore\n",
     )
     parser.add_argument(
         "-o",
         "--optional-dependencies",
         default="n",
         choices=["y", "n"],
-        help="Set whether to install optional dependencies. Default: n",
+        help="Set whether to install optional dependencies.\n"
+        "Default: n\n",
     )
     parser.add_argument(
         "-d",
         "--daemon-restart",
         default="n",
         choices=["y", "n"],
-        help="Set whether to restart services and daemons after an update. Default: n",
+        help="Set whether to restart services and daemons after an update.\n"
+        "Default: n\n",
     )
     parser.add_argument(
         "-e",
         "--clean",
         default="n",
         choices=["y", "n"],
-        help="Set wether to clean orphaned packaged after an update. Default: n",
+        help="Set wether to clean orphaned packaged after an update.\n"
+        "Default: n\n",
     )
 
     args = parser.parse_args()
