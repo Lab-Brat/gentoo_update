@@ -56,13 +56,15 @@ def run_shell_script(script_path, *args):
     command = shlex.split(f"sh {script_path} {' '.join(args)}")
     with subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-    ) as p:
-        for line in p.stdout:
+    ) as script_stream:
+        for line in script_stream.stdout:
             logger.info(line.decode().rstrip("\n"))
-        p.wait()
-        if p.returncode != 0:
-            logger.error(f"{script_path} exited with error code {p.returncode}")
-            sys.exit(p.returncode)
+        script_stream.wait()
+        if script_stream.returncode != 0:
+            logger.error(
+                f"{script_path} exited with error code {script_stream.returncode}"
+            )
+            sys.exit(script_stream.returncode)
 
 
 # Run the updater
