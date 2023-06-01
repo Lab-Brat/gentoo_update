@@ -45,7 +45,7 @@ function install_dependencies() {
 
 	# Install the programs
 	if [[ ${#not_installed[@]} -gt 0 ]]; then
-		echo "Installing ${not_installed[@]}"
+		echo "Installing" "${not_installed[@]}"
 		emerge --verbose --quiet-build y "${not_installed[@]}"
 		echo "Installation completed."
 	else
@@ -93,14 +93,14 @@ function upgrade_security() {
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
-  echo "Running Upgrade: Check Pretend First"
-  if emerge --pretend --update --newuse --deep @world  ; then
-  	echo "emerge pretend was successful, upgrading..."
-  	emerge --verbose --quiet-build y --color y \
-           --update --newuse --deep @world
-  else
-  	echo "emerge pretend has failed, not upgrading"
-  fi
+	echo "Running Upgrade: Check Pretend First"
+	if emerge --pretend --update --newuse --deep @world; then
+		echo "emerge pretend was successful, upgrading..."
+		emerge --verbose --quiet-build y --color y \
+			--update --newuse --deep @world
+	else
+		echo "emerge pretend has failed, not upgrading"
+	fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
@@ -198,18 +198,18 @@ sync_tree
 echo ""
 
 if [[ "${UPGRADE_MODE}" == 'security' ]]; then
-  echo -e "\n{{ SECURITY UPGRADES }}\n"
-  upgrade_security
-  echo ""
+	echo -e "\n{{ SECURITY UPGRADES }}\n"
+	upgrade_security
+	echo ""
 
 elif [[ "${UPGRADE_MODE}" == 'full' ]]; then
-  echo -e "\n{{ SYSTEM UPGRADE }}\n"
-  upgrade
-  echo ""
+	echo -e "\n{{ SYSTEM UPGRADE }}\n"
+	upgrade
+	echo ""
 
 else
-  echo "Invalide upgrade mode, exiting...."
-  exit 1
+	echo "Invalide upgrade mode, exiting...."
+	exit 1
 fi
 
 echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
@@ -231,7 +231,6 @@ echo ""
 echo -e "\n{{ READ NEWS }}\n"
 get_news
 echo ""
-
 
 echo "Upgrade complete!"
 echo "Upgrade log can be found at: ${UPGRADE_LOG}"
