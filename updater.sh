@@ -2,7 +2,6 @@
 
 set -e
 
-### [done] Move these to python and pass them in where through cmdline (e.g. UPGRADE_MODE=$1)
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE="${1}"
 CONFIG_UPDATE_MODE="${2}"
@@ -19,8 +18,6 @@ function install_dependencies() {
 		"needrestart"
 		"gentoolkit" # "eclean", "euse", "equery"
 		"glsa-check"
-		### [done] Layman should be optional, not default - I'd split this list into "required_dependencies" and "optional_dependencies'
-		### I'd actually not do this here at all and instead have these come from the ebuild that is requirement for this project :)
 	)
 
 	optional_dependencies=(
@@ -49,7 +46,6 @@ function install_dependencies() {
 	# Install the programs
 	if [[ ${#not_installed[@]} -gt 0 ]]; then
 		echo "Installing ${not_installed[@]}"
-		### See comment about about moving this into the ebuild for this script. You also don't want this in unattended mode - you want to pass `--ask`
 		emerge --verbose --quiet-build y "${not_installed[@]}"
 		echo "Installation completed."
 	else
@@ -61,14 +57,12 @@ function install_dependencies() {
 # ------------------- SECURITY_UPDATES ------------------- #
 function update_security() {
 	# Check for GLSAs and install updates if necessary
-	### [done] Use long-form --list
 	glsa=$(glsa-check --list affected)
 
 	if [ -z "${glsa}" ]; then
 		echo "No affected GLSAs found."
 	else
 		echo "Affected GLSAs found. Applying updates..."
-		### [done] Use long form --fix
 		glsa-check --fix affected
 		echo "Updates applied."
 	fi
@@ -80,7 +74,6 @@ function sync_tree() {
 
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
-	### [done] Wrap all vars with braces: e.g. "${UPGRADE_REPORT}"
 	emerge --sync
 
 	if [[ "${update_optional_dependencies}" == 'y' ]]; then
@@ -128,7 +121,6 @@ upgrade() {
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
-	### [done] Make it "${CONFIG_UPDATE_MODE} and add curly braces on the ones below"
 	update_mode="${CONFIG_UPDATE_MODE}"
 
 	# Perform the update based on the update mode
@@ -152,7 +144,6 @@ function clean_up() {
 	clean="${CLEAN}"
 	if [[ "${clean}" == 'y' ]]; then
 		echo "Cleaning packages that are not part of the tree..."
-		### [done] This is something I think is dangerous to automate - it should go out as a notification to user to it themselves
 		emerge --depclean
 
 		echo "Checking reverse dependencies..."
@@ -170,7 +161,6 @@ function check_restart() {
 	restart="${DAEMON_RESTART}"
 	echo "Checking is any service needs a restart"
 	if [[ "${restart}" == 'y' ]]; then
-		### [done] Use long-form option flags <<< needrestart doesn't have a long-form option :(
 		# automatically restart all services
 		needrestart -r a
 	else
@@ -182,7 +172,6 @@ function check_restart() {
 # ---------------------- GET_ELOGS ----------------------- #
 function get_logs() {
 	echo "Reading elogs"
-	### [done] Use long-form option flags
 	elog_dir="/var/log/portage/elog"
 
 	# Check if the elog directory exists
@@ -212,7 +201,6 @@ function get_logs() {
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
 	echo "Getting important news"
-	### [done] Use long-form option flags
 	eselect news read new
 }
 
@@ -255,5 +243,4 @@ echo ""
 
 
 echo "Upgrade complete!"
-### [done] Right now this is more of an upgrade log than a report. A report is something we'd get after parsing the output to a summary or something like that
 echo "Upgrade log can be found at: ${UPGRADE_LOG}"

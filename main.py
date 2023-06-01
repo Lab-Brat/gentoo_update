@@ -8,11 +8,6 @@ from datetime import datetime
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 
-# Code review comments
-### [done] Not all users will have bash - can we default to `sh`?
-### [done] We need to exit with the same code as the result process once it finishes running
-### [done] Use python logger - since we'll want to run this from cron, it will really help to have timestamps of all output
-
 
 def create_logger():
     """
@@ -71,7 +66,6 @@ def run_shell_script(script_path, *args):
 
 
 # Run the updater
-### [done] Since you are running the updater from python, you should create the commandline options flags with help documentation in python and pass them all into the shell script
 def create_cli():
     parser = argparse.ArgumentParser(
         description="Automate updates on Gentoo Linux."
@@ -120,7 +114,6 @@ def create_cli():
 def main():
     args = create_cli()
 
-    # Run the updater
     run_shell_script(
         f"{current_path}/updater.sh",
         args.upgrade_mode,
