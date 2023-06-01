@@ -15,14 +15,13 @@ function install_dependencies() {
 
 	# List of programs that the updater will be using
 	required_dependencies=(
-		"needrestart"
-		"gentoolkit" # "eclean", "euse", "equery"
-		"glsa-check"
+		"app-admin/needrestart"
+		"app-portage/gentoolkit" # "eclean", "euse", "equery"
 	)
 
 	optional_dependencies=(
-		"eix"
-		"layman"
+		"app-portage/eix"
+		"app-portage/layman"
 	)
 
 	# Combine required and optional dependencies if needed
