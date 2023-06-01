@@ -22,7 +22,10 @@ def create_logger():
         logging.Logger: Configured logger.
     """
     timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
-    log_filename = f"/var/log/gentoo_updater/log_{timestamp}"
+    log_dir = "/var/log/gentoo_update"
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+    log_filename = f"{log_dir}/log_{timestamp}"
 
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
