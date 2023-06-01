@@ -77,7 +77,7 @@ def create_cli():
         "-m",
         "--upgrade-mode",
         default="safe",
-        choices=["skip", "safe", "autofix"],
+        choices=["security", "full"],
         help="Set the upgrade mode. Default: safe",
     )
     parser.add_argument(

@@ -54,20 +54,6 @@ function install_dependencies() {
 
 }
 
-# ------------------- SECURITY_UPDATES ------------------- #
-function update_security() {
-	# Check for GLSAs and install updates if necessary
-	glsa=$(glsa-check --list affected)
-
-	if [ -z "${glsa}" ]; then
-		echo "No affected GLSAs found."
-	else
-		echo "Affected GLSAs found. Applying updates..."
-		glsa-check --fix affected
-		echo "Updates applied."
-	fi
-}
-
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
 	update_optional_dependencies=$OPTIONAL_DEPENDENCIES
@@ -91,32 +77,30 @@ function sync_tree() {
 	fi
 }
 
+# ------------------- SECURITY_UPDATES ------------------- #
+function upgrade_security() {
+	# Check for GLSAs and install updates if necessary
+	glsa=$(glsa-check --list affected)
+
+	if [ -z "${glsa}" ]; then
+		echo "No affected GLSAs found."
+	else
+		echo "Affected GLSAs found. Applying updates..."
+		glsa-check --fix affected
+		echo "Updates applied."
+	fi
+}
+
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
-	upgrade_mode=$UPGRADE_MODE
-	local emerge_options="--update --newuse --deep --quiet-build y @world"
-
-	if [[ "${upgrade_mode}" == 'skip' ]]; then
-		echo "Running Upgrade: Skipping Errors"
-		emerge --verbose --keep-going ${emerge_options} --color y
-
-	elif [[ "${upgrade_mode}" == 'safe' ]]; then
-		echo "Running Upgrade: Check Pretend First"
-		if emerge --pretend ${emerge_options}; then
-			echo "emerge pretend was successful, upgrading..."
-			emerge --verbose "${emerge_options}" --color y
-		else
-			echo "Command failed"
-		fi
-
-	elif [[ "${upgrade_mode}" == 'autofix' ]]; then
-		echo "Running Upgrade: Full Upgrade"
-		echo "Beep Beep Boop Bop"
-
-	else
-		echo "Invalid or undefined Upgrade Mode"
-		exit 1
-	fi
+  echo "Running Upgrade: Check Pretend First"
+  if emerge --pretend --update --newuse --deep @world  ; then
+  	echo "emerge pretend was successful, upgrading..."
+  	emerge --verbose --quiet-build y --color y \
+           --update --newuse --deep @world
+  else
+  	echo "emerge pretend has failed, not upgrading"
+  fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
@@ -209,17 +193,24 @@ echo -e "\n{{ INSTALL DEPENDENCIES }}\n"
 install_dependencies
 echo ""
 
-echo -e "\n{{ GLSA UPDATES }}\n"
-update_security
-echo ""
-
 echo -e "\n{{ SYNC PORTAGE TREE }}\n"
 sync_tree
 echo ""
 
-echo -e "\n{{ FULL SYSTEM UPGRADE }}\n"
-upgrade
-echo ""
+if [[ "${UPGRADE_MODE}" == 'security' ]]; then
+  echo -e "\n{{ SECURITY UPGRADES }}\n"
+  upgrade_security
+  echo ""
+
+elif [[ "${UPGRADE_MODE}" == 'full' ]]; then
+  echo -e "\n{{ SYSTEM UPGRADE }}\n"
+  upgrade
+  echo ""
+
+else
+  echo "Invalide upgrade mode, exiting...."
+  exit 1
+fi
 
 echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
 config_update
