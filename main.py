@@ -11,9 +11,12 @@ current_path = os.path.dirname(os.path.realpath(__file__))
 
 def create_logger():
     """
-    Creates a logger with two handlers: terminal output and file output.
-    Both handlers have the same logging level (INFO) and share the same formatter.
-    The formatter includes timestamp, log level, and the log message.
+    Create a logger with two handlers:
+        1. terminal output
+        2. file output
+    Both handlers have the same logging level (INFO)
+    and share the same formatter.
+    Formatters includes timestamp, log level and the message.
 
     Returns:
         logging.Logger: Configured logger.
@@ -44,8 +47,8 @@ def create_logger():
 
 def run_shell_script(script_path, *args):
     """
-    Run a shell script and stream standard output and standard error
-    to terminal and a log file.
+    Run a shell script and stream standard output
+    and standard error to terminal and a log file.
 
     Args:
         script_path (str): Shell script path.
@@ -71,20 +74,19 @@ def create_cli():
     formatter = argparse.RawTextHelpFormatter
     parser = argparse.ArgumentParser(
         description="Automate updates on Gentoo Linux.",
-        formatter_class=formatter
+        formatter_class=formatter,
     )
 
     parser.add_argument(
         "-m",
         "--upgrade-mode",
-        default="safe",
+        default="security",
         choices=["security", "full"],
         help="Set the upgrade mode.\n"
         "Options:\n"
         "* security: upgrade only security patches (GLSA)\n"
-        "* full: do a full @world upgrade\n"  
-        "Default: security\n"
-        ,
+        "* full: do a full @world upgrade\n"
+        "Default: security\n",
     )
     parser.add_argument(
         "-c",
@@ -104,8 +106,7 @@ def create_cli():
         "--optional-dependencies",
         default="n",
         choices=["y", "n"],
-        help="Set whether to install optional dependencies.\n"
-        "Default: n\n",
+        help="Set whether to install optional dependencies.\n" "Default: n\n",
     )
     parser.add_argument(
         "-d",
