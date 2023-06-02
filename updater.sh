@@ -5,75 +5,15 @@ set -e
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE="${1}"
 CONFIG_UPDATE_MODE="${2}"
-OPTIONAL_DEPENDENCIES="${3}"
-DAEMON_RESTART="${4}"
-CLEAN="${5}"
+DAEMON_RESTART="${3}"
+CLEAN="${4}"
 
-# ----------------- INSTALL_DEPENDENCIES ----------------- #
-function install_dependencies() {
-	install_optional_dependencies=$OPTIONAL_DEPENDENCIES
-
-	# List of programs that the updater will be using
-	required_dependencies=(
-		"app-admin/needrestart"
-		"app-portage/gentoolkit" # "eclean", "euse", "equery"
-	)
-
-	optional_dependencies=(
-		"app-portage/eix"
-		"app-portage/layman"
-	)
-
-	# Combine required and optional dependencies if needed
-	if [[ "${install_optional_dependencies}" == "y" ]]; then
-		all_dependencies=(
-			"${required_dependencies[@]}"
-			"${optional_dependencies[@]}"
-		)
-	else
-		all_dependencies=("${required_dependencies[@]}")
-	fi
-
-	# Filter the programs that are not installed
-	not_installed=()
-	for dependency in "${all_dependencies[@]}"; do
-		if ! command -v "${dependency}" >/dev/null 2>&1; then
-			not_installed+=("${dependency}")
-		fi
-	done
-
-	# Install the programs
-	if [[ ${#not_installed[@]} -gt 0 ]]; then
-		echo "Installing" "${not_installed[@]}"
-		emerge --verbose --quiet-build y "${not_installed[@]}"
-		echo "Installation completed."
-	else
-		echo "All dependencies are already installed."
-	fi
-
-}
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
-	update_optional_dependencies=$OPTIONAL_DEPENDENCIES
-
 	# Update main Portage tree
 	echo "Syncing Portage Tree"
 	emerge --sync
-
-	if [[ "${update_optional_dependencies}" == 'y' ]]; then
-		# Update layman overlays if layman is installed
-		if command -v layman >/dev/null 2>&1; then
-			echo "Syncting layman overlays"
-			layman --sync-all
-		fi
-
-		# Update the eix cache if eix is installed
-		if command -v eix >/dev/null 2>&1; then
-			echo "Updating eix binary cache"
-			eix-update
-		fi
-	fi
 }
 
 # ------------------- SECURITY_UPDATES ------------------- #
@@ -188,10 +128,6 @@ function get_news() {
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
-echo -e "\n{{ INSTALL DEPENDENCIES }}\n"
-install_dependencies
-echo ""
-
 echo -e "\n{{ SYNC PORTAGE TREE }}\n"
 sync_tree
 echo ""

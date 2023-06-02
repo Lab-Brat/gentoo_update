@@ -105,13 +105,6 @@ def create_cli():
         "Default: ignore\n",
     )
     parser.add_argument(
-        "-o",
-        "--optional-dependencies",
-        default="n",
-        choices=["y", "n"],
-        help="Set whether to install optional dependencies.\n" "Default: n\n",
-    )
-    parser.add_argument(
         "-d",
         "--daemon-restart",
         default="n",
@@ -139,7 +132,6 @@ def main():
         f"{current_path}/updater.sh",
         args.upgrade_mode,
         args.config_update_mode,
-        args.optional_dependencies,
         args.daemon_restart,
         args.clean,
     )
