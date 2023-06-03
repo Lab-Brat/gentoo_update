@@ -12,6 +12,7 @@ CONFIG_UPDATE_MODE="${3}"
 DAEMON_RESTART="${4}"
 CLEAN="${5}"
 READ_ELOGS="${6}"
+READ_NEWS="${7}"
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
@@ -35,7 +36,7 @@ function update_security() {
 }
 
 function update_full() {
-  # Do a full system update
+	# Do a full system update
 	IFS=' ' read -r -a update_flags <<<"${UPDATE_FLAGS}"
 
 	echo "Running Update: Check Pretend First"
@@ -49,22 +50,22 @@ function update_full() {
 }
 
 function update() {
-  update_mode="${UPDATE_MODE}"
-  # Do security updates or full system updates
-  if [[ "${update_mode}" == 'security' ]]; then
-  	echo -e "installing security updates only\n"
-  	update_security
-  	echo ""
-  
-  elif [[ "${update_mode}" == 'full' ]]; then
-  	echo -e "updating @world\n"
-  	update_full
-  	echo ""
-  
-  else
-  	echo "Invalid update mode, exiting...."
-  	exit 1
-  fi
+	update_mode="${UPDATE_MODE}"
+	# Do security updates or full system updates
+	if [[ "${update_mode}" == 'security' ]]; then
+		echo -e "installing security updates only\n"
+		update_security
+		echo ""
+
+	elif [[ "${update_mode}" == 'full' ]]; then
+		echo -e "updating @world\n"
+		update_full
+		echo ""
+
+	else
+		echo "Invalid update mode, exiting...."
+		exit 1
+	fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
@@ -146,19 +147,24 @@ function read_elogs() {
 }
 
 function get_logs() {
-  read_elogs="${READ_ELOGS}"
+	read_elogs="${READ_ELOGS}"
 	if [[ "${read_elogs}" == 'y' ]]; then
-    echo "reading elogs"
-    read_elogs
+		echo "reading elogs"
+		read_elogs
 	else
-    echo "not reading elogs"
+		echo "not reading elogs"
 	fi
 }
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
-	echo "Getting important news"
-	eselect news read new
+	read_news="${READ_NEWS}"
+	if [[ "${read_news}" == 'y' ]]; then
+		echo "Getting important news"
+		eselect news read new
+	else
+		echo "not reading news"
+	fi
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #

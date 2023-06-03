@@ -157,8 +157,15 @@ def create_cli():
         "--read-logs",
         default="n",
         choices=["y", "n"],
-        help="Set wether to ead elogs generated after an update.\n"
+        help="Set wether to read elogs generated after an update.\n"
         "Default: n\n",
+    )
+    parser.add_argument(
+        "-n",
+        "--read-news",
+        default="n",
+        choices=["y", "n"],
+        help="Set wether to read news after an update.\n" "Default: n\n",
     )
 
     args = parser.parse_args()
@@ -202,6 +209,7 @@ def main():
         args.daemon_restart,
         args.clean,
         args.read_logs,
+        args.read_news,
     )
 
 
