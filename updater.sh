@@ -5,6 +5,9 @@ set -e
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE="${1}"
 UPGRADE_FLAGS="${2}"
+if [[ "${UPGRADE_FLAGS}" == "NOARGS" ]]; then
+    UPGRADE_FLAGS=""
+fi
 CONFIG_UPDATE_MODE="${3}"
 DAEMON_RESTART="${4}"
 CLEAN="${5}"
