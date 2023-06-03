@@ -3,10 +3,10 @@
 set -e
 
 # ---------------------- VARIABLES ----------------------- #
-UPGRADE_MODE="${1}"
-UPGRADE_FLAGS="${2}"
-if [[ "${UPGRADE_FLAGS}" == "NOARGS" ]]; then
-	UPGRADE_FLAGS=""
+UPDATE_MODE="${1}"
+UPDATE_FLAGS="${2}"
+if [[ "${UPDATE_FLAGS}" == "NOARGS" ]]; then
+	UPDATE_FLAGS=""
 fi
 CONFIG_UPDATE_MODE="${3}"
 DAEMON_RESTART="${4}"
@@ -20,8 +20,8 @@ function sync_tree() {
 	emerge --sync
 }
 
-# ------------------- SECURITY_UPDATES ------------------- #
-function upgrade_security() {
+# -------------------- UPDATE_SYSTEM --------------------- #
+function update_security() {
 	# Check for GLSAs and install updates if necessary
 	glsa=$(glsa-check --list affected)
 
@@ -34,18 +34,37 @@ function upgrade_security() {
 	fi
 }
 
-# ----------------- FULL_SYSTEM_UPGRADE ------------------ #
-upgrade() {
-	IFS=' ' read -r -a upgrade_flags <<<"${UPGRADE_FLAGS}"
+function update_full() {
+  # Do a full system update
+	IFS=' ' read -r -a update_flags <<<"${UPDATE_FLAGS}"
 
-	echo "Running Upgrade: Check Pretend First"
+	echo "Running Update: Check Pretend First"
 	if emerge --pretend --update --newuse --deep @world; then
-		echo "emerge pretend was successful, upgrading..."
+		echo "emerge pretend was successful, updating..."
 		emerge --verbose --quiet-build y \
-			--update --newuse --deep "${upgrade_flags[@]}" @world
+			--update --newuse --deep "${update_flags[@]}" @world
 	else
-		echo "emerge pretend has failed, not upgrading"
+		echo "emerge pretend has failed, not updating"
 	fi
+}
+
+function update() {
+  update_mode="${UPDATE_MODE}"
+  # Do security updates or full system updates
+  if [[ "${update_mode}" == 'security' ]]; then
+  	echo -e "installing security updates only\n"
+  	update_security
+  	echo ""
+  
+  elif [[ "${update_mode}" == 'full' ]]; then
+  	echo -e "updating @world\n"
+  	update_full
+  	echo ""
+  
+  else
+  	echo "Invalid update mode, exiting...."
+  	exit 1
+  fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
@@ -146,20 +165,9 @@ function get_news() {
 echo -e "{{ SYNC PORTAGE TREE }}\n"
 sync_tree
 
-if [[ "${UPGRADE_MODE}" == 'security' ]]; then
-	echo -e "{{ SECURITY UPGRADES }}\n"
-	upgrade_security
-	echo ""
-
-elif [[ "${UPGRADE_MODE}" == 'full' ]]; then
-	echo -e "{{ SYSTEM UPGRADE }}\n"
-	upgrade
-	echo ""
-
-else
-	echo "Invalid upgrade mode, exiting...."
-	exit 1
-fi
+echo -e "{{ UPDATE SYSTEM }}\n"
+update
+echo ""
 
 echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
 config_update
