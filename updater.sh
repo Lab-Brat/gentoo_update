@@ -130,22 +130,21 @@ function get_news() {
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
-echo -e "\n{{ SYNC PORTAGE TREE }}\n"
+echo -e "{{ SYNC PORTAGE TREE }}\n"
 sync_tree
-echo ""
 
 if [[ "${UPGRADE_MODE}" == 'security' ]]; then
-	echo -e "\n{{ SECURITY UPGRADES }}\n"
+	echo -e "{{ SECURITY UPGRADES }}\n"
 	upgrade_security
 	echo ""
 
 elif [[ "${UPGRADE_MODE}" == 'full' ]]; then
-	echo -e "\n{{ SYSTEM UPGRADE }}\n"
+	echo -e "{{ SYSTEM UPGRADE }}\n"
 	upgrade
 	echo ""
 
 else
-	echo "Invalide upgrade mode, exiting...."
+	echo "Invalid upgrade mode, exiting...."
 	exit 1
 fi
 
@@ -167,7 +166,4 @@ echo ""
 
 echo -e "\n{{ READ NEWS }}\n"
 get_news
-echo ""
-
-echo "Upgrade complete!"
-echo "Upgrade log can be found at: ${UPGRADE_LOG}"
+echo -e "\n"

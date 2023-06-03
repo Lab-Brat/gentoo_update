@@ -45,7 +45,7 @@ def create_logger():
     logger.addHandler(terminal_handler)
     logger.addHandler(file_handler)
 
-    return logger
+    return logger, log_filename
 
 
 def run_shell_script(script_path, *args):
@@ -58,7 +58,7 @@ def run_shell_script(script_path, *args):
         *args (str): Arguments for the shell script.
                      They need to be handled by the script.
     """
-    logger = create_logger()
+    logger, log_file = create_logger()
     command = shlex.split(f"sh {script_path} {' '.join(args)}")
     with subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -71,6 +71,8 @@ def run_shell_script(script_path, *args):
                 f"{script_path} exited with error code {script_stream.returncode}"
             )
             sys.exit(script_stream.returncode)
+    logger.info("gentoo_update completed it's tasks!")
+    logger.info(f"log file can be found at: {log_file}")
 
 
 def create_cli():
