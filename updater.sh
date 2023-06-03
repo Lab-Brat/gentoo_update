@@ -37,7 +37,7 @@ upgrade() {
 	echo "Running Upgrade: Check Pretend First"
 	if emerge --pretend --update --newuse --deep @world; then
 		echo "emerge pretend was successful, upgrading..."
-		emerge --verbose \
+		emerge --verbose --quiet-build y \
 			--update --newuse --deep "${upgrade_flags[@]}" @world
 	else
 		echo "emerge pretend has failed, not upgrading"

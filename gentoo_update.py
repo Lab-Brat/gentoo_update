@@ -20,6 +20,7 @@ def create_logger():
 
     Returns:
         logging.Logger: Configured logger.
+        log_filename: Log filename.
     """
     timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
     log_dir = "/var/log/gentoo_update"
@@ -63,19 +64,42 @@ def run_shell_script(script_path, *args):
     with subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
     ) as script_stream:
+        # Process stdout
         for line in script_stream.stdout:
             logger.info(line.decode().rstrip("\n"))
+
+        # Process stderr
+        stderr_output = []
+        for line in script_stream.stderr:
+            line = line.decode().rstrip("\n")
+            stderr_output.append(line)
+            logger.error(line)
+
         script_stream.wait()
+
         if script_stream.returncode != 0:
-            logger.error(
-                f"{script_path} exited with error code {script_stream.returncode}"
+            error_message = (
+                f"{script_path} "
+                "exited with error code {script_stream.returncode}"
             )
+            if stderr_output:
+                stderr_output_message = "n".join(stderr_output)
+                error_message += (
+                    f"\nStandard error output:\n{stderr_output_message}"
+                )
+            logger.error(error_message)
             sys.exit(script_stream.returncode)
     logger.info("gentoo_update completed it's tasks!")
     logger.info(f"log file can be found at: {log_file}")
 
 
 def create_cli():
+    """
+    Define CLI commands using argparse.
+
+    Returns:
+        parser.parse_args: Argparse commands
+    """
     formatter = argparse.RawTextHelpFormatter
     parser = argparse.ArgumentParser(
         description="Automate updates on Gentoo Linux.",
@@ -134,6 +158,18 @@ def create_cli():
 
 
 def add_prefixes(args_list):
+    """
+    Function to add prefixes to a list of arguments passed to
+    --upgrade-mode full.
+
+    Parameters:
+    args_list (List[str]): A list of arguments without prefixes,
+        example: v quiet-build=y
+
+    Returns:
+    List[str]: A new list of arguments with added prefixes,
+        example: -v --quiet-build=y
+    """
     prefixed_args = []
 
     for arg in args_list:
@@ -153,7 +189,7 @@ def main():
     run_shell_script(
         f"{current_path}/updater.sh",
         args.upgrade_mode,
-        " ".join(add_prefixes(args.args)) if args.args else "",
+        " ".join(add_prefixes(args.args)) if args.args else " ",
         args.config_update_mode,
         args.daemon_restart,
         args.clean,
