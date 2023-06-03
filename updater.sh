@@ -4,10 +4,10 @@ set -e
 
 # ---------------------- VARIABLES ----------------------- #
 UPGRADE_MODE="${1}"
-CONFIG_UPDATE_MODE="${2}"
-DAEMON_RESTART="${3}"
-CLEAN="${4}"
-
+UPGRADE_FLAGS="${2}"
+CONFIG_UPDATE_MODE="${3}"
+DAEMON_RESTART="${4}"
+CLEAN="${5}"
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
@@ -32,11 +32,13 @@ function upgrade_security() {
 
 # ----------------- FULL_SYSTEM_UPGRADE ------------------ #
 upgrade() {
+	IFS=' ' read -r -a upgrade_flags <<<"${UPGRADE_FLAGS}"
+
 	echo "Running Upgrade: Check Pretend First"
 	if emerge --pretend --update --newuse --deep @world; then
 		echo "emerge pretend was successful, upgrading..."
-		emerge --verbose --quiet-build y --color y \
-			--update --newuse --deep @world
+		emerge --verbose \
+			--update --newuse --deep "${upgrade_flags[@]}" @world
 	else
 		echo "emerge pretend has failed, not upgrading"
 	fi

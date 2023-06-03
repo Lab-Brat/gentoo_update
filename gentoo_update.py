@@ -92,6 +92,12 @@ def create_cli():
         "Default: security\n",
     )
     parser.add_argument(
+        "-a",
+        "--args",
+        nargs="*",
+        help="Additional arguments to be passed when in 'full' upgrade mode.",
+    )
+    parser.add_argument(
         "-c",
         "--config-update-mode",
         default="ignore",
@@ -125,12 +131,27 @@ def create_cli():
     return args
 
 
+def add_prefixes(args_list):
+    prefixed_args = []
+
+    for arg in args_list:
+        if "=" in arg:
+            prefixed_args.append("--" + arg)
+        elif len(arg) == 1:
+            prefixed_args.append("-" + arg)
+        else:
+            prefixed_args.append("--" + arg)
+
+    return prefixed_args
+
+
 def main():
     args = create_cli()
 
     run_shell_script(
         f"{current_path}/updater.sh",
         args.upgrade_mode,
+        " ".join(add_prefixes(args.args)) if args.args else "",
         args.config_update_mode,
         args.daemon_restart,
         args.clean,
