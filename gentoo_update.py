@@ -186,7 +186,12 @@ def add_prefixes(args_list):
 def main():
     args = create_cli()
 
-    print(args.upgrade_mode, args.config_update_mode, args.daemon_restart, args.clean)
+    print(
+        args.upgrade_mode,
+        args.config_update_mode,
+        args.daemon_restart,
+        args.clean,
+    )
 
     run_shell_script(
         f"{current_path}/updater.sh",
