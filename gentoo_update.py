@@ -152,6 +152,14 @@ def create_cli():
         help="Set wether to clean orphaned packaged after an update.\n"
         "Default: n\n",
     )
+    parser.add_argument(
+        "-l",
+        "--read-logs",
+        default="n",
+        choices=["y", "n"],
+        help="Set wether to ead elogs generated after an update.\n"
+        "Default: n\n",
+    )
 
     args = parser.parse_args()
     return args
@@ -200,6 +208,7 @@ def main():
         args.config_update_mode,
         args.daemon_restart,
         args.clean,
+        args.read_logs,
     )
 
 

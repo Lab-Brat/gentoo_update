@@ -11,6 +11,7 @@ fi
 CONFIG_UPDATE_MODE="${3}"
 DAEMON_RESTART="${4}"
 CLEAN="${5}"
+READ_ELOGS="${6}"
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
@@ -98,8 +99,7 @@ function check_restart() {
 }
 
 # ---------------------- GET_ELOGS ----------------------- #
-function get_logs() {
-	echo "Reading elogs"
+function read_elogs() {
 	elog_dir="/var/log/portage/elog"
 
 	# Check if the elog directory exists
@@ -124,6 +124,16 @@ function get_logs() {
 				echo ""
 			fi
 		done
+}
+
+function get_logs() {
+  read_elogs="${READ_ELOGS}"
+	if [[ "${read_elogs}" == 'y' ]]; then
+    echo "reading elogs"
+    read_elogs
+	else
+    echo "not reading elogs"
+	fi
 }
 
 # ----------------------- GET_NEWS ----------------------- #
