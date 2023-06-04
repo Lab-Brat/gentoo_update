@@ -16,7 +16,7 @@ def create_logger():
         2. file output
     Both handlers have the same logging level (INFO)
     and share the same formatter.
-    Formatters includes timestamp, log level and the message.
+    Formatters include timestamp, log level and the message.
 
     Returns:
         logging.Logger: Configured logger.
@@ -95,7 +95,7 @@ def run_shell_script(script_path, *args):
 
 def create_cli():
     """
-    Define CLI commands using argparse.
+    Define CLI command flags using argparse.
 
     Returns:
         parser.parse_args: Argparse commands
@@ -108,29 +108,29 @@ def create_cli():
 
     parser.add_argument(
         "-m",
-        "--upgrade-mode",
+        "--update-mode",
         default="security",
         choices=["security", "full"],
-        help="Set the upgrade mode.\n"
+        help="Set the update mode.\n"
         "Options:\n"
-        "* security: upgrade only security patches (GLSA)\n"
-        "* full: do a full @world upgrade\n"
+        "* security: update only security patches (GLSA)\n"
+        "* full: do a full @world update\n"
         "Default: security\n",
     )
     parser.add_argument(
         "-a",
         "--args",
         nargs="*",
-        help="Additional arguments to be passed when in 'full' upgrade mode.",
+        help="Additional arguments to be passed when in 'full' update mode.",
     )
     parser.add_argument(
         "-c",
         "--config-update-mode",
         default="ignore",
         choices=["ignore", "merge", "interactive", "dispatch"],
-        help="Set the way new configuration are handled after an update.\n"
+        help="Set the way new configurations are handled after an update.\n"
         "Options:\n"
-        "* ignore: do not update configurations files at all.\n"
+        "* ignore: do not update configuration files at all.\n"
         "* merge: automatically merge changes in configuration files.\n"
         "* interactive: launch interactive etc-upgrade.\n"
         "* dispatch: launch interactive dispatch-conf.\n"
@@ -152,6 +152,21 @@ def create_cli():
         help="Set wether to clean orphaned packaged after an update.\n"
         "Default: n\n",
     )
+    parser.add_argument(
+        "-l",
+        "--read-logs",
+        default="n",
+        choices=["y", "n"],
+        help="Set wether to read elogs after an update.\n"
+        "Default: n\n",
+    )
+    parser.add_argument(
+        "-n",
+        "--read-news",
+        default="n",
+        choices=["y", "n"],
+        help="Set wether to read news after an update.\n" "Default: n\n",
+    )
 
     args = parser.parse_args()
     return args
@@ -160,7 +175,7 @@ def create_cli():
 def add_prefixes(args_list):
     """
     Function to add prefixes to a list of arguments passed to
-    --upgrade-mode full.
+    --update-mode full.
 
     Parameters:
     args_list (List[str]): A list of arguments without prefixes,
@@ -173,9 +188,7 @@ def add_prefixes(args_list):
     prefixed_args = []
 
     for arg in args_list:
-        if "=" in arg:
-            prefixed_args.append("--" + arg)
-        elif len(arg) == 1:
+        if len(arg) == 1:
             prefixed_args.append("-" + arg)
         else:
             prefixed_args.append("--" + arg)
@@ -186,20 +199,15 @@ def add_prefixes(args_list):
 def main():
     args = create_cli()
 
-    print(
-        args.upgrade_mode,
-        args.config_update_mode,
-        args.daemon_restart,
-        args.clean,
-    )
-
     run_shell_script(
         f"{current_path}/updater.sh",
-        args.upgrade_mode,
+        args.update_mode,
         " ".join(add_prefixes(args.args)) if args.args else "NOARGS",
         args.config_update_mode,
         args.daemon_restart,
         args.clean,
+        args.read_logs,
+        args.read_news,
     )
 
 
