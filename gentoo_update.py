@@ -16,7 +16,7 @@ def create_logger():
         2. file output
     Both handlers have the same logging level (INFO)
     and share the same formatter.
-    Formatters includes timestamp, log level and the message.
+    Formatters include timestamp, log level and the message.
 
     Returns:
         logging.Logger: Configured logger.
@@ -95,7 +95,7 @@ def run_shell_script(script_path, *args):
 
 def create_cli():
     """
-    Define CLI commands using argparse.
+    Define CLI command flags using argparse.
 
     Returns:
         parser.parse_args: Argparse commands
@@ -128,9 +128,9 @@ def create_cli():
         "--config-update-mode",
         default="ignore",
         choices=["ignore", "merge", "interactive", "dispatch"],
-        help="Set the way new configuration are handled after an update.\n"
+        help="Set the way new configurations are handled after an update.\n"
         "Options:\n"
-        "* ignore: do not update configurations files at all.\n"
+        "* ignore: do not update configuration files at all.\n"
         "* merge: automatically merge changes in configuration files.\n"
         "* interactive: launch interactive etc-upgrade.\n"
         "* dispatch: launch interactive dispatch-conf.\n"
