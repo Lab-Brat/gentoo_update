@@ -108,20 +108,20 @@ def create_cli():
 
     parser.add_argument(
         "-m",
-        "--upgrade-mode",
+        "--update-mode",
         default="security",
         choices=["security", "full"],
-        help="Set the upgrade mode.\n"
+        help="Set the update mode.\n"
         "Options:\n"
-        "* security: upgrade only security patches (GLSA)\n"
-        "* full: do a full @world upgrade\n"
+        "* security: update only security patches (GLSA)\n"
+        "* full: do a full @world update\n"
         "Default: security\n",
     )
     parser.add_argument(
         "-a",
         "--args",
         nargs="*",
-        help="Additional arguments to be passed when in 'full' upgrade mode.",
+        help="Additional arguments to be passed when in 'full' update mode.",
     )
     parser.add_argument(
         "-c",
@@ -157,7 +157,7 @@ def create_cli():
         "--read-logs",
         default="n",
         choices=["y", "n"],
-        help="Set wether to read elogs generated after an update.\n"
+        help="Set wether to read elogs after an update.\n"
         "Default: n\n",
     )
     parser.add_argument(
@@ -175,7 +175,7 @@ def create_cli():
 def add_prefixes(args_list):
     """
     Function to add prefixes to a list of arguments passed to
-    --upgrade-mode full.
+    --update-mode full.
 
     Parameters:
     args_list (List[str]): A list of arguments without prefixes,
@@ -188,9 +188,7 @@ def add_prefixes(args_list):
     prefixed_args = []
 
     for arg in args_list:
-        if "=" in arg:
-            prefixed_args.append("--" + arg)
-        elif len(arg) == 1:
+        if len(arg) == 1:
             prefixed_args.append("-" + arg)
         else:
             prefixed_args.append("--" + arg)
@@ -203,7 +201,7 @@ def main():
 
     run_shell_script(
         f"{current_path}/updater.sh",
-        args.upgrade_mode,
+        args.update_mode,
         " ".join(add_prefixes(args.args)) if args.args else "NOARGS",
         args.config_update_mode,
         args.daemon_restart,
