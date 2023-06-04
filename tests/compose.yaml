@@ -1,15 +1,16 @@
 version: '3'
 services:
   gentoo1:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_update_dockerfiles/main/stage3_initrd.Dockerfile
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_update_dockerfiles/main/stage3_systemd.Dockerfile
     command: sleep infinity
     volumes:
       - ../gentoo_update.py:/root/gentoo_update.py
       - ../updater.sh:/root/updater.sh
 
   gentoo2:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_update_dockerfiles/main/stage3_1w.Dockerfile
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_update_dockerfiles/main/stage3_openrc_0501.Dockerfile
     command: sleep infinity
     volumes:
       - ../gentoo_update.py:/root/gentoo_update.py
       - ../updater.sh:/root/updater.sh
+
