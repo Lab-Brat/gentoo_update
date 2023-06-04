@@ -1,3 +1,4 @@
+dist
+gentoo_update.egg-info
 venv
 __pycache__
-_logs
