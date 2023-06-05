@@ -49,7 +49,7 @@ def create_logger():
     return logger, log_filename
 
 
-def run_shell_script(script_path, *args):
+def run_shell_script(*args):
     """
     Run a shell script and stream standard output
     and standard error to terminal and a log file.
@@ -60,7 +60,7 @@ def run_shell_script(script_path, *args):
                      They need to be handled by the script.
     """
     logger, log_file = create_logger()
-    command = shlex.split(f"sh {script_path} {' '.join(args)}")
+    command = shlex.split(f"updater.sh {' '.join(args)}")
     with subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
     ) as script_stream:
@@ -79,8 +79,7 @@ def run_shell_script(script_path, *args):
 
         if script_stream.returncode != 0:
             error_message = (
-                f"{script_path} "
-                "exited with error code {script_stream.returncode}"
+                "updater.sh exited with error code {script_stream.returncode}"
             )
             if stderr_output:
                 stderr_output_message = "n".join(stderr_output)
@@ -157,8 +156,7 @@ def create_cli():
         "--read-logs",
         default="n",
         choices=["y", "n"],
-        help="Set wether to read elogs after an update.\n"
-        "Default: n\n",
+        help="Set wether to read elogs after an update.\n" "Default: n\n",
     )
     parser.add_argument(
         "-n",
@@ -200,7 +198,6 @@ def main():
     args = create_cli()
 
     run_shell_script(
-        f"{current_path}/updater.sh",
         args.update_mode,
         " ".join(add_prefixes(args.args)) if args.args else "NOARGS",
         args.config_update_mode,
