@@ -12,6 +12,11 @@ class TestGentooUpdate(unittest.TestCase):
         self.assertTrue(mock_mkdir.called)
         self.assertEqual(logger.level, 20)
 
+    def test_add_prefixes(self):
+        input_args = ['a', 'bc']
+        expected_output = ['-a', '--bc']
+        self.assertEqual(add_prefixes(input_args), expected_output)
+
 if __name__ == '__main__':
     unittest.main()
 
