@@ -32,22 +32,5 @@ gentoo-update --update-mode full --read-logs y --read-news y
 ```
 
 The detailed explanation of command flags can be found in `--help`.  
-
-
-#### Testing
-**Note** Testing will be automated in the future, right now it's a bit hackish
-In `gentoo_update/tests` there is a Docker Compose file that 
-can be used for testing. It builds containers based on stage3 
-tarballs and mounts the source code to `/root/gentoo_update_source`.  
-
-Example of a test:
-```bash
-cd tests
-docker compose up gentoo1 -d
-docker exec -it tests-gentoo1-1 /bin/bash
-
-# inside container
-cd /root/gentoo_update_source
-python gentoo_update.python
-```
-
+Information on testing can be found in tests directory 
+[readme](gentoo_update/blob/main/tests/README.md)
