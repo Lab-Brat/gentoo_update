@@ -6,8 +6,8 @@ from gentoo_update import create_logger, add_prefixes, run_shell_script
 class TestGentooUpdate(unittest.TestCase):
     @mock.patch("gentoo_update.os.path.exists", return_value=False)
     @mock.patch("gentoo_update.os.mkdir")
-    def test_create_logger(self, mock_mkdir, mock_exists):
-        logger, log_file = create_logger()
+    def test_create_logger(self, mock_mkdir, _):
+        logger, _ = create_logger()
         self.assertTrue(mock_mkdir.called)
         self.assertEqual(logger.level, 20)
 
@@ -21,7 +21,7 @@ class TestGentooUpdate(unittest.TestCase):
         "gentoo_update.create_logger", return_value=(mock.Mock(), "log_file")
     )
     @mock.patch("gentoo_update.shlex.split")
-    def test_run_shell_script(self, mock_split, mock_logger, mock_popen):
+    def test_run_shell_script(self, mock_split, _, mock_popen):
         # mocking the split, logger and popen calls
         mock_process = mock.Mock()
         mock_process.returncode = 0
