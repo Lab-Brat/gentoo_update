@@ -6,6 +6,7 @@ import argparse
 import subprocess
 from datetime import datetime
 
+__version__ = "0.1.3"
 current_path = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -164,6 +165,12 @@ def create_cli():
         default="n",
         choices=["y", "n"],
         help="Set wether to read news after an update.\n" "Default: n\n",
+    )
+    # add --version argument
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=__version__,
     )
 
     args = parser.parse_args()
