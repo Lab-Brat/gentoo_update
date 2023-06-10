@@ -7,7 +7,9 @@ from datetime import datetime
 
 
 class ShellRunner:
-    def __init__(self):
+    def __init__(self, quiet):
+        self.quiet = True if quiet == "y" else False
+
         self.timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
         self.log_dir = "/var/log/gentoo_update"
         self.log_filename = f"{self.log_dir}/log_{self.timestamp}"
@@ -32,19 +34,20 @@ class ShellRunner:
         logger = logging.getLogger(__name__)
         logger.setLevel(logging.INFO)
 
-        terminal_handler = logging.StreamHandler()
-        terminal_handler.setLevel(logging.INFO)
-        file_handler = logging.FileHandler(self.log_filename)
-        file_handler.setLevel(logging.INFO)
-
         formater = logging.Formatter(
             "[%(asctime)s %(levelname)s] ::: %(message)s",
             datefmt="%d-%b-%y %H:%M:%S",
         )
-        terminal_handler.setFormatter(formater)
-        file_handler.setFormatter(formater)
 
-        logger.addHandler(terminal_handler)
+        if not self.quiet:
+            terminal_handler = logging.StreamHandler()
+            terminal_handler.setLevel(logging.INFO)
+            terminal_handler.setFormatter(formater)
+            logger.addHandler(terminal_handler)
+
+        file_handler = logging.FileHandler(self.log_filename)
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(formater)
         logger.addHandler(file_handler)
 
         return logger
@@ -103,5 +106,7 @@ class ShellRunner:
                     )
                 self.logger.error(error_message)
                 sys.exit(script_stream.returncode)
-        self.logger.info("gentoo_update completed it's tasks!")
-        self.logger.info(f"log file can be found at: {self.log_filename}")
+        final_message = f"gentoo-update is done! Log:file: {self.log_filename}"
+        self.logger.info(final_message)
+        if self.quiet:
+            print(final_message)

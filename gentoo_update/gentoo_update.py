@@ -79,7 +79,13 @@ def create_cli():
         choices=["y", "n"],
         help="Set wether to read news after an update.\n" "Default: n\n",
     )
-    # add --version argument
+    parser.add_argument(
+        "-q",
+        "--quiet",
+        default="n",
+        choices=["y", "n"],
+        help="Do not show logs on the terminal screen.\n" "Default: n\n",
+    )
     parser.add_argument(
         "--version",
         action="version",
@@ -116,7 +122,7 @@ def add_prefixes(args_list):
 
 def main():
     args = create_cli()
-    runner = ShellRunner()
+    runner = ShellRunner(args.quiet)
 
     runner.run_shell_script(
         args.update_mode,
