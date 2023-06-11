@@ -1,2 +1,2 @@
-from .gentoo_update import create_logger, run_shell_script, add_prefixes
-
+from .gentoo_update import add_prefixes, create_cli, main
+from .shell_runner import ShellRunner

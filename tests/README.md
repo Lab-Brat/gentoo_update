@@ -1,5 +1,5 @@
 ### Testing
-**Note** Testing will be automated in the future, right now it's a bit hackish
+**Note** Testing will be automated in the future, right now it's a bit hackish.
 
 #### Unit Test
 Initialize a virtual environment in the parent directory to run unit tests. 
@@ -21,5 +21,5 @@ docker exec -it tests-gentoo1-1 /bin/bash
 
 # inside container
 cd /root/gentoo_update_source
-python gentoo_update.python
+pip install . --break-system-packages
 ```
