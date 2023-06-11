@@ -79,6 +79,24 @@ class ShellRunner:
                 self.logger.error(line)
         return output
 
+    def _exit_with_error_message(self, stream):
+        """
+        Exit runner if updater.sh encounters an error and 
+        print/log that error.
+
+        Args:
+            stream: output stream from subprocess.Popen
+            stderr_output: 
+        """
+        error_message = "updater.sh exited with error code {script_stream.returncode}"
+        if self.stderr_output:
+            stderr_output_message = "n".join(self.stderr_output)
+            error_message += (
+                f"\nStandard error output:\n{stderr_output_message}"
+            )
+        self.logger.error(error_message)
+        sys.exit(stream.returncode)
+
     def run_shell_script(self, *args):
         """
         Run a shell script and stream standard output
@@ -93,19 +111,13 @@ class ShellRunner:
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
-            stdout_output = self._log_stream_output(script_stream, "stdout")
-            stderr_output = self._log_stream_output(script_stream, "stderr")
+            self.stdout_output = self._log_stream_output(script_stream, "stdout")
+            self.stderr_output = self._log_stream_output(script_stream, "stderr")
             script_stream.wait()
 
             if script_stream.returncode != 0:
-                error_message = "updater.sh exited with error code {script_stream.returncode}"
-                if stderr_output:
-                    stderr_output_message = "n".join(stderr_output)
-                    error_message += (
-                        f"\nStandard error output:\n{stderr_output_message}"
-                    )
-                self.logger.error(error_message)
-                sys.exit(script_stream.returncode)
+                self._exit_with_error_message(script_stream)
+
         final_message = f"gentoo-update is done! Log:file: {self.log_filename}"
         self.logger.info(final_message)
         if self.quiet:
