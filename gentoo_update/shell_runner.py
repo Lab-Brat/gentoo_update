@@ -122,3 +122,14 @@ class ShellRunner:
         self.logger.info(final_message)
         if self.quiet:
             print(final_message)
+
+    def __del__(self):
+        """
+        Closed all file handlers after ShellRunner is closed.
+        """
+        if self.logger:
+            for handler in self.logger.handlers:
+                print(handler)
+                handler.close()
+                self.logger.removeHandler(handler)
+
