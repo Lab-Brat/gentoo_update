@@ -81,14 +81,16 @@ class ShellRunner:
 
     def _exit_with_error_message(self, stream):
         """
-        Exit runner if updater.sh encounters an error and 
+        Exit runner if updater.sh encounters an error and
         print/log that error.
 
         Args:
             stream: output stream from subprocess.Popen
-            stderr_output: 
+            stderr_output:
         """
-        error_message = "updater.sh exited with error code {script_stream.returncode}"
+        error_message = (
+            "updater.sh exited with error code {script_stream.returncode}"
+        )
         if self.stderr_output:
             stderr_output_message = "n".join(self.stderr_output)
             error_message += (
@@ -111,8 +113,12 @@ class ShellRunner:
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
-            self.stdout_output = self._log_stream_output(script_stream, "stdout")
-            self.stderr_output = self._log_stream_output(script_stream, "stderr")
+            self.stdout_output = self._log_stream_output(
+                script_stream, "stdout"
+            )
+            self.stderr_output = self._log_stream_output(
+                script_stream, "stderr"
+            )
             script_stream.wait()
 
             if script_stream.returncode != 0:
@@ -132,4 +138,3 @@ class ShellRunner:
                 print(handler)
                 handler.close()
                 self.logger.removeHandler(handler)
-
