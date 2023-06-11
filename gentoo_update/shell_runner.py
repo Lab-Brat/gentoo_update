@@ -135,6 +135,5 @@ class ShellRunner:
         """
         if self.logger:
             for handler in self.logger.handlers:
-                print(handler)
                 handler.close()
                 self.logger.removeHandler(handler)

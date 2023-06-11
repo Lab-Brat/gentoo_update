@@ -90,6 +90,7 @@ def create_cli():
         "--version",
         action="version",
         version=__version__,
+        help="Print updater version.\n",
     )
 
     args = parser.parse_args()
