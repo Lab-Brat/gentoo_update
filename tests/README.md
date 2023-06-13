@@ -1,5 +1,4 @@
 ### Testing
-**Note** Testing will be automated in the future, right now it's a bit hackish.
 
 #### Unit Test
 Initialize a virtual environment in the parent directory to run unit tests. 
@@ -12,14 +11,20 @@ python tests/test_updater.py
 
 #### Docker Test
 `compose.yaml` can be used for testing. It builds containers based on stage3 
-tarballs and mounts the source code to `/root/gentoo_update_source`.  
+tarballs and runs a tests script (`tests/run_tests.sh`) on it.  
 
-Example of a test:
+Before running tests, make sure you have the directory to store logs:
 ```bash
-docker compose up gentoo1 -d
-docker exec -it tests-gentoo1-1 /bin/bash
+mkdir ./tests/logs
+```
+After a test is complete, the update log will be placed there which can be inspected.  
+Test Examples:
+```bash
+# build a systemd base images, install gentoo-update with pip and run full update
+cd tests
+docker compose up gentoo1_source -d
 
-# inside container
-cd /root/gentoo_update_source
-pip install . --break-system-packages
+# build an openrc desktop image, install gentoo-update from GURU repo and run security update
+cd tests
+dcoker compose up gentoo1 -d
 ```
