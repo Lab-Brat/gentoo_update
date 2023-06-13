@@ -15,8 +15,8 @@ class ShellRunner:
         self.log_filename = f"{self.log_dir}/log_{self.timestamp}"
         self.logger = self.initiate_logger()
 
-        self.script_dir = os.path.join(os.path.dirname(__file__), 'scripts')
-        self.script_path = os.path.join(self.script_dir, 'updater.sh')
+        self.script_dir = os.path.join(os.path.dirname(__file__), "scripts")
+        self.script_path = os.path.join(self.script_dir, "updater.sh")
 
     def initiate_logger(self):
         """

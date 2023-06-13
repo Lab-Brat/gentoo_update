@@ -62,7 +62,7 @@ def create_cli():
         "--clean",
         default="n",
         choices=["y", "n"],
-        help="Set wether to clean orphaned packaged after an update.\n"
+        help="Set whether to clean orphaned packaged after an update.\n"
         "Default: n\n",
     )
     parser.add_argument(
@@ -70,14 +70,14 @@ def create_cli():
         "--read-logs",
         default="n",
         choices=["y", "n"],
-        help="Set wether to read elogs after an update.\n" "Default: n\n",
+        help="Set whether to read elogs after an update.\n" "Default: n\n",
     )
     parser.add_argument(
         "-n",
         "--read-news",
         default="n",
         choices=["y", "n"],
-        help="Set wether to read news after an update.\n" "Default: n\n",
+        help="Set whether to read news after an update.\n" "Default: n\n",
     )
     parser.add_argument(
         "-q",

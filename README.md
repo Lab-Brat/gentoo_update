@@ -2,7 +2,7 @@
 
 `gentoo-update` is a tool that automates updates on Gentoo Linux. 
 By default it only installs security updates from [GLSA](https://security.gentoo.org/glsa/), 
-but it can also be used to update `@world`.  
+but it can also be used to update all packages on the system. i.e. `@world`.  
 
 This project 
 [originates](https://wiki.gentoo.org/wiki/Google_Summer_of_Code/2023/Ideas/Automated_Gentoo_system_updater) 
