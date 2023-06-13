@@ -1,4 +1,6 @@
+tests/logs
 dist
+build
 gentoo_update.egg-info
 venv
 __pycache__

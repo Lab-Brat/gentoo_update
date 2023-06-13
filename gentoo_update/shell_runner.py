@@ -15,6 +15,9 @@ class ShellRunner:
         self.log_filename = f"{self.log_dir}/log_{self.timestamp}"
         self.logger = self.initiate_logger()
 
+        self.script_dir = os.path.join(os.path.dirname(__file__), "scripts")
+        self.script_path = os.path.join(self.script_dir, "updater.sh")
+
     def initiate_logger(self):
         """
         Create a logger with two handlers:
@@ -109,7 +112,7 @@ class ShellRunner:
             *args (str): Arguments for the shell script.
                          They need to be handled by the script.
         """
-        command = shlex.split(f"updater.sh {' '.join(args)}")
+        command = shlex.split(f"{self.script_path} {' '.join(args)}")
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
