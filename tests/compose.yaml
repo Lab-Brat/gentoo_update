@@ -1,13 +1,26 @@
 version: '3'
 services:
-  gentoo1:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_openrc.Dockerfile
-    command: sleep infinity
+  gentoo1_source:
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_systemd.Dockerfile
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh sec_update"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
+      - ./logs:/var/log/gentoo_update
+      - ./run_tests.sh:/tmp/run_tests.sh
+
+  gentoo1:
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_openrc.Dockerfile
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh emerge_install && /tmp/run_tests.sh sec_update"]
+    volumes:
+      - ../../gentoo_update/:/root/gentoo_update_source
+      - ./logs:/var/log/gentoo_update
+      - ./run_tests.sh:/tmp/run_tests.sh
 
   gentoo2:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_systemd.Dockerfile
-    command: sleep infinity
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh emerge_install && /tmp/run_tests.sh full_update"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
+      - ./logs:/var/log/gentoo_update
+      - ./run_tests.sh:/tmp/run_tests.sh
+
