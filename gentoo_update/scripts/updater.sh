@@ -108,13 +108,18 @@ function clean_up() {
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	restart="${DAEMON_RESTART}"
-	echo "Checking is any service needs a restart"
-	if [[ "${restart}" == 'y' ]]; then
-		# automatically restart all services
-		needrestart -r a
+
+	if command -v needrestart >/dev/null 2>&1; then
+		echo "Checking is any service needs a restart"
+		if [[ "${restart}" == 'y' ]]; then
+			# automatically restart all services
+			needrestart -r a
+		else
+			# list services that require a restart
+			needrestart -r l
+		fi
 	else
-		# list services that require a restart
-		needrestart -r l
+		echo "app-admin/needrestart is not installed"
 	fi
 }
 
