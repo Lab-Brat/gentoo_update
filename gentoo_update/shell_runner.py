@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 class ShellRunner:
-    def __init__(self, quiet):
+    def __init__(self, quiet: str) -> None:
         self.quiet = True if quiet == "y" else False
 
         self.timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
@@ -18,7 +18,7 @@ class ShellRunner:
         self.script_dir = os.path.join(os.path.dirname(__file__), "scripts")
         self.script_path = os.path.join(self.script_dir, "updater.sh")
 
-    def initiate_logger(self):
+    def initiate_logger(self) -> logging.Logger:
         """
         Create a logger with two handlers:
             1. terminal output
@@ -55,7 +55,9 @@ class ShellRunner:
 
         return logger
 
-    def _log_stream_output(self, stream_obj, type):
+    def _log_stream_output(
+        self, stream_obj: subprocess.Popen, type: str
+    ) -> list:
         """
         Process sterr from the upadte script.
 
@@ -82,7 +84,7 @@ class ShellRunner:
                 self.logger.error(line)
         return output
 
-    def _exit_with_error_message(self, stream):
+    def _exit_with_error_message(self, stream: subprocess.Popen) -> None:
         """
         Exit runner if updater.sh encounters an error and
         print/log that error.
@@ -102,7 +104,7 @@ class ShellRunner:
         self.logger.error(error_message)
         sys.exit(stream.returncode)
 
-    def run_shell_script(self, *args):
+    def run_shell_script(self, *args: str) -> None:
         """
         Run a shell script and stream standard output
         and standard error to terminal and a log file.
@@ -132,7 +134,7 @@ class ShellRunner:
         if self.quiet:
             print(final_message)
 
-    def __del__(self):
+    def __del__(self) -> None:
         """
         Closed all file handlers after ShellRunner is closed.
         """

@@ -6,7 +6,7 @@ __version__ = "0.1.5"
 current_path = os.path.dirname(os.path.realpath(__file__))
 
 
-def create_cli():
+def create_cli() -> argparse.Namespace:
     """
     Define CLI command flags using argparse.
 
@@ -94,10 +94,11 @@ def create_cli():
     )
 
     args = parser.parse_args()
+    print(type(args))
     return args
 
 
-def add_prefixes(args_list):
+def add_prefixes(args_list: list[str]) -> list[str]:
     """
     Function to add prefixes to a list of arguments passed to
     --update-mode full.
@@ -121,7 +122,7 @@ def add_prefixes(args_list):
     return prefixed_args
 
 
-def main():
+def main() -> None:
     args = create_cli()
     runner = ShellRunner(args.quiet)
 
