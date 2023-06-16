@@ -94,7 +94,6 @@ def create_cli() -> argparse.Namespace:
     )
 
     args = parser.parse_args()
-    print(type(args))
     return args
 
 
