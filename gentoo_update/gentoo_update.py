@@ -1,6 +1,7 @@
 import os
 import argparse
 from .shell_runner import ShellRunner
+from typing import List
 
 __version__ = "0.1.5"
 current_path = os.path.dirname(os.path.realpath(__file__))
@@ -97,7 +98,7 @@ def create_cli() -> argparse.Namespace:
     return args
 
 
-def add_prefixes(args_list: list[str]) -> list[str]:
+def add_prefixes(args_list: List[str]) -> List[str]:
     """
     Function to add prefixes to a list of arguments passed to
     --update-mode full.

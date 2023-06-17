@@ -5,6 +5,7 @@ import logging
 import subprocess
 from configparser import ConfigParser
 from datetime import datetime
+from typing import Tuple, List
 
 
 class ShellRunner:
@@ -32,7 +33,7 @@ class ShellRunner:
             config.read_string("[DEFAULT]\n" + config_string.read())
         return config
 
-    def initiate_log_directory(self) -> tuple(str, list[str]):
+    def initiate_log_directory(self) -> Tuple[str, List[str]]:
         """
         Create log directory if it does not exist.
         If PORTAGE_LOGDIR is not set, use the default directory.
@@ -102,7 +103,7 @@ class ShellRunner:
 
     def _log_stream_output(
         self, stream_obj: subprocess.Popen, type: str
-    ) -> list:
+    ) -> List[str]:
         """
         Process sterr from the upadte script.
 
