@@ -32,7 +32,7 @@ class ShellRunner:
             config.read_string("[DEFAULT]\n" + config_string.read())
         return config
 
-    def initiate_log_directory(self):
+    def initiate_log_directory(self) -> tuple(str, list[str]):
         """
         Create log directory if it does not exist.
         If PORTAGE_LOGDIR is not set, use the default directory.
