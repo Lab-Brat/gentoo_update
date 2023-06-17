@@ -95,11 +95,16 @@ function clean_up() {
 		echo "Cleaning packages that are not part of the tree..."
 		emerge --depclean
 
-		echo "Checking reverse dependencies..."
-		revdep-rebuild
+		if command -v revdep-rebuild >/dev/null 2>&1; then
+			echo "Checking reverse dependencies..."
+			revdep-rebuild
 
-		echo "Clean source code..."
-		eclean --deep distfiles
+			echo "Clean source code..."
+			eclean --deep distfiles
+		else
+			echo "app-portage/gentoolkit is not installed"
+		fi
+
 	else
 		echo "Clean up is not enabled."
 	fi
