@@ -41,7 +41,11 @@ class ShellRunner:
             str: Log directory path.
             List[str]: List of messages to be logged.
         """
-        log_dir = self.make_conf["DEFAULT"]["PORTAGE_LOGDIR"].replace('"', "")
+        try:
+            log_dir = self.make_conf["DEFAULT"]["PORTAGE_LOGDIR"]
+        except KeyError:
+            log_dir = ""
+
         log_dir_messages = []
         if log_dir == "":
             log_dir = "/var/log/portage/gentoo-update"
@@ -49,6 +53,7 @@ class ShellRunner:
                 f"PORTAGE_LOGDIR not set, using default: {log_dir}"
             )
         else:
+            log_dir = log_dir.replace('"', "")
             log_dir = f"{log_dir}/gentoo-update"
             log_dir_messages.append(f"PORTAGE_LOGDIR set, using: {log_dir}")
 
