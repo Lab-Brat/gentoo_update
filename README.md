@@ -11,20 +11,23 @@ from 2023 Google Summer of Code.
 
 #### Usage
 `gentoo-update` is in [GURU](https://wiki.gentoo.org/wiki/Project:GURU) 
-overlay, and can be installed using emerge:
-```bash
-emerge --ask app-admin/gentoo_update
-```
-Because the project is in early stage of development it's not considered stable 
-and is masked by `~amd64`. To unmask it run:
+overlay, and can be installed using `emerge`. But because the project is 
+in early stage of development it's not considered stable and is masked by 
+`~amd64`. To unmask and install it, run:
 ```bash
 echo 'app-admin/gentoo_update ~amd64' >> /etc/portage/package.accept_keywords/gentoo_update
+emerge --ask app-admin/gentoo_update
 ```
 
 Alternatively, updater can be installed with pip:
 ```
 pip install gentoo_update --break-system-packages
 ```
+
+The updater will not display build logs by default, so it's recommended to 
+define `PORTAGE_LOGDIR` in `/etc/portage/make.conf`. If this option is defined, 
+updater will use it to store it's own logs as well.  
+
 
 Here are some usage examples:
 * Basic security update
