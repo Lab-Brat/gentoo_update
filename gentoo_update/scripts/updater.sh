@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # ---------------------- VARIABLES ----------------------- #
 UPDATE_MODE="${1}"
