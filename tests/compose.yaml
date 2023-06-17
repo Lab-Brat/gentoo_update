@@ -8,6 +8,14 @@ services:
       - ./logs:/var/log/gentoo_update
       - ./run_tests.sh:/tmp/run_tests.sh
 
+  gentoo2_source:
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_systemd.Dockerfile
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh full_update_all_options"]
+    volumes:
+      - ../../gentoo_update/:/root/gentoo_update_source
+      - ./logs:/var/log/gentoo_update
+      - ./run_tests.sh:/tmp/run_tests.sh
+
   gentoo1:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_openrc.Dockerfile
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh emerge_install && /tmp/run_tests.sh sec_update"]

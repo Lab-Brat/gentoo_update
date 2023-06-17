@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 # ---------------------- VARIABLES ----------------------- #
 UPDATE_MODE="${1}"
@@ -95,11 +95,16 @@ function clean_up() {
 		echo "Cleaning packages that are not part of the tree..."
 		emerge --depclean
 
-		echo "Checking reverse dependencies..."
-		revdep-rebuild
+		if command -v revdep-rebuild >/dev/null 2>&1; then
+			echo "Checking reverse dependencies..."
+			revdep-rebuild
 
-		echo "Clean source code..."
-		eclean --deep distfiles
+			echo "Clean source code..."
+			eclean --deep distfiles
+		else
+			echo "app-portage/gentoolkit is not installed"
+		fi
+
 	else
 		echo "Clean up is not enabled."
 	fi
@@ -108,13 +113,18 @@ function clean_up() {
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
 	restart="${DAEMON_RESTART}"
-	echo "Checking is any service needs a restart"
-	if [[ "${restart}" == 'y' ]]; then
-		# automatically restart all services
-		needrestart -r a
+
+	if command -v needrestart >/dev/null 2>&1; then
+		echo "Checking is any service needs a restart"
+		if [[ "${restart}" == 'y' ]]; then
+			# automatically restart all services
+			needrestart -r a
+		else
+			# list services that require a restart
+			needrestart -r l
+		fi
 	else
-		# list services that require a restart
-		needrestart -r l
+		echo "app-admin/needrestart is not installed"
 	fi
 }
 
