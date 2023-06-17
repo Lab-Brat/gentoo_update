@@ -20,7 +20,17 @@ sec_update() {
 
 full_update() {
 	# Run the gentoo-update in full update mode
-	gentoo-update -m full
+	gentoo-update --update-mode full
+}
+
+full_update_all_options() {
+	# Run the gentoo-update in full update mode and all options enabled
+	gentoo-update --update-mode full \
+		--config-update-mode merge \
+		--daemon-restart y \
+		--clean y \
+		--read-logs y \
+		--read-news y
 }
 
 "$@"
