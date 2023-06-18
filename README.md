@@ -11,11 +11,8 @@ from 2023 Google Summer of Code.
 
 #### Usage
 `gentoo-update` is in [GURU](https://wiki.gentoo.org/wiki/Project:GURU) 
-overlay, and can be installed using `emerge`. But because the project is 
-in early stage of development it's not considered stable and is masked by 
-`~amd64`. To unmask and install it, run:
+overlay, and can be installed using `emerge`:
 ```bash
-echo 'app-admin/gentoo_update ~amd64' >> /etc/portage/package.accept_keywords/gentoo_update
 emerge --ask app-admin/gentoo_update
 ```
 
