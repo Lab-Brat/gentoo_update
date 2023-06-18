@@ -26,5 +26,5 @@ docker compose up gentoo1_source -d
 
 # build an openrc desktop image, install gentoo-update from GURU repo and run security update
 cd tests
-dcoker compose up gentoo1 -d
+docker compose up gentoo1 -d
 ```
