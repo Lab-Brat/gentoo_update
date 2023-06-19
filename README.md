@@ -21,10 +21,8 @@ Alternatively, updater can be installed with pip:
 pip install gentoo_update --break-system-packages
 ```
 
-The updater will not display build logs by default, so it's recommended to 
-define `PORTAGE_LOGDIR` in `/etc/portage/make.conf`. If this option is defined, 
-updater will use it to store it's own logs as well.  
-
+The updater creates a subdirectory in Portage's default `PORTAGE_LOGDIR` located at `/var/log/portage/gentoo-update`. 
+However, if this variable is set to a different value in `make.conf`, it will use the new location instead of the default.  
 
 Here are some usage examples:
 * Basic security update
