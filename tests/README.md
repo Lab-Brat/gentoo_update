@@ -1,8 +1,12 @@
 ### Testing
 
 #### Unit Test
-There is a simple unit test that can be run via:
+There is a simple unit test that can be run by installing 
+`gentoo_update` in a virtual environment and running:
 ```bash
+python -m venv venv
+source venv/bin/activate
+python -m pip install .
 python tests/test_updater.py
 ```
 

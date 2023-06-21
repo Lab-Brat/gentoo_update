@@ -113,7 +113,6 @@ def add_prefixes(args: str) -> str:
         example: "--quiet-build=n --color=y --keep-going"
     """
     args = args.split(" ")
-    print(args)
     prefixed_args = []
 
     for arg in args:
@@ -121,7 +120,6 @@ def add_prefixes(args: str) -> str:
             prefixed_args.append("-" + arg)
         else:
             prefixed_args.append("--" + arg)
-    print(prefixed_args)
     return " ".join(prefixed_args)
 
 
