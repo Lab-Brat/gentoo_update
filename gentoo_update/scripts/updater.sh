@@ -35,15 +35,21 @@ function update_security() {
 	fi
 }
 
-function update_full() {
-	# Do a full system update
-	IFS=' ' read -r -a update_flags <<<"${UPDATE_FLAGS}"
+function emerge_full() {
+	# run emerge with custom flags
+	local update_flags=("$@")
+	emerge --verbose --quiet-build y \
+		--update --newuse --deep "${update_flags[@]}" @world
+}
 
+function update_full() {
+	read -r -a update_flags <<<"${UPDATE_FLAGS}"
+
+	# Do a full system update
 	echo "Running Update: Check Pretend First"
 	if emerge --pretend --update --newuse --deep @world; then
 		echo "emerge pretend was successful, updating..."
-		emerge --verbose --quiet-build y \
-			--update --newuse --deep "${update_flags[@]}" @world
+		emerge_full "${update_flags[@]}"
 	else
 		echo "emerge pretend has failed, not updating"
 	fi
