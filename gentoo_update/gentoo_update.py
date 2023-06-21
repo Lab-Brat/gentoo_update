@@ -3,7 +3,7 @@ import argparse
 from .shell_runner import ShellRunner
 from typing import List
 
-__version__ = "0.1.5"
+__version__ = "0.1.6"
 current_path = os.path.dirname(os.path.realpath(__file__))
 
 
