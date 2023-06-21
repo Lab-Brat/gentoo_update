@@ -34,7 +34,9 @@ def create_cli() -> argparse.Namespace:
         "-a",
         "--args",
         default="",
-        help="Additional arguments to be passed when in 'full' update mode.",
+        help="Additional arguments to be passed when in 'full' update mode.\n"
+        "Example:\n"
+        "--args 'quiet-build=n color=y keep-going'",
     )
     parser.add_argument(
         "-c",
@@ -103,12 +105,12 @@ def add_prefixes(args: str) -> str:
     --update-mode full.
 
     Parameters:
-    args_list (List[str]): A list of arguments without prefixes,
-        example: v quiet-build=y
+    args_list (str): A string of space separated arguments without prefixes 
+        example: "quiet-build=n color=y keep-going"
 
     Returns:
-    List[str]: A new list of arguments with added prefixes,
-        example: -v --quiet-build=y
+    str: A new string of space separated arguments with added prefixes,
+        example: "--quiet-build=n --color=y --keep-going"
     """
     args = args.split(" ")
     print(args)
