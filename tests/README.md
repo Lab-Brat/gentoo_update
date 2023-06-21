@@ -1,11 +1,8 @@
 ### Testing
 
 #### Unit Test
-Initialize a virtual environment in the parent directory to run unit tests. 
-For example:
-```
-python -m venv venv
-source venv/bin/activate
+There is a simple unit test that can be run via:
+```bash
 python tests/test_updater.py
 ```
 
@@ -14,17 +11,19 @@ python tests/test_updater.py
 tarballs and runs a tests script (`tests/run_tests.sh`) on it.  
 
 Before running tests, make sure you have the directory to store logs:
+**NOTE** All commands below are run from `tests` directory
 ```bash
-mkdir ./tests/logs
+mkdir logs
 ```
 After a test is complete, the update log will be placed there which can be inspected.  
 Test Examples:
 ```bash
-# build a systemd base images, install gentoo-update with pip and run full update
-cd tests
-docker compose up gentoo1_source -d
+# build a systemd base image, install gentoo_update with pip and run full update
+docker compose up gentoo1_source
 
-# build an openrc desktop image, install gentoo-update from GURU repo and run security update
-cd tests
-docker compose up gentoo1 -d
+# build a systemd base image, install gentoo_update with pip and run full update with all available flags
+docker compose up gentoo2_source
+
+# build an openrc desktop image, install gentoo_update from GURU repo and run security update
+docker compose up gentoo1
 ```
