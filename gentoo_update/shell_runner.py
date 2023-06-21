@@ -1,6 +1,5 @@
 import os
 import sys
-import shlex
 import logging
 import subprocess
 from configparser import ConfigParser
@@ -160,7 +159,7 @@ class ShellRunner:
             *args (str): Arguments for the shell script.
                          They need to be handled by the script.
         """
-        command = shlex.split(f"{self.script_path} {' '.join(args)}")
+        command = [self.script_path] + list(args)
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:

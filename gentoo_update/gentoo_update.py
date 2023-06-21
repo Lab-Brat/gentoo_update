@@ -1,7 +1,6 @@
 import os
 import argparse
 from .shell_runner import ShellRunner
-from typing import List
 
 __version__ = "0.1.6"
 current_path = os.path.dirname(os.path.realpath(__file__))
@@ -34,7 +33,7 @@ def create_cli() -> argparse.Namespace:
     parser.add_argument(
         "-a",
         "--args",
-        nargs="*",
+        default="",
         help="Additional arguments to be passed when in 'full' update mode.",
     )
     parser.add_argument(
@@ -98,7 +97,7 @@ def create_cli() -> argparse.Namespace:
     return args
 
 
-def add_prefixes(args_list: List[str]) -> List[str]:
+def add_prefixes(args: str) -> str:
     """
     Function to add prefixes to a list of arguments passed to
     --update-mode full.
@@ -111,15 +110,17 @@ def add_prefixes(args_list: List[str]) -> List[str]:
     List[str]: A new list of arguments with added prefixes,
         example: -v --quiet-build=y
     """
+    args = args.split(" ")
+    print(args)
     prefixed_args = []
 
-    for arg in args_list:
+    for arg in args:
         if len(arg) == 1:
             prefixed_args.append("-" + arg)
         else:
             prefixed_args.append("--" + arg)
-
-    return prefixed_args
+    print(prefixed_args)
+    return " ".join(prefixed_args)
 
 
 def main() -> None:
@@ -128,7 +129,7 @@ def main() -> None:
 
     runner.run_shell_script(
         args.update_mode,
-        " ".join(add_prefixes(args.args)) if args.args else "NOARGS",
+        add_prefixes(args.args) if args.args else "NOARGS",
         args.config_update_mode,
         args.daemon_restart,
         args.clean,
