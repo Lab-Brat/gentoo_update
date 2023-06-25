@@ -105,7 +105,7 @@ def add_prefixes(args: str) -> str:
     --update-mode full.
 
     Parameters:
-    args_list (str): A string of space separated arguments without prefixes 
+    args_list (str): A string of space separated arguments without prefixes
         example: "quiet-build=n color=y keep-going"
 
     Returns:
