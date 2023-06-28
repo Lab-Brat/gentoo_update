@@ -81,17 +81,13 @@ function config_update() {
 
     # Perform the update based on the update mode
     if [[ "${update_mode}" == "merge" ]]; then
-        etc-update --automode -5
-    elif [[ "${update_mode}" == "interactive" ]]; then
-        etc-update
-    elif [[ "${update_mode}" == "dispatch" ]]; then
-        dispatch-conf
+        etc-update --automode -3
     elif [[ "${update_mode}" == "ignore" ]]; then
         echo "Ignoring configuration update for now..."
         echo "Please UPDATE IT MANUALLY LATER"
     else
         echo "Invalid update mode: ${update_mode}" >&2
-        echo "Please set UPDATE_MODE to 'merge', 'interactive', 'dispatch' or 'ignore'." >&2
+        echo "Please set UPDATE_MODE to 'merge' or 'ignore'." >&2
     fi
 }
 

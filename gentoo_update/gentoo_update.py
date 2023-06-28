@@ -42,13 +42,11 @@ def create_cli() -> argparse.Namespace:
         "-c",
         "--config-update-mode",
         default="ignore",
-        choices=["ignore", "merge", "interactive", "dispatch"],
+        choices=["ignore", "merge"],
         help="Set the way new configurations are handled after an update.\n"
         "Options:\n"
         "* ignore: do not update configuration files at all.\n"
         "* merge: automatically merge changes in configuration files.\n"
-        "* interactive: launch interactive etc-upgrade.\n"
-        "* dispatch: launch interactive dispatch-conf.\n"
         "Default: ignore\n",
     )
     parser.add_argument(
