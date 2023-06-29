@@ -81,7 +81,7 @@ function config_update() {
 
     # Perform the update based on the update mode
     if [[ "${update_mode}" == "merge" ]]; then
-        etc-update --automode -3
+        etc-update --automode -5
     elif [[ "${update_mode}" == "ignore" ]]; then
         echo "Ignoring configuration update for now..."
         echo "Please UPDATE IT MANUALLY LATER"
