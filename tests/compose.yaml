@@ -7,7 +7,7 @@ services:
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh sec_update"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
   gentoo_update_world_source:
@@ -15,7 +15,7 @@ services:
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh full_update_all_options"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
   # container to test gentoo_update by installing it from PyPI using pip
@@ -23,7 +23,7 @@ services:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh pypi_install && /tmp/run_tests.sh full_update_all_options"]
     volumes:
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
   # container to test gentoo_update by installing it from GURU using emerge
@@ -32,6 +32,6 @@ services:
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh emerge_install && /tmp/run_tests.sh full_update"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
