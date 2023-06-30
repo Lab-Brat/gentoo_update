@@ -63,7 +63,9 @@ class Parser:
         print("Section parsing finished!")
 
     def split_emerge_pretend_section(self, section_content: List[str]):
-        pretend_successful = "emerge pretend was successful, updating..." in section_content
+        pretend_successful = (
+            "emerge pretend was successful, updating..." in section_content
+        )
         if pretend_successful:
             print("Pretend completed without errors")
         else:

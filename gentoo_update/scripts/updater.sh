@@ -48,15 +48,15 @@ function emerge_pretend() {
     update_mode="${UPDATE_MODE}"
 
     if [[ "${update_mode}" == 'full' ]]; then
-      echo "Running emerge with --pretend"
-      if emerge --pretend --update --newuse --deep @world; then
-          echo "emerge pretend was successful, updating..."
-      else
-          echo "emerge pretend has failed, exiting" 
-          exit 1
-      fi
+        echo "Running emerge with --pretend"
+        if emerge --pretend --update --newuse --deep @world; then
+            echo "emerge pretend was successful, updating..."
+        else
+            echo "emerge pretend has failed, exiting"
+            exit 1
+        fi
     else
-      echo "Security update dont have pretend mode, skipping..."
+        echo "Security update dont have pretend mode, skipping..."
     fi
 }
 
