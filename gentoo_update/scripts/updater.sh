@@ -43,30 +43,36 @@ function emerge_full() {
     eval "emerge --verbose --quiet-build=y --update --newuse --deep ${update_flags} @world"
 }
 
-function update_full() {
-    update_flags="${UPDATE_FLAGS}"
+function emerge_pretend() {
+    # run emerge in pretend mode to detect some issues before updating
+    update_mode="${UPDATE_MODE}"
 
-    # Do a full system update
-    echo "Running Update: Check Pretend First"
-    if emerge --pretend --update --newuse --deep @world; then
-        echo "emerge pretend was successful, updating..."
-        emerge_full "${update_flags}"
+    if [[ "${update_mode}" == 'full' ]]; then
+      echo "Running emerge with --pretend"
+      if emerge --pretend --update --newuse --deep @world; then
+          echo "emerge pretend was successful, updating..."
+      else
+          echo "emerge pretend has failed, exiting" 
+          exit 1
+      fi
     else
-        echo "emerge pretend has failed, not updating"
+      echo "Security update dont have pretend mode, skipping..."
     fi
 }
 
 function update() {
     update_mode="${UPDATE_MODE}"
+    update_flags="${UPDATE_FLAGS}"
+
     # Do security updates or full system updates
     if [[ "${update_mode}" == 'security' ]]; then
-        echo -e "installing security updates only\n"
+        echo -e "updating GLSA\n"
         update_security
         echo ""
 
     elif [[ "${update_mode}" == 'full' ]]; then
         echo -e "updating @world\n"
-        update_full
+        emerge_full "${update_flags}"
         echo ""
 
     else
@@ -183,6 +189,10 @@ function get_news() {
 # --------------------- RUN_PROGRAM ---------------------- #
 echo -e "{{ SYNC PORTAGE TREE }}\n"
 sync_tree
+
+echo -e "{{ PRETEND EMERGE }}"
+emerge_pretend
+echo ""
 
 echo -e "{{ UPDATE SYSTEM }}\n"
 update
