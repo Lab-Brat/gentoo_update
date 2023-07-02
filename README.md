@@ -6,7 +6,9 @@ but it can also be used to update all packages on the system. i.e. `@world`.
 
 This project 
 [originates](https://wiki.gentoo.org/wiki/Google_Summer_of_Code/2023/Ideas/Automated_Gentoo_system_updater) 
-from 2023 Google Summer of Code.
+from 2023 Google Summer of Code, more about it can be found in the 
+[blog post](https://labbrat.net/blog/gsoc2023/gentoo_update_intro/) and 
+[Gentoo Forums](https://forums.gentoo.org/viewtopic-p-8793827.html#8793827).  
 
 
 #### Usage
@@ -16,9 +18,11 @@ overlay, and can be installed using `emerge`:
 emerge --ask app-admin/gentoo_update
 ```
 
-Alternatively, updater can be installed with pip:
-```
-pip install gentoo_update --break-system-packages
+Alternatively, it can be installed with pip in a virtual environment:
+```bash
+python -m venv gentoo_update
+source gentoo_update/bin/activate
+python -m pip install gentoo_update
 ```
 
 The updater creates a subdirectory in Portage's default `PORTAGE_LOGDIR` located at `/var/log/portage/gentoo-update`. 
