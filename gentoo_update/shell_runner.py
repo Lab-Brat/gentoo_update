@@ -149,17 +149,15 @@ class ShellRunner:
         self.logger.error(error_message)
         sys.exit(stream.returncode)
 
-    def run_shell_script(self, *args: str) -> None:
+    def run_shell_function(self, command: List) -> None:
         """
         Run a shell script and stream standard output
         and standard error to terminal and a log file.
 
         Args:
-            script_path (str): Shell script path.
-            *args (str): Arguments for the shell script.
-                         They need to be handled by the script.
+            command (List(str)): A call to specific function in
+                                 update.sh with all parameters.
         """
-        command = [self.script_path] + list(args)
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
@@ -173,6 +171,28 @@ class ShellRunner:
 
             if script_stream.returncode != 0:
                 self._exit_with_error_message(script_stream)
+
+    def run_shell_script(self, *args: str) -> None:
+        """
+        Run every function in update.sh one by one.
+
+        Args:
+            *args (str): Arguments for the shell script.
+                         They need to be handled by the script.
+        """
+        script_stages = [
+            "sync_tree",
+            "emerge_pretend",
+            "update",
+            "config_update",
+            "clean_up",
+            "check_restart",
+            "get_logs",
+            "get_news",
+        ]
+        for stage in script_stages:
+            command = [self.script_path] + [stage] + list(args)
+            self.run_shell_function(command)
 
         final_message = f"gentoo-update is done! Log:file: {self.log_filename}"
         self.logger.info(final_message)

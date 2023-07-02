@@ -85,7 +85,7 @@ class Parser:
         Function to parse the "update system" section of the log data.
 
         Parameters:
-            section_content (List[str]): A list of strings that contains 
+            section_content (List[str]): A list of strings that contains
                     the content of the "update system" section.
 
         Returns:
