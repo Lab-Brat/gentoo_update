@@ -69,12 +69,14 @@ function update() {
         echo -e "updating GLSA\n"
         update_security
         echo ""
+        echo "glsa update was successful"
+        echo ""
 
     elif [[ "${update_mode}" == 'full' ]]; then
         echo -e "updating @world\n"
         emerge_full "${update_flags}"
         echo ""
-        echo "update was successful"
+        echo "full update was successful"
         echo ""
 
     else
