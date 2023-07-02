@@ -87,6 +87,13 @@ def create_cli() -> argparse.Namespace:
         help="Do not show logs on the terminal screen.\n" "Default: n\n",
     )
     parser.add_argument(
+        "-r",
+        "--report",
+        default="n",
+        choices=["y", "n"],
+        help="Show report or the last update log.\n",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=__version__,
@@ -123,7 +130,8 @@ def add_prefixes(args: str) -> str:
 
 def main() -> None:
     args = create_cli()
-    runner = ShellRunner(args.quiet)
+
+    runner = ShellRunner(args.quiet, args.report)
 
     runner.run_shell_script(
         args.update_mode,
