@@ -106,35 +106,35 @@ class Parser:
             update_status = False
             # function to parse emerge update errors
             # update_details = parse_update_error_details(section_content, type)
-            update_datails = {"updated_packages": [], "errors": []}
+            update_details = {"updated_packages": [], "errors": []}
             return {
                 "update_status": update_status,
                 "update_details": update_details,
             }
 
-    def compose_report(self) -> Dict:
+    def extract_info_for_report(self) -> Dict:
         """
-        Compose a report by parsing the sections of the log data.
+        Extract information about the update from the log file.
 
         Returns:
             Dict: A dictionary that contains the
                   parsed data from all sections.
         """
-        report = {}
+        info = {}
         for section in self.log_data.keys():
             section_content = self.log_data[section]
             if section == "pretend_emerge":
-                report[section] = self.parse_emerge_pretend_section(
+                info[section] = self.parse_emerge_pretend_section(
                     section_content
                 )
             elif section == "update_system":
-                report[section] = self.parse_update_system_section(
+                info[section] = self.parse_update_system_section(
                     section_content
                 )
 
-        return report
+        return info
 
 
 if __name__ == "__main__":
-    report = Parser("./log_for_tests").compose_report()
+    report = Parser("./log_for_tests").extract_info_for_report()
     pprint.pprint(report)
