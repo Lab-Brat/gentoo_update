@@ -74,6 +74,8 @@ function update() {
         echo -e "updating @world\n"
         emerge_full "${update_flags}"
         echo ""
+        echo "update was successful"
+        echo ""
 
     else
         echo "Invalid update mode, exiting...."
