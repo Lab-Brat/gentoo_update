@@ -1,34 +1,37 @@
 version: '3'
 services:
-  gentoo1_source:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_systemd.Dockerfile
+  # 2 containers to test gentoo_update by installing it from source using pip
+  # these are used in the development process
+  gentoo_update_glsa_source:
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/old_openrc_desktop.Dockerfile
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh sec_update"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
-  gentoo2_source:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_systemd.Dockerfile
+  gentoo_update_world_source:
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh full_update_all_options"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
-  gentoo1:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_openrc.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh emerge_install && /tmp/run_tests.sh sec_update"]
+  # container to test gentoo_update by installing it from PyPI using pip
+  gentoo_update_world_pypi:
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pypi_install && /tmp/run_tests.sh full_update_all_options"]
     volumes:
-      - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
-  gentoo2:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/stage3_systemd.Dockerfile
+  # container to test gentoo_update by installing it from GURU using emerge
+  gentoo_update_world_guru:
+    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh emerge_install && /tmp/run_tests.sh full_update"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/gentoo_update
+      - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 

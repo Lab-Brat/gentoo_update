@@ -2,18 +2,25 @@ import os
 import sys
 import logging
 import subprocess
+import pprint
 from configparser import ConfigParser
 from datetime import datetime
 from typing import Tuple, List
+from .parser import Parser
 
 
 class ShellRunner:
-    def __init__(self, quiet: str) -> None:
+    def __init__(self, quiet: str, report: str) -> None:
         self.quiet = True if quiet == "y" else False
 
         self.timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
         self.make_conf = self.make_conf_reader()
         self.log_dir, self.log_dir_messages = self.initiate_log_directory()
+
+        self.report = True if report == "y" else False
+        if self.report:
+            self.show_last_report()
+
         self.log_filename = f"{self.log_dir}/log_{self.timestamp}"
         self.logger = self.initiate_logger()
 
@@ -62,6 +69,17 @@ class ShellRunner:
             log_dir_messages.append(f"Created log directory: {log_dir}")
 
         return log_dir, log_dir_messages
+
+    def show_last_report(self):
+        """
+        Show report for the last log located in $PORTAGE_LOGDIR.
+        """
+        files = os.listdir(self.log_dir)
+        paths = [os.path.join(self.log_dir, basename) for basename in files]
+        last_log = max(paths, key=os.path.getctime)
+        report = Parser(last_log).extract_info_for_report()
+        pprint.pprint(report)
+        sys.exit(0)
 
     def initiate_logger(self) -> logging.Logger:
         """
@@ -149,17 +167,15 @@ class ShellRunner:
         self.logger.error(error_message)
         sys.exit(stream.returncode)
 
-    def run_shell_script(self, *args: str) -> None:
+    def run_shell_function(self, command: List) -> None:
         """
         Run a shell script and stream standard output
         and standard error to terminal and a log file.
 
         Args:
-            script_path (str): Shell script path.
-            *args (str): Arguments for the shell script.
-                         They need to be handled by the script.
+            command (List(str)): A call to specific function in
+                                 update.sh with all parameters.
         """
-        command = [self.script_path] + list(args)
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
@@ -174,6 +190,28 @@ class ShellRunner:
             if script_stream.returncode != 0:
                 self._exit_with_error_message(script_stream)
 
+    def run_shell_script(self, *args: str) -> None:
+        """
+        Run every function in update.sh one by one.
+
+        Args:
+            *args (str): Arguments for the shell script.
+                         They need to be handled by the script.
+        """
+        script_stages = [
+            "sync_tree",
+            "emerge_pretend",
+            "update",
+            "config_update",
+            "clean_up",
+            "check_restart",
+            "get_logs",
+            "get_news",
+        ]
+        for stage in script_stages:
+            command = [self.script_path] + [stage] + list(args)
+            self.run_shell_function(command)
+
         final_message = f"gentoo-update is done! Log:file: {self.log_filename}"
         self.logger.info(final_message)
         if self.quiet:
@@ -183,7 +221,10 @@ class ShellRunner:
         """
         Closed all file handlers after ShellRunner is closed.
         """
-        if self.logger:
-            for handler in self.logger.handlers:
-                handler.close()
-                self.logger.removeHandler(handler)
+        try:
+            if self.logger:
+                for handler in self.logger.handlers:
+                    handler.close()
+                    self.logger.removeHandler(handler)
+        except AttributeError:
+            pass

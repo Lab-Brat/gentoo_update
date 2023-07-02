@@ -1,8 +1,8 @@
 import os
 import argparse
 from .shell_runner import ShellRunner
+from ._version import __version__
 
-__version__ = "0.1.6"
 current_path = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -42,13 +42,11 @@ def create_cli() -> argparse.Namespace:
         "-c",
         "--config-update-mode",
         default="ignore",
-        choices=["ignore", "merge", "interactive", "dispatch"],
+        choices=["ignore", "merge"],
         help="Set the way new configurations are handled after an update.\n"
         "Options:\n"
         "* ignore: do not update configuration files at all.\n"
         "* merge: automatically merge changes in configuration files.\n"
-        "* interactive: launch interactive etc-upgrade.\n"
-        "* dispatch: launch interactive dispatch-conf.\n"
         "Default: ignore\n",
     )
     parser.add_argument(
@@ -89,6 +87,13 @@ def create_cli() -> argparse.Namespace:
         help="Do not show logs on the terminal screen.\n" "Default: n\n",
     )
     parser.add_argument(
+        "-r",
+        "--report",
+        default="n",
+        choices=["y", "n"],
+        help="Show report or the last update log.\n",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=__version__,
@@ -105,7 +110,7 @@ def add_prefixes(args: str) -> str:
     --update-mode full.
 
     Parameters:
-    args_list (str): A string of space separated arguments without prefixes 
+    args_list (str): A string of space separated arguments without prefixes
         example: "quiet-build=n color=y keep-going"
 
     Returns:
@@ -125,7 +130,8 @@ def add_prefixes(args: str) -> str:
 
 def main() -> None:
     args = create_cli()
-    runner = ShellRunner(args.quiet)
+
+    runner = ShellRunner(args.quiet, args.report)
 
     runner.run_shell_script(
         args.update_mode,

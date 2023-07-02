@@ -19,15 +19,15 @@ Before running tests, make sure you have the directory to store logs:
 ```bash
 mkdir logs
 ```
+
 After a test is complete, the update log will be placed there which can be inspected.  
 Test Examples:
 ```bash
-# build a systemd base image, install gentoo_update with pip and run full update
-docker compose up gentoo1_source
+# build an openrc base image 
+# install gentoo_update with pip from source and run full update
+docker compose up gentoo_update_world_source
 
-# build a systemd base image, install gentoo_update with pip and run full update with all available flags
-docker compose up gentoo2_source
-
-# build an openrc desktop image, install gentoo_update from GURU repo and run security update
-docker compose up gentoo1
+# build an old (08-05-2023) openrc desktop image,
+# install gentoo_update from source and install only security updates
+docker compose up gentoo_update_glsa_source
 ```

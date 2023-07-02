@@ -3,19 +3,22 @@
 set -euo pipefail
 
 # ---------------------- VARIABLES ----------------------- #
-UPDATE_MODE="${1}"
-UPDATE_FLAGS="${2}"
+FUNCTION="${1}"
+UPDATE_MODE="${2}"
+UPDATE_FLAGS="${3}"
 if [[ "${UPDATE_FLAGS}" == "NOARGS" ]]; then
     UPDATE_FLAGS=""
 fi
-CONFIG_UPDATE_MODE="${3}"
-DAEMON_RESTART="${4}"
-CLEAN="${5}"
-READ_ELOGS="${6}"
-READ_NEWS="${7}"
+CONFIG_UPDATE_MODE="${4}"
+DAEMON_RESTART="${5}"
+CLEAN="${6}"
+READ_ELOGS="${7}"
+READ_NEWS="${8}"
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
+    echo -e "{{ SYNC PORTAGE TREE }}\n"
+
     # Update main Portage tree
     echo "Syncing Portage Tree"
     emerge --sync
@@ -23,6 +26,8 @@ function sync_tree() {
 
 # -------------------- UPDATE_SYSTEM --------------------- #
 function update_security() {
+    echo -e "{{ UPDATE SYSTEM }}\n"
+
     # Check for GLSAs and install updates if necessary
     glsa=$(glsa-check --list affected)
 
@@ -43,30 +48,44 @@ function emerge_full() {
     eval "emerge --verbose --quiet-build=y --update --newuse --deep ${update_flags} @world"
 }
 
-function update_full() {
-    update_flags="${UPDATE_FLAGS}"
+function emerge_pretend() {
+    echo -e "{{ PRETEND EMERGE }}"
 
-    # Do a full system update
-    echo "Running Update: Check Pretend First"
-    if emerge --pretend --update --newuse --deep @world; then
-        echo "emerge pretend was successful, updating..."
-        emerge_full "${update_flags}"
+    # run emerge in pretend mode to detect some issues before updating
+    update_mode="${UPDATE_MODE}"
+
+    if [[ "${update_mode}" == 'full' ]]; then
+        echo "Running emerge with --pretend"
+        if emerge --pretend --update --newuse --deep @world; then
+            echo "emerge pretend was successful, updating..."
+        else
+            echo "emerge pretend has failed, exiting"
+            exit 1
+        fi
     else
-        echo "emerge pretend has failed, not updating"
+        echo "Security update dont have pretend mode, skipping..."
     fi
 }
 
 function update() {
+    echo -e "{{ UPDATE SYSTEM }}\n"
+
     update_mode="${UPDATE_MODE}"
+    update_flags="${UPDATE_FLAGS}"
+
     # Do security updates or full system updates
     if [[ "${update_mode}" == 'security' ]]; then
-        echo -e "installing security updates only\n"
+        echo -e "updating GLSA\n"
         update_security
+        echo ""
+        echo "update was successful"
         echo ""
 
     elif [[ "${update_mode}" == 'full' ]]; then
         echo -e "updating @world\n"
-        update_full
+        emerge_full "${update_flags}"
+        echo ""
+        echo "update was successful"
         echo ""
 
     else
@@ -77,27 +96,28 @@ function update() {
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
+    echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
+
     update_mode="${CONFIG_UPDATE_MODE}"
 
     # Perform the update based on the update mode
     if [[ "${update_mode}" == "merge" ]]; then
         etc-update --automode -5
-    elif [[ "${update_mode}" == "interactive" ]]; then
-        etc-update
-    elif [[ "${update_mode}" == "dispatch" ]]; then
-        dispatch-conf
     elif [[ "${update_mode}" == "ignore" ]]; then
         echo "Ignoring configuration update for now..."
         echo "Please UPDATE IT MANUALLY LATER"
     else
         echo "Invalid update mode: ${update_mode}" >&2
-        echo "Please set UPDATE_MODE to 'merge', 'interactive', 'dispatch' or 'ignore'." >&2
+        echo "Please set UPDATE_MODE to 'merge' or 'ignore'." >&2
     fi
 }
 
 # ----------------------- CLEAN_UP ----------------------- #
 function clean_up() {
+    echo -e "\n{{ CLEAN UP }}\n"
+
     clean="${CLEAN}"
+
     if [[ "${clean}" == 'y' ]]; then
         echo "Cleaning packages that are not part of the tree..."
         emerge --depclean
@@ -119,6 +139,8 @@ function clean_up() {
 
 # -------------------- CHECK_RESTART --------------------- #
 function check_restart() {
+    echo -e "\n{{ RESTART SERVICES }}\n"
+
     restart="${DAEMON_RESTART}"
 
     if command -v needrestart >/dev/null 2>&1; then
@@ -164,7 +186,10 @@ function read_elogs() {
 }
 
 function get_logs() {
+    echo -e "\n{{ READ ELOGS }}\n"
+
     read_elogs="${READ_ELOGS}"
+
     if [[ "${read_elogs}" == 'y' ]]; then
         echo "reading elogs"
         read_elogs
@@ -175,7 +200,10 @@ function get_logs() {
 
 # ----------------------- GET_NEWS ----------------------- #
 function get_news() {
+    echo -e "\n{{ READ NEWS }}\n"
+
     read_news="${READ_NEWS}"
+
     if [[ "${read_news}" == 'y' ]]; then
         echo "Getting important news"
         eselect news read new
@@ -185,29 +213,37 @@ function get_news() {
 }
 
 # --------------------- RUN_PROGRAM ---------------------- #
-echo -e "{{ SYNC PORTAGE TREE }}\n"
-sync_tree
-
-echo -e "{{ UPDATE SYSTEM }}\n"
-update
-echo ""
-
-echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
-config_update
-echo ""
-
-echo -e "\n{{ CLEAN UP }}\n"
-clean_up
-echo ""
-
-echo -e "\n{{ RESTART SERVICES }}\n"
-check_restart
-echo ""
-
-echo -e "\n{{ READ ELOGS }}\n"
-get_logs
-echo ""
-
-echo -e "\n{{ READ NEWS }}\n"
-get_news
-echo -e "\n"
+case ${FUNCTION} in
+sync_tree)
+    "$@"
+    exit
+    ;;
+emerge_pretend)
+    "$@"
+    exit
+    ;;
+update)
+    "$@"
+    exit
+    ;;
+config_update)
+    "$@"
+    exit
+    ;;
+clean_up)
+    "$@"
+    exit
+    ;;
+check_restart)
+    "$@"
+    exit
+    ;;
+get_logs)
+    "$@"
+    exit
+    ;;
+get_news)
+    "$@"
+    exit
+    ;;
+esac

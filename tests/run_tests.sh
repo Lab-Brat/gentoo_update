@@ -13,6 +13,11 @@ pip_install() {
     cd /root/gentoo_update_source && pip install . --break-system-packages
 }
 
+pypi_install() {
+    # Install with pip from PyPi
+    pip install gentoo_update --break-system-packages
+}
+
 sec_update() {
     # Run the gentoo-update in secure mode
     gentoo-update
