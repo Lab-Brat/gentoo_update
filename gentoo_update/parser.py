@@ -1,5 +1,4 @@
 import re
-import sys
 import pprint
 from typing import Dict, List
 
@@ -14,7 +13,6 @@ class Parser:
         """
         self.log_file = log_file
         self.log_data = self.read_log()
-        self.parse_sections()
 
     def read_log(self) -> List[str]:
         """
@@ -27,7 +25,7 @@ class Parser:
             log_data = log_file.readlines()
         return self.split_log_to_sections(log_data)
 
-    def split_log_to_sections(self, log_data: List) -> Dict[str, List[str]]:
+    def split_log_to_sections(self, log_data: List) -> Dict:
         """
         Splits the log file into sections based on specified markers.
 
@@ -44,7 +42,7 @@ class Parser:
                 line = line.split(" ::: ")[1].strip()
                 match_section_pattern = re.search(section_pattern, line)
                 if match_section_pattern:
-                    section_name = line
+                    section_name = "_".join(line.split()[1:-1]).lower()
                     log_by_sections[section_name] = []
                 else:
                     log_by_sections[section_name].append(line)
@@ -53,42 +51,90 @@ class Parser:
 
         return log_by_sections
 
-    def parse_sections(self):
+    def parse_emerge_pretend_section(self, section_content: List[str]) -> Dict:
+        """
+        Function to parse the "emerge pretend" section of the log data.
+
+        Parameters:
+            section_content (List[str]): A list of strings that contains
+                        the content of the "emerge pretend" section.
+
+        Returns:
+            Dict: A dictionary that contains the status of
+                  the "emerge pretend" operation and the details.
+        """
+        if "emerge pretend was successful, updating..." in section_content:
+            pretend_status = True
+            pretend_details = None
+            return {
+                "pretend_status": pretend_status,
+                "pretend_details": pretend_details,
+            }
+        else:
+            pretend_status = {"pretend_status": False}
+            # function to parse errors during emerge --pretend
+            # pretend_details = parse_pretend_details(section_content)
+            pretend_details = {"error_type": "", "error_details": ""}
+            return {
+                "pretend_status": pretend_status,
+                "pretend_details": pretend_details,
+            }
+
+    def parse_update_system_section(self, section_content: List[str]) -> Dict:
+        """
+        Function to parse the "update system" section of the log data.
+
+        Parameters:
+            section_content (List[str]): A list of strings that contains 
+                    the content of the "update system" section.
+
+        Returns:
+            Dict: A dictionary that contains the status
+                  of the system update and the details.
+        """
+        update_type = section_content[1].split()[1]
+        if "update was successful" in section_content:
+            update_status = True
+            # function to parse update details
+            # update_details = parse_update_details(section_content, type)
+            update_details = {"updated_packages": []}
+            return {
+                "update_status": update_status,
+                "update_details": update_details,
+            }
+        else:
+            update_status = False
+            # function to parse emerge update errors
+            # update_details = parse_update_error_details(section_content, type)
+            update_datails = {"updated_packages": [], "errors": []}
+            return {
+                "update_status": update_status,
+                "update_details": update_details,
+            }
+
+    def compose_report(self) -> Dict:
+        """
+        Compose a report by parsing the sections of the log data.
+
+        Returns:
+            Dict: A dictionary that contains the
+                  parsed data from all sections.
+        """
+        report = {}
         for section in self.log_data.keys():
             section_content = self.log_data[section]
-            if section == "{{ PRETEND EMERGE }}":
-                self.parse_emerge_pretend_section(section_content)
-            elif section == "{{ UPDATE SYSTEM }}":
-                self.parse_update_system_section(section_content)
+            if section == "pretend_emerge":
+                report[section] = self.parse_emerge_pretend_section(
+                    section_content
+                )
+            elif section == "update_system":
+                report[section] = self.parse_update_system_section(
+                    section_content
+                )
 
-    def parse_emerge_pretend_section(self, section_content: List[str]):
-        pretend_successful = (
-            "emerge pretend was successful, updating..." in section_content
-        )
-        if pretend_successful:
-            print("Pretend completed without errors")
-        else:
-            print("Pretend exited with errors: ")
-            # function to parse --pretend errors
-
-    def parse_update_system_section(self, section_content: List[str]):
-        update_type = section_content[1].split()[1]
-        if update_type == "@world":
-            if "update was successful" in section_content:
-                print("Full update was successful")
-            else:
-                print("Full update was NOT successful")
-                # function to parse emerge update errors
-        elif update_type == "GLSA":
-            if "glsa update was successful" in section_content:
-                print("Security update was successful")
-            else:
-                print("Security update was NOT successful")
-                # function to parse glsa update errors
-        else:
-            print(f"{update_type} is a wrong update type")
-            print("Correct types: @world and GLSA")
+        return report
 
 
 if __name__ == "__main__":
-    parser = Parser("./log_for_tests")
+    report = Parser("./log_for_tests").compose_report()
+    pprint.pprint(report)
