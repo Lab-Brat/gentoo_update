@@ -97,7 +97,8 @@ class Parser:
             update_status = True
             # function to parse update details
             # update_details = parse_update_details(section_content, type)
-            update_details = {"updated_packages": []}
+            package_list = self.parse_update_details(section_content)
+            update_details = {"updated_packages": package_list}
             return {
                 "update_status": update_status,
                 "update_details": update_details,
@@ -111,6 +112,57 @@ class Parser:
                 "update_status": update_status,
                 "update_details": update_details,
             }
+
+    def parse_update_details(self, section_content: List[str]) -> List[Dict]:
+        ebuild_info_pattern = r"\[(.+?)\]"
+        package_strings = [
+            line
+            for line in section_content
+            if re.search(ebuild_info_pattern, line)
+        ]
+
+        packages = []
+        for line in package_strings:
+            chunks = line.split()
+
+            ebuild_info = {}
+            for chunk in chunks:
+                # Match package name and versions
+                package_info = re.match(r"^([\w/-]+)-(.*)::gentoo$", chunk)
+                if package_info:
+                    package_name = package_info.group(1)
+                    ebuild_info[package_name] = {}
+                    ebuild_info[package_name][
+                        "New Version"
+                    ] = package_info.group(2)
+
+                # Match update status
+                update_status = re.match(r"^\[ebuild\s+(.*)\]$", chunk)
+                if update_status:
+                    ebuild_info[package_name][
+                        "Update Status"
+                    ] = update_status.group(1)
+
+            # Match USE flags
+            use_flags = re.search(r'USE="(.*?)"', line)
+            if use_flags:
+                ebuild_info[package_name]["USE Flags"] = use_flags.group(1)
+
+            # Match other parameters
+            other_params = re.search(r'(ABI_X86=".*?")', line)
+            if other_params:
+                ebuild_info[package_name][
+                    "Other Parameters"
+                ] = other_params.group(1)
+
+            # Match size
+            size = re.search(r"(\d+\s+KiB)", line)
+            if size:
+                ebuild_info[package_name]["Size"] = size.group(1)
+
+            packages.append(ebuild_info)
+
+        return packages
 
     def extract_info_for_report(self) -> Dict:
         """
