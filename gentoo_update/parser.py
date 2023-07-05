@@ -1,5 +1,4 @@
 import re
-import pprint
 from typing import Dict, List
 
 
@@ -186,7 +185,46 @@ class Parser:
 
         return info
 
+    def create_failed_report(self, update_info) -> List:
+        """
+        Create a report when update failes.
+        """
+        # do failed report processing
+        return []
+
+    def create_successful_report(self, update_info) -> List:
+        """
+        Create a report when update is successful.
+        """
+        report = [
+            "==========> Gentoo Update Report <==========",
+            "update status: SUCCESS",
+        ]
+        updated_packages = update_info["update_details"]["updated_packages"]
+        if updated_packages:
+            report.append(r"processed packages:")
+            for package in updated_packages:
+                package_name = list(package.keys())[0]
+                report.append(f"--- {package_name}")
+
+        return report
+
+    def create_report(self) -> List:
+        """
+        Create a report.
+        """
+        info = self.extract_info_for_report()
+        update_info = info["update_system"]
+        update_success = update_info["update_status"]
+        if update_success:
+            report = self.create_successful_report(update_info)
+            return report
+        else:
+            report = self.create_failed_report(update_info)
+            return report
+
 
 if __name__ == "__main__":
-    report = Parser("./log_for_tests").extract_info_for_report()
-    pprint.pprint(report)
+    report = Parser("./log_for_tests").create_report()
+    for line in report:
+        print(line)
