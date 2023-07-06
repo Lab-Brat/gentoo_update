@@ -119,11 +119,9 @@ class Parser:
             for line in section_content
             if re.search(ebuild_info_pattern, line)
         ]
-
         packages = []
         for line in package_strings:
             chunks = line.split()
-
             ebuild_info = {}
             for chunk in chunks:
                 # Match package name and versions
@@ -136,23 +134,26 @@ class Parser:
                     ] = package_info.group(2)
 
                 # Match update status
-                update_status = re.match(r"^\[ebuild\s+(.*)\]$", chunk)
+                update_status = re.match(r"^(\[ebuild\s+.*\])$", chunk)
                 if update_status:
                     ebuild_info[package_name][
                         "Update Status"
                     ] = update_status.group(1)
+
+            old_version = re.search(r'::gentoo\s+\[(.*?)::gentoo\]', line)
+            print(old_version)
+            if old_version:
+                ebuild_info[package_name]["Old Version"] = old_version.group(1)
 
             # Match USE flags
             use_flags = re.search(r'USE="(.*?)"', line)
             if use_flags:
                 ebuild_info[package_name]["USE Flags"] = use_flags.group(1)
 
-            # Match other parameters
-            other_params = re.search(r'(ABI_X86=".*?")', line)
-            if other_params:
-                ebuild_info[package_name][
-                    "Other Parameters"
-                ] = other_params.group(1)
+            # Match multilibs
+            multilibs = re.search(r'(ABI_X86=".*?")', line)
+            if multilibs:
+                ebuild_info[package_name]["Multilibs"] = multilibs.group(1)
 
             # Match size
             size = re.search(r"(\d+\s+KiB)", line)
@@ -160,7 +161,6 @@ class Parser:
                 ebuild_info[package_name]["Size"] = size.group(1)
 
             packages.append(ebuild_info)
-
         return packages
 
     def extract_info_for_report(self) -> Dict:
@@ -214,6 +214,7 @@ class Parser:
         Create a report.
         """
         info = self.extract_info_for_report()
+        print(info)
         update_info = info["update_system"]
         update_success = update_info["update_status"]
         if update_success:
@@ -226,5 +227,5 @@ class Parser:
 
 if __name__ == "__main__":
     report = Parser("./log_for_tests").create_report()
-    for line in report:
-        print(line)
+    # for line in report:
+    #    print(line)
