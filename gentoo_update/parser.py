@@ -112,6 +112,17 @@ class Parser:
                 "update_details": update_details,
             }
 
+    def _parse_update_get_packages_names(self, name_and_version):
+        package_regex = re.compile(
+            r"^(.+?)-((?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)(?:_p[0-9]+)?(?:-r[0-9]+)?(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?)(?::|$)"
+        )
+        match = package_regex.search(name_and_version)
+        if match:
+            package_name, new_version, _ = match.groups()
+            return package_name, new_version
+        else:
+            return ("undefined", "undefined")
+
     def parse_update_details(self, section_content: List[str]) -> List[Dict]:
         ebuild_info_pattern = r"\[(.+?)\]"
         package_strings = [
@@ -122,18 +133,8 @@ class Parser:
         packages = []
         for line in package_strings:
             chunks = re.findall(r'\S+=".*?"|\[.*?\]|\S+', line)
-            ebuild_info = {}
-
-            for chunk in chunks:
-                # Match package name and new versions
-                package_regex = re.compile(
-                    r"^(.+?)-((?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)(?:_p[0-9]+)?(?:-r[0-9]+)?(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?)(?::|$)"
-                )
-                match = package_regex.search(chunk)
-                if match:
-                    package_name, new_version, _ = match.groups()
-                    ebuild_info[package_name] = {}
-                    ebuild_info[package_name]["New Version"] = new_version
+            package_name, new_version = self._parse_update_get_packages_names(chunks[1])
+            ebuild_info = {package_name: {"New Version": new_version}}
 
             for chunk in chunks:
                 # Match update status
