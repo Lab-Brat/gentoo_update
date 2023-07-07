@@ -121,18 +121,21 @@ class Parser:
         ]
         packages = []
         for line in package_strings:
-            chunks = line.split()
+            chunks = re.findall(r'\S+=".*?"|\[.*?\]|\S+', line)
             ebuild_info = {}
-            for chunk in chunks:
-                # Match package name and versions
-                package_info = re.match(r"^([\w/-]+)-(.*)::gentoo$", chunk)
-                if package_info:
-                    package_name = package_info.group(1)
-                    ebuild_info[package_name] = {}
-                    ebuild_info[package_name][
-                        "New Version"
-                    ] = package_info.group(2)
 
+            for chunk in chunks:
+                # Match package name and new versions
+                package_regex = re.compile(
+                    r"^(.+?)-((?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)(?:_p[0-9]+)?(?:-r[0-9]+)?(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?)(?::|$)"
+                )
+                match = package_regex.search(chunk)
+                if match:
+                    package_name, new_version, _ = match.groups()
+                    ebuild_info[package_name] = {}
+                    ebuild_info[package_name]["New Version"] = new_version
+
+            for chunk in chunks:
                 # Match update status
                 update_status = re.match(r"^(\[ebuild\s+.*\])$", chunk)
                 if update_status:
@@ -140,25 +143,26 @@ class Parser:
                         "Update Status"
                     ] = update_status.group(1)
 
-            old_version = re.search(r'::gentoo\s+\[(.*?)::gentoo\]', line)
-            print(old_version)
-            if old_version:
-                ebuild_info[package_name]["Old Version"] = old_version.group(1)
+                old_version = re.search(r"\[(.*?)::gentoo\]", chunk)
+                if old_version:
+                    ebuild_info[package_name][
+                        "Old Version"
+                    ] = old_version.group(1)
 
-            # Match USE flags
-            use_flags = re.search(r'USE="(.*?)"', line)
-            if use_flags:
-                ebuild_info[package_name]["USE Flags"] = use_flags.group(1)
+                # Match USE flags
+                use_flags = re.search(r'USE="(.*?)"', chunk)
+                if use_flags:
+                    ebuild_info[package_name]["USE Flags"] = use_flags.group(1)
 
-            # Match multilibs
-            multilibs = re.search(r'(ABI_X86=".*?")', line)
-            if multilibs:
-                ebuild_info[package_name]["Multilibs"] = multilibs.group(1)
+                # Match multilibs
+                multilibs = re.search(r'(ABI_X86=".*?")', chunk)
+                if multilibs:
+                    ebuild_info[package_name]["Multilibs"] = multilibs.group(1)
 
-            # Match size
-            size = re.search(r"(\d+\s+KiB)", line)
-            if size:
-                ebuild_info[package_name]["Size"] = size.group(1)
+                # Match size
+                size = re.search(r"(\d+\s+KiB)", chunk)
+                if size:
+                    ebuild_info[package_name]["Size"] = size.group(1)
 
             packages.append(ebuild_info)
         return packages
