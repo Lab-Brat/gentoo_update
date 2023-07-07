@@ -159,11 +159,6 @@ class Parser:
                 if multilibs:
                     ebuild_info[package_name]["Multilibs"] = multilibs.group(1)
 
-                # Match size
-                size = re.search(r"(\d+\s+KiB)", chunk)
-                if size:
-                    ebuild_info[package_name]["Size"] = size.group(1)
-
             packages.append(ebuild_info)
         return packages
 
