@@ -1,6 +1,6 @@
 import re
 from pprint import pprint
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 
 class Parser:
@@ -25,13 +25,16 @@ class Parser:
             log_data = log_file.readlines()
         return self.split_log_to_sections(log_data)
 
-    def split_log_to_sections(self, log_data: List) -> Dict:
+    def split_log_to_sections(self, log_data: List[str]) -> Dict:
         """
         Splits the log file into sections based on specified markers.
 
+        Parameters:
+            log_data (List[str]): Log content read with read_log method. 
+
         Returns:
-            Dict[str, List[str]]: A dictionary with section names as
-                                  keys and content as values.
+            Dict: A dictionary with section names as keys 
+                and content as values.
         """
         section_pattern = r"\{\{(.+?)\}\}"
         section_name = "beginning"
@@ -95,8 +98,6 @@ class Parser:
         update_type = section_content[1].split()[1]
         if "update was successful" in section_content:
             update_status = True
-            # function to parse update details
-            # update_details = parse_update_details(section_content, type)
             package_list = self.parse_update_details(section_content)
             update_details = {"updated_packages": package_list}
             return {
@@ -113,7 +114,20 @@ class Parser:
                 "update_details": update_details,
             }
 
-    def _parse_update_get_packages_names(self, name_and_version):
+    def _parse_update_get_packages_names(self, name_and_version: str) -> Tuple[str, str]:
+        """
+        Parse package name and new version.
+
+        Parameters:
+            name_and_version (str): String containing package information.
+            example:
+                sys-process/procps-3.3.17-r2:0/8::gentoo
+
+        Returns:
+            Tuple: tuple containing package name and it's new version
+            example:
+                (sys-process/procps, 3.3.17-r2:0/8)
+        """
         regex_package_info = (
             r"^(.+?)-" # regex_package_name
             r"("
@@ -133,6 +147,17 @@ class Parser:
             return ("undefined", "undefined")
 
     def parse_update_details(self, section_content: List[str]) -> List[Dict]:
+        """
+        Parse information about the update from logs.
+
+        Parameters:
+            section_content (List[str]): A list where each item is 
+                one line of logs from a section.
+
+        Returns: 
+            List[Dict]: A list of dictionaries where each item is 
+                a named dictionary containing useful information for the report.
+        """
         ebuild_info_pattern = r"\[(.+?)\]"
         package_strings = [
             line
@@ -196,16 +221,30 @@ class Parser:
 
         return info
 
-    def create_failed_report(self, update_info) -> List:
+    def create_failed_report(self, update_info: List[Dict]) -> List[str]:
         """
         Create a report when update failes.
+        
+        Parameters:
+            update_info (List[Dict]): Update information parsed by 
+                self.parse_update_details.
+        
+        Returns:
+            List: A list of strings that comprise the error report.
         """
         # do failed report processing
         return []
 
     def create_successful_report(self, update_info) -> List:
         """
-        Create a report when update is successful.
+        Create a report when update succeeds.
+        
+        Parameters:
+            update_info (List[Dict]): Update information parsed by 
+                self.parse_update_details.
+        
+        Returns:
+            List: A list of strings that comprise the success report.
         """
         report = [
             "==========> Gentoo Update Report <==========",
@@ -220,12 +259,14 @@ class Parser:
 
         return report
 
-    def create_report(self) -> List:
+    def create_report(self) -> List[str]:
         """
         Create a report.
+        
+        Returns:
+            List: A list of strings that comprise the update report.
         """
         info = self.extract_info_for_report()
-        pprint(info)
         update_info = info["update_system"]
         update_success = update_info["update_status"]
         if update_success:
@@ -238,5 +279,5 @@ class Parser:
 
 if __name__ == "__main__":
     report = Parser("./log_for_tests").create_report()
-    # for line in report:
-    #    print(line)
+    for line in report:
+       print(line)
