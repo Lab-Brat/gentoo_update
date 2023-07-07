@@ -1,4 +1,5 @@
 import re
+from pprint import pprint
 from typing import Dict, List
 
 
@@ -113,9 +114,17 @@ class Parser:
             }
 
     def _parse_update_get_packages_names(self, name_and_version):
-        package_regex = re.compile(
-            r"^(.+?)-((?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)(?:_p[0-9]+)?(?:-r[0-9]+)?(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?)(?::|$)"
+        regex_package_info = (
+            r"^(.+?)-" # regex_package_name
+            r"("
+            r"(?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)" # regex_version_number
+            r"(?:_p[0-9]+)?" # regex_optional_patch      
+            r"(?:-r[0-9]+)?" # regex_optional_revision   
+            r"(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?" # regex_optional_sub_version
+            r")"
+            r"(?::|$)" # regex end
         )
+        package_regex = re.compile(regex_package_info)
         match = package_regex.search(name_and_version)
         if match:
             package_name, new_version, _ = match.groups()
@@ -133,7 +142,9 @@ class Parser:
         packages = []
         for line in package_strings:
             chunks = re.findall(r'\S+=".*?"|\[.*?\]|\S+', line)
-            package_name, new_version = self._parse_update_get_packages_names(chunks[1])
+            package_name, new_version = self._parse_update_get_packages_names(
+                chunks[1]
+            )
             ebuild_info = {package_name: {"New Version": new_version}}
 
             for chunk in chunks:
@@ -214,7 +225,7 @@ class Parser:
         Create a report.
         """
         info = self.extract_info_for_report()
-        print(info)
+        pprint(info)
         update_info = info["update_system"]
         update_success = update_info["update_status"]
         if update_success:
