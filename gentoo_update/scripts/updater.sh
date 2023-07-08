@@ -17,13 +17,13 @@ READ_NEWS="${8}"
 
 # ------------------- CHECK_DISK_USAGE ------------------- #
 function check_disk_usage() {
-    # Read /etc/fstab
+    mount_point_found=false
+
     while read -r line; do
         if [[ "${line}" = \#* ]] || [[ -z "${line}" ]]; then
             continue
         fi
 
-        # Get the mount point
         mount_point=$(echo "${line}" | awk '{print $2}')
 
         if [[ ${mount_point} = "/tmp" || ${mount_point} = "swap" ]]; then
@@ -35,10 +35,27 @@ function check_disk_usage() {
             continue
         fi
 
+        mount_point_found=true
+
         df -h "${mount_point}" |
             awk -v OFS=", " 'NR==2 {print "Disk usage for " "'"${mount_point}"'"" ===> Total=" $2, "Used=" $3, "Free=" $4, "Percent used=" $5}'
 
     done </etc/fstab
+
+    if [[ $mount_point_found == false ]]; then
+        df -h "/" |
+            awk -v OFS=", " 'NR==2 {print "Disk usage for " "/"" ===> Total=" $2, "Used=" $3, "Free=" $4, "Percent used=" $5}'
+    fi
+}
+
+function check_disk_usage_before_update() {
+    echo -e "\n{{ CALCULATE DISK USAGE 1 }}\n"
+    check_disk_usage
+}
+
+function check_disk_usage_after_update() {
+    echo -e "\n{{ CALCULATE DISK USAGE 2 }}\n"
+    check_disk_usage
 }
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
@@ -240,7 +257,11 @@ function get_news() {
 
 # --------------------- RUN_PROGRAM ---------------------- #
 case ${FUNCTION} in
-check_disk_usage)
+check_disk_usage_before_update)
+    "$@"
+    exit
+    ;;
+check_disk_usage_after_update)
     "$@"
     exit
     ;;

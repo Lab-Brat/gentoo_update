@@ -199,7 +199,7 @@ class ShellRunner:
                          They need to be handled by the script.
         """
         script_stages = [
-            "check_disk_usage",
+            "check_disk_usage_before_update",
             "sync_tree",
             "emerge_pretend",
             "update",
@@ -208,7 +208,7 @@ class ShellRunner:
             "check_restart",
             "get_logs",
             "get_news",
-            "check_disk_usage",
+            "check_disk_usage_after_update",
         ]
         for stage in script_stages:
             command = [self.script_path] + [stage] + list(args)
