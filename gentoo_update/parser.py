@@ -30,10 +30,10 @@ class Parser:
         Splits the log file into sections based on specified markers.
 
         Parameters:
-            log_data (List[str]): Log content read with read_log method. 
+            log_data (List[str]): Log content read with read_log method.
 
         Returns:
-            Dict: A dictionary with section names as keys 
+            Dict: A dictionary with section names as keys
                 and content as values.
         """
         section_pattern = r"\{\{(.+?)\}\}"
@@ -114,7 +114,9 @@ class Parser:
                 "update_details": update_details,
             }
 
-    def _parse_update_get_packages_names(self, name_and_version: str) -> Tuple[str, str]:
+    def _parse_update_get_packages_names(
+        self, name_and_version: str
+    ) -> Tuple[str, str]:
         """
         Parse package name and new version.
 
@@ -129,14 +131,14 @@ class Parser:
                 (sys-process/procps, 3.3.17-r2:0/8)
         """
         regex_package_info = (
-            r"^(.+?)-" # regex_package_name
+            r"^(.+?)-"  # regex_package_name
             r"("
-            r"(?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)" # regex_version_number
-            r"(?:_p[0-9]+)?" # regex_optional_patch      
-            r"(?:-r[0-9]+)?" # regex_optional_revision   
-            r"(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?" # regex_optional_sub_version
+            r"(?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)"  # regex_version_number
+            r"(?:_p[0-9]+)?"  # regex_optional_patch
+            r"(?:-r[0-9]+)?"  # regex_optional_revision
+            r"(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?"  # regex_optional_sub_version
             r")"
-            r"(?::|$)" # regex end
+            r"(?::|$)"  # regex end
         )
         package_regex = re.compile(regex_package_info)
         match = package_regex.search(name_and_version)
@@ -151,11 +153,11 @@ class Parser:
         Parse information about the update from logs.
 
         Parameters:
-            section_content (List[str]): A list where each item is 
+            section_content (List[str]): A list where each item is
                 one line of logs from a section.
 
-        Returns: 
-            List[Dict]: A list of dictionaries where each item is 
+        Returns:
+            List[Dict]: A list of dictionaries where each item is
                 a named dictionary containing useful information for the report.
         """
         ebuild_info_pattern = r"\[(.+?)\]"
@@ -224,11 +226,11 @@ class Parser:
     def create_failed_report(self, update_info: List[Dict]) -> List[str]:
         """
         Create a report when update failes.
-        
+
         Parameters:
-            update_info (List[Dict]): Update information parsed by 
+            update_info (List[Dict]): Update information parsed by
                 self.parse_update_details.
-        
+
         Returns:
             List: A list of strings that comprise the error report.
         """
@@ -238,11 +240,11 @@ class Parser:
     def create_successful_report(self, update_info) -> List:
         """
         Create a report when update succeeds.
-        
+
         Parameters:
-            update_info (List[Dict]): Update information parsed by 
+            update_info (List[Dict]): Update information parsed by
                 self.parse_update_details.
-        
+
         Returns:
             List: A list of strings that comprise the success report.
         """
@@ -255,14 +257,18 @@ class Parser:
             report.append(r"processed packages:")
             for package in updated_packages:
                 package_name = list(package.keys())[0]
-                report.append(f"--- {package_name}")
+                new_version = package[package_name]["New Version"]
+                old_version = package[package_name]["Old Version"]
+                report.append(
+                    f"--- {package_name} {old_version}->{new_version}"
+                )
 
         return report
 
     def create_report(self) -> List[str]:
         """
         Create a report.
-        
+
         Returns:
             List: A list of strings that comprise the update report.
         """
@@ -280,4 +286,4 @@ class Parser:
 if __name__ == "__main__":
     report = Parser("./log_for_tests").create_report()
     for line in report:
-       print(line)
+        print(line)
