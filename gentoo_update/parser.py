@@ -172,7 +172,15 @@ class Parser:
             package_name, new_version = self._parse_update_get_packages_names(
                 chunks[1]
             )
-            ebuild_info = {package_name: {"New Version": new_version}}
+            ebuild_info = {
+                package_name: {
+                    "New Version": new_version,
+                    "Old Version": "undefined",
+                    "Update Status": "undefined",
+                    "USE Flags": "undefined",
+                    "Multilibs": "undefined",
+                }
+            }
 
             for chunk in chunks:
                 # Match update status
@@ -182,7 +190,7 @@ class Parser:
                         "Update Status"
                     ] = update_status.group(1)
 
-                old_version = re.search(r"\[(.*?)::gentoo\]", chunk)
+                old_version = re.search(r"\[(.*)(::gentoo)\]", chunk)
                 if old_version:
                     ebuild_info[package_name][
                         "Old Version"
@@ -201,6 +209,9 @@ class Parser:
             packages.append(ebuild_info)
         return packages
 
+    def parse_disk_usage_info(self, section_content: List[str]) -> List[Dict]:
+        pass
+
     def extract_info_for_report(self) -> Dict:
         """
         Extract information about the update from the log file.
@@ -209,7 +220,7 @@ class Parser:
             Dict: A dictionary that contains the
                   parsed data from all sections.
         """
-        info = {}
+        info = {"disk_usage": []}
         for section in self.log_data.keys():
             section_content = self.log_data[section]
             if section == "pretend_emerge":
@@ -220,6 +231,8 @@ class Parser:
                 info[section] = self.parse_update_system_section(
                     section_content
                 )
+            elif "calculate_disk_usage" in "section":
+                info["disk_usage"].append(section)
 
         return info
 
@@ -273,6 +286,7 @@ class Parser:
             List: A list of strings that comprise the update report.
         """
         info = self.extract_info_for_report()
+        # pprint(info)
         update_info = info["update_system"]
         update_success = update_info["update_status"]
         if update_success:
