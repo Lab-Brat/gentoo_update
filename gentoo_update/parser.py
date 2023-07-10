@@ -255,21 +255,27 @@ class Parser:
 
         return info
 
-    def create_failed_report(self, update_info: List[Dict]) -> List[str]:
+    def create_failed_report(
+        self, update_info: List[Dict], disk_usage_info: Dict[Dict]
+    ) -> List[str]:
         """
         Create a report when update failes.
 
         Parameters:
             update_info (List[Dict]): Update information parsed by
                 self.parse_update_details.
+            disk_usage_inf (Dict[Dict]): Disk usage information parsed by
+                self.parse_disk_usage_info.
 
         Returns:
-            List: A list of strings that comprise the error report.
+            List: A list of strings that comprise the failed update report.
         """
         # do failed report processing
         return []
 
-    def create_successful_report(self, update_info, disk_usage_info) -> List:
+    def create_successful_report(
+        self, update_info: List[Dict], disk_usage_info: Dict[Dict]
+    ) -> List[str]:
         """
         Create a report when update succeeds.
 
@@ -280,7 +286,7 @@ class Parser:
                 self.parse_disk_usage_info.
 
         Returns:
-            List: A list of strings that comprise the success report.
+            List: A list of strings that comprise the successful update report.
         """
         report = [
             "==========> Gentoo Update Report <==========",
@@ -327,9 +333,3 @@ class Parser:
         else:
             report = self.create_failed_report(update_info, disk_usage_info)
             return report
-
-
-if __name__ == "__main__":
-    report = Parser("./log_for_tests").create_report()
-    for line in report:
-        print(line)
