@@ -209,8 +209,25 @@ class Parser:
             packages.append(ebuild_info)
         return packages
 
-    def parse_disk_usage_info(self, section_content: List[str]) -> List[Dict]:
-        pass
+    def parse_disk_usage_info(self, section_content: List[str]) -> Dict:
+        """
+        Get disk usage information.
+
+        Parameters:
+            section_content (List[str]): A list where each item is
+                one line of logs from a section.
+
+        Returns:
+            Dict: A dictionary containing statistics of disk usage.
+        """
+        disk_usage = {}
+        split_content = section_content[1].split(" ===> ")
+        split_content = split_content[1].split(", ")
+        for stat in split_content:
+            stat = stat.split("=")
+            disk_usage[stat[0]] = stat[1]
+
+        return disk_usage
 
     def extract_info_for_report(self) -> Dict:
         """
@@ -220,7 +237,7 @@ class Parser:
             Dict: A dictionary that contains the
                   parsed data from all sections.
         """
-        info = {"disk_usage": []}
+        info = {"disk_usage": {}}
         for section in self.log_data.keys():
             section_content = self.log_data[section]
             if section == "pretend_emerge":
@@ -231,8 +248,10 @@ class Parser:
                 info[section] = self.parse_update_system_section(
                     section_content
                 )
-            elif "calculate_disk_usage" in "section":
-                info["disk_usage"].append(section)
+            elif "calculate_disk_usage" in section:
+                info["disk_usage"][section] = self.parse_disk_usage_info(
+                    section_content
+                )
 
         return info
 
@@ -250,13 +269,15 @@ class Parser:
         # do failed report processing
         return []
 
-    def create_successful_report(self, update_info) -> List:
+    def create_successful_report(self, update_info, disk_usage_info) -> List:
         """
         Create a report when update succeeds.
 
         Parameters:
             update_info (List[Dict]): Update information parsed by
                 self.parse_update_details.
+            disk_usage_inf (Dict[Dict]): Disk usage information parsed by
+                self.parse_disk_usage_info.
 
         Returns:
             List: A list of strings that comprise the success report.
@@ -275,6 +296,17 @@ class Parser:
                 report.append(
                     f"--- {package_name} {old_version}->{new_version}"
                 )
+            report.append("")
+
+            disk_usage_before = disk_usage_info["calculate_disk_usage_1"]
+            disk_usage_after = disk_usage_info["calculate_disk_usage_2"]
+            disk_usage_stats = (
+                "Disk Usage Stats:\n"
+                f"Free Space {disk_usage_before['Free']} => {disk_usage_after['Free']}\n"
+                f"Used Space {disk_usage_before['Used']} => {disk_usage_after['Used']}\n"
+                f"Used pc(%) {disk_usage_before['Percent used']} => {disk_usage_after['Percent used']}\n"
+            )
+            report.append(disk_usage_stats)
 
         return report
 
@@ -286,14 +318,14 @@ class Parser:
             List: A list of strings that comprise the update report.
         """
         info = self.extract_info_for_report()
-        # pprint(info)
         update_info = info["update_system"]
+        disk_usage_info = info["disk_usage"]
         update_success = update_info["update_status"]
         if update_success:
-            report = self.create_successful_report(update_info)
+            report = self.create_successful_report(update_info, disk_usage_info)
             return report
         else:
-            report = self.create_failed_report(update_info)
+            report = self.create_failed_report(update_info, disk_usage_info)
             return report
 
 
