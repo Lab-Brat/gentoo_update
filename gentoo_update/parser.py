@@ -256,7 +256,7 @@ class Parser:
         return info
 
     def create_failed_report(
-        self, update_info: List[Dict], disk_usage_info: Dict[Dict]
+        self, update_info: List[Dict], disk_usage_info: Dict
     ) -> List[str]:
         """
         Create a report when update failes.
@@ -264,7 +264,7 @@ class Parser:
         Parameters:
             update_info (List[Dict]): Update information parsed by
                 self.parse_update_details.
-            disk_usage_inf (Dict[Dict]): Disk usage information parsed by
+            disk_usage_inf (Dict): Disk usage information parsed by
                 self.parse_disk_usage_info.
 
         Returns:
@@ -274,7 +274,7 @@ class Parser:
         return []
 
     def create_successful_report(
-        self, update_info: List[Dict], disk_usage_info: Dict[Dict]
+        self, update_info: List[Dict], disk_usage_info: Dict
     ) -> List[str]:
         """
         Create a report when update succeeds.
@@ -282,7 +282,7 @@ class Parser:
         Parameters:
             update_info (List[Dict]): Update information parsed by
                 self.parse_update_details.
-            disk_usage_inf (Dict[Dict]): Disk usage information parsed by
+            disk_usage_inf (Dict): Disk usage information parsed by
                 self.parse_disk_usage_info.
 
         Returns:
