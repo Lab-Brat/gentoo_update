@@ -44,6 +44,11 @@ gentoo-update --update-mode full --args "color=y keep-going"
 gentoo-update --update-mode full --read-logs y --read-news y
 ```
 
+* Reading last update report (currently only successful update report):
+```bash
+gentoo-update --report
+```
+
 The detailed explanation of command flags can be found in `--help`.  
 Information on testing can be found in tests directory 
 [readme](tests/README.md)
