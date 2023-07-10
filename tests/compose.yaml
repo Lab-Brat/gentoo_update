@@ -35,3 +35,10 @@ services:
       - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
 
+  # container for inspection
+  gentoo_update_inspect:
+    image: gentoo/stage3:latest
+    command: "sleep infinity"
+    volumes:
+      - ../../gentoo_update/:/root/gentoo_update_source
+      - ./logs:/var/log/portage/gentoo-update
