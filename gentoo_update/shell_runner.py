@@ -221,12 +221,15 @@ class ShellRunner:
 
     def __del__(self) -> None:
         """
-        Closed all file handlers after ShellRunner is closed.
+        Close all file handlers after ShellRunner is closed.
         """
         try:
             if self.logger:
                 for handler in self.logger.handlers:
-                    handler.close()
-                    self.logger.removeHandler(handler)
+                    try:
+                        handler.close()
+                        self.logger.removeHandler(handler)
+                    except:
+                        "Log Handler Error: Could not close handler"
         except AttributeError:
-            pass
+            print("Log Hanlder Error: Logger object was not defined")
