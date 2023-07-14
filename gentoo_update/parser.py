@@ -254,7 +254,7 @@ class Parser:
                 )
 
         return info
-    
+
     def create_failed_pretend_report(self, pretend_info: Dict) -> List[str]:
         """
         Create a report when emerge pretend fails.
@@ -270,7 +270,7 @@ class Parser:
             "==========> Gentoo Update Report <==========",
             "emerge pretend status: FAIL",
         ]
-        return report 
+        return report
 
     def create_failed_report(
         self, update_info: List[Dict], disk_usage_info: Dict
@@ -360,6 +360,7 @@ class Parser:
             report = self.create_failed_pretend_report(pretend_info)
             return report
 
-pp = Parser('./log_for_tests').create_report()
+
+pp = Parser("./log_for_tests").create_report()
 for p in pp:
     print(p)
