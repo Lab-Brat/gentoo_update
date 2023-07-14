@@ -74,7 +74,7 @@ class Parser:
                 "pretend_details": pretend_details,
             }
         else:
-            pretend_status = {"pretend_status": False}
+            pretend_status = False
             # function to parse errors during emerge --pretend
             # pretend_details = parse_pretend_details(section_content)
             pretend_details = {"error_type": "", "error_details": ""}
@@ -254,6 +254,23 @@ class Parser:
                 )
 
         return info
+    
+    def create_failed_pretend_report(self, pretend_info: Dict) -> List[str]:
+        """
+        Create a report when emerge pretend fails.
+
+        Parameters:
+            pretend_info (Dict): emerge pretend information parsed by
+                parse_emerge_pretend_section.
+
+        Returns:
+            List: A list of strings that comprise the failed pretend report.
+        """
+        report = [
+            "==========> Gentoo Update Report <==========",
+            "emerge pretend status: FAIL",
+        ]
+        return report 
 
     def create_failed_report(
         self, update_info: List[Dict], disk_usage_info: Dict
@@ -271,7 +288,7 @@ class Parser:
             List: A list of strings that comprise the failed update report.
         """
         # do failed report processing
-        return []
+        return ["Your update is a failure"]
 
     def create_successful_report(
         self, update_info: List[Dict], disk_usage_info: Dict
@@ -324,12 +341,25 @@ class Parser:
             List: A list of strings that comprise the update report.
         """
         info = self.extract_info_for_report()
-        update_info = info["update_system"]
         disk_usage_info = info["disk_usage"]
-        update_success = update_info["update_status"]
+        pretend_success = info["pretend_emerge"]["pretend_status"]
+
+        if pretend_success:
+            update_info = info["update_system"]
+            update_success = info["update_system"]["update_status"]
+        else:
+            pretend_info = info["pretend_emerge"]
+            update_success = False
+
         if update_success:
             report = self.create_successful_report(update_info, disk_usage_info)
             return report
-        else:
+        elif pretend_success and not update_success:
             report = self.create_failed_report(update_info, disk_usage_info)
+        else:
+            report = self.create_failed_pretend_report(pretend_info)
             return report
+
+pp = Parser('./log_for_tests').create_report()
+for p in pp:
+    print(p)
