@@ -1,5 +1,5 @@
 tests/logs
-gentoo_update/log_for_tests
+log_for_tests
 dist
 build
 gentoo_update.egg-info
