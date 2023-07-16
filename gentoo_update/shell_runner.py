@@ -2,11 +2,11 @@ import os
 import sys
 import logging
 import subprocess
-import pprint
 from configparser import ConfigParser
 from datetime import datetime
 from typing import Tuple, List
 from .parser import Parser
+from .reporter import Reporter
 
 
 class ShellRunner:
@@ -77,8 +77,10 @@ class ShellRunner:
         files = os.listdir(self.log_dir)
         paths = [os.path.join(self.log_dir, basename) for basename in files]
         last_log = max(paths, key=os.path.getctime)
-        report = Parser(last_log).extract_info_for_report()
-        pprint.pprint(report)
+        update_info = Parser(last_log).extract_info_for_report()
+        report = Reporter(update_info).report
+        for line in report:
+            print(line)
         sys.exit(0)
 
     def initiate_logger(self) -> logging.Logger:
