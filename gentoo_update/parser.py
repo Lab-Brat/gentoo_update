@@ -220,7 +220,7 @@ class Parser:
         package_strings = [
             line
             for line in section_content
-            if re.search(ebuild_info_pattern, line)
+            if re.search(ebuild_info_pattern, line) and line != "[ ok ]"
         ]
         packages = []
         for line in package_strings:
