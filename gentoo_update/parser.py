@@ -1,3 +1,4 @@
+from os import walk
 import re
 from pprint import pprint
 from typing import Dict, List, Tuple
@@ -76,12 +77,65 @@ class Parser:
         else:
             pretend_status = False
             # function to parse errors during emerge --pretend
-            # pretend_details = parse_pretend_details(section_content)
-            pretend_details = {"error_type": "", "error_details": ""}
+            pretend_details = self.parse_pretend_details(section_content)
             return {
                 "pretend_status": pretend_status,
                 "pretend_details": pretend_details,
             }
+
+    def _parse_pretend_get_blocked_details(self, error_content: List[str]) -> List[str]:
+        """
+        Parse details of blocked package error.
+        """
+        blocked_packages = []
+        for line in error_content:
+            match_package_pattern = re.search(r"^\((.+?)\)", line)
+            if match_package_pattern:
+                blocked_packages.append(match_package_pattern.group(1))
+
+        return blocked_packages
+
+    def _parse_pretend_get_error_type(self, error_content) -> Tuple[str, str]:
+        """
+        Parse error type and error details.
+
+        Parameters:
+ 
+        Returns:
+        """
+        error_type = "undefined"
+        error_definition = "undefined"
+        error_details = "undefined"
+
+        for line in error_content:
+            if "Blocked Packages" in line:
+                error_type = "Blocked Packages"
+                error_details = self._parse_pretend_get_blocked_details(error_content)
+
+        for line in error_content:
+            if line[0] == "*":
+                error_definition += f"{line[2:]} "
+   
+        return (error_type, error_definition, error_details)
+
+    def parse_pretend_details(self, section_content: List[str]) -> Dict:
+        """
+        Parse information about the emerge pretend from logs.
+
+        Parameters:
+            section_content (List[str]): A list where each item is
+                one line of logs from a section.
+
+        Returns:
+            List[Dict]: A list of dictionaries where each item is
+                a named dictionary containing useful information for the report.
+        """
+        error_index = section_content.index("emerge pretend has failed, exiting")
+        error_content = [line for line in section_content[error_index+1:] if line]
+
+        error_type, _, error_details = self._parse_pretend_get_error_type(error_content)
+        pretend_details = {"error_type": error_type, "error_details": error_details}
+        return pretend_details
 
     def parse_update_system_section(self, section_content: List[str]) -> Dict:
         """
@@ -111,6 +165,7 @@ class Parser:
             # update_details = parse_update_error_details(section_content, type)
             update_details = {"updated_packages": [], "errors": []}
             return {
+                "update_type": update_type,
                 "update_status": update_status,
                 "update_details": update_details,
             }
