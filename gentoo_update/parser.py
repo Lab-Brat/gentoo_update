@@ -101,8 +101,9 @@ class Parser:
             package_list = self.parse_update_details(section_content)
             update_details = {"updated_packages": package_list}
             return {
+                "update_type": update_type,
                 "update_status": update_status,
-                "update_details": update_details,
+                "update_details": update_details
             }
         else:
             update_status = False
@@ -254,3 +255,7 @@ class Parser:
                 )
 
         return info
+
+if __name__ == "__main__":
+    parser = Parser("./log_for_tests").extract_info_for_report()
+    pprint(parser)
