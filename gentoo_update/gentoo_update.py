@@ -154,9 +154,12 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
     return log_dir, log_dir_messages
 
 
-def show_last_report(log_dir):
+def show_last_report(log_dir: str) -> None:
     """
     Show report for the last log located in $PORTAGE_LOGDIR.
+
+    Parameters:
+        log_dir (str): Directory where gentoo_update stores logs.
     """
     files = os.listdir(log_dir)
     paths = [os.path.join(log_dir, basename) for basename in files]

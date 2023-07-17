@@ -1,5 +1,5 @@
 from typing import Dict, List
-from .parser import Parser
+
 
 class Reporter:
     def __init__(self, update_info) -> None:
@@ -30,14 +30,20 @@ class Reporter:
         report.append("")
         return report
 
-    def _report_blocked_packages(self, pretend_details):
+    def _report_blocked_packages(self, pretend_details: List[str]) -> List[str]:
         """
         Report on Blocked Packages error during emerge pretend.
+
+        Parameters:
+            pretend_details (List[str]): In this case it's blocked packages.
+
+        Returns:
+            List[str]: Section of the report about blocked packages.
         """
         blocked_packages_report = ["List of Blocked Packages:"]
         for package in pretend_details["error_details"]:
             blocked_packages_report.append(f"-----> {package}")
-        
+
         return blocked_packages_report
 
     def create_failed_report(
@@ -127,11 +133,3 @@ class Reporter:
         else:
             report = self.create_failed_pretend_report(pretend_info)
             return report
-
-
-if __name__ == "__main__":
-    info = Parser("./log_for_tests").extract_info_for_report()
-    report = Reporter(info).report
-    for line in report:
-        print(line)
-
