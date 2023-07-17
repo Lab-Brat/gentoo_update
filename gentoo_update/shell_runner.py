@@ -2,84 +2,23 @@ import os
 import sys
 import logging
 import subprocess
-import pprint
-from configparser import ConfigParser
 from datetime import datetime
-from typing import Tuple, List
-from .parser import Parser
+from typing import List
 
 
 class ShellRunner:
-    def __init__(self, quiet: str, report: str) -> None:
+    def __init__(self, quiet: str, log_dir: str, log_dir_messages: str) -> None:
         self.quiet = True if quiet == "y" else False
 
         self.timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
-        self.make_conf = self.make_conf_reader()
-        self.log_dir, self.log_dir_messages = self.initiate_log_directory()
-
-        self.report = True if report == "y" else False
-        if self.report:
-            self.show_last_report()
+        self.log_dir = log_dir
+        self.log_dir_messages = log_dir_messages
 
         self.log_filename = f"{self.log_dir}/log_{self.timestamp}"
         self.logger = self.initiate_logger()
 
         self.script_dir = os.path.join(os.path.dirname(__file__), "scripts")
         self.script_path = os.path.join(self.script_dir, "updater.sh")
-
-    def make_conf_reader(self) -> ConfigParser:
-        """
-        Read /etc/portage/make.conf with configparser.
-
-        Returns:
-            configparser.ConfigParser: ConfigParser object.
-        """
-        config = ConfigParser()
-        with open("/etc/portage/make.conf") as config_string:
-            config.read_string("[DEFAULT]\n" + config_string.read())
-        return config
-
-    def initiate_log_directory(self) -> Tuple[str, List[str]]:
-        """
-        Create log directory if it does not exist.
-        If PORTAGE_LOGDIR is not set, use the default directory.
-
-        Returns:
-            str: Log directory path.
-            List[str]: List of messages to be logged.
-        """
-        try:
-            log_dir = self.make_conf["DEFAULT"]["PORTAGE_LOGDIR"]
-        except KeyError:
-            log_dir = ""
-
-        log_dir_messages = []
-        if log_dir == "":
-            log_dir = "/var/log/portage/gentoo-update"
-            log_dir_messages.append(
-                f"PORTAGE_LOGDIR not set, using default: {log_dir}"
-            )
-        else:
-            log_dir = log_dir.replace('"', "")
-            log_dir = f"{log_dir}/gentoo-update"
-            log_dir_messages.append(f"PORTAGE_LOGDIR set, using: {log_dir}")
-
-        if not os.path.exists(log_dir):
-            os.mkdir(log_dir)
-            log_dir_messages.append(f"Created log directory: {log_dir}")
-
-        return log_dir, log_dir_messages
-
-    def show_last_report(self):
-        """
-        Show report for the last log located in $PORTAGE_LOGDIR.
-        """
-        files = os.listdir(self.log_dir)
-        paths = [os.path.join(self.log_dir, basename) for basename in files]
-        last_log = max(paths, key=os.path.getctime)
-        report = Parser(last_log).extract_info_for_report()
-        pprint.pprint(report)
-        sys.exit(0)
 
     def initiate_logger(self) -> logging.Logger:
         """
@@ -221,12 +160,15 @@ class ShellRunner:
 
     def __del__(self) -> None:
         """
-        Closed all file handlers after ShellRunner is closed.
+        Close all file handlers after ShellRunner is closed.
         """
         try:
             if self.logger:
                 for handler in self.logger.handlers:
-                    handler.close()
-                    self.logger.removeHandler(handler)
+                    try:
+                        handler.close()
+                        self.logger.removeHandler(handler)
+                    except:
+                        "Log Handler Error: Could not close handler"
         except AttributeError:
-            pass
+            print("Log Hanlder Error: Logger object was not defined")

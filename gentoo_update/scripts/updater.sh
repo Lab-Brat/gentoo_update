@@ -26,7 +26,7 @@ function check_disk_usage() {
 
         mount_point=$(echo "${line}" | awk '{print $2}')
 
-        if [[ ${mount_point} = "/tmp" || ${mount_point} = "swap" ]]; then
+        if [[ ${mount_point} = "/tmp" || "${mount_point}" = "swap" ]]; then
             continue
         fi
 
@@ -42,7 +42,7 @@ function check_disk_usage() {
 
     done </etc/fstab
 
-    if [[ $mount_point_found == false ]]; then
+    if [[ "${mount_point_found}" == false ]]; then
         df -h "/" |
             awk -v OFS=", " 'NR==2 {print "Disk usage for " "/"" ===> Total=" $2, "Used=" $3, "Free=" $4, "Percent used=" $5}'
     fi
