@@ -1,6 +1,11 @@
 import os
+import sys
 import argparse
+from typing import Tuple, List
+from configparser import ConfigParser
 from .shell_runner import ShellRunner
+from .parser import Parser
+from .reporter import Reporter
 from ._version import __version__
 
 current_path = os.path.dirname(os.path.realpath(__file__))
@@ -104,6 +109,65 @@ def create_cli() -> argparse.Namespace:
     return args
 
 
+def make_conf_reader() -> ConfigParser:
+    """
+    Read /etc/portage/make.conf with configparser.
+
+    Returns:
+        configparser.ConfigParser: ConfigParser object.
+    """
+    config = ConfigParser()
+    with open("/etc/portage/make.conf") as config_string:
+        config.read_string("[DEFAULT]\n" + config_string.read())
+    return config
+
+
+def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
+    """
+    Create log directory if it does not exist.
+    If PORTAGE_LOGDIR is not set, use the default directory.
+
+    Returns:
+        str: Log directory path.
+        List[str]: List of messages to be logged.
+    """
+    try:
+        log_dir = make_conf["DEFAULT"]["PORTAGE_LOGDIR"]
+    except KeyError:
+        log_dir = ""
+
+    log_dir_messages = []
+    if log_dir == "":
+        log_dir = "/var/log/portage/gentoo-update"
+        log_dir_messages.append(
+            f"PORTAGE_LOGDIR not set, using default: {log_dir}"
+        )
+    else:
+        log_dir = log_dir.replace('"', "")
+        log_dir = f"{log_dir}/gentoo-update"
+        log_dir_messages.append(f"PORTAGE_LOGDIR set, using: {log_dir}")
+
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+        log_dir_messages.append(f"Created log directory: {log_dir}")
+
+    return log_dir, log_dir_messages
+
+
+def show_last_report(log_dir):
+    """
+    Show report for the last log located in $PORTAGE_LOGDIR.
+    """
+    files = os.listdir(log_dir)
+    paths = [os.path.join(log_dir, basename) for basename in files]
+    last_log = max(paths, key=os.path.getctime)
+    update_info = Parser(last_log).extract_info_for_report()
+    report = Reporter(update_info).report
+    for line in report:
+        print(line)
+    sys.exit(0)
+
+
 def add_prefixes(args: str) -> str:
     """
     Function to add prefixes to a list of arguments passed to
@@ -131,17 +195,22 @@ def add_prefixes(args: str) -> str:
 def main() -> None:
     args = create_cli()
 
-    runner = ShellRunner(args.quiet, args.report)
+    make_conf = make_conf_reader()
+    log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
-    runner.run_shell_script(
-        args.update_mode,
-        add_prefixes(args.args) if args.args else "NOARGS",
-        args.config_update_mode,
-        args.daemon_restart,
-        args.clean,
-        args.read_logs,
-        args.read_news,
-    )
+    if args.report == "y":
+        show_last_report(log_dir)
+    else:
+        runner = ShellRunner(args.quiet, log_dir, log_dir_messages)
+        runner.run_shell_script(
+            args.update_mode,
+            add_prefixes(args.args) if args.args else "NOARGS",
+            args.config_update_mode,
+            args.daemon_restart,
+            args.clean,
+            args.read_logs,
+            args.read_news,
+        )
 
 
 if __name__ == "__main__":
