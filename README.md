@@ -10,6 +10,37 @@ from 2023 Google Summer of Code, more about it can be found in the
 [blog post](https://labbrat.net/blog/gsoc2023/gentoo_update_intro/) and 
 [Gentoo Forums](https://forums.gentoo.org/viewtopic-p-8793827.html#8793827).  
 
+**TLDR**: `gentoo_update` has 3 main modules - updater, parser and notifier. Updater runs the 
+update script and create a log file. Parser reads the log file and composes a post-upgrade 
+report which notifier then sends via email or IRC chat.
+
+
+#### Features
+updater:
+- [x] detect and patch security updates by default using glsa-check
+- [x] update `@world`
+- [x] insert additional flags to `@world` update 
+- [x] calculate disk usage before and after the update
+- [] do not start the update if available disk space is lower than a certain threshold
+
+parser:
+- [x] Compose a report that informs if the update was successful or not
+- [x] Add package info after successful info, like updated packages, new versions and USE flags
+- [] Detect different errors during an update
+    - [x] Blocked Packages
+    - [] USE flag conflicts
+    - [] Issues with Licenses
+    - [] Network issues during an update
+    - [] OOM during an update
+- [x] Add disk usage before/after an update to the report
+
+notifier:
+- [] Send update report via IRC chat
+- [] Send update report via email
+
+Other:
+- [x] Add an ebuild to GURU repository
+- [] Create a CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
 
 #### Usage
 `gentoo-update` is in [GURU](https://wiki.gentoo.org/wiki/Project:GURU) 
