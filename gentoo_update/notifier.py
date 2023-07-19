@@ -12,10 +12,22 @@ class Notifier:
         elif notification_type == "irc":
             server = "irc.libera.chat"
             port = 6697
-            channel = os.environ["irc_chan"]
-            botnick = os.environ["irc_nick"]
-            botpassword = os.environ["irc_pass"]
-            self.send_report_to_itc(server, port, channel, botnick, botpassword)
+            channel = os.getenv("irc_chan")
+            botnick = os.getenv("irc_nick")
+            botpassword = os.getenv("irc_pass")
+            if None not in (channel, botnick, botpassword):
+                self.send_report_to_itc(
+                    server, port, channel, botnick, botpassword
+                )
+            else:
+                print("Undefined enviromental variable(s)")
+                print(
+                    "Please define: irc_chan, irc_nick and irc_pass variables"
+                )
+        else:
+            print("Unsupported authentication methods")
+            print("Currently supporting: irc")
+            print("Exiting...")
 
     def send_report_to_itc(
         self,
