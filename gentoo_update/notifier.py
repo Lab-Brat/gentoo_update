@@ -2,11 +2,11 @@ import os
 import socket
 import ssl
 import time
-from typing import Dict
+from typing import List
 
 
 class Notifier:
-    def __init__(self, notification_type: str, report: Dict) -> None:
+    def __init__(self, notification_type: str, report: List) -> None:
         if notification_type == "email":
             pass
         elif notification_type == "irc":
@@ -16,7 +16,7 @@ class Notifier:
             botnick = os.getenv("irc_nick")
             botpass = os.getenv("irc_pass")
             if None not in (channel, botnick, botpass):
-                self.send_report_to_itc(server, port, channel, botnick, botpass)
+                self.send_report_to_itc(report, server, port, channel, botnick, botpass)
             else:
                 print("Undefined enviromental variable(s)")
                 print(
@@ -29,6 +29,7 @@ class Notifier:
 
     def send_report_to_itc(
         self,
+        report: List,
         server: str,
         port: int,
         channel: str,
@@ -38,7 +39,6 @@ class Notifier:
         """
         Send the update report to IRC chat.
         """
-        message = "I AM CROCUBOT"
         ssl_context = ssl.create_default_context()
 
         irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -54,12 +54,24 @@ class Notifier:
         time.sleep(10)
 
         irc.send(f"JOIN {channel}\n".encode("UTF-8"))
-        irc.send(f"PRIVMSG {channel} :{message}\n".encode("UTF-8"))
-        time.sleep(20)
+        for line in report:
+            irc.send(f"PRIVMSG {channel} :{line}\n".encode("UTF-8"))
+            time.sleep(10)
 
         irc.send("QUIT \n".encode("UTF-8"))
         irc.close()
 
 
 if __name__ == "__main__":
-    notify = Notifier(notification_type="irc", report={})
+    report = [
+        "==========> Gentoo Update Report <==========",
+        "update status: SUCCESS",
+        "processed packages:",
+        "--- sys-apps/sandbox 2.32->2.37",
+        "",
+        "Disk Usage Stats:",
+        "Free Space 35G => 35G",
+        "Used Space 7.5G => 7.5G",
+        "Used pc(%) 18% => 18%"
+    ]
+    notify = Notifier(notification_type="irc", report=report)
