@@ -14,11 +14,9 @@ class Notifier:
             port = 6697
             channel = os.getenv("irc_chan")
             botnick = os.getenv("irc_nick")
-            botpassword = os.getenv("irc_pass")
-            if None not in (channel, botnick, botpassword):
-                self.send_report_to_itc(
-                    server, port, channel, botnick, botpassword
-                )
+            botpass = os.getenv("irc_pass")
+            if None not in (channel, botnick, botpass):
+                self.send_report_to_itc(server, port, channel, botnick, botpass)
             else:
                 print("Undefined enviromental variable(s)")
                 print(
@@ -35,53 +33,31 @@ class Notifier:
         port: int,
         channel: str,
         botnick: str,
-        botpassword: str,
+        botpass: str,
     ) -> None:
         """
         Send the update report to IRC chat.
         """
-        irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        message = "I AM CROCUBOT"
         ssl_context = ssl.create_default_context()
+
+        irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         irc = ssl_context.wrap_socket(irc, server_hostname=server)
-
         irc.connect((server, port))
-
-        # Send the necessary commands to identify the bot and join the channel
         irc.send(
-            bytes(
-                "USER "
-                + botnick
-                + " "
-                + botnick
-                + " "
-                + botnick
-                + " "
-                + botnick
-                + "\n",
-                "UTF-8",
-            )
+            f"USER {botnick} {botnick} {botnick} {botnick}\n".encode("UTF-8")
         )
-        irc.send(bytes("NICK " + botnick + "\n", "UTF-8"))
+        irc.send(f"NICK {botnick}\n".encode("UTF-8"))
         irc.send(
-            bytes(
-                "PRIVMSG NickServ :IDENTIFY "
-                + botnick
-                + " "
-                + botpassword
-                + "\n",
-                "UTF-8",
-            )
+            f"PRIVMSG NickServ :IDENTIFY {botnick} {botpass}\n".encode("UTF-8")
         )
         time.sleep(10)
 
-        irc.send(bytes("JOIN " + channel + "\n", "UTF-8"))
+        irc.send(f"JOIN {channel}\n".encode("UTF-8"))
+        irc.send(f"PRIVMSG {channel} :{message}\n".encode("UTF-8"))
+        time.sleep(20)
 
-        message = "I AM CROCUBOT"
-        irc.send(bytes("PRIVMSG " + channel + " :" + message + "\n", "UTF-8"))
-
-        time.sleep(30)
-
-        irc.send(bytes("QUIT \n", "UTF-8"))
+        irc.send("QUIT \n".encode("UTF-8"))
         irc.close()
 
 
