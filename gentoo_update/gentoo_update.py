@@ -1,11 +1,11 @@
 import os
-import sys
 import argparse
 from typing import Tuple, List
 from configparser import ConfigParser
 from .shell_runner import ShellRunner
 from .parser import Parser
 from .reporter import Reporter
+from .notifier import Notifier
 from ._version import __version__
 
 current_path = os.path.dirname(os.path.realpath(__file__))
@@ -99,6 +99,14 @@ def create_cli() -> argparse.Namespace:
         help="Show report or the last update log.\n",
     )
     parser.add_argument(
+        "-s",
+        "--send-report",
+        default="irc",
+        choices=["irc", "email"],
+        help="Send update report via IRC bot or email (SendGrid).\n"
+        "Default: irc\n",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=__version__,
@@ -154,7 +162,7 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
     return log_dir, log_dir_messages
 
 
-def show_last_report(log_dir: str) -> None:
+def generate_last_report(log_dir: str) -> None:
     """
     Show report for the last log located in $PORTAGE_LOGDIR.
 
@@ -165,10 +173,7 @@ def show_last_report(log_dir: str) -> None:
     paths = [os.path.join(log_dir, basename) for basename in files]
     last_log = max(paths, key=os.path.getctime)
     update_info = Parser(last_log).extract_info_for_report()
-    report = Reporter(update_info).report
-    for line in report:
-        print(line)
-    sys.exit(0)
+    return Reporter(update_info).report
 
 
 def add_prefixes(args: str) -> str:
@@ -202,7 +207,12 @@ def main() -> None:
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
     if args.report == "y":
-        show_last_report(log_dir)
+        report = generate_last_report(log_dir)
+        for line in report:
+            print(line)
+    elif args.send_report in ["irc", "email"]:
+        report = generate_last_report(log_dir)
+        Notifier(notification_type=args.send_report, report=report, short=True)
     else:
         runner = ShellRunner(args.quiet, log_dir, log_dir_messages)
         runner.run_shell_script(
