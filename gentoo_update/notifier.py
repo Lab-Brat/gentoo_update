@@ -20,7 +20,12 @@ class Notifier:
         report = report[0:2] if short else report
 
         if notification_type == "email":
-            self.send_report_to_mail(report)
+            if USE_SENDGRID:
+                self.send_report_to_mail(report)
+            else:
+                print("sendgrid library is not installed")
+                print("it can be installed from GURU overlay:")
+                print("  emerge --ask dev-python/sendgrid")
         elif notification_type == "irc":
             self.send_report_to_irc(report)
         else:
@@ -39,7 +44,9 @@ class Notifier:
             return channel, botnick, botpass
         else:
             print("Undefined enviromental variable(s)")
-            print("IRC_CHANNEL, IRC_BOT_NICKNAME, IRC_BOT_PASSWORD")
+            print(
+                "Please define: IRC_CHANNEL, IRC_BOT_NICKNAME, IRC_BOT_PASSWORD"
+            )
             exit(1)
 
     def send_report_to_irc(self, report: List[str]) -> None:

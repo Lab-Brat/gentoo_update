@@ -101,8 +101,8 @@ def create_cli() -> argparse.Namespace:
     parser.add_argument(
         "-s",
         "--send-report",
-        default="irc",
-        choices=["irc", "email"],
+        default="none",
+        choices=["irc", "email", "none"],
         help="Send update report via IRC bot or email (SendGrid).\n"
         "Default: irc\n",
     )
