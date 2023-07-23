@@ -2,30 +2,38 @@ import os
 import socket
 import ssl
 import time
-from typing import List
+from sys import exit
+from typing import List, Tuple
 
 
 class Notifier:
-    def __init__(self, notification_type: str, report: List) -> None:
+    def __init__(self, notification_type: str, report: List, short=True) -> None:
         if notification_type == "email":
             pass
         elif notification_type == "irc":
             server = "irc.libera.chat"
             port = 6697
-            channel = os.getenv("irc_chan")
-            botnick = os.getenv("irc_nick")
-            botpass = os.getenv("irc_pass")
-            if None not in (channel, botnick, botpass):
-                self.send_report_to_irc(report, server, port, channel, botnick, botpass)
-            else:
-                print("Undefined enviromental variable(s)")
-                print(
-                    "Please define: irc_chan, irc_nick and irc_pass variables"
-                )
+            channel, botnick, botpass = self.get_irc_vars()
+            report = report[0:2] if short else report
+            self.send_report_to_irc(report, server, port, channel, botnick, botpass)
         else:
             print("Unsupported authentication methods")
             print("Currently supporting: irc")
             print("Exiting...")
+
+    def get_irc_vars(self) -> Tuple[str, str, str]:
+        """
+        Get variables needed to send report to IRC chat from env.
+        """
+        channel = os.getenv("irc_chan")
+        botnick = os.getenv("irc_nick")
+        botpass = os.getenv("irc_pass")
+        if None not in (channel, botnick, botpass):
+            return channel, botnick, botpass
+        else:
+            print("Undefined enviromental variable(s)")
+            print("Please define: irc_chan, irc_nick and irc_pass variables")
+            exit(1)
 
     def send_report_to_irc(
         self,
@@ -56,7 +64,8 @@ class Notifier:
         irc.send(f"JOIN {channel}\n".encode("UTF-8"))
         for line in report:
             irc.send(f"PRIVMSG {channel} :{line}\n".encode("UTF-8"))
-            time.sleep(10)
+            time.sleep(15)
+        print("report sent, quitting...")
 
         irc.send("QUIT \n".encode("UTF-8"))
         irc.close()
