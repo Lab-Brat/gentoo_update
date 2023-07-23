@@ -5,18 +5,26 @@ import time
 from sys import exit
 from typing import List, Tuple
 
+USE_SENDGRID = True
+try:
+    import sendgrid
+    from sendgrid.helpers.mail import Mail, Email, To, Content
+except ImportError:
+    USE_SENDGRID = False
+
 
 class Notifier:
     def __init__(
         self, notification_type: str, report: List, short=True
     ) -> None:
+        report = report[0:2] if short else report
+
         if notification_type == "email":
-            pass
+            self.send_report_to_mail(report)
         elif notification_type == "irc":
             server = "irc.libera.chat"
             port = 6697
             channel, botnick, botpass = self.get_irc_vars()
-            report = report[0:2] if short else report
             self.send_report_to_irc(
                 report, server, port, channel, botnick, botpass
             )
@@ -36,7 +44,7 @@ class Notifier:
             return channel, botnick, botpass
         else:
             print("Undefined enviromental variable(s)")
-            print("Please define: irc_chan, irc_nick and irc_pass variables")
+            print("IRC_CHANNEL, IRC_BOT_NICKNAME, IRC_BOT_PASSWORD")
             exit(1)
 
     def send_report_to_irc(
@@ -74,6 +82,39 @@ class Notifier:
         irc.send("QUIT \n".encode("UTF-8"))
         irc.close()
 
+    def get_mail_vars(self) -> Tuple[str, str, str]:
+        """
+        Get variables needed to send report to email via SendGrid from env.
+        """
+        api_key = os.getenv("SENDGRID_API_KEY")
+        send_to = os.getenv("SENDGRID_TO")
+        send_from = os.getenv("SENDGRID_FROM")
+        if None not in (api_key, send_to, send_from):
+            return api_key, send_to, send_from
+        else:
+            print("Undefined enviromental variable(s)")
+            print("Please define: SENDGRID_API_KEY, SENDGRID_TO, SENDGRID_FROM")
+            exit(1)
+
+    def send_report_to_mail(self, report):
+        """
+        Send the update report to email via SendGrid.
+        """
+        api_key, send_to, send_from = self.get_mail_vars()
+        sendgrid_client = sendgrid.SendGridAPIClient(api_key=api_key)
+        subject = "Gentoo Linux Update Report"
+
+        content = Content("text/plain", "\n".join(report))
+        mail = Mail(Email(send_from), To(send_to), subject, content)
+        mail_json = mail.get()
+
+        response = sendgrid_client.client.mail.send.post(request_body=mail_json)
+        if response.status_code == 202:
+            print("email was sent successfully!")
+        else:
+            print("email was not sent successfully, details:")
+            print(response)
+
 
 if __name__ == "__main__":
     report = [
@@ -87,4 +128,4 @@ if __name__ == "__main__":
         "Used Space 7.5G => 7.5G",
         "Used pc(%) 18% => 18%",
     ]
-    notify = Notifier(notification_type="irc", report=report)
+    notify = Notifier(notification_type="email", report=report, short=False)
