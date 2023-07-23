@@ -7,7 +7,9 @@ from typing import List, Tuple
 
 
 class Notifier:
-    def __init__(self, notification_type: str, report: List, short=True) -> None:
+    def __init__(
+        self, notification_type: str, report: List, short=True
+    ) -> None:
         if notification_type == "email":
             pass
         elif notification_type == "irc":
@@ -15,7 +17,9 @@ class Notifier:
             port = 6697
             channel, botnick, botpass = self.get_irc_vars()
             report = report[0:2] if short else report
-            self.send_report_to_irc(report, server, port, channel, botnick, botpass)
+            self.send_report_to_irc(
+                report, server, port, channel, botnick, botpass
+            )
         else:
             print("Unsupported authentication methods")
             print("Currently supporting: irc")
@@ -25,9 +29,9 @@ class Notifier:
         """
         Get variables needed to send report to IRC chat from env.
         """
-        channel = os.getenv("irc_chan")
-        botnick = os.getenv("irc_nick")
-        botpass = os.getenv("irc_pass")
+        channel = os.getenv("IRC_CHANNEL")
+        botnick = os.getenv("IRC_BOT_NICKNAME")
+        botpass = os.getenv("IRC_BOT_PASSWORD")
         if None not in (channel, botnick, botpass):
             return channel, botnick, botpass
         else:
@@ -81,6 +85,6 @@ if __name__ == "__main__":
         "Disk Usage Stats:",
         "Free Space 35G => 35G",
         "Used Space 7.5G => 7.5G",
-        "Used pc(%) 18% => 18%"
+        "Used pc(%) 18% => 18%",
     ]
     notify = Notifier(notification_type="irc", report=report)
