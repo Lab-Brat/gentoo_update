@@ -34,8 +34,10 @@ report which notifier then sends via email or IRC chat.
         - [ ] OOM during an update
     - [x] Add disk usage before/after an update to the report
 - notifier:
-    - [ ] Send update report via IRC chat
-    - [ ] Send update report via email
+    - [x] Send update report via IRC bot
+    - [ ] Send full report via IRC bot if requested
+    - [x] Send update report via email using SendGrid
+    - [ ] Send update report via email using local relay
 - Other:
     - [x] Add an ebuild to GURU repository
     - [ ] Create a CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
@@ -78,6 +80,14 @@ gentoo-update --update-mode full --read-logs y --read-news y
 * Reading last update report (currently only successful update report):
 ```bash
 gentoo-update --report
+```
+
+* Send the last update report via IRC bot
+```bash
+export IRC_CHANNEL="#<irc_channel_name>"
+export IRC_BOT_NICKNAME="<bot_name>"
+export IRC_BOT_PASSWORD="<bot_password>"
+gentoo-update --send-report irc
 ```
 
 The detailed explanation of command flags can be found in `--help`.  
