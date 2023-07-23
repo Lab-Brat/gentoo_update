@@ -22,12 +22,7 @@ class Notifier:
         if notification_type == "email":
             self.send_report_to_mail(report)
         elif notification_type == "irc":
-            server = "irc.libera.chat"
-            port = 6697
-            channel, botnick, botpass = self.get_irc_vars()
-            self.send_report_to_irc(
-                report, server, port, channel, botnick, botpass
-            )
+            self.send_report_to_irc(report)
         else:
             print("Unsupported authentication methods")
             print("Currently supporting: irc")
@@ -47,18 +42,13 @@ class Notifier:
             print("IRC_CHANNEL, IRC_BOT_NICKNAME, IRC_BOT_PASSWORD")
             exit(1)
 
-    def send_report_to_irc(
-        self,
-        report: List,
-        server: str,
-        port: int,
-        channel: str,
-        botnick: str,
-        botpass: str,
-    ) -> None:
+    def send_report_to_irc(self, report: List[str]) -> None:
         """
         Send the update report to IRC chat.
         """
+        server = "irc.libera.chat"
+        port = 6697
+        channel, botnick, botpass = self.get_irc_vars()
         ssl_context = ssl.create_default_context()
 
         irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -71,12 +61,12 @@ class Notifier:
         irc.send(
             f"PRIVMSG NickServ :IDENTIFY {botnick} {botpass}\n".encode("UTF-8")
         )
-        time.sleep(10)
+        time.sleep(5)
 
         irc.send(f"JOIN {channel}\n".encode("UTF-8"))
         for line in report:
             irc.send(f"PRIVMSG {channel} :{line}\n".encode("UTF-8"))
-            time.sleep(15)
+            time.sleep(10)
         print("report sent, quitting...")
 
         irc.send("QUIT \n".encode("UTF-8"))
@@ -96,7 +86,7 @@ class Notifier:
             print("Please define: SENDGRID_API_KEY, SENDGRID_TO, SENDGRID_FROM")
             exit(1)
 
-    def send_report_to_mail(self, report):
+    def send_report_to_mail(self, report: List[str]) -> None:
         """
         Send the update report to email via SendGrid.
         """
