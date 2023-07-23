@@ -16,7 +16,7 @@ class Notifier:
             botnick = os.getenv("irc_nick")
             botpass = os.getenv("irc_pass")
             if None not in (channel, botnick, botpass):
-                self.send_report_to_itc(report, server, port, channel, botnick, botpass)
+                self.send_report_to_irc(report, server, port, channel, botnick, botpass)
             else:
                 print("Undefined enviromental variable(s)")
                 print(
@@ -27,7 +27,7 @@ class Notifier:
             print("Currently supporting: irc")
             print("Exiting...")
 
-    def send_report_to_itc(
+    def send_report_to_irc(
         self,
         report: List,
         server: str,
