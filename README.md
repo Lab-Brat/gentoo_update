@@ -74,7 +74,7 @@ gentoo-update --update-mode full --args "color=y keep-going"
 
 * Full system update, show elogs and news
 ```bash
-gentoo-update --update-mode full --read-logs y --read-news y
+gentoo-update --update-mode full --read-logs --read-news
 ```
 
 * Reading last update report (currently only successful update report):
