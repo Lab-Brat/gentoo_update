@@ -57,45 +57,37 @@ def create_cli() -> argparse.Namespace:
     parser.add_argument(
         "-d",
         "--daemon-restart",
-        default="n",
-        choices=["y", "n"],
-        help="Set whether to restart services and daemons after an update.\n"
-        "Default: n\n",
+        action="store_true",
+        help="Set whether to restart services and daemons after an update.\n",
     )
     parser.add_argument(
         "-e",
         "--clean",
-        default="n",
-        choices=["y", "n"],
-        help="Set whether to clean orphaned packaged after an update.\n"
-        "Default: n\n",
+        action="store_true",
+        help="Set whether to clean orphaned packaged after an update.\n",
     )
     parser.add_argument(
         "-l",
         "--read-logs",
-        default="n",
-        choices=["y", "n"],
-        help="Set whether to read elogs after an update.\n" "Default: n\n",
+        action="store_true",
+        help="Set whether to read elogs after an update.\n",
     )
     parser.add_argument(
         "-n",
         "--read-news",
-        default="n",
-        choices=["y", "n"],
-        help="Set whether to read news after an update.\n" "Default: n\n",
+        action="store_true",
+        help="Set whether to read news after an update.\n",
     )
     parser.add_argument(
         "-q",
         "--quiet",
-        default="n",
-        choices=["y", "n"],
-        help="Do not show logs on the terminal screen.\n" "Default: n\n",
+        action="store_true",
+        help="Do not show logs on the terminal screen.\n",
     )
     parser.add_argument(
         "-r",
         "--report",
-        default="n",
-        choices=["y", "n"],
+        action="store_true",
         help="Show report or the last update log.\n",
     )
     parser.add_argument(
@@ -104,7 +96,7 @@ def create_cli() -> argparse.Namespace:
         default="none",
         choices=["irc", "email", "none"],
         help="Send update report via IRC bot or email (SendGrid).\n"
-        "Default: irc\n",
+        "Default: none\n",
     )
     parser.add_argument(
         "--version",
@@ -206,7 +198,7 @@ def main() -> None:
     make_conf = make_conf_reader()
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
-    if args.report == "y":
+    if args.report:
         report = generate_last_report(log_dir)
         for line in report:
             print(line)
@@ -214,15 +206,17 @@ def main() -> None:
         report = generate_last_report(log_dir)
         Notifier(notification_type=args.send_report, report=report, short=True)
     else:
-        runner = ShellRunner(args.quiet, log_dir, log_dir_messages)
+        runner = ShellRunner(
+            "y" if args.quiet else "n", log_dir, log_dir_messages
+        )
         runner.run_shell_script(
             args.update_mode,
             add_prefixes(args.args) if args.args else "NOARGS",
-            args.config_update_mode,
-            args.daemon_restart,
-            args.clean,
-            args.read_logs,
-            args.read_news,
+            "y" if args.config_update_mode else "n",
+            "y" if args.daemon_restart else "n",
+            "y" if args.clean else "n",
+            "y" if args.read_logs else "n",
+            "y" if args.read_news else "n",
         )
 
 
