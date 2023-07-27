@@ -192,39 +192,38 @@ class Parser:
                 "update_details": update_details,
             }
 
-    def _parse_update_get_packages_names(
-        self, name_and_version: str
-    ) -> Tuple[str, str]:
+    def parse_package_string(self, package_string: str) -> List[str]:
         """
-        Parse package name and new version.
+        Parse package string into multiple parts.
 
         Parameters:
-            name_and_version (str): String containing package information.
-            example:
-                sys-process/procps-3.3.17-r2:0/8::gentoo
+            package_string (str): String containing package information.
 
         Returns:
-            Tuple: tuple containing package name and it's new version
-            example:
-                (sys-process/procps, 3.3.17-r2:0/8)
+            List: List containing package information parts.
         """
-        regex_package_info = (
-            r"^(.+?)-"  # regex_package_name
-            r"("
-            r"(?:(?<=-)[a-z]{2,}|[0-9]+(?:\.[0-9]+)*)"  # regex_version_number
-            r"(?:_p[0-9]+)?"  # regex_optional_patch
-            r"(?:-r[0-9]+)?"  # regex_optional_revision
-            r"(?::[0-9]+(?:/[0-9]+(\.[0-9]+)?)?)?"  # regex_optional_sub_version
-            r")"
-            r"(?::|$)"  # regex end
-        )
-        package_regex = re.compile(regex_package_info)
-        match = package_regex.search(name_and_version)
-        if match:
-            package_name, new_version, _ = match.groups()
-            return package_name, new_version
-        else:
-            return ("undefined", "undefined")
+        split_package_string = []
+        temp = ""
+        quotes_count = 0
+        brackets_count = 0
+
+        for char in package_string:
+            temp += char
+            if char == '"':
+                quotes_count += 1
+            elif char == "[":
+                brackets_count += 1
+            elif char == "]":
+                brackets_count -= 1
+
+            if char == " " and quotes_count % 2 == 0 and brackets_count == 0:
+                split_package_string.append(temp.strip())
+                temp = ""
+
+        if temp:
+            split_package_string.append(temp.strip())
+
+        return split_package_string
 
     def parse_update_details(self, section_content: List[str]) -> List[Dict]:
         """
@@ -245,44 +244,44 @@ class Parser:
             if re.search(ebuild_info_pattern, line) and line != "[ ok ]"
         ]
         packages = []
-        for line in package_strings:
-            chunks = re.findall(r'\S+=".*?"|\[.*?\]|\S+', line)
-            package_name, new_version = self._parse_update_get_packages_names(
-                chunks[1]
-            )
+        for package_string in package_strings:
+            split_package_string = self.parse_package_string(package_string)
+            print(split_package_string)
+            update_status = split_package_string[0]
+
+            package_base_info = split_package_string[1]
+            repo = package_base_info.split("::")[1]
+            name_newversion = package_base_info.split("::")[0]
+
+            package_name = ""
+            for part in name_newversion.split("-"):
+                print(part, part.isnumeric())
+                if part.isnumeric() == True:
+                    pass
+                elif "." in part:
+                    pass
+                else:
+                    print(f"adding {part} to name")
+                    package_name += f"{part}-"
+            
+
+            new_version = name_newversion.replace(package_name, "")
+            old_version = split_package_string[2].split("::")[0][1:]
+            package_name = package_name[:-1]
+
             ebuild_info = {
                 package_name: {
+                    "Repository": repo,
                     "New Version": new_version,
-                    "Old Version": "undefined",
-                    "Update Status": "undefined",
-                    "USE Flags": "undefined",
-                    "Multilibs": "undefined",
+                    "Old Version": old_version,
+                    "Update Status": update_status,
                 }
             }
 
-            for chunk in chunks:
-                # Match update status
-                update_status = re.match(r"^(\[ebuild\s+.*\])$", chunk)
-                if update_status:
-                    ebuild_info[package_name][
-                        "Update Status"
-                    ] = update_status.group(1)
-
-                old_version = re.search(r"\[(.*)(::gentoo)\]", chunk)
-                if old_version:
-                    ebuild_info[package_name][
-                        "Old Version"
-                    ] = old_version.group(1)
-
-                # Match USE flags
-                use_flags = re.search(r'USE="(.*?)"', chunk)
-                if use_flags:
-                    ebuild_info[package_name]["USE Flags"] = use_flags.group(1)
-
-                # Match multilibs
-                multilibs = re.search(r'(ABI_X86=".*?")', chunk)
-                if multilibs:
-                    ebuild_info[package_name]["Multilibs"] = multilibs.group(1)
+            for var in split_package_string:
+                if '="' in var:
+                    var = var.split("=")
+                    ebuild_info[package_name][var[0]] = var[1][1:-1].split(" ")
 
             packages.append(ebuild_info)
         return packages
