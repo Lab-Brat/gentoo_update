@@ -1,5 +1,44 @@
 import re
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
+from dataclasses import dataclass
+
+
+@dataclass
+class PackageInfo:
+    package_name: str
+    new_version: str
+    old_version: str
+    update_status: str
+    repo: str
+
+    def add_attributes(self, attrs):
+        for attr_name, attr_value in attrs.items():
+            setattr(self, attr_name, attr_value)
+
+
+@dataclass
+class UpdateSection:
+    update_type: str
+    update_status: bool
+    update_details: Dict[str, PackageInfo]
+
+
+@dataclass
+class PretendSection:
+    pretend_status: bool
+    pretend_details: Optional[Dict]
+
+
+@dataclass
+class DiskUsageSection:
+    disk_usage: Dict[str, str]
+
+
+@dataclass
+class LogInfo:
+    pretend_emerge: PretendSection
+    update_system: UpdateSection
+    disk_usage: Dict[str, DiskUsageSection]
 
 
 class Parser:
@@ -53,7 +92,9 @@ class Parser:
 
         return log_by_sections
 
-    def parse_emerge_pretend_section(self, section_content: List[str]) -> Dict:
+    def parse_emerge_pretend_section(
+        self, section_content: List[str]
+    ) -> PretendSection:
         """
         Function to parse the "emerge pretend" section of the log data.
 
@@ -68,18 +109,10 @@ class Parser:
         if "emerge pretend was successful, updating..." in section_content:
             pretend_status = True
             pretend_details = None
-            return {
-                "pretend_status": pretend_status,
-                "pretend_details": pretend_details,
-            }
         else:
             pretend_status = False
-            # function to parse errors during emerge --pretend
             pretend_details = self.parse_pretend_details(section_content)
-            return {
-                "pretend_status": pretend_status,
-                "pretend_details": pretend_details,
-            }
+        return PretendSection(pretend_status, pretend_details)
 
     def _parse_pretend_get_blocked_details(
         self, error_content: List[str]
@@ -159,7 +192,9 @@ class Parser:
         }
         return pretend_details
 
-    def parse_update_system_section(self, section_content: List[str]) -> Dict:
+    def parse_update_system_section(
+        self, section_content: List[str]
+    ) -> UpdateSection:
         """
         Function to parse the "update system" section of the log data.
 
@@ -176,21 +211,10 @@ class Parser:
             update_status = True
             package_list = self.parse_update_details(section_content)
             update_details = {"updated_packages": package_list}
-            return {
-                "update_type": update_type,
-                "update_status": update_status,
-                "update_details": update_details,
-            }
         else:
             update_status = False
-            # function to parse emerge update errors
-            # update_details = parse_update_error_details(section_content, type)
             update_details = {"updated_packages": [], "errors": []}
-            return {
-                "update_type": update_type,
-                "update_status": update_status,
-                "update_details": update_details,
-            }
+        return UpdateSection(update_type, update_status, update_details)
 
     def parse_package_string(self, package_string: str) -> List[str]:
         """
@@ -225,7 +249,7 @@ class Parser:
 
         return split_package_string
 
-    def parse_update_details(self, section_content: List[str]) -> List[Dict]:
+    def parse_update_details(self, section_content: List[str]) -> PackageInfo:
         """
         Parse information about the update from logs.
 
@@ -267,25 +291,23 @@ class Parser:
             old_version = split_package_string[2].split("::")[0][1:]
             package_name = package_name[:-1]
 
-            ebuild_info = {
-                package_name: {
-                    "Repository": repo,
-                    "New Version": new_version,
-                    "Old Version": old_version,
-                    "Update Status": update_status,
-                }
-            }
-            print(ebuild_info)
+            ebuild_info = PackageInfo(
+                package_name, new_version, old_version, update_status, repo
+            )
 
             for var in split_package_string:
                 if '="' in var:
                     var = var.split("=")
-                    ebuild_info[package_name][var[0]] = var[1][1:-1].split(" ")
-            packages.append(ebuild_info)
+                    ebuild_info.add_attributes(
+                        {var[0]: var[1][1:-1].split(" ")}
+                    )
 
+            packages.append(ebuild_info)
         return packages
 
-    def parse_disk_usage_info(self, section_content: List[str]) -> Dict:
+    def parse_disk_usage_info(
+        self, section_content: List[str]
+    ) -> DiskUsageSection:
         """
         Get disk usage information.
 
@@ -302,10 +324,9 @@ class Parser:
         for stat in split_content:
             stat = stat.split("=")
             disk_usage[stat[0]] = stat[1]
+        return DiskUsageSection(disk_usage)
 
-        return disk_usage
-
-    def extract_info_for_report(self) -> Dict:
+    def extract_info_for_report(self) -> LogInfo:
         """
         Extract information about the update from the log file.
 
@@ -313,25 +334,24 @@ class Parser:
             Dict: A dictionary that contains the
                   parsed data from all sections.
         """
-        info = {"disk_usage": {}}
+        disk_usage = {}
         for section in self.log_data.keys():
             section_content = self.log_data[section]
             if section == "pretend_emerge":
-                info[section] = self.parse_emerge_pretend_section(
+                pretend_emerge = self.parse_emerge_pretend_section(
                     section_content
                 )
             elif section == "update_system":
-                info[section] = self.parse_update_system_section(
+                update_system = self.parse_update_system_section(
                     section_content
                 )
             elif "calculate_disk_usage" in section:
-                info["disk_usage"][section] = self.parse_disk_usage_info(
+                disk_usage[section] = self.parse_disk_usage_info(
                     section_content
                 )
-
-        return info
+        return LogInfo(pretend_emerge, update_system, disk_usage)
 
 
 if __name__ == "__main__":
-    parser = Parser("./log_for_tests")
-    print(parser.extract_info_for_report())
+    report = Parser("./log_for_tests").extract_info_for_report()
+    print(report.disk_usage)
