@@ -246,7 +246,6 @@ class Parser:
         packages = []
         for package_string in package_strings:
             split_package_string = self.parse_package_string(package_string)
-            print(split_package_string)
             update_status = split_package_string[0]
 
             package_base_info = split_package_string[1]
@@ -255,15 +254,14 @@ class Parser:
 
             package_name = ""
             for part in name_newversion.split("-"):
-                print(part, part.isnumeric())
                 if part.isnumeric() == True:
                     pass
                 elif "." in part:
                     pass
+                elif len(part) == 2 and part[0] == "r" and part[1].isnumeric():
+                    pass
                 else:
-                    print(f"adding {part} to name")
                     package_name += f"{part}-"
-            
 
             new_version = name_newversion.replace(package_name, "")
             old_version = split_package_string[2].split("::")[0][1:]
@@ -277,13 +275,14 @@ class Parser:
                     "Update Status": update_status,
                 }
             }
+            print(ebuild_info)
 
             for var in split_package_string:
                 if '="' in var:
                     var = var.split("=")
                     ebuild_info[package_name][var[0]] = var[1][1:-1].split(" ")
-
             packages.append(ebuild_info)
+
         return packages
 
     def parse_disk_usage_info(self, section_content: List[str]) -> Dict:
@@ -331,3 +330,8 @@ class Parser:
                 )
 
         return info
+
+
+if __name__ == "__main__":
+    parser = Parser("./log_for_tests")
+    print(parser.extract_info_for_report())
