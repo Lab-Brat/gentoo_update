@@ -1,6 +1,7 @@
 from typing import List
 from .parser import (
     UpdateSection,
+    PretendError,
     PretendSection,
     DiskUsage,
     LogInfo,
@@ -31,26 +32,26 @@ class Reporter:
         pretend_details = pretend_info.pretend_details
         if pretend_details.error_type == "undefined":
             report.append("Could not identify error, please check the logs")
-        else:
+        elif pretend_details.error_type == "Blocked Packages":
             report.append(f"\nError Type: {pretend_details.error_type}")
             report.extend(
-                self._report_blocked_packages(pretend_details.error_details)
+                self._report_blocked_packages(pretend_details)
             )
         report.append("")
         return report
 
-    def _report_blocked_packages(self, pretend_details: List[str]) -> List[str]:
+    def _report_blocked_packages(self, pretend_details: PretendError) -> List[str]:
         """
         Report on Blocked Packages error during emerge pretend.
 
         Parameters:
-            pretend_details (List[str]): In this case it's blocked packages.
+            pretend_details (PretendError): In this case it's blocked packages.
 
         Returns:
             List[str]: Section of the report about blocked packages.
         """
         blocked_packages_report = ["List of Blocked Packages:"]
-        for package in pretend_details:
+        for package in pretend_details.error_details:
             blocked_packages_report.append(f"-----> {package}")
 
         return blocked_packages_report
