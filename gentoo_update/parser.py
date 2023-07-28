@@ -30,15 +30,25 @@ class PretendSection:
 
 
 @dataclass
-class DiskUsageSection:
-    disk_usage: Dict[str, str]
+class DiskUsageStats:
+    mount_point: str
+    total: str
+    used: str
+    free: str
+    percent_used: str
+
+
+@dataclass
+class DiskUsage:
+    before_update: List[DiskUsageStats]
+    after_update: List[DiskUsageStats]
 
 
 @dataclass
 class LogInfo:
     pretend_emerge: PretendSection
     update_system: UpdateSection
-    disk_usage: Dict[str, DiskUsageSection]
+    disk_usage: Dict[str, DiskUsage]
 
 
 class Parser:
@@ -305,9 +315,7 @@ class Parser:
             packages.append(ebuild_info)
         return packages
 
-    def parse_disk_usage_info(
-        self, section_content: List[str]
-    ) -> DiskUsageSection:
+    def parse_disk_usage_info(self, section_content: List[str]) -> Tuple[str]:
         """
         Get disk usage information.
 
@@ -318,13 +326,27 @@ class Parser:
         Returns:
             Dict: A dictionary containing statistics of disk usage.
         """
-        disk_usage = {}
-        split_content = section_content[1].split(" ===> ")
-        split_content = split_content[1].split(", ")
-        for stat in split_content:
-            stat = stat.split("=")
-            disk_usage[stat[0]] = stat[1]
-        return DiskUsageSection(disk_usage)
+        mount_point_lines = [
+            line for line in section_content if line[0:14] == "Disk usage for"
+        ]
+        mount_points = []
+
+        for line in mount_point_lines:
+            split_content = line.split(" ===> ")
+            stats = split_content[1].split(", ")
+
+            mount_point = split_content[0].replace("Disk usage for ", "")
+            total = stats[0].split("=")[1]
+            used = stats[1].split("=")[1]
+            free = stats[2].split("=")[1]
+            percent_used = stats[3].split("=")[1]
+
+            disk_usage_stats = DiskUsageStats(
+                mount_point, total, used, free, percent_used
+            )
+            mount_points.append(disk_usage_stats)
+
+        return mount_points
 
     def extract_info_for_report(self) -> LogInfo:
         """
@@ -334,7 +356,7 @@ class Parser:
             Dict: A dictionary that contains the
                   parsed data from all sections.
         """
-        disk_usage = {}
+        disk_usage = DiskUsage
         for section in self.log_data.keys():
             section_content = self.log_data[section]
             if section == "pretend_emerge":
@@ -345,8 +367,12 @@ class Parser:
                 update_system = self.parse_update_system_section(
                     section_content
                 )
-            elif "calculate_disk_usage" in section:
-                disk_usage[section] = self.parse_disk_usage_info(
+            elif section == "calculate_disk_usage_1":
+                disk_usage.before_update = self.parse_disk_usage_info(
+                    section_content
+                )
+            elif section == "calculate_disk_usage_2":
+                disk_usage.after_update = self.parse_disk_usage_info(
                     section_content
                 )
         return LogInfo(pretend_emerge, update_system, disk_usage)
@@ -354,4 +380,5 @@ class Parser:
 
 if __name__ == "__main__":
     report = Parser("./log_for_tests").extract_info_for_report()
-    print(report.disk_usage)
+    for du in report.disk_usage.after_update:
+        print(du.mount_point)
