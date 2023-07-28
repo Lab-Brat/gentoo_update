@@ -189,8 +189,8 @@ class Parser:
                 one line of logs from a section.
 
         Returns:
-            List[Dict]: A list of dictionaries where each item is
-                a named dictionary containing useful information for the report.
+            PretendError: A datalass that contains details about failed pretend,
+                for example a list of blocked packages.
         """
         error_index = section_content.index(
             "emerge pretend has failed, exiting"
@@ -202,12 +202,8 @@ class Parser:
         error_type, _, error_details = self._parse_pretend_get_error_type(
             error_content
         )
-        pretend_details = PretendError(error_type, error_details)
-        # pretend_details = {
-        #     "error_type": error_type,
-        #     "error_details": error_details,
-        # }
-        return pretend_details
+
+        return PretendError(error_type, error_details)
 
     def parse_update_system_section(
         self, section_content: List[str]
@@ -220,8 +216,8 @@ class Parser:
                     the content of the "update system" section.
 
         Returns:
-            Dict: A dictionary that contains the status
-                  of the system update and the details.
+            UpdateSection: A dataclass that contains the status
+                  of the system update and package details.
         """
         update_type = section_content[1].split()[1]
         if "update was successful" in section_content:
@@ -266,17 +262,19 @@ class Parser:
 
         return split_package_string
 
-    def parse_update_details(self, section_content: List[str]) -> PackageInfo:
+    def parse_update_details(
+        self, section_content: List[str]
+    ) -> List[PackageInfo]:
         """
-        Parse information about the update from logs.
+        Parse information about update from log file.
 
         Parameters:
             section_content (List[str]): A list where each item is
                 one line of logs from a section.
 
         Returns:
-            List[Dict]: A list of dictionaries where each item is
-                a named dictionary containing useful information for the report.
+            List[PackageInf]o: List of PackageInfo objects where each object
+                contains useful information for the report.
         """
         ebuild_info_pattern = r"\[(.+?)\]"
         package_strings = [
@@ -322,7 +320,9 @@ class Parser:
             packages.append(ebuild_info)
         return packages
 
-    def parse_disk_usage_info(self, section_content: List[str]) -> Tuple[str]:
+    def parse_disk_usage_info(
+        self, section_content: List[str]
+    ) -> List[DiskUsageStats]:
         """
         Get disk usage information.
 
@@ -331,7 +331,8 @@ class Parser:
                 one line of logs from a section.
 
         Returns:
-            Dict: A dictionary containing statistics of disk usage.
+            List[DiskUsageStats]: A list of DiskUsageStats objects
+                for each mount point containing statistics of disk usage.
         """
         mount_point_lines = [
             line for line in section_content if line[0:14] == "Disk usage for"
@@ -360,8 +361,7 @@ class Parser:
         Extract information about the update from the log file.
 
         Returns:
-            Dict: A dictionary that contains the
-                  parsed data from all sections.
+            LogInfo: Dataclass containing parsed data from all sections.
         """
         log_info = LogInfo
         disk_usage = DiskUsage

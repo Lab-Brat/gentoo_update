@@ -34,13 +34,13 @@ class Reporter:
             report.append("Could not identify error, please check the logs")
         elif pretend_details.error_type == "Blocked Packages":
             report.append(f"\nError Type: {pretend_details.error_type}")
-            report.extend(
-                self._report_blocked_packages(pretend_details)
-            )
+            report.extend(self._report_blocked_packages(pretend_details))
         report.append("")
         return report
 
-    def _report_blocked_packages(self, pretend_details: PretendError) -> List[str]:
+    def _report_blocked_packages(
+        self, pretend_details: PretendError
+    ) -> List[str]:
         """
         Report on Blocked Packages error during emerge pretend.
 
