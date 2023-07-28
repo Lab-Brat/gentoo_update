@@ -24,9 +24,15 @@ class UpdateSection:
 
 
 @dataclass
+class PretendError:
+    error_type: str
+    error_details: List[str]
+
+
+@dataclass
 class PretendSection:
     pretend_status: bool
-    pretend_details: Optional[Dict]
+    pretend_details: PretendError
 
 
 @dataclass
@@ -46,9 +52,9 @@ class DiskUsage:
 
 @dataclass
 class LogInfo:
-    pretend_emerge: PretendSection
-    update_system: UpdateSection
-    disk_usage: DiskUsage
+    pretend_emerge: Optional[PretendSection]
+    update_system: Optional[UpdateSection]
+    disk_usage: Optional[DiskUsage]
 
 
 class Parser:
@@ -174,7 +180,7 @@ class Parser:
 
         return (error_type, error_definition, error_details)
 
-    def parse_pretend_details(self, section_content: List[str]) -> Dict:
+    def parse_pretend_details(self, section_content: List[str]) -> PretendError:
         """
         Parse information about the emerge pretend from logs.
 
@@ -196,10 +202,11 @@ class Parser:
         error_type, _, error_details = self._parse_pretend_get_error_type(
             error_content
         )
-        pretend_details = {
-            "error_type": error_type,
-            "error_details": error_details,
-        }
+        pretend_details = PretendError(error_type, error_details)
+        # pretend_details = {
+        #     "error_type": error_type,
+        #     "error_details": error_details,
+        # }
         return pretend_details
 
     def parse_update_system_section(
@@ -356,15 +363,16 @@ class Parser:
             Dict: A dictionary that contains the
                   parsed data from all sections.
         """
+        log_info = LogInfo
         disk_usage = DiskUsage
         for section in self.log_data.keys():
             section_content = self.log_data[section]
             if section == "pretend_emerge":
-                pretend_emerge = self.parse_emerge_pretend_section(
+                log_info.pretend_emerge = self.parse_emerge_pretend_section(
                     section_content
                 )
             elif section == "update_system":
-                update_system = self.parse_update_system_section(
+                log_info.update_system = self.parse_update_system_section(
                     section_content
                 )
             elif section == "calculate_disk_usage_1":
@@ -375,9 +383,10 @@ class Parser:
                 disk_usage.after_update = self.parse_disk_usage_info(
                     section_content
                 )
-        return LogInfo(pretend_emerge, update_system, disk_usage)
+        log_info.disk_usage = disk_usage
+        return log_info
 
 
 if __name__ == "__main__":
-    report = Parser("./log_for_tests").extract_info_for_report()
-    print(report.update_system)
+    report = Parser("./log_blocks").extract_info_for_report()
+    print(report.pretend_emerge)

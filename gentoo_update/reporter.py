@@ -29,11 +29,13 @@ class Reporter:
             "emerge pretend status: FAIL",
         ]
         pretend_details = pretend_info.pretend_details
-        if pretend_details["error_type"] == "undefined":
+        if pretend_details.error_type == "undefined":
             report.append("Could not identify error, please check the logs")
         else:
-            report.append(f"\nError Type: {pretend_details['error_type']}")
-            report.extend(self._report_blocked_packages(pretend_details))
+            report.append(f"\nError Type: {pretend_details.error_type}")
+            report.extend(
+                self._report_blocked_packages(pretend_details.error_details)
+            )
         report.append("")
         return report
 
@@ -48,7 +50,7 @@ class Reporter:
             List[str]: Section of the report about blocked packages.
         """
         blocked_packages_report = ["List of Blocked Packages:"]
-        for package in pretend_details["error_details"]:
+        for package in pretend_details:
             blocked_packages_report.append(f"-----> {package}")
 
         return blocked_packages_report
