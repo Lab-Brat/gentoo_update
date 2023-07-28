@@ -48,7 +48,7 @@ class DiskUsage:
 class LogInfo:
     pretend_emerge: PretendSection
     update_system: UpdateSection
-    disk_usage: Dict[str, DiskUsage]
+    disk_usage: DiskUsage
 
 
 class Parser:
@@ -380,5 +380,4 @@ class Parser:
 
 if __name__ == "__main__":
     report = Parser("./log_for_tests").extract_info_for_report()
-    for du in report.disk_usage.after_update:
-        print(du.mount_point)
+    print(report.update_system)
