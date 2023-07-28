@@ -1,12 +1,22 @@
 from typing import Dict, List
+from .parser import (
+    PackageInfo,
+    UpdateSection,
+    PretendSection,
+    DiskUsageStats,
+    DiskUsage,
+    LogInfo,
+)
 
 
 class Reporter:
-    def __init__(self, update_info) -> None:
+    def __init__(self, update_info: LogInfo) -> None:
         self.info = update_info
         self.report = self.create_report()
 
-    def create_failed_pretend_report(self, pretend_info: Dict) -> List[str]:
+    def create_failed_pretend_report(
+        self, pretend_info: PretendSection
+    ) -> List[str]:
         """
         Create a report when emerge pretend fails.
 
@@ -21,7 +31,7 @@ class Reporter:
             "==========> Gentoo Update Report <==========",
             "emerge pretend status: FAIL",
         ]
-        pretend_details = pretend_info["pretend_details"]
+        pretend_details = pretend_info.pretend_details
         if pretend_details["error_type"] == "undefined":
             report.append("Could not identify error, please check the logs")
         else:
@@ -65,7 +75,7 @@ class Reporter:
         return ["Your update is a failure"]
 
     def create_successful_report(
-        self, update_info: List[Dict], disk_usage_info: Dict
+        self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
         """
         Create a report when update succeeds.
@@ -83,27 +93,29 @@ class Reporter:
             "==========> Gentoo Update Report <==========",
             "update status: SUCCESS",
         ]
-        updated_packages = update_info["update_details"]["updated_packages"]
+        updated_packages = update_info.update_details["updated_packages"]
         if updated_packages:
             report.append(r"processed packages:")
             for package in updated_packages:
-                package_name = list(package.keys())[0]
-                new_version = package[package_name]["New Version"]
-                old_version = package[package_name]["Old Version"]
+                package_name = package.package_name
+                new_version = package.new_version
+                old_version = package.old_version
                 report.append(
                     f"--- {package_name} {old_version}->{new_version}"
                 )
             report.append("")
+            report.append("Disk Usage Stats:")
 
-            disk_usage_before = disk_usage_info["calculate_disk_usage_1"]
-            disk_usage_after = disk_usage_info["calculate_disk_usage_2"]
-            disk_usage_stats = (
-                "Disk Usage Stats:\n"
-                f"Free Space {disk_usage_before['Free']} => {disk_usage_after['Free']}\n"
-                f"Used Space {disk_usage_before['Used']} => {disk_usage_after['Used']}\n"
-                f"Used pc(%) {disk_usage_before['Percent used']} => {disk_usage_after['Percent used']}\n"
-            )
-            report.append(disk_usage_stats)
+            for before, after in zip(
+                disk_usage_info.before_update, disk_usage_info.after_update
+            ):
+                disk_usage_stats = (
+                    f"Mount Point {before.mount_point}\n"
+                    f"Free Space {before.free} => {after.free}\n"
+                    f"Used Space {before.used} => {after.used}\n"
+                    f"Used pc(%) {before.percent_used} => {after.percent_used}\n"
+                )
+                report.append(disk_usage_stats)
 
         return report
 
@@ -115,14 +127,14 @@ class Reporter:
             List: A list of strings that comprise the update report.
         """
         info = self.info
-        disk_usage_info = info["disk_usage"]
-        pretend_success = info["pretend_emerge"]["pretend_status"]
+        disk_usage_info = info.disk_usage
+        pretend_success = info.pretend_emerge.pretend_status
 
         if pretend_success:
-            update_info = info["update_system"]
-            update_success = info["update_system"]["update_status"]
+            update_info = info.update_system
+            update_success = info.update_system.update_status
         else:
-            pretend_info = info["pretend_emerge"]
+            pretend_info = info.pretend_emerge
             update_success = False
 
         if update_success:
