@@ -1,9 +1,7 @@
-from typing import Dict, List
+from typing import List
 from .parser import (
-    PackageInfo,
     UpdateSection,
     PretendSection,
-    DiskUsageStats,
     DiskUsage,
     LogInfo,
 )
@@ -21,8 +19,7 @@ class Reporter:
         Create a report when emerge pretend fails.
 
         Parameters:
-            pretend_info (Dict): emerge pretend information parsed by
-                parse_emerge_pretend_section.
+            pretend_info (PretendSection): emerge pretend information.
 
         Returns:
             List: A list of strings that comprise the failed pretend report.
@@ -57,16 +54,14 @@ class Reporter:
         return blocked_packages_report
 
     def create_failed_report(
-        self, update_info: List[Dict], disk_usage_info: Dict
+        self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
         """
-        Create a report when update failes.
+        Create a report when update fails.
 
         Parameters:
-            update_info (List[Dict]): Update information parsed by
-                self.parse_update_details.
-            disk_usage_inf (Dict): Disk usage information parsed by
-                self.parse_disk_usage_info.
+            update_info (LogInfo.UpdateSection): Update information.
+            disk_usage_inf (LogInfo.DiskUsage): Disk usage information.
 
         Returns:
             List: A list of strings that comprise the failed update report.
@@ -81,10 +76,8 @@ class Reporter:
         Create a report when update succeeds.
 
         Parameters:
-            update_info (List[Dict]): Update information parsed by
-                self.parse_update_details.
-            disk_usage_inf (Dict): Disk usage information parsed by
-                self.parse_disk_usage_info.
+            update_info (LogInfo.UpdateSection): Update information.
+            disk_usage_inf (LogInfo.DiskUsage): Disk usage information.
 
         Returns:
             List: A list of strings that comprise the successful update report.
