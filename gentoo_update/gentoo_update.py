@@ -165,7 +165,7 @@ def generate_last_report(log_dir: str) -> None:
     paths = [os.path.join(log_dir, basename) for basename in files]
     last_log = max(paths, key=os.path.getctime)
     update_info = Parser(last_log).extract_info_for_report()
-    return Reporter(update_info).report
+    return Reporter(update_info)
 
 
 def add_prefixes(args: str) -> str:
@@ -199,11 +199,9 @@ def main() -> None:
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
     if args.report:
-        report = generate_last_report(log_dir)
-        for line in report:
-            print(line)
+        generate_last_report(log_dir).print_report()
     elif args.send_report in ["irc", "email"]:
-        report = generate_last_report(log_dir)
+        report = generate_last_report(log_dir).create_report()
         Notifier(notification_type=args.send_report, report=report, short=True)
     else:
         runner = ShellRunner(

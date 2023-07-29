@@ -11,9 +11,8 @@ from .parser import (
 class Reporter:
     def __init__(self, update_info: LogInfo) -> None:
         self.info = update_info
-        self.report = self.create_report()
 
-    def create_failed_pretend_report(
+    def _create_failed_pretend_report(
         self, pretend_info: PretendSection
     ) -> List[str]:
         """
@@ -56,7 +55,7 @@ class Reporter:
 
         return blocked_packages_report
 
-    def create_failed_report(
+    def _create_failed_report(
         self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
         """
@@ -72,7 +71,7 @@ class Reporter:
         # do failed report processing
         return ["Your update is a failure"]
 
-    def create_successful_report(
+    def _create_successful_report(
         self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
         """
@@ -134,10 +133,17 @@ class Reporter:
             update_success = False
 
         if update_success:
-            report = self.create_successful_report(update_info, disk_usage_info)
-            return report
+            report = self._create_successful_report(update_info, disk_usage_info)
         elif pretend_success and not update_success:
-            report = self.create_failed_report(update_info, disk_usage_info)
+            report = self._create_failed_report(update_info, disk_usage_info)
         else:
-            report = self.create_failed_pretend_report(pretend_info)
-            return report
+            report = self._create_failed_pretend_report(pretend_info)
+        return report
+
+    def print_report(self) -> None:
+        """
+        Print the report line by line to console.
+        """
+        report = self.create_report()
+        for line in report:
+            print(line)
