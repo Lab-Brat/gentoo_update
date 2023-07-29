@@ -202,7 +202,8 @@ def main() -> None:
         generate_last_report(log_dir).print_report()
     elif args.send_report in ["irc", "email"]:
         report = generate_last_report(log_dir).create_report()
-        Notifier(notification_type=args.send_report, report=report, short=True)
+        short = False if args.send_report == "email" else True
+        Notifier(notification_type=args.send_report, report=report, short=short)
     else:
         runner = ShellRunner(
             "y" if args.quiet else "n", log_dir, log_dir_messages
