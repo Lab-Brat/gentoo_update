@@ -32,10 +32,10 @@ full_update_all_options() {
     # Run the gentoo-update in full update mode and all options enabled
     gentoo-update --update-mode full \
         --config-update-mode merge \
-        --daemon-restart y \
-        --clean y \
-        --read-logs y \
-        --read-news y
+        --daemon-restart \
+        --clean \
+        --read-logs \
+        --read-news
 }
 
 "$@"

@@ -1,18 +1,25 @@
-from typing import Dict, List
+from typing import List
+from .parser import (
+    UpdateSection,
+    PretendError,
+    PretendSection,
+    DiskUsage,
+    LogInfo,
+)
 
 
 class Reporter:
-    def __init__(self, update_info) -> None:
+    def __init__(self, update_info: LogInfo) -> None:
         self.info = update_info
-        self.report = self.create_report()
 
-    def create_failed_pretend_report(self, pretend_info: Dict) -> List[str]:
+    def _create_failed_pretend_report(
+        self, pretend_info: PretendSection
+    ) -> List[str]:
         """
         Create a report when emerge pretend fails.
 
         Parameters:
-            pretend_info (Dict): emerge pretend information parsed by
-                parse_emerge_pretend_section.
+            pretend_info (PretendSection): emerge pretend information.
 
         Returns:
             List: A list of strings that comprise the failed pretend report.
@@ -21,42 +28,42 @@ class Reporter:
             "==========> Gentoo Update Report <==========",
             "emerge pretend status: FAIL",
         ]
-        pretend_details = pretend_info["pretend_details"]
-        if pretend_details["error_type"] == "undefined":
+        pretend_details = pretend_info.pretend_details
+        if pretend_details.error_type == "undefined":
             report.append("Could not identify error, please check the logs")
-        else:
-            report.append(f"\nError Type: {pretend_details['error_type']}")
+        elif pretend_details.error_type == "Blocked Packages":
+            report.append(f"\nError Type: {pretend_details.error_type}")
             report.extend(self._report_blocked_packages(pretend_details))
         report.append("")
         return report
 
-    def _report_blocked_packages(self, pretend_details: List[str]) -> List[str]:
+    def _report_blocked_packages(
+        self, pretend_details: PretendError
+    ) -> List[str]:
         """
         Report on Blocked Packages error during emerge pretend.
 
         Parameters:
-            pretend_details (List[str]): In this case it's blocked packages.
+            pretend_details (PretendError): In this case it's blocked packages.
 
         Returns:
             List[str]: Section of the report about blocked packages.
         """
         blocked_packages_report = ["List of Blocked Packages:"]
-        for package in pretend_details["error_details"]:
+        for package in pretend_details.error_details:
             blocked_packages_report.append(f"-----> {package}")
 
         return blocked_packages_report
 
-    def create_failed_report(
-        self, update_info: List[Dict], disk_usage_info: Dict
+    def _create_failed_report(
+        self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
         """
-        Create a report when update failes.
+        Create a report when update fails.
 
         Parameters:
-            update_info (List[Dict]): Update information parsed by
-                self.parse_update_details.
-            disk_usage_inf (Dict): Disk usage information parsed by
-                self.parse_disk_usage_info.
+            update_info (LogInfo.UpdateSection): Update information.
+            disk_usage_inf (LogInfo.DiskUsage): Disk usage information.
 
         Returns:
             List: A list of strings that comprise the failed update report.
@@ -64,17 +71,15 @@ class Reporter:
         # do failed report processing
         return ["Your update is a failure"]
 
-    def create_successful_report(
-        self, update_info: List[Dict], disk_usage_info: Dict
+    def _create_successful_report(
+        self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
         """
         Create a report when update succeeds.
 
         Parameters:
-            update_info (List[Dict]): Update information parsed by
-                self.parse_update_details.
-            disk_usage_inf (Dict): Disk usage information parsed by
-                self.parse_disk_usage_info.
+            update_info (LogInfo.UpdateSection): Update information.
+            disk_usage_inf (LogInfo.DiskUsage): Disk usage information.
 
         Returns:
             List: A list of strings that comprise the successful update report.
@@ -83,27 +88,29 @@ class Reporter:
             "==========> Gentoo Update Report <==========",
             "update status: SUCCESS",
         ]
-        updated_packages = update_info["update_details"]["updated_packages"]
+        updated_packages = update_info.update_details["updated_packages"]
         if updated_packages:
             report.append(r"processed packages:")
             for package in updated_packages:
-                package_name = list(package.keys())[0]
-                new_version = package[package_name]["New Version"]
-                old_version = package[package_name]["Old Version"]
+                package_name = package.package_name
+                new_version = package.new_version
+                old_version = package.old_version
                 report.append(
                     f"--- {package_name} {old_version}->{new_version}"
                 )
             report.append("")
+            report.append("Disk Usage Stats:")
 
-            disk_usage_before = disk_usage_info["calculate_disk_usage_1"]
-            disk_usage_after = disk_usage_info["calculate_disk_usage_2"]
-            disk_usage_stats = (
-                "Disk Usage Stats:\n"
-                f"Free Space {disk_usage_before['Free']} => {disk_usage_after['Free']}\n"
-                f"Used Space {disk_usage_before['Used']} => {disk_usage_after['Used']}\n"
-                f"Used pc(%) {disk_usage_before['Percent used']} => {disk_usage_after['Percent used']}\n"
-            )
-            report.append(disk_usage_stats)
+            for before, after in zip(
+                disk_usage_info.before_update, disk_usage_info.after_update
+            ):
+                disk_usage_stats = (
+                    f"Mount Point {before.mount_point}\n"
+                    f"Free Space {before.free} => {after.free}\n"
+                    f"Used Space {before.used} => {after.used}\n"
+                    f"Used pc(%) {before.percent_used} => {after.percent_used}\n"
+                )
+                report.append(disk_usage_stats)
 
         return report
 
@@ -115,21 +122,28 @@ class Reporter:
             List: A list of strings that comprise the update report.
         """
         info = self.info
-        disk_usage_info = info["disk_usage"]
-        pretend_success = info["pretend_emerge"]["pretend_status"]
+        disk_usage_info = info.disk_usage
+        pretend_success = info.pretend_emerge.pretend_status
 
         if pretend_success:
-            update_info = info["update_system"]
-            update_success = info["update_system"]["update_status"]
+            update_info = info.update_system
+            update_success = info.update_system.update_status
         else:
-            pretend_info = info["pretend_emerge"]
+            pretend_info = info.pretend_emerge
             update_success = False
 
         if update_success:
-            report = self.create_successful_report(update_info, disk_usage_info)
-            return report
+            report = self._create_successful_report(update_info, disk_usage_info)
         elif pretend_success and not update_success:
-            report = self.create_failed_report(update_info, disk_usage_info)
+            report = self._create_failed_report(update_info, disk_usage_info)
         else:
-            report = self.create_failed_pretend_report(pretend_info)
-            return report
+            report = self._create_failed_pretend_report(pretend_info)
+        return report
+
+    def print_report(self) -> None:
+        """
+        Print the report line by line to console.
+        """
+        report = self.create_report()
+        for line in report:
+            print(line)
