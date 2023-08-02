@@ -1,7 +1,6 @@
 import os
 import argparse
-from typing import Tuple, List
-from configparser import ConfigParser
+from typing import Tuple, List, Dict
 from .shell_runner import ShellRunner
 from .parser import Parser
 from .reporter import Reporter
@@ -109,17 +108,33 @@ def create_cli() -> argparse.Namespace:
     return args
 
 
-def make_conf_reader() -> ConfigParser:
+def make_conf_reader() -> Dict:
     """
-    Read /etc/portage/make.conf with configparser.
+    Read /etc/portage/make.conf.
 
     Returns:
-        configparser.ConfigParser: ConfigParser object.
+        Dict: Parameters in the key:value format.
+        Example: {'COMMON_FLAGS': '"-O2 -pipe"'}
     """
-    config = ConfigParser()
-    with open("/etc/portage/make.conf") as config_string:
-        config.read_string("[DEFAULT]\n" + config_string.read())
-    return config
+    make_conf = {}
+    with open("/etc/portage/make.conf", 'r') as make_conf_raw:
+        lines = make_conf_raw.read().splitlines()
+    key, value = None, []
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+        if '=' in line:
+            if key:
+                make_conf[key] = ' '.join(value)
+            parts = line.split('=', 1)
+            key = parts[0].strip()
+            value = [parts[1].strip()]
+        else:
+            value.append(line)
+    if key:
+        make_conf[key] = ' '.join(value)
+    return make_conf
 
 
 def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
@@ -132,7 +147,7 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
         List[str]: List of messages to be logged.
     """
     try:
-        log_dir = make_conf["DEFAULT"]["PORTAGE_LOGDIR"]
+        log_dir = make_conf["PORTAGE_LOGDIR"].replace('"', '')
     except KeyError:
         log_dir = ""
 
