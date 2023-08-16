@@ -133,7 +133,9 @@ class Reporter:
             update_success = False
 
         if update_success:
-            report = self._create_successful_report(update_info, disk_usage_info)
+            report = self._create_successful_report(
+                update_info, disk_usage_info
+            )
         elif pretend_success and not update_success:
             report = self._create_failed_report(update_info, disk_usage_info)
         else:

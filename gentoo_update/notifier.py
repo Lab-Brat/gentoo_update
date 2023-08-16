@@ -2,7 +2,8 @@ import os
 import socket
 import ssl
 import time
-import requests
+import json
+import urllib.request
 from sys import exit
 from typing import List, Tuple
 
@@ -125,21 +126,23 @@ class Notifier:
             exit(1)
         update_status = report[1].split(": ")[1]
         update_content = report[2:-1]
+
         url = "https://us-central1-gentoo-update.cloudfunctions.net/checkTokenAndForwardData"
-        headers = {
-            "Content-Type": "application/json"
-        }
-        print(token)
+        headers = {"Content-Type": "application/json"}
         data = {
             "token": token,
             "update_status": update_status,
-            "update_content": update_content
+            "update_content": update_content,
         }
-        
-        response = requests.post(url, headers=headers, json=data)
-        
-        print(response.status_code)
-        print(response.text)
+
+        data = json.dumps(data).encode("utf-8")
+
+        req = urllib.request.Request(
+            url, data=data, headers=headers, method="POST"
+        )
+        with urllib.request.urlopen(req) as response:
+            print(response.status)
+            print(response.read().decode("utf-8"))
 
 
 if __name__ == "__main__":

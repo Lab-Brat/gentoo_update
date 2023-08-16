@@ -93,8 +93,8 @@ def create_cli() -> argparse.Namespace:
         "-s",
         "--send-report",
         default="none",
-        choices=["irc", "email", "none"],
-        help="Send update report via IRC bot or email (SendGrid).\n"
+        choices=["irc", "email", "mobile", "none"],
+        help="Send update report via IRC bot, email (SendGrid) or mobile app.\n"
         "Default: none\n",
     )
     parser.add_argument(
@@ -117,23 +117,23 @@ def make_conf_reader() -> Dict:
         Example: {'COMMON_FLAGS': '"-O2 -pipe"'}
     """
     make_conf = {}
-    with open("/etc/portage/make.conf", 'r') as make_conf_raw:
+    with open("/etc/portage/make.conf", "r") as make_conf_raw:
         lines = make_conf_raw.read().splitlines()
     key, value = None, []
     for line in lines:
         line = line.strip()
-        if not line or line.startswith('#'):
+        if not line or line.startswith("#"):
             continue
-        if '=' in line:
+        if "=" in line:
             if key:
-                make_conf[key] = ' '.join(value)
-            parts = line.split('=', 1)
+                make_conf[key] = " ".join(value)
+            parts = line.split("=", 1)
             key = parts[0].strip()
             value = [parts[1].strip()]
         else:
             value.append(line)
     if key:
-        make_conf[key] = ' '.join(value)
+        make_conf[key] = " ".join(value)
     return make_conf
 
 
@@ -147,7 +147,7 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
         List[str]: List of messages to be logged.
     """
     try:
-        log_dir = make_conf["PORTAGE_LOGDIR"].replace('"', '')
+        log_dir = make_conf["PORTAGE_LOGDIR"].replace('"', "")
     except KeyError:
         log_dir = ""
 
@@ -215,9 +215,9 @@ def main() -> None:
 
     if args.report:
         generate_last_report(log_dir).print_report()
-    elif args.send_report in ["irc", "email"]:
+    elif args.send_report in ["irc", "email", "mobile"]:
         report = generate_last_report(log_dir).create_report()
-        short = False if args.send_report == "email" else True
+        short = False if args.send_report != "irc" else True
         Notifier(notification_type=args.send_report, report=report, short=short)
     else:
         runner = ShellRunner(
