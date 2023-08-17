@@ -11,8 +11,9 @@ from 2023 Google Summer of Code, more about it can be found in the
 [Gentoo Forums](https://forums.gentoo.org/viewtopic-p-8793827.html#8793827).  
 
 **TLDR**: `gentoo_update` has 3 main modules - updater, parser and notifier. Updater runs the 
-update script and create a log file. Parser reads the log file and composes a post-upgrade 
-report which notifier then sends via email or IRC chat.
+update script and creates a log file. Parser reads the log file and composes a post-upgrade 
+report which notifier then sends via email, IRC bot or 
+[mobile app](https://github.com/Lab-Brat/gentoo_update_flutter).
 
 <br>
 
@@ -38,6 +39,7 @@ report which notifier then sends via email or IRC chat.
     - [ ] Send full report via IRC bot if requested
     - [x] Send update report via email using SendGrid
     - [ ] Send update report via email using local relay
+    - [x] Send update report via mobile app
 - Other:
     - [x] Add an ebuild to GURU repository
     - [ ] Create a CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
