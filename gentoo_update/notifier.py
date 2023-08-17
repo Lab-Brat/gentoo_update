@@ -2,6 +2,8 @@ import os
 import socket
 import ssl
 import time
+import json
+import urllib.request
 from sys import exit
 from typing import List, Tuple
 
@@ -28,6 +30,8 @@ class Notifier:
                 print("  emerge --ask dev-python/sendgrid")
         elif notification_type == "irc":
             self.send_report_to_irc(report)
+        elif notification_type == "mobile":
+            self.send_report_to_mobile(report)
         else:
             print("Unsupported authentication methods")
             print("Currently supporting: irc")
@@ -112,6 +116,34 @@ class Notifier:
             print("email was not sent successfully, details:")
             print(response)
 
+    def send_report_to_mobile(self, report: List[str]) -> None:
+        """
+        Send the update report to mobile app.
+        """
+        token = os.getenv("GU_TOKEN")
+        if not token:
+            print("Token not found, please define GU_TOKEN env variable.")
+            exit(1)
+        update_status = report[1].split(": ")[1]
+        update_content = report[2:-1]
+
+        url = "https://us-central1-gentoo-update.cloudfunctions.net/checkTokenAndForwardData"
+        headers = {"Content-Type": "application/json"}
+        data = {
+            "token": token,
+            "update_status": update_status,
+            "update_content": update_content,
+        }
+
+        data = json.dumps(data).encode("utf-8")
+
+        req = urllib.request.Request(
+            url, data=data, headers=headers, method="POST"
+        )
+        with urllib.request.urlopen(req) as response:
+            print(response.status)
+            print(response.read().decode("utf-8"))
+
 
 if __name__ == "__main__":
     report = [
@@ -125,4 +157,4 @@ if __name__ == "__main__":
         "Used Space 7.5G => 7.5G",
         "Used pc(%) 18% => 18%",
     ]
-    notify = Notifier(notification_type="email", report=report, short=False)
+    notify = Notifier(notification_type="mobile", report=report, short=False)
