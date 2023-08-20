@@ -26,7 +26,7 @@ function check_disk_usage() {
 
         mount_point=$(echo "${line}" | awk '{print $2}')
 
-        if [[ ${mount_point} = "/tmp" || "${mount_point}" = "swap" ]]; then
+        if [[ ${mount_point} = "/tmp" || "${mount_point}" = "swap" || "${mount_point}" == "/boot/efi" ]]; then
             continue
         fi
 
