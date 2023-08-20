@@ -50,6 +50,7 @@ report which notifier then sends via email, IRC bot or
 `gentoo-update` is in [GURU](https://wiki.gentoo.org/wiki/Project:GURU) 
 overlay, and can be installed using `emerge`:
 ```bash
+eselect repository enable guru
 emerge --ask app-admin/gentoo_update
 ```
 

@@ -295,7 +295,7 @@ class Parser:
             for part in name_newversion.split("-"):
                 if part.isnumeric() == True:
                     pass
-                elif "." in part:
+                elif "." in part or ":" in part:
                     pass
                 elif len(part) == 2 and part[0] == "r" and part[1].isnumeric():
                     pass
