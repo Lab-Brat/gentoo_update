@@ -74,14 +74,19 @@ function update_security() {
     # Check for GLSAs and install updates if necessary
     glsa=$(glsa-check --list affected)
 
-    if [ -z "${glsa}" ]; then
-        echo "No affected GLSAs found."
-    else
-        echo "Affected GLSAs found. Applying updates..."
-        glsa-check --fix affected
-        echo "Updates applied."
+    # Filter out the affected packages
+    affected_packages=$(echo "${glsa}" | grep '\[N\]' | awk '{print $(NF-1)}' | paste -sd " " -)
+    
+    if [ -z "$affected_packages" ]; then
+        echo "No packages need updates."
+        exit 0
     fi
-}
+    
+    # Update affected packages
+    echo "Affected GLSAs found: ${affected_packages}"
+    eval "emerge --update --quiet-build ${affected_packages}"
+    echo "All updates are done!"
+  }
 
 function emerge_full() {
     # run emerge with custom flags
