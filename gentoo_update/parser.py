@@ -125,6 +125,9 @@ class Parser:
         if "emerge pretend was successful, updating..." in section_content:
             pretend_status = True
             pretend_details = None
+        elif "There are no packages to update, skipping..." in section_content:
+            pretend_status = True
+            pretend_details = "No Updates"
         else:
             pretend_status = False
             pretend_details = self.parse_pretend_details(section_content)
@@ -219,11 +222,23 @@ class Parser:
             UpdateSection: A dataclass that contains the status
                   of the system update and package details.
         """
-        update_type = section_content[1].split()[1]
+        try:
+            update_type = (
+                "@world"
+                if section_content[2].split()[1] == "@world"
+                else "security"
+            )
+        except IndexError:
+            update_type = "Undefined"
+
         if "update was successful" in section_content:
             update_status = True
             package_list = self.parse_update_details(section_content)
             update_details = {"updated_packages": package_list}
+        elif "There are no packages to update, skipping..." in section_content:
+            update_status = True
+            update_type = "security"
+            update_details = {"updated_packages": [], "errors": []}
         else:
             update_status = False
             update_details = {"updated_packages": [], "errors": []}
@@ -284,6 +299,7 @@ class Parser:
         ]
         packages = []
         for package_string in package_strings:
+            print(package_string)
             split_package_string = self.parse_package_string(package_string)
             update_status = split_package_string[0]
 
@@ -385,8 +401,3 @@ class Parser:
                 )
         log_info.disk_usage = disk_usage
         return log_info
-
-
-if __name__ == "__main__":
-    report = Parser("./log_blocks").extract_info_for_report()
-    print(report.pretend_emerge)

@@ -76,13 +76,13 @@ function get_update_packages_and_commands() {
     if [[ "${update_mode}" == 'security' ]]; then
         glsa=$(glsa-check --list --quiet affected)
         AFFECTED_PACKAGES=$(echo "${glsa}" | awk 'NF>1 {print $(NF-1)}' | paste -sd " " -)
-        UPDATE_PRETEND_COMMAND="emerge --pretend --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
-        UPDATE_COMMAND="emerge --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_PRETEND_COMMAND="emerge --verbose --pretend --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_COMMAND="emerge --verbose  --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
 
     elif [[ "${update_mode}" == 'full' ]]; then
         AFFECTED_PACKAGES='@world'
-        UPDATE_PRETEND_COMMAND="emerge --pretend --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
-        UPDATE_COMMAND="emerge --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_PRETEND_COMMAND="emerge --verbose  --pretend --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_COMMAND="emerge --verbose --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
 
     else
         echo "Invalid update mode, exiting...."
@@ -124,6 +124,7 @@ function update() {
         echo "Update command:"
         echo "${UPDATE_COMMAND}"
         eval "${UPDATE_COMMAND}"
+        echo "update was successful"
 
     else
         echo -e "There are no packages to update, skipping...\n"
