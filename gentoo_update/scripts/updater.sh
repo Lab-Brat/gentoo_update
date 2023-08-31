@@ -72,16 +72,14 @@ function get_update_packages_and_commands() {
     update_mode="${UPDATE_MODE}"
     update_flags="${UPDATE_FLAGS}"
 
-    # Do security updates or full system updates
+    # Get a list of security patches or just use @world
     if [[ "${update_mode}" == 'security' ]]; then
-        echo "Getting security updates from GLSA"
         glsa=$(glsa-check --list --quiet affected)
         AFFECTED_PACKAGES=$(echo "${glsa}" | awk 'NF>1 {print $(NF-1)}' | paste -sd " " -)
         UPDATE_PRETEND_COMMAND="emerge --pretend --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
         UPDATE_COMMAND="emerge --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
 
     elif [[ "${update_mode}" == 'full' ]]; then
-        echo "Not getting packages, updating @world"
         AFFECTED_PACKAGES='@world'
         UPDATE_PRETEND_COMMAND="emerge --pretend --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
         UPDATE_COMMAND="emerge --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
@@ -94,17 +92,16 @@ function get_update_packages_and_commands() {
 get_update_packages_and_commands
 
 function emerge_pretend() {
-    echo -e "{{ PRETEND EMERGE }}"
+    echo -e "{{ PRETEND EMERGE }}\n"
 
     # run emerge in pretend mode to detect some issues before updating
     update_mode="${UPDATE_MODE}"
     update_flags="${UPDATE_FLAGS}"
     affected_packages="${AFFECTED_PACKAGES}"
 
-    echo "$affected_packages"
-
     if [ -n "${affected_packages}" ]; then
-        echo "Running emerge with --pretend"
+        echo "emerging with --pretend..."
+        echo "Updating: ${affected_packages}"
         if eval "${UPDATE_PRETEND_COMMAND}"; then
             echo "emerge pretend was successful, updating..."
         else
@@ -112,7 +109,7 @@ function emerge_pretend() {
             exit 1
         fi
     else
-        echo -e "There are no packaged to update, skipping...\n"
+        echo -e "There are no packages to update, skipping...\n"
     fi
 }
 
@@ -122,19 +119,20 @@ function update() {
     affected_packages="${AFFECTED_PACKAGES}"
 
     if [ -n "${affected_packages}" ]; then
-        echo "Running update on ${affected_packages}"
+        echo "emerging..."
+        echo "Updating: ${affected_packages}"
         echo "Update command:"
         echo "${UPDATE_COMMAND}"
         eval "${UPDATE_COMMAND}"
 
     else
-        echo -e "There are no packaged to update, skipping...\n"
+        echo -e "There are no packages to update, skipping...\n"
     fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
-    echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
+    echo -e "{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
 
     update_mode="${CONFIG_UPDATE_MODE}"
 
