@@ -68,77 +68,67 @@ function sync_tree() {
 }
 
 # -------------------- UPDATE_SYSTEM --------------------- #
-function update_security() {
-    echo -e "{{ UPDATE SYSTEM }}\n"
+function get_update_packages_and_commands() {
+    update_mode="${UPDATE_MODE}"
+    update_flags="${UPDATE_FLAGS}"
 
-    # Check for GLSAs and install updates if necessary
-    glsa=$(glsa-check --list affected)
+    # Do security updates or full system updates
+    if [[ "${update_mode}" == 'security' ]]; then
+        echo "Getting security updates from GLSA"
+        glsa=$(glsa-check --list --quiet affected)
+        AFFECTED_PACKAGES=$(echo "${glsa}" | awk 'NF>1 {print $(NF-1)}' | paste -sd " " -)
+        UPDATE_PRETEND_COMMAND="emerge --pretend --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_COMMAND="emerge --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
 
-    # Filter out the affected packages
-    affected_packages=$(echo "${glsa}" | grep '\[N\]' | awk '{print $(NF-1)}' | paste -sd " " -)
-    
-    if [ -z "$affected_packages" ]; then
-        echo "No packages need updates."
-        exit 0
+    elif [[ "${update_mode}" == 'full' ]]; then
+        echo "Not getting packages, updating @world"
+        AFFECTED_PACKAGES='@world'
+        UPDATE_PRETEND_COMMAND="emerge --pretend --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_COMMAND="emerge --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
+
+    else
+        echo "Invalid update mode, exiting...."
+        exit 1
     fi
-    
-    # Update affected packages
-    echo "Affected GLSAs found: ${affected_packages}"
-    eval "emerge --update --quiet-build ${affected_packages}"
-    echo "All updates are done!"
-  }
-
-function emerge_full() {
-    # run emerge with custom flags
-    local update_flags="${1}"
-    echo "Update command:"
-    echo "emerge --verbose --quiet-build=y --update --newuse --deep ${update_flags} @world"
-    eval "emerge --verbose --quiet-build=y --update --newuse --deep ${update_flags} @world"
 }
+get_update_packages_and_commands
 
 function emerge_pretend() {
     echo -e "{{ PRETEND EMERGE }}"
 
     # run emerge in pretend mode to detect some issues before updating
     update_mode="${UPDATE_MODE}"
+    update_flags="${UPDATE_FLAGS}"
+    affected_packages="${AFFECTED_PACKAGES}"
 
-    if [[ "${update_mode}" == 'full' ]]; then
+    echo "$affected_packages"
+
+    if [ -n "${affected_packages}" ]; then
         echo "Running emerge with --pretend"
-        if emerge --pretend --update --newuse --deep @world; then
+        if eval "${UPDATE_PRETEND_COMMAND}"; then
             echo "emerge pretend was successful, updating..."
         else
             echo "emerge pretend has failed, exiting"
             exit 1
         fi
     else
-        echo "Security update dont have pretend mode, skipping..."
+        echo -e "There are no packaged to update, skipping...\n"
     fi
 }
 
 function update() {
     echo -e "{{ UPDATE SYSTEM }}\n"
 
-    update_mode="${UPDATE_MODE}"
-    update_flags="${UPDATE_FLAGS}"
+    affected_packages="${AFFECTED_PACKAGES}"
 
-    # Do security updates or full system updates
-    if [[ "${update_mode}" == 'security' ]]; then
-        echo -e "updating GLSA\n"
-        update_security
-        echo ""
-        echo "update was successful"
-        echo ""
-
-    elif [[ "${update_mode}" == 'full' ]]; then
-        echo -e "updating @world\n"
-        emerge_full "${update_flags}"
-        echo ""
-        echo "update was successful"
-        echo ""
+    if [ -n "${affected_packages}" ]; then
+        echo "Running update on ${affected_packages}"
+        echo "Update command:"
+        echo "${UPDATE_COMMAND}"
+        eval "${UPDATE_COMMAND}"
 
     else
-        echo "Invalid update mode, exiting...."
-        exit 1
+        echo -e "There are no packaged to update, skipping...\n"
     fi
 }
 
