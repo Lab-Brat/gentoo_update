@@ -233,8 +233,11 @@ class Parser:
 
         if "update was successful" in section_content:
             update_status = True
-            package_list = self.parse_update_details(section_content)
-            update_details = {"updated_packages": package_list}
+            if "Nothing to merge; quitting" in section_content:
+                update_details = {"updated_packages": [], "errors": []}
+            else:
+                package_list = self.parse_update_details(section_content)
+                update_details = {"updated_packages": package_list}
         elif "There are no packages to update, skipping..." in section_content:
             update_status = True
             update_type = "security"
@@ -288,7 +291,7 @@ class Parser:
                 one line of logs from a section.
 
         Returns:
-            List[PackageInf]o: List of PackageInfo objects where each object
+            List[PackageInfo]: List of PackageInfo objects where each object
                 contains useful information for the report.
         """
         ebuild_info_pattern = r"\[(.+?)\]"
@@ -299,42 +302,59 @@ class Parser:
         ]
         packages = []
         for package_string in package_strings:
-            print(package_string)
             split_package_string = self.parse_package_string(package_string)
             update_status = split_package_string[0]
 
-            package_base_info = split_package_string[1]
-            repo = package_base_info.split("::")[1]
-            name_newversion = package_base_info.split("::")[0]
+            if 'ebuild' in update_status:
+                package = self._parse_package_ebuild(split_package_string)
+            elif 'blocks' in update_status:
+                package = self._parse_package_blocks(split_package_string)
 
-            package_name = ""
-            for part in name_newversion.split("-"):
-                if part.isnumeric() == True:
-                    pass
-                elif "." in part or ":" in part:
-                    pass
-                elif len(part) == 2 and part[0] == "r" and part[1].isnumeric():
-                    pass
-                else:
-                    package_name += f"{part}-"
+            packages.append(package)
 
-            new_version = name_newversion.replace(package_name, "")
-            old_version = split_package_string[2].split("::")[0][1:]
-            package_name = package_name[:-1]
-
-            ebuild_info = PackageInfo(
-                package_name, new_version, old_version, update_status, repo
-            )
-
-            for var in split_package_string:
-                if '="' in var:
-                    var = var.split("=")
-                    ebuild_info.add_attributes(
-                        {var[0]: var[1][1:-1].split(" ")}
-                    )
-
-            packages.append(ebuild_info)
         return packages
+
+    def _parse_package_ebuild(self, split_package_string: str) -> PackageInfo:
+        """
+        """
+        update_status = split_package_string[0]
+        package_base_info = split_package_string[1]
+        repo = package_base_info.split("::")[1]
+        name_newversion = package_base_info.split("::")[0]
+
+        package_name = ""
+        for part in name_newversion.split("-"):
+            if part.isnumeric() == True:
+                pass
+            elif "." in part or ":" in part:
+                pass
+            elif len(part) == 2 and part[0] == "r" and part[1].isnumeric():
+                pass
+            else:
+                package_name += f"{part}-"
+
+        new_version = name_newversion.replace(package_name, "")
+        old_version = split_package_string[2].split("::")[0][1:]
+        package_name = package_name[:-1]
+
+        ebuild_info = PackageInfo(
+            package_name, new_version, old_version, update_status, repo
+        )
+
+        for var in split_package_string:
+            if '="' in var:
+                var = var.split("=")
+                ebuild_info.add_attributes(
+                    {var[0]: var[1][1:-1].split(" ")}
+                )
+
+        return ebuild_info
+
+    def _parse_package_blocks(split_package_string: str) -> PackageInfo:
+        """
+        """
+        update_status = split_package_string[0]
+        pass
 
     def parse_disk_usage_info(
         self, section_content: List[str]
