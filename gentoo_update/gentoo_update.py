@@ -226,7 +226,7 @@ def main() -> None:
         runner.run_shell_script(
             args.update_mode,
             add_prefixes(args.args) if args.args else "NOARGS",
-            "y" if args.config_update_mode else "n",
+            args.config_update_mode,
             "y" if args.daemon_restart else "n",
             "y" if args.clean else "n",
             "y" if args.read_logs else "n",

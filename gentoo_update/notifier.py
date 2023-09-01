@@ -125,7 +125,7 @@ class Notifier:
             print("Token not found, please define GU_TOKEN env variable.")
             exit(1)
         update_status = report[1].split(": ")[1]
-        update_content = report[2:-1]
+        update_content = report[2:]
 
         url = "https://us-central1-gentoo-update.cloudfunctions.net/checkTokenAndForwardData"
         headers = {"Content-Type": "application/json"}

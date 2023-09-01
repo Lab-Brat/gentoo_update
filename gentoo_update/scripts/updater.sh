@@ -68,78 +68,72 @@ function sync_tree() {
 }
 
 # -------------------- UPDATE_SYSTEM --------------------- #
-function update_security() {
-    echo -e "{{ UPDATE SYSTEM }}\n"
-
-    # Check for GLSAs and install updates if necessary
-    glsa=$(glsa-check --list affected)
-
-    if [ -z "${glsa}" ]; then
-        echo "No affected GLSAs found."
-    else
-        echo "Affected GLSAs found. Applying updates..."
-        glsa-check --fix affected
-        echo "Updates applied."
-    fi
-}
-
-function emerge_full() {
-    # run emerge with custom flags
-    local update_flags="${1}"
-    echo "Update command:"
-    echo "emerge --verbose --quiet-build=y --update --newuse --deep ${update_flags} @world"
-    eval "emerge --verbose --quiet-build=y --update --newuse --deep ${update_flags} @world"
-}
-
-function emerge_pretend() {
-    echo -e "{{ PRETEND EMERGE }}"
-
-    # run emerge in pretend mode to detect some issues before updating
-    update_mode="${UPDATE_MODE}"
-
-    if [[ "${update_mode}" == 'full' ]]; then
-        echo "Running emerge with --pretend"
-        if emerge --pretend --update --newuse --deep @world; then
-            echo "emerge pretend was successful, updating..."
-        else
-            echo "emerge pretend has failed, exiting"
-            exit 1
-        fi
-    else
-        echo "Security update dont have pretend mode, skipping..."
-    fi
-}
-
-function update() {
-    echo -e "{{ UPDATE SYSTEM }}\n"
-
+function get_update_packages_and_commands() {
     update_mode="${UPDATE_MODE}"
     update_flags="${UPDATE_FLAGS}"
 
-    # Do security updates or full system updates
+    # Get a list of security patches or just use @world
     if [[ "${update_mode}" == 'security' ]]; then
-        echo -e "updating GLSA\n"
-        update_security
-        echo ""
-        echo "update was successful"
-        echo ""
+        glsa=$(glsa-check --list --quiet affected)
+        AFFECTED_PACKAGES=$(echo "${glsa}" | awk 'NF>1 {print $(NF-1)}' | paste -sd " " -)
+        UPDATE_PRETEND_COMMAND="emerge --verbose --pretend --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_COMMAND="emerge --verbose  --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
 
     elif [[ "${update_mode}" == 'full' ]]; then
-        echo -e "updating @world\n"
-        emerge_full "${update_flags}"
-        echo ""
-        echo "update was successful"
-        echo ""
+        AFFECTED_PACKAGES='@world'
+        UPDATE_PRETEND_COMMAND="emerge --verbose  --pretend --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
+        UPDATE_COMMAND="emerge --verbose --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
 
     else
         echo "Invalid update mode, exiting...."
         exit 1
     fi
 }
+get_update_packages_and_commands
+
+function emerge_pretend() {
+    echo -e "{{ PRETEND EMERGE }}\n"
+
+    # run emerge in pretend mode to detect some issues before updating
+    update_mode="${UPDATE_MODE}"
+    update_flags="${UPDATE_FLAGS}"
+    affected_packages="${AFFECTED_PACKAGES}"
+
+    if [ -n "${affected_packages}" ]; then
+        echo "emerging with --pretend..."
+        echo "Updating: ${affected_packages}"
+        if eval "${UPDATE_PRETEND_COMMAND}"; then
+            echo "emerge pretend was successful, updating..."
+        else
+            echo "emerge pretend has failed, exiting"
+            exit 1
+        fi
+    else
+        echo -e "There are no packages to update, skipping...\n"
+    fi
+}
+
+function update() {
+    echo -e "{{ UPDATE SYSTEM }}\n"
+
+    affected_packages="${AFFECTED_PACKAGES}"
+
+    if [ -n "${affected_packages}" ]; then
+        echo "emerging..."
+        echo "Updating: ${affected_packages}"
+        echo "Update command:"
+        echo "${UPDATE_COMMAND}"
+        eval "${UPDATE_COMMAND}"
+        echo "update was successful"
+
+    else
+        echo -e "There are no packages to update, skipping...\n"
+    fi
+}
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
-    echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
+    echo -e "{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
 
     update_mode="${CONFIG_UPDATE_MODE}"
 

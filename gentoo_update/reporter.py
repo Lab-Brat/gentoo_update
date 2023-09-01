@@ -89,15 +89,30 @@ class Reporter:
             "update status: SUCCESS",
         ]
         updated_packages = update_info.update_details["updated_packages"]
+        other_package_types = False
         if updated_packages:
             report.append(r"processed packages:")
             for package in updated_packages:
-                package_name = package.package_name
-                new_version = package.new_version
-                old_version = package.old_version
-                report.append(
-                    f"--- {package_name} {old_version}->{new_version}"
-                )
+                if package.package_type == "ebuild":
+                    package_name = package.package_name
+                    new_version = package.new_version
+                    old_version = package.old_version
+                    report.append(
+                        f"--- {package_name} {old_version}->{new_version}"
+                    )
+                else:
+                    other_package_types = True
+
+            if other_package_types:
+                report.append("")
+                report.append("Non-ebuild packages")
+                for package in updated_packages:
+                    if package.package_type == "blocks":
+                        package_name = package.package_name
+                        blocked_package = package.blocked_package
+                        report.append(
+                            f"--- {package_name} blocked {blocked_package}"
+                        )
             report.append("")
             report.append("Disk Usage Stats:")
 
