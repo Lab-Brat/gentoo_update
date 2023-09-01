@@ -4,24 +4,15 @@ services:
   # these are used in the development process
   gentoo_update_glsa_source:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/old_openrc_desktop.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh sec_update"]
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh source security y n"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
       - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
-
-  gentoo_update_glsa_source_stay:
-    build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/old_openrc_desktop.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && sleep infinity"]
-    volumes:
-      - ../../gentoo_update/:/root/gentoo_update_source
-      - ./logs:/var/log/portage/gentoo-update
-      - ./run_tests.sh:/tmp/run_tests.sh
-
 
   gentoo_update_world_source:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip_install && /tmp/run_tests.sh full_update_all_options"]
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh source full_with_all_opts y n"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
       - ./logs:/var/log/portage/gentoo-update
@@ -30,7 +21,7 @@ services:
   # container to test gentoo_update by installing it from PyPI using pip
   gentoo_update_world_pypi:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pypi_install && /tmp/run_tests.sh full_update_all_options"]
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip full y n"]
     volumes:
       - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
@@ -38,7 +29,7 @@ services:
   # container to test gentoo_update by installing it from GURU using emerge
   gentoo_update_world_guru:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh emerge_install && /tmp/run_tests.sh full_update"]
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh ebuild full y n"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
       - ./logs:/var/log/portage/gentoo-update
