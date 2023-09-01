@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 @dataclass
 class PackageInfo:
+    package_type: str
     package_name: str
     new_version: str
     old_version: str
@@ -305,9 +306,9 @@ class Parser:
             split_package_string = self.parse_package_string(package_string)
             update_status = split_package_string[0]
 
-            if 'ebuild' in update_status:
+            if "ebuild" in update_status:
                 package = self._parse_package_ebuild(split_package_string)
-            elif 'blocks' in update_status:
+            elif "blocks" in update_status:
                 package = self._parse_package_blocks(split_package_string)
 
             packages.append(package)
@@ -315,8 +316,8 @@ class Parser:
         return packages
 
     def _parse_package_ebuild(self, split_package_string: str) -> PackageInfo:
-        """
-        """
+        """ """
+        package_type = "ebuild"
         update_status = split_package_string[0]
         package_base_info = split_package_string[1]
         repo = package_base_info.split("::")[1]
@@ -338,23 +339,43 @@ class Parser:
         package_name = package_name[:-1]
 
         ebuild_info = PackageInfo(
-            package_name, new_version, old_version, update_status, repo
+            package_type,
+            package_name,
+            new_version,
+            old_version,
+            update_status,
+            repo,
         )
 
         for var in split_package_string:
             if '="' in var:
                 var = var.split("=")
-                ebuild_info.add_attributes(
-                    {var[0]: var[1][1:-1].split(" ")}
-                )
+                ebuild_info.add_attributes({var[0]: var[1][1:-1].split(" ")})
 
         return ebuild_info
 
-    def _parse_package_blocks(split_package_string: str) -> PackageInfo:
-        """
-        """
+    def _parse_package_blocks(self, split_package_string: str) -> PackageInfo:
+        """ """
+        package_type = "blocks"
+        package_name = split_package_string[1][1:]
+        new_version = None
+        old_version = None
         update_status = split_package_string[0]
-        pass
+        repo = None
+
+        blocks_info = PackageInfo(
+            package_type,
+            package_name,
+            new_version,
+            old_version,
+            update_status,
+            repo,
+        )
+
+        blocks_info.add_attributes(
+            {"blocked_package": split_package_string[-1][:-1]}
+        )
+        return blocks_info
 
     def parse_disk_usage_info(
         self, section_content: List[str]
