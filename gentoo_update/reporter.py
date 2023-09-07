@@ -1,3 +1,4 @@
+import sys
 from typing import List
 from .parser import (
     UpdateSection,
@@ -137,25 +138,29 @@ class Reporter:
             List: A list of strings that comprise the update report.
         """
         info = self.info
-        disk_usage_info = info.disk_usage
-        pretend_success = info.pretend_emerge.pretend_status
+        try:
+            disk_usage_info = info.disk_usage
+            pretend_success = info.pretend_emerge.pretend_status
 
-        if pretend_success:
-            update_info = info.update_system
-            update_success = info.update_system.update_status
-        else:
-            pretend_info = info.pretend_emerge
-            update_success = False
+            if pretend_success:
+                update_info = info.update_system
+                update_success = info.update_system.update_status
+            else:
+                pretend_info = info.pretend_emerge
+                update_success = False
 
-        if update_success:
-            report = self._create_successful_report(
-                update_info, disk_usage_info
-            )
-        elif pretend_success and not update_success:
-            report = self._create_failed_report(update_info, disk_usage_info)
-        else:
-            report = self._create_failed_pretend_report(pretend_info)
-        return report
+            if update_success:
+                report = self._create_successful_report(
+                    update_info, disk_usage_info
+                )
+            elif pretend_success and not update_success:
+                report = self._create_failed_report(update_info, disk_usage_info)
+            else:
+                report = self._create_failed_pretend_report(pretend_info)
+            return report
+        except AttributeError:
+            print("[Error] Could not create the report, incomplete log file")
+            sys.exit(1)
 
     def print_report(self) -> None:
         """
