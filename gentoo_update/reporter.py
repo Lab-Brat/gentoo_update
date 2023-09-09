@@ -114,6 +114,10 @@ class Reporter:
                         report.append(
                             f"--- {package_name} blocked {blocked_package}"
                         )
+                    elif package.package_type == "uninstall":
+                        package_name = package.package_name
+                        uninstalled_package = package.uninstalled_package
+                        report.append(f"--- {package_name} was uninstalled")
             report.append("")
             report.append("Disk Usage Stats:")
 
@@ -154,7 +158,9 @@ class Reporter:
                     update_info, disk_usage_info
                 )
             elif pretend_success and not update_success:
-                report = self._create_failed_report(update_info, disk_usage_info)
+                report = self._create_failed_report(
+                    update_info, disk_usage_info
+                )
             else:
                 report = self._create_failed_pretend_report(pretend_info)
             return report
