@@ -60,7 +60,7 @@ function check_disk_usage_after_update() {
 
 # ------------------ SYNC_PORTAGE_TREE ------------------- #
 function sync_tree() {
-    echo -e "{{ SYNC PORTAGE TREE }}\n"
+    echo -e "\n{{ SYNC PORTAGE TREE }}\n"
 
     # Update main Portage tree
     echo "Syncing Portage Tree"
@@ -92,7 +92,7 @@ function get_update_packages_and_commands() {
 get_update_packages_and_commands
 
 function emerge_pretend() {
-    echo -e "{{ PRETEND EMERGE }}\n"
+    echo -e "\n{{ PRETEND EMERGE }}\n"
 
     # run emerge in pretend mode to detect some issues before updating
     update_mode="${UPDATE_MODE}"
@@ -109,12 +109,12 @@ function emerge_pretend() {
             exit 1
         fi
     else
-        echo -e "There are no packages to update, skipping...\n"
+        echo "There are no packages to update, skipping.."
     fi
 }
 
 function update() {
-    echo -e "{{ UPDATE SYSTEM }}\n"
+    echo -e "\n{{ UPDATE SYSTEM }}\n"
 
     affected_packages="${AFFECTED_PACKAGES}"
 
@@ -127,13 +127,13 @@ function update() {
         echo "update was successful"
 
     else
-        echo -e "There are no packages to update, skipping...\n"
+        echo "There are no packages to update, skipping..."
     fi
 }
 
 # ---------------- UPDATE_CONFIGURATIONS ----------------- #
 function config_update() {
-    echo -e "{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
+    echo -e "\n{{ UPDATE SYSTEM CONFIGURATION FILES }}\n"
 
     update_mode="${CONFIG_UPDATE_MODE}"
 
