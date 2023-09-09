@@ -317,8 +317,18 @@ class Parser:
 
         return packages
 
-    def _parse_package_ebuild(self, split_package_string: str) -> PackageInfo:
-        """ """
+    def _parse_package_ebuild(self, split_package_string: List) -> PackageInfo:
+        """
+        Parse ebuild information.
+
+        Parameters:
+            split_package_string (List[str]): A list with ebuild info, example:
+                ['[ebuild     U  ]', 'sys-devel/gnuconfig-20230731::gentoo',
+                 '[20230121::gentoo]', '72', 'KiB']
+
+        Returns:
+            PackageInfo: PackageInfo object with processed information
+        """
         package_type = "ebuild"
         update_status = split_package_string[0]
         package_base_info = split_package_string[1]
@@ -357,7 +367,18 @@ class Parser:
         return ebuild_info
 
     def _parse_package_blocks(self, split_package_string: str) -> PackageInfo:
-        """ """
+        """
+        Parse blocks information.
+
+        Parameters:
+            split_package_string (List[str]): A list with blocks info, example:
+                ['[blocks b      ]', '<perl-core/Compress-Raw-Zlib-2.204.1_rc',
+                 '("<perl-core/Compress-Raw-Zlib-2.204.1_rc"', 'is', 'soft',
+                 'blocking', 'virtual/perl-Compress-Raw-Zlib-2.204.1_rc)']
+
+        Returns:
+            PackageInfo: PackageInfo object with processed information
+        """
         package_type = "blocks"
         package_name = split_package_string[1][1:]
         new_version = None
@@ -380,9 +401,18 @@ class Parser:
         return blocks_info
 
     def _parse_package_uninstall(
-        self, split_package_string: str
+        self, split_package_string: List
     ) -> PackageInfo:
-        """ """
+        """
+        Parse uninstall information.
+
+        Parameters:
+            split_package_string (List[str]): A list with uninstall info, example:
+                ['[uninstall     ]', 'perl-core/Compress-Raw-Zlib-2.202.0::gentoo']
+
+        Returns:
+            PackageInfo: PackageInfo object with processed information
+        """
         package_type = "uninstall"
         split_package_info = split_package_string[1].split("::")
         package_name = split_package_info[0]
