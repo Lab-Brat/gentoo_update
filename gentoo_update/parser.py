@@ -310,13 +310,25 @@ class Parser:
                 package = self._parse_package_ebuild(split_package_string)
             elif "blocks" in update_status:
                 package = self._parse_package_blocks(split_package_string)
+            elif "uninstall" in update_status:
+                package = self._parse_package_uninstall(split_package_string)
 
             packages.append(package)
 
         return packages
 
-    def _parse_package_ebuild(self, split_package_string: str) -> PackageInfo:
-        """ """
+    def _parse_package_ebuild(self, split_package_string: List) -> PackageInfo:
+        """
+        Parse ebuild information.
+
+        Parameters:
+            split_package_string (List[str]): A list with ebuild info, example:
+                ['[ebuild     U  ]', 'sys-devel/gnuconfig-20230731::gentoo',
+                 '[20230121::gentoo]', '72', 'KiB']
+
+        Returns:
+            PackageInfo: PackageInfo object with processed information
+        """
         package_type = "ebuild"
         update_status = split_package_string[0]
         package_base_info = split_package_string[1]
@@ -355,7 +367,18 @@ class Parser:
         return ebuild_info
 
     def _parse_package_blocks(self, split_package_string: str) -> PackageInfo:
-        """ """
+        """
+        Parse blocks information.
+
+        Parameters:
+            split_package_string (List[str]): A list with blocks info, example:
+                ['[blocks b      ]', '<perl-core/Compress-Raw-Zlib-2.204.1_rc',
+                 '("<perl-core/Compress-Raw-Zlib-2.204.1_rc"', 'is', 'soft',
+                 'blocking', 'virtual/perl-Compress-Raw-Zlib-2.204.1_rc)']
+
+        Returns:
+            PackageInfo: PackageInfo object with processed information
+        """
         package_type = "blocks"
         package_name = split_package_string[1][1:]
         new_version = None
@@ -376,6 +399,39 @@ class Parser:
             {"blocked_package": split_package_string[-1][:-1]}
         )
         return blocks_info
+
+    def _parse_package_uninstall(
+        self, split_package_string: List
+    ) -> PackageInfo:
+        """
+        Parse uninstall information.
+
+        Parameters:
+            split_package_string (List[str]): A list with uninstall info, example:
+                ['[uninstall     ]', 'perl-core/Compress-Raw-Zlib-2.202.0::gentoo']
+
+        Returns:
+            PackageInfo: PackageInfo object with processed information
+        """
+        package_type = "uninstall"
+        split_package_info = split_package_string[1].split("::")
+        package_name = split_package_info[0]
+        repo = split_package_info[1]
+        new_version = None
+        old_version = None
+        update_status = split_package_string[0]
+
+        uninstall_info = PackageInfo(
+            package_type,
+            package_name,
+            new_version,
+            old_version,
+            update_status,
+            repo,
+        )
+
+        uninstall_info.add_attributes({"uninstalled_package": package_name})
+        return uninstall_info
 
     def parse_disk_usage_info(
         self, section_content: List[str]
