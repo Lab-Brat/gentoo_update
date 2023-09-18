@@ -497,4 +497,5 @@ class Parser:
                     section_content
                 )
         log_info.disk_usage = disk_usage
+
         return log_info

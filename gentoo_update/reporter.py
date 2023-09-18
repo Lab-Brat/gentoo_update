@@ -10,8 +10,9 @@ from .parser import (
 
 
 class Reporter:
-    def __init__(self, update_info: LogInfo) -> None:
+    def __init__(self, update_info: LogInfo, short_report: bool) -> None:
         self.info = update_info
+        self.short_report = short_report
 
     def _create_failed_pretend_report(
         self, pretend_info: PretendSection
@@ -152,6 +153,10 @@ class Reporter:
             else:
                 pretend_info = info.pretend_emerge
                 update_success = False
+
+            if self.short_report:
+                update_status = "SUCCESS" if update_success else "FAIL"
+                return [f"update status: {update_status}"]
 
             if update_success:
                 report = self._create_successful_report(

@@ -98,6 +98,12 @@ def create_cli() -> argparse.Namespace:
         "Default: none\n",
     )
     parser.add_argument(
+        "-t",
+        "--short-report",
+        action="store_true",
+        help="Show or send only update status without package info.\n",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=__version__,
@@ -169,18 +175,19 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
     return log_dir, log_dir_messages
 
 
-def generate_last_report(log_dir: str) -> None:
+def generate_last_report(log_dir: str, short_report: bool) -> None:
     """
     Show report for the last log located in $PORTAGE_LOGDIR.
 
     Parameters:
         log_dir (str): Directory where gentoo_update stores logs.
+        short_report (bool): Short report format.
     """
     files = os.listdir(log_dir)
     paths = [os.path.join(log_dir, basename) for basename in files]
     last_log = max(paths, key=os.path.getctime)
     update_info = Parser(last_log).extract_info_for_report()
-    return Reporter(update_info)
+    return Reporter(update_info, short_report)
 
 
 def add_prefixes(args: str) -> str:
@@ -214,9 +221,11 @@ def main() -> None:
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
     if args.report:
-        generate_last_report(log_dir).print_report()
+        generate_last_report(log_dir, args.short_report).print_report()
     elif args.send_report in ["irc", "email", "mobile"]:
-        report = generate_last_report(log_dir).create_report()
+        report = generate_last_report(
+            log_dir, args.short_report
+        ).create_report()
         short = False if args.send_report != "irc" else True
         Notifier(notification_type=args.send_report, report=report, short=short)
     else:
