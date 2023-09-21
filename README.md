@@ -22,22 +22,23 @@ report which notifier then sends via email, IRC bot or
     - [x] update security patches from GLSA by default, and optionally update `@world`
     - [x] insert additional flags to `@world` update 
     - [ ] do not start the update if available disk space is lower than a certain threshold
+    - [ ] show list of packages before the update
 - parser:
-    - [x] Show update status (success/failure) in the report
-    - [x] Show package info after successful update: ebuilds, blocks, uninstalls etc.
-    - [ ] Detect different errors during an update
-        - [x] Blocked Packages
+    - [x] show update status (success/failure) in the report
+    - [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
+    - [ ] detect different errors during an update
+        - [x] blocked Packages
         - [ ] USE flag conflicts
-        - [ ] Issues with Licenses
-        - [ ] Network issues during an update
+        - [ ] issues with Licenses
+        - [ ] network issues during an update
         - [ ] OOM during an update
-    - [x] Show disk usage before/after an update
+    - [x] show disk usage before/after an update
 - notifier:
-    - [x] Send update report via IRC bot
-    - [x] Send update report via email using SendGrid
-    - [ ] Send update report via email using local relay
-    - [x] Send update report via mobile app
-    - [ ] Send a short report with only the update status instead of a full report
+    - [x] send update report via IRC bot
+    - [x] send update report via email using SendGrid
+    - [ ] send update report via email using local relay
+    - [x] send update report via mobile app
+    - [ ] send a short report with only the update status instead of a full report
 - general:
     - [x] ebuild in GURU repository
     - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
