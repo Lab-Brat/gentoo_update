@@ -54,6 +54,13 @@ def create_cli() -> argparse.Namespace:
         "Default: ignore\n",
     )
     parser.add_argument(
+        "-u",
+        "--disk-usage-limit",
+        default="0",
+        help="Do not run update if available disk space is lower than a limit (in GB).\n"
+        "Default: 0 - do not set a limit.\n",
+    )
+    parser.add_argument(
         "-d",
         "--daemon-restart",
         action="store_true",
@@ -235,6 +242,7 @@ def main() -> None:
         runner.run_shell_script(
             args.update_mode,
             add_prefixes(args.args) if args.args else "NOARGS",
+            args.disk_usage_limit,
             args.config_update_mode,
             "y" if args.daemon_restart else "n",
             "y" if args.clean else "n",

@@ -138,6 +138,7 @@ class ShellRunner:
                          They need to be handled by the script.
         """
         script_stages = [
+            "check_root_part_limit",
             "check_disk_usage_before_update",
             "sync_tree",
             "emerge_pretend",
