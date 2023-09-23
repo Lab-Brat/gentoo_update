@@ -38,7 +38,7 @@ report which notifier then sends via email, IRC bot or
     - [x] send update report via email using SendGrid
     - [ ] send update report via email using local relay
     - [x] send update report via mobile app
-    - [ ] send a short report with only the update status instead of a full report
+    - [x] send a short report with only the update status instead of a full report
 - general:
     - [x] ebuild in GURU repository
     - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
