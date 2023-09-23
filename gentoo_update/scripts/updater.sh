@@ -9,13 +9,27 @@ UPDATE_FLAGS="${3}"
 if [[ "${UPDATE_FLAGS}" == "NOARGS" ]]; then
     UPDATE_FLAGS=""
 fi
-CONFIG_UPDATE_MODE="${4}"
-DAEMON_RESTART="${5}"
-CLEAN="${6}"
-READ_ELOGS="${7}"
-READ_NEWS="${8}"
+DISK_USAGE_LIMIT="${4}"
+CONFIG_UPDATE_MODE="${5}"
+DAEMON_RESTART="${6}"
+CLEAN="${7}"
+READ_ELOGS="${8}"
+READ_NEWS="${9}"
 
 # ------------------- CHECK_DISK_USAGE ------------------- #
+function check_root_part_limit() {
+  echo -e "\n{{ VERIFYING AVAILABLE DISK SPACE }}\n"
+  FREE_SPACE=$(df / --output=avail | tail -n 1 | awk '{print $1/1024/1024}') 
+ 
+  if (( $(echo "${FREE_SPACE} > ${DISK_USAGE_LIMIT}" | bc -l) )); then
+      echo "There is sufficient free space."
+      echo "Free space: ${FREE_SPACE} GB"
+  else
+      echo "There is no sufficient free space."
+      echo "Free space: ${FREE_SPACE} GB"
+      exit 1
+  fi
+}
 function check_disk_usage() {
     mount_point_found=false
 
@@ -251,6 +265,10 @@ function get_news() {
 
 # --------------------- RUN_PROGRAM ---------------------- #
 case ${FUNCTION} in
+check_root_part_limit)
+    "$@"
+    exit
+    ;;
 check_disk_usage_before_update)
     "$@"
     exit
