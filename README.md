@@ -20,7 +20,7 @@ report which notifier then sends via email, IRC bot or
 - updater:
   - [x] update security patches from GLSA by default, and optionally update `@world`
   - [x] insert additional flags to `@world` update
-  - [ ] do not start the update if available disk space is lower than a certain threshold
+  - [x] do not start the update if available disk space is lower than a certain threshold
   - [ ] show list of packages before the update
   - parser:
   - [x] show update status (success/failure) in the report
