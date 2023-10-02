@@ -1,6 +1,6 @@
 import re
-from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
 
 
 @dataclass
@@ -76,7 +76,7 @@ class Parser:
         Returns:
             List[str]: The content of the log file as a list of strings.
         """
-        with open(self.log_file, "r") as log_file:
+        with open(self.log_file, "r", encoding="utf-8") as log_file:
             log_data = log_file.readlines()
         return self.split_log_to_sections(log_data)
 
@@ -337,7 +337,7 @@ class Parser:
 
         package_name = ""
         for part in name_newversion.split("-"):
-            if part.isnumeric() == True:
+            if part.isnumeric() is True:
                 pass
             elif "." in part or ":" in part:
                 pass
@@ -478,8 +478,7 @@ class Parser:
         """
         log_info = LogInfo
         disk_usage = DiskUsage
-        for section in self.log_data.keys():
-            section_content = self.log_data[section]
+        for section, section_content in self.log_data.items():
             if section == "pretend_emerge":
                 log_info.pretend_emerge = self.parse_emerge_pretend_section(
                     section_content

@@ -1,11 +1,12 @@
 import sys
 from typing import List
+
 from .parser import (
-    UpdateSection,
-    PretendError,
-    PretendSection,
     DiskUsage,
     LogInfo,
+    PretendError,
+    PretendSection,
+    UpdateSection,
 )
 
 
@@ -117,7 +118,8 @@ class Reporter:
                         )
                     elif package.package_type == "uninstall":
                         package_name = package.package_name
-                        uninstalled_package = package.uninstalled_package
+                        # uninstalled_package seems unused
+                        # uninstalled_package = package.uninstalled_package
                         report.append(f"--- {package_name} was uninstalled")
             report.append("")
             report.append("Disk Usage Stats:")

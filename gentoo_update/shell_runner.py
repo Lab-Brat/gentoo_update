@@ -1,12 +1,33 @@
-import os
-import sys
 import logging
+import os
 import subprocess
+import sys
 from datetime import datetime
 from typing import List
 
 
 class ShellRunner:
+    """
+    A class that runs shell scripts and logs the output to a file and terminal.
+
+    Args:
+        quiet (str): If 'y', suppresses terminal output.
+        log_dir (str): Directory to save log files.
+        log_dir_messages (str): List of messages to log.
+
+    Attributes:
+        quiet (bool): If True, suppresses terminal output.
+        timestamp (str): Current timestamp in the format of '%Y-%m-%d-%H-%M'.
+        log_dir (str): Directory to save log files.
+        log_dir_messages (str): List of messages to log.
+        log_filename (str): Log filename.
+        logger (logging.Logger): Configured logger.
+        script_dir (str): Directory of the shell script.
+        script_path (str): Path to the shell script.
+        stdout_output (List[str]): List containing the standard output.
+        stderr_output (List[str]): List containing the standard error output.
+    """
+
     def __init__(self, quiet: str, log_dir: str, log_dir_messages: str) -> None:
         self.quiet = True if quiet == "y" else False
 
@@ -58,21 +79,21 @@ class ShellRunner:
         return logger
 
     def _log_stream_output(
-        self, stream_obj: subprocess.Popen, type: str
+        self, stream_obj: subprocess.Popen, outputtype: str
     ) -> List[str]:
         """
         Process sterr from the upadte script.
 
         Args:
             stream: output stream from subprocess.Popen
-            type: output type, stderr or stdout
+            outputtype: output type, stderr or stdout
         Returns:
             List[str]: List containing the output
         """
         output = []
-        if type == "stdout":
+        if outputtype == "stdout":
             stream = stream_obj.stdout
-        elif type == "stderr":
+        elif outputtype == "stderr":
             stream = stream_obj.stderr
         else:
             self.logger.error("Invalid Output Stream Type")
@@ -80,9 +101,9 @@ class ShellRunner:
         for line in stream:
             line = line.decode().rstrip("\n")
             output.append(line)
-            if type == "stdout":
+            if outputtype == "stdout":
                 self.logger.info(line)
-            elif type == "stderr":
+            elif outputtype == "stderr":
                 self.logger.error(line)
         return output
 
@@ -170,6 +191,6 @@ class ShellRunner:
                         handler.close()
                         self.logger.removeHandler(handler)
                     except:
-                        "Log Handler Error: Could not close handler"
+                        print("Log Handler Error: Could not close handler")
         except AttributeError:
             print("Log Hanlder Error: Logger object was not defined")

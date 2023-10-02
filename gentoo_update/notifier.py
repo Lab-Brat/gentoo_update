@@ -1,16 +1,16 @@
+import json
 import os
 import socket
 import ssl
 import time
-import json
 import urllib.request
 from sys import exit
 from typing import List, Tuple
 
 USE_SENDGRID = True
 try:
-    import sendgrid
-    from sendgrid.helpers.mail import Mail, Email, To, Content
+    import sendgrid  # noqa: I005
+    from sendgrid.helpers.mail import Content, Email, Mail, To  # noqa: I005
 except ImportError:
     USE_SENDGRID = False
 

@@ -1,11 +1,12 @@
-import os
 import argparse
-from typing import Tuple, List, Dict
-from .shell_runner import ShellRunner
+import os
+from typing import Dict, List, Tuple
+
+from ._version import __version__
+from .notifier import Notifier
 from .parser import Parser
 from .reporter import Reporter
-from .notifier import Notifier
-from ._version import __version__
+from .shell_runner import ShellRunner
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 
