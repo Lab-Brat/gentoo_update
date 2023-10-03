@@ -1,13 +1,38 @@
-import os
-import sys
+"""Provides a class `ShellRunner` for running shell scripts."""
+
 import logging
+import os
 import subprocess
+import sys
 from datetime import datetime
 from typing import List
 
 
 class ShellRunner:
+    """Runs shell scripts and logs the output to a file and terminal.
+
+    Args:
+    ----
+        quiet (str): If 'y', suppresses terminal output.
+        log_dir (str): Directory to save log files.
+        log_dir_messages (str): List of messages to log.
+
+    Attributes:
+    ----------
+        quiet (bool): If True, suppresses terminal output.
+        timestamp (str): Current timestamp in the format of '%Y-%m-%d-%H-%M'.
+        log_dir (str): Directory to save log files.
+        log_dir_messages (str): List of messages to log.
+        log_filename (str): Log filename.
+        logger (logging.Logger): Configured logger.
+        script_dir (str): Directory of the shell script.
+        script_path (str): Path to the shell script.
+        stdout_output (List[str]): List containing the standard output.
+        stderr_output (List[str]): List containing the standard error output.
+    """
+
     def __init__(self, quiet: str, log_dir: str, log_dir_messages: str) -> None:
+        """Initialize ShellRunner class."""
         self.quiet = True if quiet == "y" else False
 
         self.timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
@@ -21,15 +46,17 @@ class ShellRunner:
         self.script_path = os.path.join(self.script_dir, "updater.sh")
 
     def initiate_logger(self) -> logging.Logger:
-        """
-        Create a logger with two handlers:
+        """Create a logger with two handlers.
+
             1. terminal output
             2. file output
+
         Both handlers have the same logging level (INFO)
         and share the same formatter.
         Formatters include timestamp, log level and the message.
 
-        Returns:
+        Returns
+        -------
             logging.Logger: Configured logger.
             log_filename: Log filename.
         """
@@ -58,82 +85,76 @@ class ShellRunner:
         return logger
 
     def _log_stream_output(
-        self, stream_obj: subprocess.Popen, type: str
+        self, stream_obj: subprocess.Popen, outputtype: str
     ) -> List[str]:
-        """
-        Process sterr from the upadte script.
+        """Process sterr from the upadte script.
 
         Args:
-            stream: output stream from subprocess.Popen
-            type: output type, stderr or stdout
+        ----
+            stream_obj (subprocess.Popen): output stream from subprocess.Popen
+            outputtype (str): output type, stderr or stdout
+
         Returns:
+        -------
             List[str]: List containing the output
         """
         output = []
-        if type == "stdout":
+        if outputtype == "stdout":
             stream = stream_obj.stdout
-        elif type == "stderr":
+        elif outputtype == "stderr":
             stream = stream_obj.stderr
         else:
             self.logger.error("Invalid Output Stream Type")
 
-        for line in stream:
-            line = line.decode().rstrip("\n")
+        for stream_line in stream:
+            line = stream_line.decode().rstrip("\n")
             output.append(line)
-            if type == "stdout":
+            if outputtype == "stdout":
                 self.logger.info(line)
-            elif type == "stderr":
+            elif outputtype == "stderr":
                 self.logger.error(line)
         return output
 
     def _exit_with_error_message(self, stream: subprocess.Popen) -> None:
-        """
-        Exit runner if updater.sh encounters an error and
-        print/log that error.
+        """Exit runner if updater.sh encounters an error and log that error.
 
         Args:
+        ----
             stream: output stream from subprocess.Popen
-            stderr_output:
+            stderr_output: List containing the standard error output.
         """
-        error_message = (
-            "updater.sh exited with error code {script_stream.returncode}"
-        )
+        error_message = "updater.sh exited with error code {script_stream.returncode}"
         if self.stderr_output:
             stderr_output_message = "n".join(self.stderr_output)
-            error_message += (
-                f"\nStandard error output:\n{stderr_output_message}"
-            )
+            error_message += f"\nStandard error output:\n{stderr_output_message}"
         self.logger.error(error_message)
         sys.exit(stream.returncode)
 
     def run_shell_function(self, command: List) -> None:
-        """
-        Run a shell script and stream standard output
+        """Run a shell script and stream standard output.
+
         and standard error to terminal and a log file.
 
         Args:
+        ----
             command (List(str)): A call to specific function in
                                  update.sh with all parameters.
         """
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
-            self.stdout_output = self._log_stream_output(
-                script_stream, "stdout"
-            )
-            self.stderr_output = self._log_stream_output(
-                script_stream, "stderr"
-            )
+            self.stdout_output = self._log_stream_output(script_stream, "stdout")
+            self.stderr_output = self._log_stream_output(script_stream, "stderr")
             script_stream.wait()
 
             if script_stream.returncode != 0:
                 self._exit_with_error_message(script_stream)
 
     def run_shell_script(self, *args: str) -> None:
-        """
-        Run every function in update.sh one by one.
+        """Run every function in update.sh one by one.
 
         Args:
+        ----
             *args (str): Arguments for the shell script.
                          They need to be handled by the script.
         """
@@ -160,16 +181,14 @@ class ShellRunner:
             print(final_message)
 
     def __del__(self) -> None:
-        """
-        Close all file handlers after ShellRunner is closed.
-        """
+        """Close all file handlers after ShellRunner is closed."""
         try:
             if self.logger:
                 for handler in self.logger.handlers:
                     try:
                         handler.close()
                         self.logger.removeHandler(handler)
-                    except:
-                        "Log Handler Error: Could not close handler"
-        except AttributeError:
-            print("Log Hanlder Error: Logger object was not defined")
+                    except Exception as exc:
+                        print(f"Handler Error: Could not close handler: {exc}")
+        except AttributeError as attrerr:
+            print(f"Handler Error: {attrerr}. Logger object was not defined")
