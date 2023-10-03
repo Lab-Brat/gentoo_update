@@ -187,9 +187,7 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
     log_dir_messages = []
     if log_dir == "":
         log_dir = "/var/log/portage/gentoo-update"
-        log_dir_messages.append(
-            f"PORTAGE_LOGDIR not set, using default: {log_dir}"
-        )
+        log_dir_messages.append(f"PORTAGE_LOGDIR not set, using default: {log_dir}")
     else:
         log_dir = log_dir.replace('"', "")
         log_dir = f"{log_dir}/gentoo-update"
@@ -252,17 +250,11 @@ def main() -> None:
     if args.report:
         generate_last_report(log_dir, args.short_report).print_report()
     elif args.send_report in ["irc", "email", "mobile"]:
-        report = generate_last_report(
-            log_dir, args.short_report
-        ).create_report()
+        report = generate_last_report(log_dir, args.short_report).create_report()
         short = False if args.send_report != "irc" else True
-        Notifier(
-            notification_type=args.send_report, report=report, short=short
-        )
+        Notifier(notification_type=args.send_report, report=report, short=short)
     else:
-        runner = ShellRunner(
-            "y" if args.quiet else "n", log_dir, log_dir_messages
-        )
+        runner = ShellRunner("y" if args.quiet else "n", log_dir, log_dir_messages)
         runner.run_shell_script(
             args.update_mode,
             add_prefixes(args.args) if args.args else "NOARGS",

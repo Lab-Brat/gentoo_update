@@ -27,9 +27,7 @@ class Reporter:
         self.info = update_info
         self.short_report = short_report
 
-    def _create_failed_pretend_report(
-        self, pretend_info: PretendSection
-    ) -> List[str]:
+    def _create_failed_pretend_report(self, pretend_info: PretendSection) -> List[str]:
         """Create a report when emerge pretend fails.
 
         Args:
@@ -53,9 +51,7 @@ class Reporter:
         report.append("")
         return report
 
-    def _report_blocked_packages(
-        self, pretend_details: PretendError
-    ) -> List[str]:
+    def _report_blocked_packages(self, pretend_details: PretendError) -> List[str]:
         """Report on Blocked Packages error during emerge pretend.
 
         Args:
@@ -116,9 +112,7 @@ class Reporter:
                     package_name = package.package_name
                     new_version = package.new_version
                     old_version = package.old_version
-                    report.append(
-                        f"--- {package_name} {old_version}->{new_version}"
-                    )
+                    report.append(f"--- {package_name} {old_version}->{new_version}")
                 else:
                     other_package_types = True
 
@@ -129,9 +123,7 @@ class Reporter:
                     if package.package_type == "blocks":
                         package_name = package.package_name
                         blocked_package = package.blocked_package
-                        report.append(
-                            f"--- {package_name} blocked {blocked_package}"
-                        )
+                        report.append(f"--- {package_name} blocked {blocked_package}")
                     elif package.package_type == "uninstall":
                         package_name = package.package_name
                         # uninstalled_package seems unused
@@ -177,13 +169,9 @@ class Reporter:
                 return [f"update status: {update_status}"]
 
             if update_success:
-                report = self._create_successful_report(
-                    update_info, disk_usage_info
-                )
+                report = self._create_successful_report(update_info, disk_usage_info)
             elif pretend_success and not update_success:
-                report = self._create_failed_report(
-                    update_info, disk_usage_info
-                )
+                report = self._create_failed_report(update_info, disk_usage_info)
             else:
                 report = self._create_failed_pretend_report(pretend_info)
             return report

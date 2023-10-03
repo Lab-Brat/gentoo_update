@@ -21,9 +21,7 @@ except ImportError:
 class Notifier:
     """Notifier class for sending update reports."""
 
-    def __init__(
-        self, notification_type: str, report: List, short=True
-    ) -> None:
+    def __init__(self, notification_type: str, report: List, short=True) -> None:
         """Initialize Notifier class."""
         report = report[0:2] if short else report
 
@@ -88,9 +86,7 @@ class Notifier:
             return api_key, send_to, send_from
         else:
             print("Undefined enviromental variable(s)")
-            print(
-                "Please define: SENDGRID_API_KEY, SENDGRID_TO, SENDGRID_FROM"
-            )
+            print("Please define: SENDGRID_API_KEY, SENDGRID_TO, SENDGRID_FROM")
             exit(1)
 
     def send_report_to_mail(self, report: List[str]) -> None:
@@ -103,9 +99,7 @@ class Notifier:
         mail = Mail(Email(send_from), To(send_to), subject, content)
         mail_json = mail.get()
 
-        response = sendgrid_client.client.mail.send.post(
-            request_body=mail_json
-        )
+        response = sendgrid_client.client.mail.send.post(request_body=mail_json)
         if response.status_code == ACCEPTED_HTTP_CODE:
             print("email was sent successfully!")
         else:
@@ -131,9 +125,7 @@ class Notifier:
 
         data = json.dumps(data).encode("utf-8")
 
-        req = urllib.request.Request(
-            url, data=data, headers=headers, method="POST"
-        )
+        req = urllib.request.Request(url, data=data, headers=headers, method="POST")
         with urllib.request.urlopen(req) as response:
             print(response.status)
             print(response.read().decode("utf-8"))

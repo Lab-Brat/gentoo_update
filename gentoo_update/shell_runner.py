@@ -31,9 +31,7 @@ class ShellRunner:
         stderr_output (List[str]): List containing the standard error output.
     """
 
-    def __init__(
-        self, quiet: str, log_dir: str, log_dir_messages: str
-    ) -> None:
+    def __init__(self, quiet: str, log_dir: str, log_dir_messages: str) -> None:
         """Initialize ShellRunner class."""
         self.quiet = True if quiet == "y" else False
 
@@ -125,14 +123,10 @@ class ShellRunner:
             stream: output stream from subprocess.Popen
             stderr_output: List containing the standard error output.
         """
-        error_message = (
-            "updater.sh exited with error code {script_stream.returncode}"
-        )
+        error_message = "updater.sh exited with error code {script_stream.returncode}"
         if self.stderr_output:
             stderr_output_message = "n".join(self.stderr_output)
-            error_message += (
-                f"\nStandard error output:\n{stderr_output_message}"
-            )
+            error_message += f"\nStandard error output:\n{stderr_output_message}"
         self.logger.error(error_message)
         sys.exit(stream.returncode)
 
@@ -149,12 +143,8 @@ class ShellRunner:
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
-            self.stdout_output = self._log_stream_output(
-                script_stream, "stdout"
-            )
-            self.stderr_output = self._log_stream_output(
-                script_stream, "stderr"
-            )
+            self.stdout_output = self._log_stream_output(script_stream, "stdout")
+            self.stderr_output = self._log_stream_output(script_stream, "stderr")
             script_stream.wait()
 
             if script_stream.returncode != 0:

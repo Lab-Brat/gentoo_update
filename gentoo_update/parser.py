@@ -164,9 +164,7 @@ class Parser:
             pretend_details = self.parse_pretend_details(section_content)
         return PretendSection(pretend_status, pretend_details)
 
-    def _parse_pretend_get_blocked_details(
-        self, error_content: List[str]
-    ) -> List[str]:
+    def _parse_pretend_get_blocked_details(self, error_content: List[str]) -> List[str]:
         """Parse details of blocked package error.
 
         Args:
@@ -206,9 +204,7 @@ class Parser:
         for line in error_content:
             if "Blocked Packages" in line:
                 error_type = "Blocked Packages"
-                error_details = self._parse_pretend_get_blocked_details(
-                    error_content
-                )
+                error_details = self._parse_pretend_get_blocked_details(error_content)
 
         for line in error_content:
             if line[0] == "*":
@@ -216,9 +212,7 @@ class Parser:
 
         return (error_type, error_definition, error_details)
 
-    def parse_pretend_details(
-        self, section_content: List[str]
-    ) -> PretendError:
+    def parse_pretend_details(self, section_content: List[str]) -> PretendError:
         """Parse information about the emerge pretend from logs.
 
         Args:
@@ -231,22 +225,14 @@ class Parser:
             PretendError: Dataclass that contains details about failed pretend,
                 for example a list of blocked packages.
         """
-        error_index = section_content.index(
-            "emerge pretend has failed, exiting"
-        )
-        error_content = [
-            line for line in section_content[error_index + 1 :] if line
-        ]
+        error_index = section_content.index("emerge pretend has failed, exiting")
+        error_content = [line for line in section_content[error_index + 1 :] if line]
 
-        error_type, _, error_details = self._parse_pretend_get_error_type(
-            error_content
-        )
+        error_type, _, error_details = self._parse_pretend_get_error_type(error_content)
 
         return PretendError(error_type, error_details)
 
-    def parse_update_system_section(
-        self, section_content: List[str]
-    ) -> UpdateSection:
+    def parse_update_system_section(self, section_content: List[str]) -> UpdateSection:
         """Parse the "update system" section of the log data.
 
         Args:
@@ -261,9 +247,7 @@ class Parser:
         """
         try:
             update_type = (
-                "@world"
-                if section_content[2].split()[1] == "@world"
-                else "security"
+                "@world" if section_content[2].split()[1] == "@world" else "security"
             )
         except IndexError:
             update_type = "Undefined"
@@ -318,9 +302,7 @@ class Parser:
 
         return split_package_string
 
-    def parse_update_details(
-        self, section_content: List[str]
-    ) -> List[PackageInfo]:
+    def parse_update_details(self, section_content: List[str]) -> List[PackageInfo]:
         """Parse information about update from log file.
 
         Args:
@@ -401,9 +383,7 @@ class Parser:
         for var in split_package_string:
             if '="' in var:
                 splitvar = var.split("=")
-                ebuild_info.add_attributes(
-                    {splitvar[0]: splitvar[1][1:-1].split(" ")}
-                )
+                ebuild_info.add_attributes({splitvar[0]: splitvar[1][1:-1].split(" ")})
 
         return ebuild_info
 
@@ -437,14 +417,10 @@ class Parser:
             repo,
         )
 
-        blocks_info.add_attributes(
-            {"blocked_package": split_package_string[-1][:-1]}
-        )
+        blocks_info.add_attributes({"blocked_package": split_package_string[-1][:-1]})
         return blocks_info
 
-    def _parse_package_uninstall(
-        self, split_package_string: List
-    ) -> PackageInfo:
+    def _parse_package_uninstall(self, split_package_string: List) -> PackageInfo:
         """Parse uninstall information.
 
         Args:
@@ -479,9 +455,7 @@ class Parser:
         uninstall_info.add_attributes({"uninstalled_package": package_name})
         return uninstall_info
 
-    def parse_disk_usage_info(
-        self, section_content: List[str]
-    ) -> List[DiskUsageStats]:
+    def parse_disk_usage_info(self, section_content: List[str]) -> List[DiskUsageStats]:
         """Get disk usage information.
 
         Args:
@@ -535,13 +509,9 @@ class Parser:
                     section_content
                 )
             elif section == "calculate_disk_usage_1":
-                disk_usage.before_update = self.parse_disk_usage_info(
-                    section_content
-                )
+                disk_usage.before_update = self.parse_disk_usage_info(section_content)
             elif section == "calculate_disk_usage_2":
-                disk_usage.after_update = self.parse_disk_usage_info(
-                    section_content
-                )
+                disk_usage.after_update = self.parse_disk_usage_info(section_content)
         log_info.disk_usage = disk_usage
 
         return log_info
