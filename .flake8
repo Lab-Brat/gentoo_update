@@ -1,0 +1,4 @@
+[flake8]
+per-file-ignores =
+    # imported but unused
+    gentoo_update/__init__.py: F401
