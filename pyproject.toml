@@ -1,18 +1,18 @@
 [tool.black]
-line-length = 79
+line-length = 88
 
 [tool.isort]
 include_trailing_comma = true
-line_length = 79
+line_length = 88
 multi_line_output = 3
 
 [tool.flake8]
 per-file-ignores = ["gentoo_update/__init__.py:F401"]
 ignore = ["E203", "E501"]
-max-line-length = 79
+max-line-length = 88
 
 [tool.ruff]
-line-length = 79
+line-length = 88
 select = [
     "E",  # pycodestyle
     "F",  # pyflakes
@@ -25,7 +25,7 @@ select = [
 "gentoo_update/__init__.py" = ["F401"]
 
 [tool.pylint.format]
-max-line-length = 79
+max-line-length = 88
 
 [tool.pydocstyle]
 convention = "google"
