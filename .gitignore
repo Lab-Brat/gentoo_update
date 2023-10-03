@@ -4,3 +4,5 @@ build
 gentoo_update.egg-info
 venv
 __pycache__
+.ruff_cache
+.venv

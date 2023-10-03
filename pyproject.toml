@@ -13,6 +13,19 @@ max-line-length = 79
 
 [tool.ruff]
 line-length = 79
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "UP", # pyupgrade
+    "I",  # isort
+    "D",  # pydocstyle
+]
 
 [tool.ruff.per-file-ignores]
 "gentoo_update/__init__.py" = ["F401"]
+
+[tool.pylint.format]
+max-line-length = 79
+
+[tool.pydocstyle]
+convention = "google"
