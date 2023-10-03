@@ -1,29 +1,43 @@
+"""Contains the Reporter class which is responsible for generating a report.
+
+The report can be either a successful or failed update report.
+The class has methods for creating a report when emerge pretend fails,
+creating a report when update fails, creating a report when update succeeds,
+and creating a report.
+
+The module also contains helper classes for parsing log information.
+"""
 import sys
 from typing import List
+
 from .parser import (
-    UpdateSection,
-    PretendError,
-    PretendSection,
     DiskUsage,
     LogInfo,
+    PretendError,
+    PretendSection,
+    UpdateSection,
 )
 
 
 class Reporter:
+    """Reporter class for generating a report."""
+
     def __init__(self, update_info: LogInfo, short_report: bool) -> None:
+        """Initialize Reporter class."""
         self.info = update_info
         self.short_report = short_report
 
     def _create_failed_pretend_report(
         self, pretend_info: PretendSection
     ) -> List[str]:
-        """
-        Create a report when emerge pretend fails.
+        """Create a report when emerge pretend fails.
 
-        Parameters:
+        Args:
+        ----
             pretend_info (PretendSection): emerge pretend information.
 
         Returns:
+        -------
             List: A list of strings that comprise the failed pretend report.
         """
         report = [
@@ -42,13 +56,14 @@ class Reporter:
     def _report_blocked_packages(
         self, pretend_details: PretendError
     ) -> List[str]:
-        """
-        Report on Blocked Packages error during emerge pretend.
+        """Report on Blocked Packages error during emerge pretend.
 
-        Parameters:
+        Args:
+        ----
             pretend_details (PretendError): In this case it's blocked packages.
 
         Returns:
+        -------
             List[str]: Section of the report about blocked packages.
         """
         blocked_packages_report = ["List of Blocked Packages:"]
@@ -60,14 +75,15 @@ class Reporter:
     def _create_failed_report(
         self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
-        """
-        Create a report when update fails.
+        """Create a report when update fails.
 
-        Parameters:
+        Args:
+        ----
             update_info (LogInfo.UpdateSection): Update information.
-            disk_usage_inf (LogInfo.DiskUsage): Disk usage information.
+            disk_usage_info (LogInfo.DiskUsage): Disk usage information.
 
         Returns:
+        -------
             List: A list of strings that comprise the failed update report.
         """
         # do failed report processing
@@ -76,14 +92,15 @@ class Reporter:
     def _create_successful_report(
         self, update_info: UpdateSection, disk_usage_info: DiskUsage
     ) -> List[str]:
-        """
-        Create a report when update succeeds.
+        """Create a report when update succeeds.
 
-        Parameters:
+        Args:
+        ----
             update_info (LogInfo.UpdateSection): Update information.
-            disk_usage_inf (LogInfo.DiskUsage): Disk usage information.
+            disk_usage_info (LogInfo.DiskUsage): Disk usage information.
 
         Returns:
+        -------
             List: A list of strings that comprise the successful update report.
         """
         report = [
@@ -117,7 +134,8 @@ class Reporter:
                         )
                     elif package.package_type == "uninstall":
                         package_name = package.package_name
-                        uninstalled_package = package.uninstalled_package
+                        # uninstalled_package seems unused
+                        # uninstalled_package = package.uninstalled_package
                         report.append(f"--- {package_name} was uninstalled")
             report.append("")
             report.append("Disk Usage Stats:")
@@ -125,21 +143,21 @@ class Reporter:
             for before, after in zip(
                 disk_usage_info.before_update, disk_usage_info.after_update
             ):
-                disk_usage_stats = (
-                    f"Mount Point {before.mount_point}\n"
-                    f"Free Space {before.free} => {after.free}\n"
-                    f"Used Space {before.used} => {after.used}\n"
-                    f"Used pc(%) {before.percent_used} => {after.percent_used}\n"
-                )
-                report.append(disk_usage_stats)
+                disk_usage_stats = [
+                    f"Mount Point {before.mount_point}",
+                    f"Free Space {before.free} => {after.free}",
+                    f"Used Space {before.used} => {after.used}",
+                    f"Used (%) {before.percent_used} => {after.percent_used}",
+                ]
+                report += disk_usage_stats
 
         return report
 
     def create_report(self) -> List[str]:
-        """
-        Create a report.
+        """Create a report.
 
-        Returns:
+        Returns
+        -------
             List: A list of strings that comprise the update report.
         """
         info = self.info
@@ -174,9 +192,7 @@ class Reporter:
             sys.exit(1)
 
     def print_report(self) -> None:
-        """
-        Print the report line by line to console.
-        """
+        """Print the report line by line to console."""
         report = self.create_report()
         for line in report:
             print(line)

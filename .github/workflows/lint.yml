@@ -1,0 +1,25 @@
+name: Lint
+on: [push, pull_request]
+
+jobs:
+  markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v13
+        with:
+          globs: |
+            *.md
+
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+        with:
+          path: "gentoo_update"
+          plugins: "flake8-black flake8-docstrings flake8-isort flake8-pyproject"
