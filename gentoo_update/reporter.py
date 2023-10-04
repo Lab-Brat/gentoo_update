@@ -10,13 +10,7 @@ The module also contains helper classes for parsing log information.
 import sys
 from typing import List
 
-from .parser import (
-    DiskUsage,
-    LogInfo,
-    PretendError,
-    PretendSection,
-    UpdateSection,
-)
+from .parser import DiskUsage, LogInfo, PretendError, PretendSection, UpdateSection
 
 
 class Reporter:
