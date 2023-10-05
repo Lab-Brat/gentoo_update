@@ -1,3 +1,5 @@
+"""Dataclasses that are used to construct update reports."""
+
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
