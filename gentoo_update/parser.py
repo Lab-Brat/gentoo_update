@@ -165,7 +165,7 @@ class Parser:
                 for example a list of blocked packages.
         """
         error_index = section_content.index("emerge pretend has failed, exiting")
-        error_content = [line for line in section_content[error_index + 1:] if line]
+        error_content = [line for line in section_content[error_index + 1 :] if line]
 
         error_type, _, error_details = self._parse_pretend_get_error_type(error_content)
 
