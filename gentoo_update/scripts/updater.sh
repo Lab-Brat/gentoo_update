@@ -18,17 +18,17 @@ READ_NEWS="${9}"
 
 # ------------------- CHECK_DISK_USAGE ------------------- #
 function check_root_part_limit() {
-  echo -e "\n{{ VERIFYING AVAILABLE DISK SPACE }}\n"
-  FREE_SPACE=$(df / --output=avail | tail -n 1 | awk '{print $1/1024/1024}') 
- 
-  if (( $(echo "${FREE_SPACE} > ${DISK_USAGE_LIMIT}" | bc -l) )); then
-      echo "There is sufficient free space."
-      echo "Free space: ${FREE_SPACE} GB"
-  else
-      echo "There is no sufficient free space."
-      echo "Free space: ${FREE_SPACE} GB"
-      exit 1
-  fi
+    echo -e "\n{{ VERIFYING AVAILABLE DISK SPACE }}\n"
+    FREE_SPACE=$(df / --output=avail | tail -n 1 | awk '{print $1/1024/1024}')
+
+    if (($(echo "${FREE_SPACE} > ${DISK_USAGE_LIMIT}" | bc -l))); then
+        echo "There is sufficient free space."
+        echo "Free space: ${FREE_SPACE} GB"
+    else
+        echo "There is no sufficient free space."
+        echo "Free space: ${FREE_SPACE} GB"
+        exit 1
+    fi
 }
 function check_disk_usage() {
     mount_point_found=false
@@ -90,12 +90,10 @@ function get_update_packages_and_commands() {
     if [[ "${update_mode}" == 'security' ]]; then
         glsa=$(glsa-check --list --quiet affected)
         AFFECTED_PACKAGES=$(echo "${glsa}" | awk 'NF>1 {print $(NF-1)}' | paste -sd " " -)
-        UPDATE_PRETEND_COMMAND="emerge --verbose --pretend --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
         UPDATE_COMMAND="emerge --verbose  --quiet-build --update ${update_flags} ${AFFECTED_PACKAGES}"
 
     elif [[ "${update_mode}" == 'full' ]]; then
         AFFECTED_PACKAGES='@world'
-        UPDATE_PRETEND_COMMAND="emerge --verbose  --pretend --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
         UPDATE_COMMAND="emerge --verbose --quiet-build --update --newuse --deep ${update_flags} ${AFFECTED_PACKAGES}"
 
     else
@@ -103,33 +101,35 @@ function get_update_packages_and_commands() {
         exit 1
     fi
 }
-get_update_packages_and_commands
 
 function emerge_pretend() {
     echo -e "\n{{ PRETEND EMERGE }}\n"
 
     # run emerge in pretend mode to detect some issues before updating
-    update_mode="${UPDATE_MODE}"
-    update_flags="${UPDATE_FLAGS}"
+    get_update_packages_and_commands
     affected_packages="${AFFECTED_PACKAGES}"
 
     if [ -n "${affected_packages}" ]; then
         echo "emerging with --pretend..."
         echo "Updating: ${affected_packages}"
-        if eval "${UPDATE_PRETEND_COMMAND}"; then
+        echo "Update command:"
+        echo "${UPDATE_COMMAND} --pretend"
+        if eval "${UPDATE_COMMAND} --pretend"; then
             echo "emerge pretend was successful, updating..."
         else
             echo "emerge pretend has failed, exiting"
             exit 1
         fi
     else
-        echo "There are no packages to update, skipping.."
+        echo "There are no packages to update, skipping..."
     fi
 }
 
 function update() {
     echo -e "\n{{ UPDATE SYSTEM }}\n"
 
+    # run emerge to update packages
+    get_update_packages_and_commands
     affected_packages="${AFFECTED_PACKAGES}"
 
     if [ -n "${affected_packages}" ]; then

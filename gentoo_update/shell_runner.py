@@ -74,7 +74,11 @@ class ShellRunner:
             terminal_handler.setFormatter(formater)
             logger.addHandler(terminal_handler)
 
-        file_handler = logging.FileHandler(self.log_filename)
+        try:
+            file_handler = logging.FileHandler(self.log_filename)
+        except PermissionError:
+            print("Not enough permissions to create a log file, exiting")
+            sys.exit(1)
         file_handler.setLevel(logging.INFO)
         file_handler.setFormatter(formater)
         logger.addHandler(file_handler)
