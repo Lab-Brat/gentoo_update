@@ -19,8 +19,8 @@ READ_NEWS="${9}"
 # ------------------- CHECK_DISK_USAGE ------------------- #
 function check_root_part_limit() {
   echo -e "\n{{ VERIFYING AVAILABLE DISK SPACE }}\n"
-  FREE_SPACE=$(df / --output=avail | tail -n 1 | awk '{print $1/1024/1024}') 
- 
+  FREE_SPACE=$(df / --output=avail | tail -n 1 | awk '{print $1/1024/1024}')
+
   if (( $(echo "${FREE_SPACE} > ${DISK_USAGE_LIMIT}" | bc -l) )); then
       echo "There is sufficient free space."
       echo "Free space: ${FREE_SPACE} GB"
@@ -123,7 +123,7 @@ function emerge_pretend() {
             exit 1
         fi
     else
-        echo "There are no packages to update, skipping.."
+        echo "There are no packages to update, skipping..."
     fi
 }
 
