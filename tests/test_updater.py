@@ -1,6 +1,7 @@
 import unittest
-from unittest.mock import patch, Mock
-from gentoo_update import create_cli, add_prefixes
+from unittest.mock import Mock, patch
+
+from gentoo_update import add_prefixes, create_cli
 
 
 class TestGentooUpdate(unittest.TestCase):

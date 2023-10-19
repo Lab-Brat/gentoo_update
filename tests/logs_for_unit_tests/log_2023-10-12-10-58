@@ -1,0 +1,171 @@
+[12-Oct-23 10:58:52 INFO] ::: PORTAGE_LOGDIR not set, using default: /var/log/portage/gentoo-update
+[12-Oct-23 10:58:52 INFO] ::: 
+[12-Oct-23 10:58:52 INFO] ::: {{ VERIFYING AVAILABLE DISK SPACE }}
+[12-Oct-23 10:58:52 INFO] ::: 
+[12-Oct-23 10:58:52 INFO] ::: There is sufficient free space.
+[12-Oct-23 10:58:52 INFO] ::: Free space: 252.612 GB
+[12-Oct-23 10:58:52 INFO] ::: 
+[12-Oct-23 10:58:52 INFO] ::: {{ CALCULATE DISK USAGE 1 }}
+[12-Oct-23 10:58:52 INFO] ::: 
+[12-Oct-23 10:58:52 INFO] ::: Disk usage for / ===> Total=453G, Used=177G, Free=253G, Percent used=42%
+[12-Oct-23 10:58:52 INFO] ::: Warning: mount point none does not exist.
+[12-Oct-23 10:58:52 INFO] ::: 
+[12-Oct-23 10:58:52 INFO] ::: {{ SYNC PORTAGE TREE }}
+[12-Oct-23 10:58:52 INFO] ::: 
+[12-Oct-23 10:58:52 INFO] ::: Syncing Portage Tree
+[12-Oct-23 10:58:52 INFO] ::: >>> Syncing repository 'gentoo' into '/var/db/repos/gentoo'...
+[12-Oct-23 10:58:52 INFO] ::: /usr/bin/git fetch origin --depth 1
+[12-Oct-23 10:58:54 INFO] ::: From https://anongit.gentoo.org/git/repo/sync/gentoo
+[12-Oct-23 10:58:54 INFO] :::  + cea05e1498...c5b93883ef master     -> origin/master  (forced update)
+[12-Oct-23 10:58:54 INFO] :::  * Using keys from /usr/share/openpgp-keys/gentoo-release.asc
+[12-Oct-23 10:58:56 INFO] :::  * Refreshing keys via WKD ...                                           [ ok ]
+[12-Oct-23 10:58:56 INFO] :::  * Trusted signature found on top commit
+[12-Oct-23 10:58:56 INFO] ::: /usr/bin/git reset --merge refs/remotes/origin/master
+[12-Oct-23 10:58:56 INFO] ::: === Sync completed for gentoo
+[12-Oct-23 10:58:56 INFO] ::: >>> Syncing repository 'guru' into '/var/db/repos/guru'...
+[12-Oct-23 10:58:56 INFO] ::: /usr/bin/git fetch origin --depth 1
+[12-Oct-23 10:58:58 INFO] ::: From https://github.com/gentoo-mirror/guru
+[12-Oct-23 10:58:58 INFO] :::  + ec4a35d0...8893319a master     -> origin/master  (forced update)
+[12-Oct-23 10:58:58 INFO] ::: /usr/bin/git reset --merge refs/remotes/origin/master
+[12-Oct-23 10:58:58 INFO] ::: === Sync completed for guru
+[12-Oct-23 10:58:58 INFO] ::: >>> Syncing repository 'brave-overlay' into '/var/db/repos/brave-overlay'...
+[12-Oct-23 10:58:58 INFO] ::: /usr/bin/git fetch origin --depth 1
+[12-Oct-23 10:58:59 INFO] ::: /usr/bin/git reset --merge refs/remotes/origin/master
+[12-Oct-23 10:58:59 INFO] ::: === Sync completed for brave-overlay
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] :::  * IMPORTANT: 3 config files in '/etc' need updating.
+[12-Oct-23 10:58:59 INFO] :::  * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[12-Oct-23 10:58:59 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] ::: Action: sync for repo: gentoo, returned code = 0
+[12-Oct-23 10:58:59 INFO] ::: Action: sync for repo: guru, returned code = 0
+[12-Oct-23 10:58:59 INFO] ::: Action: sync for repo: brave-overlay, returned code = 0
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] ::: {{ PRETEND EMERGE }}
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] ::: emerging with --pretend...
+[12-Oct-23 10:58:59 INFO] ::: Updating: @world
+[12-Oct-23 10:58:59 INFO] ::: Update command:
+[12-Oct-23 10:58:59 INFO] ::: emerge --verbose --quiet-build --update --newuse --deep  @world --pretend
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] :::  * IMPORTANT: 2 config files in '/etc/portage' need updating.
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] ::: These are the packages that would be merged, in order:
+[12-Oct-23 10:58:59 INFO] ::: 
+[12-Oct-23 10:58:59 INFO] ::: Calculating dependencies   * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[12-Oct-23 10:58:59 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[12-Oct-23 10:59:10 INFO] ::: .... done!
+[12-Oct-23 10:59:10 INFO] ::: Dependency resolution took 10.78 s.
+[12-Oct-23 10:59:10 INFO] ::: 
+[12-Oct-23 10:59:10 INFO] ::: [ebuild     U  ] dev-libs/openssl-3.0.11:0/3::gentoo [3.0.10:0/3::gentoo] USE="asm -fips -ktls -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -verify-sig -weak-ssl-ciphers" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="(sse2)" 0 KiB
+[12-Oct-23 10:59:10 INFO] ::: [ebuild     U  ] net-fs/samba-4.18.8::gentoo [4.18.4-r1::gentoo] USE="acl client cups pam regedit system-mitkrb5 systemd -addc -ads -ceph -cluster -debug (-fam) -glusterfs -gpg -iprint -json -ldap -llvm-libunwind -profiling-data -python -quota (-selinux) -snapper -spotlight -syslog (-system-heimdal) (-test) -unwind -winbind -zeroconf" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="-aes" PYTHON_SINGLE_TARGET="python3_11 -python3_10" 40368 KiB
+[12-Oct-23 10:59:10 INFO] ::: [ebuild     U  ] net-libs/nghttp2-1.57.0:0/1.14::gentoo [1.51.0:0/1.14::gentoo] USE="systemd%* xml -debug -hpack-tools -jemalloc -static-libs -test -utils (-cxx%)" ABI_X86="(64) -32 (-x32)" 1508 KiB
+[12-Oct-23 10:59:10 INFO] ::: [ebuild     U  ] www-client/firefox-bin-118.0.2:rapid::gentoo [118.0.1:rapid::gentoo] USE="alsa ffmpeg gmp-autoupdate pulseaudio (-selinux) -wayland" L10N="-ach -af -an -ar -ast -az -be -bg -bn -br -bs -ca -ca-valencia -cak -cs -cy -da -de -dsb -el -en-CA -en-GB -eo -es-AR -es-CL -es-ES -es-MX -et -eu -fa -ff -fi -fr -fy -ga -gd -gl -gn -gu -he -hi -hr -hsb -hu -hy -ia -id -is -it -ja -ka -kab -kk -km -kn -ko -lij -lt -lv -mk -mr -ms -my -nb -ne -nl -nn -oc -pa -pl -pt-BR -pt-PT -rm -ro -ru -sco -si -sk -sl -son -sq -sr -sv -ta -te -th -tl -tr -trs -uk -ur -uz -vi -xh -zh-CN -zh-TW" 78202 KiB
+[12-Oct-23 10:59:10 INFO] ::: 
+[12-Oct-23 10:59:10 INFO] ::: Total: 4 packages (4 upgrades), Size of downloads: 120076 KiB
+[12-Oct-23 10:59:11 INFO] ::: emerge pretend was successful, updating...
+[12-Oct-23 10:59:11 INFO] ::: 
+[12-Oct-23 10:59:11 INFO] ::: {{ UPDATE SYSTEM }}
+[12-Oct-23 10:59:11 INFO] ::: 
+[12-Oct-23 10:59:11 INFO] ::: emerging...
+[12-Oct-23 10:59:11 INFO] ::: Updating: @world
+[12-Oct-23 10:59:11 INFO] ::: Update command:
+[12-Oct-23 10:59:11 INFO] ::: emerge --verbose --quiet-build --update --newuse --deep  @world
+[12-Oct-23 10:59:11 INFO] ::: 
+[12-Oct-23 10:59:11 INFO] :::  * IMPORTANT: 2 config files in '/etc/portage' need updating.
+[12-Oct-23 10:59:11 INFO] ::: 
+[12-Oct-23 10:59:11 INFO] ::: These are the packages that would be merged, in order:
+[12-Oct-23 10:59:11 INFO] ::: 
+[12-Oct-23 10:59:12 INFO] ::: Calculating dependencies   * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[12-Oct-23 10:59:12 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[12-Oct-23 10:59:22 INFO] ::: ..... ... done!
+[12-Oct-23 10:59:22 INFO] ::: Dependency resolution took 10.42 s.
+[12-Oct-23 10:59:22 INFO] ::: 
+[12-Oct-23 10:59:22 INFO] ::: [ebuild     U  ] dev-libs/openssl-3.0.11:0/3::gentoo [3.0.10:0/3::gentoo] USE="asm -fips -ktls -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -verify-sig -weak-ssl-ciphers" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="(sse2)" 0 KiB
+[12-Oct-23 10:59:22 INFO] ::: [ebuild     U  ] net-fs/samba-4.18.8::gentoo [4.18.4-r1::gentoo] USE="acl client cups pam regedit system-mitkrb5 systemd -addc -ads -ceph -cluster -debug (-fam) -glusterfs -gpg -iprint -json -ldap -llvm-libunwind -profiling-data -python -quota (-selinux) -snapper -spotlight -syslog (-system-heimdal) (-test) -unwind -winbind -zeroconf" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="-aes" PYTHON_SINGLE_TARGET="python3_11 -python3_10" 40368 KiB
+[12-Oct-23 10:59:22 INFO] ::: [ebuild     U  ] net-libs/nghttp2-1.57.0:0/1.14::gentoo [1.51.0:0/1.14::gentoo] USE="systemd%* xml -debug -hpack-tools -jemalloc -static-libs -test -utils (-cxx%)" ABI_X86="(64) -32 (-x32)" 1508 KiB
+[12-Oct-23 10:59:22 INFO] ::: [ebuild     U  ] www-client/firefox-bin-118.0.2:rapid::gentoo [118.0.1:rapid::gentoo] USE="alsa ffmpeg gmp-autoupdate pulseaudio (-selinux) -wayland" L10N="-ach -af -an -ar -ast -az -be -bg -bn -br -bs -ca -ca-valencia -cak -cs -cy -da -de -dsb -el -en-CA -en-GB -eo -es-AR -es-CL -es-ES -es-MX -et -eu -fa -ff -fi -fr -fy -ga -gd -gl -gn -gu -he -hi -hr -hsb -hu -hy -ia -id -is -it -ja -ka -kab -kk -km -kn -ko -lij -lt -lv -mk -mr -ms -my -nb -ne -nl -nn -oc -pa -pl -pt-BR -pt-PT -rm -ro -ru -sco -si -sk -sl -son -sq -sr -sv -ta -te -th -tl -tr -trs -uk -ur -uz -vi -xh -zh-CN -zh-TW" 78202 KiB
+[12-Oct-23 10:59:22 INFO] ::: 
+[12-Oct-23 10:59:22 INFO] ::: Total: 4 packages (4 upgrades), Size of downloads: 120076 KiB
+[12-Oct-23 10:59:22 INFO] ::: >>> Verifying ebuild manifests
+[12-Oct-23 10:59:22 INFO] ::: 
+[12-Oct-23 10:59:22 INFO] ::: >>> Jobs: 0 of 4 complete, 1 running                Load avg: 1.42, 0.73, 0.39
+[12-Oct-23 10:59:22 INFO] ::: >>> Emerging (1 of 4) dev-libs/openssl-3.0.11::gentoo
+[12-Oct-23 10:59:22 INFO] ::: >>> Jobs: 0 of 4 complete, 1 running                Load avg: 1.42, 0.73, 0.39
+[12-Oct-23 11:01:23 INFO] ::: >>> Installing (1 of 4) dev-libs/openssl-3.0.11::gentoo
+[12-Oct-23 11:01:23 INFO] ::: >>> Jobs: 0 of 4 complete, 1 running                Load avg: 9.10, 4.66, 1.92
+[12-Oct-23 11:01:23 INFO] ::: >>> Jobs: 0 of 4 complete                           Load avg: 9.10, 4.66, 1.92
+[12-Oct-23 11:01:27 INFO] ::: >>> Completed (1 of 4) dev-libs/openssl-3.0.11::gentoo
+[12-Oct-23 11:01:27 INFO] ::: >>> Jobs: 0 of 4 complete                           Load avg: 8.53, 4.62, 1.92
+[12-Oct-23 11:01:27 INFO] ::: >>> Jobs: 1 of 4 complete                           Load avg: 8.53, 4.62, 1.92
+[12-Oct-23 11:01:27 INFO] ::: >>> Jobs: 1 of 4 complete, 1 running                Load avg: 8.53, 4.62, 1.92
+[12-Oct-23 11:01:27 INFO] ::: >>> Emerging (2 of 4) net-fs/samba-4.18.8::gentoo
+[12-Oct-23 11:01:27 INFO] ::: >>> Jobs: 1 of 4 complete, 1 running                Load avg: 8.53, 4.62, 1.92
+[12-Oct-23 11:05:31 INFO] ::: >>> Installing (2 of 4) net-fs/samba-4.18.8::gentoo
+[12-Oct-23 11:05:31 INFO] ::: >>> Jobs: 1 of 4 complete, 1 running                Load avg: 20.3, 12.4, 5.6
+[12-Oct-23 11:05:31 INFO] ::: >>> Jobs: 1 of 4 complete                           Load avg: 20.3, 12.4, 5.6
+[12-Oct-23 11:05:35 INFO] ::: >>> Completed (2 of 4) net-fs/samba-4.18.8::gentoo
+[12-Oct-23 11:05:35 INFO] ::: >>> Jobs: 1 of 4 complete                           Load avg: 20.3, 12.4, 5.6
+[12-Oct-23 11:05:35 INFO] ::: >>> Jobs: 2 of 4 complete                           Load avg: 20.3, 12.4, 5.6
+[12-Oct-23 11:05:35 INFO] ::: >>> Jobs: 2 of 4 complete, 1 running                Load avg: 20.3, 12.4, 5.6
+[12-Oct-23 11:05:35 INFO] ::: >>> Emerging (3 of 4) net-libs/nghttp2-1.57.0::gentoo
+[12-Oct-23 11:05:35 INFO] ::: >>> Jobs: 2 of 4 complete, 1 running                Load avg: 20.3, 12.4, 5.6
+[12-Oct-23 11:05:44 INFO] ::: >>> Installing (3 of 4) net-libs/nghttp2-1.57.0::gentoo
+[12-Oct-23 11:05:44 INFO] ::: >>> Jobs: 2 of 4 complete, 1 running                Load avg: 17.6, 12.1, 5.6
+[12-Oct-23 11:05:44 INFO] ::: >>> Jobs: 2 of 4 complete                           Load avg: 17.6, 12.1, 5.6
+[12-Oct-23 11:05:47 INFO] ::: >>> Completed (3 of 4) net-libs/nghttp2-1.57.0::gentoo
+[12-Oct-23 11:05:47 INFO] ::: >>> Jobs: 2 of 4 complete                           Load avg: 16.4, 11.9, 5.5
+[12-Oct-23 11:05:47 INFO] ::: >>> Jobs: 3 of 4 complete                           Load avg: 16.4, 11.9, 5.5
+[12-Oct-23 11:05:47 INFO] ::: >>> Jobs: 3 of 4 complete, 1 running                Load avg: 16.4, 11.9, 5.5
+[12-Oct-23 11:05:47 INFO] ::: >>> Emerging (4 of 4) www-client/firefox-bin-118.0.2::gentoo
+[12-Oct-23 11:05:47 INFO] ::: >>> Jobs: 3 of 4 complete, 1 running                Load avg: 16.4, 11.9, 5.5
+[12-Oct-23 11:05:58 INFO] ::: >>> Installing (4 of 4) www-client/firefox-bin-118.0.2::gentoo
+[12-Oct-23 11:05:58 INFO] ::: >>> Jobs: 3 of 4 complete, 1 running                Load avg: 14.2, 11.6, 5.5
+[12-Oct-23 11:05:58 INFO] ::: >>> Jobs: 3 of 4 complete                           Load avg: 14.2, 11.6, 5.5
+[12-Oct-23 11:06:02 INFO] ::: >>> Completed (4 of 4) www-client/firefox-bin-118.0.2::gentoo
+[12-Oct-23 11:06:02 INFO] ::: >>> Jobs: 3 of 4 complete                           Load avg: 13.3, 11.4, 5.5
+[12-Oct-23 11:06:02 INFO] ::: >>> Jobs: 4 of 4 complete                           Load avg: 13.3, 11.4, 5.5
+[12-Oct-23 11:06:02 INFO] ::: 
+[12-Oct-23 11:06:02 INFO] :::  * Messages for package www-client/firefox-bin-118.0.2:
+[12-Oct-23 11:06:02 INFO] :::  * Optional programs for extra features:
+[12-Oct-23 11:06:02 INFO] :::  *   app-accessibility/speech-dispatcher for speech syntesis (text-to-speech) support
+[12-Oct-23 11:06:02 INFO] ::: 
+[12-Oct-23 11:06:02 INFO] ::: 
+[12-Oct-23 11:06:02 INFO] ::: 
+[12-Oct-23 11:06:02 INFO] :::  * GNU info directory index is up-to-date.
+[12-Oct-23 11:06:02 INFO] ::: 
+[12-Oct-23 11:06:02 INFO] :::  * IMPORTANT: 3 config files in '/etc' need updating.
+[12-Oct-23 11:06:02 INFO] :::  * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[12-Oct-23 11:06:02 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[12-Oct-23 11:06:04 INFO] ::: update was successful
+[12-Oct-23 11:06:04 ERROR] :::  * After world updates, it is important to remove obsolete packages with
+[12-Oct-23 11:06:04 ERROR] :::  * emerge --depclean. Refer to `man emerge` for more information.
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: {{ UPDATE SYSTEM CONFIGURATION FILES }}
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: Ignoring configuration update for now...
+[12-Oct-23 11:06:04 INFO] ::: Please UPDATE IT MANUALLY LATER
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: {{ CLEAN UP }}
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: Clean up is not enabled.
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: {{ RESTART SERVICES }}
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: app-admin/needrestart is not installed
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: {{ READ ELOGS }}
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: not reading elogs
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: {{ READ NEWS }}
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: not reading news
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: {{ CALCULATE DISK USAGE 2 }}
+[12-Oct-23 11:06:04 INFO] ::: 
+[12-Oct-23 11:06:04 INFO] ::: Disk usage for / ===> Total=453G, Used=177G, Free=253G, Percent used=42%
+[12-Oct-23 11:06:04 INFO] ::: Warning: mount point none does not exist.
+[12-Oct-23 11:06:04 INFO] ::: gentoo-update is done! Log:file: /var/log/portage/gentoo-update/log_2023-10-12-10-58
