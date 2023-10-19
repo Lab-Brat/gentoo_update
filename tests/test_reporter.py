@@ -1,22 +1,30 @@
+"""Unit tests for reporter.py file."""
+
 import unittest
 
 from gentoo_update import Reporter, generate_last_report
 
 
 class TestGentooUpdate(unittest.TestCase):
+    """Unit tests for the gentoo_update module."""
+
     def setUp(self):
+        """Initialize test prerequisites."""
         report_for_tests = "logs_for_unit_tests"
         self.report_object = generate_last_report(report_for_tests, short_report=False)
         self.report = self.report_object.create_report()
 
     def test_report_object_type(self):
+        """Test if the report_object is of type Reporter."""
         self.assertIs(type(self.report_object), Reporter)
 
     def test_report_status(self):
+        """Test if the report status is SUCCESS."""
         status = self.report[1].split(" ")[-1]
         self.assertEqual(status, "SUCCESS")
 
     def test_report_packages(self):
+        """Test if the report lists the expected packages."""
         packages = sum([pkg.split(" ", 1)[1:] for pkg in self.report[3:7]], [])
         correct_package_list = [
             "dev-libs/openssl 3.0.10:0/3->3.0.11:0/3",
@@ -27,6 +35,7 @@ class TestGentooUpdate(unittest.TestCase):
         self.assertEqual(packages, correct_package_list)
 
     def test_disk_usage(self):
+        """Test if the report shows the expected disk usage."""
         disk_usage = self.report[-4::]
         correct_disk_usage = [
             "Mount Point /",
