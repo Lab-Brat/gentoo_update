@@ -46,6 +46,7 @@ report which notifier then sends via email, IRC bot or
 
 ### general
 
+- [ ] CLI: add option to choose from which log file to generate a report
 - [x] ebuild in GURU repository
 - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
 - [ ] comprehensive set of unit tests
