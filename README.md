@@ -62,6 +62,13 @@ eselect repository enable guru
 emerge --sync
 ```
 
+All packages in GURU overlay need an `~arch` keyword.
+For example, on amd64 architecture add it using:
+
+```bash
+echo 'app-admin/gentoo_update ~amd64' > /etc/portage/package.accept_keywords/gentoo_update
+```
+
 and then install it:
 
 ```bash
