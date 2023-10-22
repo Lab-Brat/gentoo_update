@@ -110,8 +110,8 @@ Default: 0 - do not set a limit.
     parser.add_argument(
         "-r",
         "--report",
-        nargs='?',
-        const='LAST',
+        nargs="?",
+        const="LAST",
         default=None,
         help="Show report. By default shows report from the last update log.",
     )
@@ -220,37 +220,29 @@ def generate_report(
                 Defaults to the latest log if not provided.
         short_report (bool): Short report format.
     """
-    try:
-        if not os.path.exists(log_dir):
-            raise FileNotFoundError(f"The log directory {log_dir} does not exist")
+    if not os.path.exists(log_dir):
+        raise FileNotFoundError(f"The log directory {log_dir} does not exist")
 
-        if log_filename is None:
-            files = os.listdir(log_dir)
-            paths = [
-                os.path.join(log_dir, basename)
-                for basename in files
-                if basename[0:4] == "log_"
-            ]
-            if not paths:
-                raise ValueError(f"No log files found in the directory {log_dir}")
-            full_log_path = max(paths, key=os.path.getctime)
-        else:
-            full_log_path = os.path.join(log_dir, log_filename)
+    if log_filename is None:
+        files = os.listdir(log_dir)
+        paths = [
+            os.path.join(log_dir, basename)
+            for basename in files
+            if basename[0:4] == "log_"
+        ]
+        if not paths:
+            raise ValueError(f"No log files found in the directory {log_dir}")
+        full_log_path = max(paths, key=os.path.getctime)
+    else:
+        full_log_path = os.path.join(log_dir, log_filename)
 
-            if not os.path.exists(full_log_path):
-                raise FileNotFoundError(
-                    f"The log file {log_filename} does not exist in {log_dir}"
-                )
+        if not os.path.exists(full_log_path):
+            raise FileNotFoundError(
+                f"The log file {log_filename} does not exist in {log_dir}"
+            )
 
-        update_info = Parser(full_log_path).extract_info_for_report()
-        return Reporter(update_info, short_report)
-
-    except FileNotFoundError as e:
-        print(f"Error: {e}")
-    except PermissionError:
-        print(f"Permission denied: Can't access the file or directory.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    update_info = Parser(full_log_path).extract_info_for_report()
+    return Reporter(update_info, short_report)
 
 
 def main() -> None:
@@ -262,10 +254,13 @@ def main() -> None:
 
     if args.report:
         log_filename = None if args.report == "LAST" else args.report
-        generate_report(log_dir, log_filename, args.short_report).print_report()
+        report = generate_report(log_dir, log_filename, args.short_report)
+        report.print_report()
     elif args.send_report in ["irc", "email", "mobile"]:
         log_filename = None if args.report == "LAST" else args.report
-        report = generate_report(log_dir, log_filename, args.short_report).create_report()
+        report = generate_report(
+            log_dir, log_filename, args.short_report
+        ).create_report()
         short = False if args.send_report != "irc" else True
         Notifier(notification_type=args.send_report, report=report, short=short)
     else:
