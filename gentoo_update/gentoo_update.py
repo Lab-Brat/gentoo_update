@@ -117,9 +117,9 @@ Default: 0 - do not set a limit.
     )
     parser.add_argument(
         "-o",
-        "--last-n-reports",
+        "--last-n-logs",
         type=int,
-        help="Show last n report filenames.",
+        help="Show last n log filenames.",
     )
     parser.add_argument(
         "-s",
@@ -208,6 +208,27 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
     return log_dir, log_dir_messages
 
 
+def show_available_reports(log_dir: str, last_n_logs: int) -> None:
+    """Short last n reports in the log directory.
+
+    Args
+    ----
+        log_dir (str): Directory where gentoo_update stores logs.
+        last_n_logs (int): Last n amount of reports in the directory.
+    """
+    log_filesnames = os.listdir(log_dir)
+    if len(log_filesnames) < last_n_logs:
+        raise ValueError(f"There are less than {last_n_logs} in {log_dir}")
+
+    if not log_filesnames:
+        raise ValueError(f"No log files found in the directory {log_dir}")
+
+    logs = log_filesnames[-last_n_logs:]
+    print(f"Here are the last {last_n_logs} log files")
+    for log in logs:
+        print(log)
+
+
 def generate_report(
     log_dir: str, log_filename: str = None, short_report: bool = False
 ) -> Reporter:
@@ -252,7 +273,9 @@ def main() -> None:
     make_conf = make_conf_reader()
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
-    if args.report:
+    if args.last_n_logs:
+        show_available_reports(log_dir, args.last_n_logs)
+    elif args.report:
         log_filename = None if args.report == "LAST" else args.report
         report = generate_report(log_dir, log_filename, args.short_report)
         report.print_report()
