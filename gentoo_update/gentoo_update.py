@@ -234,12 +234,16 @@ def generate_report(
 ) -> Reporter:
     """Show report for the <log_filename> located in $PORTAGE_LOGDIR.
 
-    Args:
+    Args
     ----
         log_dir (str): Directory where gentoo_update stores logs.
         log_filename (str, optional): File name of the update log.
                 Defaults to the latest log if not provided.
         short_report (bool): Short report format.
+
+    Returns
+    -------
+        Reporter: Object containing the update report information.
     """
     if not os.path.exists(log_dir):
         raise FileNotFoundError(f"The log directory {log_dir} does not exist")
