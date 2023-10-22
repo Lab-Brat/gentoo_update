@@ -110,8 +110,16 @@ Default: 0 - do not set a limit.
     parser.add_argument(
         "-r",
         "--report",
-        action="store_true",
-        help="Show report or the last update log.",
+        nargs='?',
+        const='LAST',
+        default=None,
+        help="Show report. By default shows report from the last update log.",
+    )
+    parser.add_argument(
+        "-o",
+        "--last-n-reports",
+        type=int,
+        help="Show last n report filenames.",
     )
     parser.add_argument(
         "-s",
@@ -200,44 +208,49 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
     return log_dir, log_dir_messages
 
 
-def generate_last_report(log_dir: str, short_report: bool) -> None:
-    """Show report for the last log located in $PORTAGE_LOGDIR.
+def generate_report(
+    log_dir: str, log_filename: str = None, short_report: bool = False
+) -> None:
+    """Show report for the <log_filename> located in $PORTAGE_LOGDIR.
 
     Args:
     ----
         log_dir (str): Directory where gentoo_update stores logs.
+        log_filename (str, optional): File name of the update log.
+                Defaults to the latest log if not provided.
         short_report (bool): Short report format.
-
     """
-    files = os.listdir(log_dir)
-    paths = [os.path.join(log_dir, basename) for basename in files]
-    last_log = max(paths, key=os.path.getctime)
-    update_info = Parser(last_log).extract_info_for_report()
-    return Reporter(update_info, short_report)
+    try:
+        if not os.path.exists(log_dir):
+            raise FileNotFoundError(f"The log directory {log_dir} does not exist")
 
-
-def add_prefixes(args: str) -> str:
-    """Add prefixes to a list of arguments passed to --update-mode full.
-
-    Args:
-    ----
-    args (str): A string of space separated arguments without prefixes
-        example: "quiet-build=n color=y keep-going"
-
-    Returns:
-    -------
-    str: A new string of space separated arguments with added prefixes,
-        example: "--quiet-build=n --color=y --keep-going"
-    """
-    args = args.split(" ")
-    prefixed_args = []
-
-    for arg in args:
-        if len(arg) == 1:
-            prefixed_args.append("-" + arg)
+        if log_filename is None:
+            files = os.listdir(log_dir)
+            paths = [
+                os.path.join(log_dir, basename)
+                for basename in files
+                if basename[0:4] == "log_"
+            ]
+            if not paths:
+                raise ValueError(f"No log files found in the directory {log_dir}")
+            full_log_path = max(paths, key=os.path.getctime)
         else:
-            prefixed_args.append("--" + arg)
-    return " ".join(prefixed_args)
+            full_log_path = os.path.join(log_dir, log_filename)
+
+            if not os.path.exists(full_log_path):
+                raise FileNotFoundError(
+                    f"The log file {log_filename} does not exist in {log_dir}"
+                )
+
+        update_info = Parser(full_log_path).extract_info_for_report()
+        return Reporter(update_info, short_report)
+
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+    except PermissionError:
+        print(f"Permission denied: Can't access the file or directory.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 
 def main() -> None:
@@ -248,16 +261,18 @@ def main() -> None:
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
     if args.report:
-        generate_last_report(log_dir, args.short_report).print_report()
+        log_filename = None if args.report == "LAST" else args.report
+        generate_report(log_dir, log_filename, args.short_report).print_report()
     elif args.send_report in ["irc", "email", "mobile"]:
-        report = generate_last_report(log_dir, args.short_report).create_report()
+        log_filename = None if args.report == "LAST" else args.report
+        report = generate_report(log_dir, log_filename, args.short_report).create_report()
         short = False if args.send_report != "irc" else True
         Notifier(notification_type=args.send_report, report=report, short=short)
     else:
         runner = ShellRunner("y" if args.quiet else "n", log_dir, log_dir_messages)
         runner.run_shell_script(
             args.update_mode,
-            add_prefixes(args.args) if args.args else "NOARGS",
+            args.args if args.args else "NOARGS",
             args.disk_usage_limit,
             args.config_update_mode,
             "y" if args.daemon_restart else "n",

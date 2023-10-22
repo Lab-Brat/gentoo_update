@@ -99,7 +99,7 @@ gentoo-update
 - Full system update with extra update parameters
 
 ```bash
-gentoo-update --update-mode full --args "color=y keep-going"
+gentoo-update --update-mode full --args "--color=y --keep-going"
 ```
 
 - Full system update, show elogs and news
