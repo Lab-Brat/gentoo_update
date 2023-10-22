@@ -210,7 +210,7 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
 
 def generate_report(
     log_dir: str, log_filename: str = None, short_report: bool = False
-) -> None:
+) -> Reporter:
     """Show report for the <log_filename> located in $PORTAGE_LOGDIR.
 
     Args:
