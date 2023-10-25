@@ -32,7 +32,13 @@ def create_cli() -> argparse.Namespace:
         formatter_class=formatter,
     )
 
-    parser.add_argument(
+    subparsers = parser.add_subparsers(dest="command")
+    update = subparsers.add_parser("update", help="Run security or full update.")
+    report = subparsers.add_parser("report", help="Generate or send update reports.")
+    version = subparsers.add_parser("version", help="Print gentoo-update version.")
+
+    # define update subparser
+    update.add_argument(
         "-m",
         "--update-mode",
         default="security",
@@ -45,7 +51,7 @@ Options:
 Default: security
 """,
     )
-    parser.add_argument(
+    update.add_argument(
         "-a",
         "--args",
         default="",
@@ -55,7 +61,7 @@ Example:
 --args 'quiet-build=n color=y keep-going'
 """,
     )
-    parser.add_argument(
+    update.add_argument(
         "-c",
         "--config-update-mode",
         default="ignore",
@@ -68,7 +74,7 @@ Options:
 Default: ignore
 """,
     )
-    parser.add_argument(
+    update.add_argument(
         "-u",
         "--disk-usage-limit",
         default="0",
@@ -77,37 +83,39 @@ Do not run update if available disk space is lower than a limit (in GB).
 Default: 0 - do not set a limit.
 """,
     )
-    parser.add_argument(
+    update.add_argument(
         "-d",
         "--daemon-restart",
         action="store_true",
         help="Set whether to restart services and daemons after an update.",
     )
-    parser.add_argument(
+    update.add_argument(
         "-e",
         "--clean",
         action="store_true",
         help="Set whether to clean orphaned packaged after an update.",
     )
-    parser.add_argument(
+    update.add_argument(
         "-l",
         "--read-logs",
         action="store_true",
         help="Set whether to read elogs after an update.",
     )
-    parser.add_argument(
+    update.add_argument(
         "-n",
         "--read-news",
         action="store_true",
         help="Set whether to read news after an update.",
     )
-    parser.add_argument(
+    update.add_argument(
         "-q",
         "--quiet",
         action="store_true",
         help="Do not show logs on the terminal screen.",
     )
-    parser.add_argument(
+
+    # define report subparser
+    report.add_argument(
         "-r",
         "--report",
         nargs="?",
@@ -115,13 +123,13 @@ Default: 0 - do not set a limit.
         default=None,
         help="Show report. By default shows report from the last update log.",
     )
-    parser.add_argument(
+    report.add_argument(
         "-o",
         "--last-n-logs",
         type=int,
         help="Show last n log filenames.",
     )
-    parser.add_argument(
+    report.add_argument(
         "-s",
         "--send-report",
         default="none",
@@ -131,17 +139,11 @@ Send update report via IRC bot, email (SendGrid) or mobile app.
 Default: none
 """,
     )
-    parser.add_argument(
+    report.add_argument(
         "-t",
         "--short-report",
         action="store_true",
         help="Show or send only update status without package info.",
-    )
-    parser.add_argument(
-        "--version",
-        action="version",
-        version=__version__,
-        help="Print updater version.",
     )
 
     args = parser.parse_args()
@@ -277,20 +279,9 @@ def main() -> None:
     make_conf = make_conf_reader()
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
-    if args.last_n_logs:
-        show_available_reports(log_dir, args.last_n_logs)
-    elif args.report:
-        log_filename = None if args.report == "LAST" else args.report
-        report = generate_report(log_dir, log_filename, args.short_report)
-        report.print_report()
-    elif args.send_report in ["irc", "email", "mobile"]:
-        log_filename = None if args.report == "LAST" else args.report
-        report = generate_report(
-            log_dir, log_filename, args.short_report
-        ).create_report()
-        short = False if args.send_report != "irc" else True
-        Notifier(notification_type=args.send_report, report=report, short=short)
-    else:
+    if args.command == "version":
+        print(__version__)
+    elif args.command == "update":
         runner = ShellRunner("y" if args.quiet else "n", log_dir, log_dir_messages)
         runner.run_shell_script(
             args.update_mode,
@@ -302,6 +293,20 @@ def main() -> None:
             "y" if args.read_logs else "n",
             "y" if args.read_news else "n",
         )
+    elif args.command == "report":
+        if args.last_n_logs:
+            show_available_reports(log_dir, args.last_n_logs)
+        elif args.send_report in ["irc", "email", "mobile"]:
+            log_filename = None if args.report == "LAST" else args.report
+            report = generate_report(
+                log_dir, log_filename, args.short_report
+            ).create_report()
+            short = False if args.send_report != "irc" else True
+            Notifier(notification_type=args.send_report, report=report, short=short)
+        else:
+            log_filename = None if args.report == "LAST" else args.report
+            report = generate_report(log_dir, log_filename, args.short_report)
+            report.print_report()
 
 
 if __name__ == "__main__":
