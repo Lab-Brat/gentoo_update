@@ -219,6 +219,7 @@ def show_available_reports(log_dir: str, last_n_logs: int) -> None:
         last_n_logs (int): Last n amount of reports in the directory.
     """
     log_filesnames = os.listdir(log_dir)
+    log_filesnames.sort()
     if len(log_filesnames) < last_n_logs:
         raise ValueError(f"There are less than {last_n_logs} in {log_dir}")
 
