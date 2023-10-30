@@ -146,6 +146,9 @@ Default: none
         help="Show or send only update status without package info.",
     )
 
+    # define version subparser
+    version.add_argument("-v", "--verbose", action="store_true")
+
     args = parser.parse_args()
     return args
 
@@ -281,7 +284,10 @@ def main() -> None:
     log_dir, log_dir_messages = initiate_log_directory(make_conf)
 
     if args.command == "version":
-        print(__version__)
+        if args.verbose:
+            print(f"gento-update version: {__version__}")
+        else:
+            print(__version__)
     elif args.command == "update":
         runner = ShellRunner("y" if args.quiet else "n", log_dir, log_dir_messages)
         runner.run_shell_script(
