@@ -8,6 +8,9 @@ reading make.conf, creating log directories, and generating reports.
 
 import argparse
 import os
+import sys
+
+sys.tracebacklimit = -1
 from typing import Dict, List, Tuple
 
 from ._version import __version__
