@@ -230,7 +230,7 @@ def show_available_reports(log_dir: str, last_n_logs: int) -> None:
         raise ValueError(f"No log files found in the directory {log_dir}")
 
     logs = log_filesnames[-last_n_logs:]
-    print(f"Here are the last {last_n_logs} log files")
+    print(f"The last {last_n_logs} log file filenames")
     for log in logs:
         print(log)
 
