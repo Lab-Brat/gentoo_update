@@ -1,6 +1,8 @@
 # Gentoo Updater
 
-> :warning: **version 0.2.2** introduces breaking changes. CLI was rewritten and now it has subcommands structure.  
+> :warning: **Important Update:** Version 0.2.2 introduces breaking changes.
+> The CLI has been completely rewritten and now features a subcommands structure.
+> Please review the updated README below to understand the changes and ensure a smooth transition.  
 
 `gentoo-update` is a tool that automates updates on Gentoo Linux.
 By default it only installs security updates from [GLSA](https://security.gentoo.org/glsa/),
@@ -49,7 +51,6 @@ report which notifier then sends via email, IRC bot or
 ### general
 
 - [x] CLI: add option to choose from which log file to generate a report
-- [x] ebuild in GURU repository
 - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
 - [ ] comprehensive set of unit tests
 
