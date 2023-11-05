@@ -93,25 +93,39 @@ Here are some usage examples:
 - Basic security update
 
 ```bash
-gentoo-update
+gentoo-update update
 ```
 
 - Full system update with extra update parameters
 
 ```bash
-gentoo-update --update-mode full --args "--color=y --keep-going"
+gentoo-update update -m full -a "--color=y --keep-going --exclude=glibc"
 ```
 
 - Full system update, show elogs and news
 
 ```bash
-gentoo-update --update-mode full --read-logs --read-news
+gentoo-update update -m full -l -n
 ```
 
 - Read last update report:
 
 ```bash
-gentoo-update --report
+gentoo-update report
+```
+
+- Show the last 3 logs filenames, and generate a report for one of it:
+
+```shell
+# gentoo-update report -o 3
+The last 3 log file filenames
+log_2023-09-23-09-19
+log_2023-10-02-20-19
+log_2023-10-07-13-14
+# gentoo-update report -r log_2023-10-02-20-19
+==========> Gentoo Update Report <==========
+update status: SUCCESS
+......
 ```
 
 - Send the last update report to an IRC channel:
@@ -120,7 +134,7 @@ gentoo-update --report
 export IRC_CHANNEL="#<irc_channel_name>"
 export IRC_BOT_NICKNAME="<bot_name>"
 export IRC_BOT_PASSWORD="<bot_password>"
-gentoo-update --send-report irc
+gentoo-update report -s irc
 ```
 
 ## Help
