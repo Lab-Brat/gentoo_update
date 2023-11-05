@@ -9,7 +9,7 @@ import urllib.request
 from sys import exit
 from typing import List, Tuple
 
-ACCEPTED_HTTP_CODE = 200
+ACCEPTED_HTTP_CODES = [200, 202]
 USE_SENDGRID = True
 try:
     import sendgrid  # noqa: I005
@@ -100,11 +100,12 @@ class Notifier:
         mail_json = mail.get()
 
         response = sendgrid_client.client.mail.send.post(request_body=mail_json)
-        if response.status_code == ACCEPTED_HTTP_CODE:
+        if response.status_code in ACCEPTED_HTTP_CODES:
             print("email was sent successfully!")
         else:
             print("email was not sent successfully, details:")
-            print(response)
+            print(response.headers)
+            print(response.body)
 
     def send_report_to_mobile(self, report: List[str]) -> None:
         """Send the update report to mobile app."""

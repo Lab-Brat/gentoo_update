@@ -1,5 +1,9 @@
 # Gentoo Updater
 
+> :warning: **Important Update:** Version 0.2.2 introduces breaking changes.
+> The CLI has been completely rewritten and now features a subcommands structure.
+> Please review the updated README below to understand the changes and ensure a smooth transition.  
+
 `gentoo-update` is a tool that automates updates on Gentoo Linux.
 By default it only installs security updates from [GLSA](https://security.gentoo.org/glsa/),
 but it can also be used to update all packages on the system, i.e. `@world`.
@@ -17,31 +21,38 @@ report which notifier then sends via email, IRC bot or
 
 ## Features
 
-- updater:
-  - [x] update security patches from GLSA by default, and optionally update `@world`
-  - [x] insert additional flags to `@world` update
-  - [x] do not start the update if available disk space is lower than a certain threshold
-  - [ ] estimate update time and show package list before the update
-  - parser:
-  - [x] show update status (success/failure) in the report
-  - [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
-  - [ ] detect different errors during an update
-    - [x] blocked Packages
-    - [ ] USE flag conflicts
-    - [ ] issues with Licenses
-    - [ ] network issues during an update
-    - [ ] OOM during an update
-  - [x] show disk usage before/after an update
-  - notifier:
-    - [x] send update report via IRC bot
-    - [x] send update report via email using SendGrid
-    - [ ] send update report via email using local relay
-    - [x] send update report via mobile app
-    - [x] send a short report with only the update status instead of a full report
-  - general:
-    - [x] ebuild in GURU repository
-    - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
-    - [ ] comprehensive set of unit tests
+### updater
+
+- [x] update security patches from GLSA by default, and optionally update `@world`
+- [x] insert additional flags to `@world` update
+- [x] do not start the update if available disk space is lower than a certain threshold
+- [ ] estimate update time and show package list before the update
+
+### parser
+
+- [x] show update status (success/failure) in the report
+- [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
+- [ ] detect different errors during an update
+  - [x] blocked Packages
+  - [ ] USE flag conflicts
+  - [ ] issues with Licenses
+  - [ ] network issues during an update
+  - [ ] OOM during an update
+- [x] show disk usage before/after an update
+
+### notifier
+
+- [x] send update report via IRC bot
+- [x] send update report via email using SendGrid
+- [ ] send update report via email using local relay
+- [x] send update report via mobile app
+- [x] send a short report with only the update status instead of a full report
+
+### general
+
+- [x] CLI: add option to choose from which log file to generate a report
+- [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
+- [ ] comprehensive set of unit tests
 
 ## Installation
 
@@ -52,6 +63,13 @@ overlay, and can be installed using `emerge`. First, enable the overlay:
 emerge --ask app-eselect/eselect-repository
 eselect repository enable guru
 emerge --sync
+```
+
+All packages in GURU overlay need an `~arch` keyword.
+For example, on amd64 architecture add it using:
+
+```bash
+echo 'app-admin/gentoo_update ~amd64' > /etc/portage/package.accept_keywords/gentoo_update
 ```
 
 and then install it:
@@ -78,25 +96,39 @@ Here are some usage examples:
 - Basic security update
 
 ```bash
-gentoo-update
+gentoo-update update
 ```
 
 - Full system update with extra update parameters
 
 ```bash
-gentoo-update --update-mode full --args "color=y keep-going"
+gentoo-update update -m full -a "--color=y --keep-going --exclude=glibc"
 ```
 
 - Full system update, show elogs and news
 
 ```bash
-gentoo-update --update-mode full --read-logs --read-news
+gentoo-update update -m full -l -n
 ```
 
 - Read last update report:
 
 ```bash
-gentoo-update --report
+gentoo-update report
+```
+
+- Show the last 3 logs filenames, and generate a report for one of it:
+
+```shell
+# gentoo-update report -o 3
+The last 3 log file filenames
+log_2023-09-23-09-19
+log_2023-10-02-20-19
+log_2023-10-07-13-14
+# gentoo-update report -r log_2023-10-02-20-19
+==========> Gentoo Update Report <==========
+update status: SUCCESS
+......
 ```
 
 - Send the last update report to an IRC channel:
@@ -105,7 +137,7 @@ gentoo-update --report
 export IRC_CHANNEL="#<irc_channel_name>"
 export IRC_BOT_NICKNAME="<bot_name>"
 export IRC_BOT_PASSWORD="<bot_password>"
-gentoo-update --send-report irc
+gentoo-update report -s irc
 ```
 
 ## Help
