@@ -9,8 +9,6 @@ reading make.conf, creating log directories, and generating reports.
 import argparse
 import os
 import sys
-
-sys.tracebacklimit = -1
 from typing import Dict, List, Tuple
 
 from ._version import __version__
@@ -20,6 +18,7 @@ from .reporter import Reporter
 from .shell_runner import ShellRunner
 
 current_path = os.path.dirname(os.path.realpath(__file__))
+sys.tracebacklimit = -1
 
 
 def create_cli() -> argparse.Namespace:
