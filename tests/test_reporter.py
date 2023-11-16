@@ -2,7 +2,9 @@
 
 import unittest
 
-from gentoo_update import Reporter, generate_last_report
+from os import path
+from gentoo_update.gentoo_update import generate_report
+from gentoo_update.reporter import Reporter
 
 
 class TestGentooUpdate(unittest.TestCase):
@@ -10,8 +12,10 @@ class TestGentooUpdate(unittest.TestCase):
 
     def setUp(self):
         """Initialize test prerequisites."""
-        report_for_tests = "logs_for_unit_tests"
-        self.report_object = generate_last_report(report_for_tests, short_report=False)
+        test_reporter_path = path.dirname(path.abspath(__file__))
+        print(test_reporter_path)
+        report_for_tests = f"{test_reporter_path}/logs_for_unit_tests"
+        self.report_object = generate_report(report_for_tests, short_report=False)
         self.report = self.report_object.create_report()
 
     def test_report_object_type(self):
