@@ -16,7 +16,7 @@ install_gentoo_update() {
         emerge --quiet-build y app-admin/gentoo_update
 
     # Install python package from PyPi
-    elif [[ "${INSTALL_METHOD}" == 'pip' ]]; then
+    elif [[ "${INSTALL_METHOD}" == 'pypi' ]]; then
         pip install gentoo_update --break-system-packages
 
     # Install python pacakge from source

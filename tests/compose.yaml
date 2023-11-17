@@ -21,7 +21,7 @@ services:
   # container to test gentoo_update by installing it from PyPI using pip
   gentoo_update_world_pypi:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip full y n"]
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pypi full y n"]
     volumes:
       - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
