@@ -13,7 +13,6 @@ class TestGentooUpdate(unittest.TestCase):
     def setUp(self):
         """Initialize test prerequisites."""
         test_reporter_path = path.dirname(path.abspath(__file__))
-        print(test_reporter_path)
         report_for_tests = f"{test_reporter_path}/logs_for_unit_tests"
         self.report_object = generate_report(report_for_tests, short_report=False)
         self.report = self.report_object.create_report()
