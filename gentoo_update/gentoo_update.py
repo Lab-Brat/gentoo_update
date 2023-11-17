@@ -316,6 +316,11 @@ def main() -> None:
             log_filename = None if args.report == "LAST" else args.report
             report = generate_report(log_dir, log_filename, args.short_report)
             report.print_report()
+    else:
+        print("No parameters specified, running securty update by default.")
+        print("command: gentoo-update update -m security -l -n")
+        runner = ShellRunner("n", log_dir, log_dir_messages)
+        runner.run_shell_script('security', "NOARGS", '0', 'ignore', "n", "n", "y", "y")
 
 
 if __name__ == "__main__":
