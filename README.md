@@ -14,12 +14,14 @@ from 2023 Google Summer of Code, more about it can be found in the
 [blog post](https://blogs.gentoo.org/gsoc/2023/08/27/final-report-automated-gentoo-system-updater/) and
 [Gentoo Forums](https://forums.gentoo.org/viewtopic-p-8793827.html#8793827).
 
-`gentoo_update` has 3 main modules - updater, parser and notifier. Updater runs the
+`gentoo-update` has 3 main modules - updater, parser and notifier. Updater runs the
 update script and creates a log file. Parser reads the log file and composes a post-upgrade
 report which notifier then sends via email, IRC bot or
 [mobile app](https://github.com/Lab-Brat/gentoo_update_flutter).
 
-## Features
+<details>
+
+<summary>Feature List</summary>
 
 ### updater
 
@@ -53,6 +55,7 @@ report which notifier then sends via email, IRC bot or
 - [x] CLI: add option to choose from which log file to generate a report
 - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
 - [ ] comprehensive set of unit tests
+</details>
 
 ## Installation
 
