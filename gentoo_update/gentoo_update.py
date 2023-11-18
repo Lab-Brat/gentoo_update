@@ -320,7 +320,7 @@ def main() -> None:
         print("No parameters specified, running securty update by default.")
         print("command: gentoo-update update -m security -l -n")
         runner = ShellRunner("n", log_dir, log_dir_messages)
-        runner.run_shell_script('security', "NOARGS", '0', 'ignore', "n", "n", "y", "y")
+        runner.run_shell_script("security", "NOARGS", "0", "ignore", "n", "n", "y", "y")
 
 
 if __name__ == "__main__":
