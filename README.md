@@ -23,38 +23,32 @@ report which notifier then sends via email, IRC bot or
 
 <summary>Feature List</summary>
 
-### updater
+- **updater**
+  - [x] update security patches from GLSA by default, and optionally update `@world`
+  - [x] insert additional flags to `@world` update
+  - [x] do not start the update if available disk space is lower than a certain threshold
+  - [ ] estimate update time and show package list before the update
+- **parser**
+  - [x] show update status (success/failure) in the report
+  - [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
+  - [ ] detect different errors during an update
+    - [x] blocked Packages
+    - [ ] USE flag conflicts
+    - [ ] issues with Licenses
+    - [ ] network issues during an update
+    - [ ] OOM during an update
+  - [x] show disk usage before/after an update
+- **notifier**
+  - [x] send update report via IRC bot
+  - [x] send update report via email using SendGrid
+  - [ ] send update report via email using local relay
+  - [x] send update report via mobile app
+  - [x] send a short report with only the update status instead of a full report
+- **general**
+  - [x] CLI: add option to choose from which log file to generate a report
+  - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
+  - [ ] comprehensive set of unit tests
 
-- [x] update security patches from GLSA by default, and optionally update `@world`
-- [x] insert additional flags to `@world` update
-- [x] do not start the update if available disk space is lower than a certain threshold
-- [ ] estimate update time and show package list before the update
-
-### parser
-
-- [x] show update status (success/failure) in the report
-- [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
-- [ ] detect different errors during an update
-  - [x] blocked Packages
-  - [ ] USE flag conflicts
-  - [ ] issues with Licenses
-  - [ ] network issues during an update
-  - [ ] OOM during an update
-- [x] show disk usage before/after an update
-
-### notifier
-
-- [x] send update report via IRC bot
-- [x] send update report via email using SendGrid
-- [ ] send update report via email using local relay
-- [x] send update report via mobile app
-- [x] send a short report with only the update status instead of a full report
-
-### general
-
-- [x] CLI: add option to choose from which log file to generate a report
-- [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
-- [ ] comprehensive set of unit tests
 </details>
 
 ## Installation
