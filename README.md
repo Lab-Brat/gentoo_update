@@ -138,6 +138,23 @@ export IRC_BOT_PASSWORD="<bot_password>"
 gentoo-update report -s irc
 ```
 
+- Send the last update report via email:
+
+```bash
+# install Sengrid library
+# need to unmask these packages: dev-python/sendgrid, dev-python/python-http-client, dev-python/starkbank-ecdsa
+emerge --ask dev-python/sendgrid
+
+# export token and other info via env variables
+export SENDGRID_TO='<to_address>'
+export SENDGRID_FROM='<from_address>'
+export SENDGRID_API_KEY='<api_key>'
+
+# send the latest report, or a specific one
+gentoo-update report -s email
+gentoo-update report -r <log_name> -s email
+```
+
 ## Help
 
 The detailed explanation of command flags can be found in CLI's help message:
