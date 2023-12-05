@@ -4,6 +4,10 @@ services:
   # these are used in the development process
   gentoo_update_glsa_source:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/old_openrc_desktop.Dockerfile
+    environment:
+      - SENDGRID_TO="${SENDGRID_TO}"
+      - SENDGRID_FROM="${SENDGRID_FROM}"
+      - SENDGRID_API_KEY="${SENDGRID_API_KEY}"
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh source security y email"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
@@ -12,6 +16,10 @@ services:
 
   gentoo_update_world_source:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
+    environment:
+      - SENDGRID_TO="${SENDGRID_TO}"
+      - SENDGRID_FROM="${SENDGRID_FROM}"
+      - SENDGRID_API_KEY="${SENDGRID_API_KEY}"
     command: ["/bin/sh", "-c", "/tmp/run_tests.sh source full_with_all_opts y email"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
@@ -38,6 +46,10 @@ services:
   # container for inspection
   gentoo_update_inspect:
     image: gentoo/stage3:latest
+    environment:
+      - SENDGRID_TO="${SENDGRID_TO}"
+      - SENDGRID_FROM="${SENDGRID_FROM}"
+      - SENDGRID_API_KEY="${SENDGRID_API_KEY}"
     command: "sleep infinity"
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
