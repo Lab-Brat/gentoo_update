@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                checkout scmGit(
+                    branches: [
+                        [name: 'dev']],
+                    userRemoteConfigs: [
+                        [url: 'https://github.com/Lab-Brat/gentoo_update']]
+                    )
+            }
+        }
+
+        stage('Run Docker Compose Tets') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'SENDGRID_FROM', variable: 'SENDGRID_FROM'),
+                    string(credentialsId: 'SENDGRID_TO', variable: 'SENDGRID_TO'),
+                    string(credentialsId: 'SENDGRID_API_KEY', variable: 'SENDGRID_API_KEY')
+                    ]
+                ) {
+                    sh 'docker compose -f tests/compose.yaml gentoo_update_world_source'
+                }
+
+            }
+        }
+    }
+}
