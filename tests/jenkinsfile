@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile {
+            filename '/var/jenkins_home/workspace/gentoo_dockerfiles/latest_openrc.Dockerfile'
+        }
+    }
 
     stages {
         stage('Clone Repository') {
@@ -13,7 +17,19 @@ pipeline {
             }
         }
 
-        stage('Run Docker Compose Tets') {
+        stage('Install gentoo_update') {
+            steps {
+                sh 'pip install . --break-system-packages'
+            }
+        }
+
+        stage('Run gentoo_update') {
+            steps {
+                sh 'gentoo-update update --update-mode full'
+            }
+        }
+
+        stage('Send update report') {
             steps {
                 withCredentials([
                     string(credentialsId: 'SENDGRID_FROM', variable: 'SENDGRID_FROM'),
@@ -21,9 +37,8 @@ pipeline {
                     string(credentialsId: 'SENDGRID_API_KEY', variable: 'SENDGRID_API_KEY')
                     ]
                 ) {
-                    sh 'docker compose -f tests/compose.yaml gentoo_update_world_source'
+                    sh 'gentoo-update report --send-report email'
                 }
-
             }
         }
     }
