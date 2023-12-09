@@ -15,7 +15,7 @@ class ShellRunner:
     ----
         quiet (str): If 'y', suppresses terminal output.
         log_dir (str): Directory to save log files.
-        log_dir_messages (str): List of messages to log.
+        log_dir_messages (List[str]): List of messages to log.
 
     Attributes:
     ----------
@@ -31,7 +31,7 @@ class ShellRunner:
         stderr_output (List[str]): List containing the standard error output.
     """
 
-    def __init__(self, quiet: str, log_dir: str, log_dir_messages: str) -> None:
+    def __init__(self, quiet: str, log_dir: str, log_dir_messages: List[str]) -> None:
         """Initialize ShellRunner class."""
         self.quiet = True if quiet == "y" else False
 
