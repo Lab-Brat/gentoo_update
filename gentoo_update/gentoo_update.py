@@ -9,7 +9,7 @@ reading make.conf, creating log directories, and generating reports.
 import argparse
 import os
 import sys
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple
 
 from ._version import __version__
 from .notifier import Notifier
