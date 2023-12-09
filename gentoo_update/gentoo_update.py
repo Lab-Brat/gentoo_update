@@ -237,7 +237,7 @@ def show_available_reports(log_dir: str, last_n_logs: int) -> None:
 
 
 def get_last_log_filename(log_dir: str) -> str:
-    """List files in log_dir, get the latest log file fielname
+    """List files in log_dir, get the latest log file fielname.
 
     Args
     ----
