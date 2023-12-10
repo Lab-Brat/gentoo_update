@@ -130,18 +130,3 @@ class Notifier:
         with urllib.request.urlopen(req) as response:
             print(response.status)
             print(response.read().decode("utf-8"))
-
-
-if __name__ == "__main__":
-    report = [
-        "==========> Gentoo Update Report <==========",
-        "update status: SUCCESS",
-        "processed packages:",
-        "--- sys-apps/sandbox 2.32->2.37",
-        "",
-        "Disk Usage Stats:",
-        "Free Space 35G => 35G",
-        "Used Space 7.5G => 7.5G",
-        "Used pc(%) 18% => 18%",
-    ]
-    notify = Notifier(notification_type="mobile", report=report, short=False)
