@@ -49,7 +49,7 @@ class Parser:
         return self.split_log_to_sections(log_data)
 
     def split_log_to_sections(self, log_data: List[str]) -> Dict:
-        """Split the log file into sections based on specified markers.
+        """Split the log file into sections based on {{ ... }} marker.
 
         Args:
         ----
@@ -74,7 +74,10 @@ class Parser:
                 else:
                     log_by_sections[section_name].append(line)
             else:
-                log_by_sections["final"] = log_line
+                if log_by_sections.get("final") is None:
+                    log_by_sections["final"] = []
+                else:
+                    log_by_sections["final"].append(log_line)
 
         return log_by_sections
 
