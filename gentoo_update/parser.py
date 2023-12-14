@@ -36,12 +36,13 @@ class Parser:
         self.log_file = log_file
         self.log_data = self.read_log()
 
-    def read_log(self) -> List[str]:
+    def read_log(self) -> Dict:
         """Read the log file and returns its content.
 
         Returns
         -------
-            List[str]: The content of the log file as a list of strings.
+            Dict: A dictionary with section names as keys
+                and content as values.
         """
         with open(self.log_file, encoding="utf-8") as log_file:
             log_data = log_file.readlines()
