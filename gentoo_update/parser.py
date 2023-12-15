@@ -93,15 +93,15 @@ class Parser:
 
         Returns:
         -------
-            Dict: A dictionary that contains the status of
+            PrentedSection: object that contains the status of
                   the "emerge pretend" operation and the details.
         """
-        if "emerge pretend was successful, updating..." in section_content:
+        if (
+            "emerge pretend was successful, updating..."
+            or "There are no packages to update, skipping..." in section_content
+        ):
             pretend_status = True
             pretend_details = None
-        elif "There are no packages to update, skipping..." in section_content:
-            pretend_status = True
-            pretend_details = "No Updates"
         else:
             pretend_status = False
             pretend_details = self.parse_pretend_details(section_content)
