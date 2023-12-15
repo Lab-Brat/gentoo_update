@@ -43,7 +43,7 @@ class PretendSection:
     """Dataclass pretend section."""
 
     pretend_status: bool
-    pretend_details: PretendError
+    pretend_details: Optional[PretendError]
 
 
 @dataclass
