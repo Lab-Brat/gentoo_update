@@ -1,12 +1,12 @@
 pipeline {
     agent {
         dockerfile {
-            filename '/var/jenkins_home/workspace/gentoo_dockerfiles/latest_openrc.Dockerfile'
+            filename '/var/jenkins_home/workspace/self/old_openrc_desktop.Dockerfile'
         }
     }
 
     stages {
-        stage('Clone Repository') {
+        stage('Clone gentoo_update Repository') {
             steps {
                 checkout scmGit(
                     branches: [
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Run gentoo_update') {
             steps {
-                sh 'gentoo-update update --update-mode full'
+                sh 'gentoo-update update'
             }
         }
 
@@ -39,6 +39,12 @@ pipeline {
                 ) {
                     sh 'gentoo-update report --send-report email'
                 }
+            }
+        }
+
+        stage('Copy log file') {
+            steps {
+                sh 'cp -r /var/log/portage/gentoo-update/* /var/jenkins_home/workspace/self/gentoo_update_logs'
             }
         }
     }
