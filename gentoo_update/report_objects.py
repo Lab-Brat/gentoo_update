@@ -61,8 +61,8 @@ class DiskUsageStats:
 class DiskUsage:
     """Dataclass disk usage."""
 
-    before_update: List[DiskUsageStats]
-    after_update: List[DiskUsageStats]
+    before_update: Optional[List[DiskUsageStats]]
+    after_update: Optional[List[DiskUsageStats]]
 
 
 @dataclass
@@ -71,4 +71,4 @@ class LogInfo:
 
     pretend_emerge: Optional[PretendSection]
     update_system: Optional[UpdateSection]
-    disk_usage: Optional[DiskUsage]
+    disk_usage: DiskUsage
