@@ -41,7 +41,7 @@ class Notifier:
             print("Currently supporting: irc")
             print("Exiting...")
 
-    def get_irc_vars(self) -> Tuple[str, str, str]:
+    def get_irc_vars(self) -> Tuple:
         """Get variables needed to send report to IRC chat from env."""
         channel = os.getenv("IRC_CHANNEL")
         botnick = os.getenv("IRC_BOT_NICKNAME")
@@ -77,7 +77,7 @@ class Notifier:
         irc.send(b"QUIT \n")
         irc.close()
 
-    def get_mail_vars(self) -> Tuple[str, str, str]:
+    def get_mail_vars(self) -> Tuple:
         """Get variables to send report to email via SendGrid from env."""
         api_key = os.getenv("SENDGRID_API_KEY")
         send_to = os.getenv("SENDGRID_TO")
@@ -99,7 +99,7 @@ class Notifier:
         mail = Mail(Email(send_from), To(send_to), subject, content)
         mail_json = mail.get()
 
-        response = sendgrid_client.client.mail.send.post(request_body=mail_json)
+        response = sendgrid_client.client.mail.send.post(request_body=mail_json) # type: ignore
         if response.status_code in ACCEPTED_HTTP_CODES:
             print("email was sent successfully!")
         else:
