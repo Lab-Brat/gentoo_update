@@ -96,10 +96,9 @@ class Parser:
             PrentedSection: object that contains the status of
                   the "emerge pretend" operation and the details.
         """
-        if (
-            "emerge pretend was successful, updating..."
-            or "There are no packages to update, skipping..." in section_content
-        ):
+        pretend_success = "emerge pretend was successful, updating..."
+        no_package_to_update = "There are no packages to update, skipping..."
+        if pretend_success or no_package_to_update in section_content:
             pretend_status = True
             pretend_details = None
         else:
