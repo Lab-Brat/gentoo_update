@@ -121,8 +121,7 @@ Default: 0 - do not set a limit.
         "-r",
         "--report",
         nargs="?",
-        const="LAST",
-        default=None,
+        default="LAST",
         help="Show report. By default shows report from the last update log.",
     )
     report.add_argument(
@@ -237,8 +236,28 @@ def show_available_reports(log_dir: str, last_n_logs: int) -> None:
         print(log)
 
 
+def get_last_log_filename(log_dir: str) -> str:
+    """List files in log_dir, get the latest log file fielname.
+
+    Args
+    ----
+        log_dir (str): Directory where gentoo_update stores logs.
+
+    Returns
+    -------
+        str: filename of the last report.
+    """
+    files = os.listdir(log_dir)
+    paths = [
+        os.path.join(log_dir, basename) for basename in files if basename[0:4] == "log_"
+    ]
+    if not paths:
+        raise ValueError(f"No log files found in the directory {log_dir}")
+    return max(paths, key=os.path.getctime)
+
+
 def generate_report(
-    log_dir: str, log_filename: str = None, short_report: bool = False
+    log_dir: str, log_filename: str, short_report: bool = False
 ) -> Reporter:
     """Show report for the <log_filename> located in $PORTAGE_LOGDIR.
 
@@ -256,23 +275,12 @@ def generate_report(
     if not os.path.exists(log_dir):
         raise FileNotFoundError(f"The log directory {log_dir} does not exist")
 
-    if log_filename is None:
-        files = os.listdir(log_dir)
-        paths = [
-            os.path.join(log_dir, basename)
-            for basename in files
-            if basename[0:4] == "log_"
-        ]
-        if not paths:
-            raise ValueError(f"No log files found in the directory {log_dir}")
-        full_log_path = max(paths, key=os.path.getctime)
-    else:
-        full_log_path = os.path.join(log_dir, log_filename)
+    full_log_path = os.path.join(log_dir, log_filename)
 
-        if not os.path.exists(full_log_path):
-            raise FileNotFoundError(
-                f"The log file {log_filename} does not exist in {log_dir}"
-            )
+    if not os.path.exists(full_log_path):
+        raise FileNotFoundError(
+            f"The log file {log_filename} does not exist in {log_dir}"
+        )
 
     update_info = Parser(full_log_path).extract_info_for_report()
     return Reporter(update_info, short_report)
@@ -306,16 +314,25 @@ def main() -> None:
         if args.last_n_logs:
             show_available_reports(log_dir, args.last_n_logs)
         elif args.send_report in ["irc", "email", "mobile"]:
-            log_filename = None if args.report == "LAST" else args.report
+            log_filename = (
+                get_last_log_filename(log_dir) if args.report == "LAST" else args.report
+            )
             report = generate_report(
                 log_dir, log_filename, args.short_report
             ).create_report()
             short = False if args.send_report != "irc" else True
             Notifier(notification_type=args.send_report, report=report, short=short)
         else:
-            log_filename = None if args.report == "LAST" else args.report
+            log_filename = (
+                get_last_log_filename(log_dir) if args.report == "LAST" else args.report
+            )
             report = generate_report(log_dir, log_filename, args.short_report)
             report.print_report()
+    else:
+        print("No parameters specified, running securty update by default.")
+        print("command: gentoo-update update -m security -l -n")
+        runner = ShellRunner("n", log_dir, log_dir_messages)
+        runner.run_shell_script("security", "NOARGS", "0", "ignore", "n", "n", "y", "y")
 
 
 if __name__ == "__main__":

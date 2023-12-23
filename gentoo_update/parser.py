@@ -36,19 +36,20 @@ class Parser:
         self.log_file = log_file
         self.log_data = self.read_log()
 
-    def read_log(self) -> List[str]:
+    def read_log(self) -> Dict:
         """Read the log file and returns its content.
 
         Returns
         -------
-            List[str]: The content of the log file as a list of strings.
+            Dict: A dictionary with section names as keys
+                and content as values.
         """
         with open(self.log_file, encoding="utf-8") as log_file:
             log_data = log_file.readlines()
         return self.split_log_to_sections(log_data)
 
     def split_log_to_sections(self, log_data: List[str]) -> Dict:
-        """Split the log file into sections based on specified markers.
+        """Split the log file into sections based on {{ ... }} marker.
 
         Args:
         ----
@@ -73,7 +74,10 @@ class Parser:
                 else:
                     log_by_sections[section_name].append(line)
             else:
-                log_by_sections["final"] = log_line
+                if log_by_sections.get("final") is None:
+                    log_by_sections["final"] = []
+                else:
+                    log_by_sections["final"].append(log_line)
 
         return log_by_sections
 
@@ -89,15 +93,14 @@ class Parser:
 
         Returns:
         -------
-            Dict: A dictionary that contains the status of
+            PrentedSection: object that contains the status of
                   the "emerge pretend" operation and the details.
         """
-        if "emerge pretend was successful, updating..." in section_content:
+        pretend_success = "emerge pretend was successful, updating..."
+        no_package_to_update = "There are no packages to update, skipping..."
+        if pretend_success or no_package_to_update in section_content:
             pretend_status = True
             pretend_details = None
-        elif "There are no packages to update, skipping..." in section_content:
-            pretend_status = True
-            pretend_details = "No Updates"
         else:
             pretend_status = False
             pretend_details = self.parse_pretend_details(section_content)
@@ -137,15 +140,14 @@ class Parser:
               strings and error details as a list of strings.
         """
         error_type = "undefined"
-        error_definition = "undefined"
-        error_details = "undefined"
+        error_definition = ""
+        error_details = []
 
         for line in error_content:
             if "Blocked Packages" in line:
                 error_type = "Blocked Packages"
                 error_details = self._parse_pretend_get_blocked_details(error_content)
 
-        for line in error_content:
             if line[0] == "*":
                 error_definition += f"{line[2:]} "
 
@@ -249,21 +251,21 @@ class Parser:
         -------
             LogInfo: Dataclass containing parsed data from all sections.
         """
-        log_info = LogInfo
-        disk_usage = DiskUsage
+        pretend_emerge = None
+        update_system = None
+        before_update = None
+        after_update = None
+
         for section, section_content in self.log_data.items():
             if section == "pretend_emerge":
-                log_info.pretend_emerge = self.parse_emerge_pretend_section(
-                    section_content
-                )
+                pretend_emerge = self.parse_emerge_pretend_section(section_content)
             elif section == "update_system":
-                log_info.update_system = self.parse_update_system_section(
-                    section_content
-                )
+                update_system = self.parse_update_system_section(section_content)
             elif section == "calculate_disk_usage_1":
-                disk_usage.before_update = self.parse_disk_usage_info(section_content)
+                before_update = self.parse_disk_usage_info(section_content)
             elif section == "calculate_disk_usage_2":
-                disk_usage.after_update = self.parse_disk_usage_info(section_content)
-        log_info.disk_usage = disk_usage
+                after_update = self.parse_disk_usage_info(section_content)
 
-        return log_info
+        return LogInfo(
+            pretend_emerge, update_system, DiskUsage(before_update, after_update)
+        )

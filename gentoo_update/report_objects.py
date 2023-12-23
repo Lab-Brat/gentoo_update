@@ -8,12 +8,12 @@ from typing import Dict, List, Optional
 class PackageInfo:
     """Dataclass that contains information about a package."""
 
-    package_type: str
-    package_name: str
-    new_version: str
-    old_version: str
-    update_status: str
-    repo: str
+    package_type: Optional[str]
+    package_name: Optional[str]
+    new_version: Optional[str]
+    old_version: Optional[str]
+    update_status: Optional[str]
+    repo: Optional[str]
 
     def add_attributes(self, attrs):
         """Add attributes to the PackageInfo object."""
@@ -27,7 +27,7 @@ class UpdateSection:
 
     update_type: str
     update_status: bool
-    update_details: Dict[str, PackageInfo]
+    update_details: Dict
 
 
 @dataclass
@@ -43,7 +43,7 @@ class PretendSection:
     """Dataclass pretend section."""
 
     pretend_status: bool
-    pretend_details: PretendError
+    pretend_details: Optional[PretendError]
 
 
 @dataclass
@@ -61,8 +61,8 @@ class DiskUsageStats:
 class DiskUsage:
     """Dataclass disk usage."""
 
-    before_update: List[DiskUsageStats]
-    after_update: List[DiskUsageStats]
+    before_update: Optional[List[DiskUsageStats]]
+    after_update: Optional[List[DiskUsageStats]]
 
 
 @dataclass
@@ -71,4 +71,4 @@ class LogInfo:
 
     pretend_emerge: Optional[PretendSection]
     update_system: Optional[UpdateSection]
-    disk_usage: Optional[DiskUsage]
+    disk_usage: DiskUsage

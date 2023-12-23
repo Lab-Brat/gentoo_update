@@ -100,7 +100,7 @@ class PackageParser:
 
         return ebuild_info
 
-    def _parse_package_blocks(self, split_package_string: str) -> PackageInfo:
+    def _parse_package_blocks(self, split_package_string: List[str]) -> PackageInfo:
         """Parse blocks information.
 
         Args:
@@ -133,7 +133,7 @@ class PackageParser:
         blocks_info.add_attributes({"blocked_package": split_package_string[-1][:-1]})
         return blocks_info
 
-    def _parse_package_uninstall(self, split_package_string: List) -> PackageInfo:
+    def _parse_package_uninstall(self, split_package_string: List[str]) -> PackageInfo:
         """Parse uninstall information.
 
         Args:
@@ -192,6 +192,7 @@ class PackageParser:
             split_package_string = self._parse_package_string(package_string)
             update_status = split_package_string[0]
 
+            package = None
             if "ebuild" in update_status:
                 package = self._parse_package_ebuild(split_package_string)
             elif "blocks" in update_status:

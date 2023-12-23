@@ -15,7 +15,7 @@ class ShellRunner:
     ----
         quiet (str): If 'y', suppresses terminal output.
         log_dir (str): Directory to save log files.
-        log_dir_messages (str): List of messages to log.
+        log_dir_messages (List[str]): List of messages to log.
 
     Attributes:
     ----------
@@ -31,7 +31,7 @@ class ShellRunner:
         stderr_output (List[str]): List containing the standard error output.
     """
 
-    def __init__(self, quiet: str, log_dir: str, log_dir_messages: str) -> None:
+    def __init__(self, quiet: str, log_dir: str, log_dir_messages: List[str]) -> None:
         """Initialize ShellRunner class."""
         self.quiet = True if quiet == "y" else False
 
@@ -88,35 +88,24 @@ class ShellRunner:
 
         return logger
 
-    def _log_stream_output(
-        self, stream_obj: subprocess.Popen, outputtype: str
-    ) -> List[str]:
+    def _log_stream_output(self, stream, logger) -> List[str]:
         """Process sterr from the upadte script.
 
         Args:
         ----
-            stream_obj (subprocess.Popen): output stream from subprocess.Popen
-            outputtype (str): output type, stderr or stdout
+            stream (Popen.stdin | Popen.stderr ): output stream from subprocess.Popen
+            logger (Logger.info | Logger.error): info() of error() methods
 
         Returns:
         -------
             List[str]: List containing the output
         """
         output = []
-        if outputtype == "stdout":
-            stream = stream_obj.stdout
-        elif outputtype == "stderr":
-            stream = stream_obj.stderr
-        else:
-            self.logger.error("Invalid Output Stream Type")
 
         for stream_line in stream:
             line = stream_line.decode().rstrip("\n")
             output.append(line)
-            if outputtype == "stdout":
-                self.logger.info(line)
-            elif outputtype == "stderr":
-                self.logger.error(line)
+            logger(line)
         return output
 
     def _exit_with_error_message(self, stream: subprocess.Popen) -> None:
@@ -147,8 +136,12 @@ class ShellRunner:
         with subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ) as script_stream:
-            self.stdout_output = self._log_stream_output(script_stream, "stdout")
-            self.stderr_output = self._log_stream_output(script_stream, "stderr")
+            self.stdout_output = self._log_stream_output(
+                script_stream.stdout, self.logger.info
+            )
+            self.stderr_output = self._log_stream_output(
+                script_stream.stderr, self.logger.error
+            )
             script_stream.wait()
 
             if script_stream.returncode != 0:

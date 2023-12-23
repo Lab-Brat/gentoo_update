@@ -14,45 +14,43 @@ from 2023 Google Summer of Code, more about it can be found in the
 [blog post](https://blogs.gentoo.org/gsoc/2023/08/27/final-report-automated-gentoo-system-updater/) and
 [Gentoo Forums](https://forums.gentoo.org/viewtopic-p-8793827.html#8793827).
 
-`gentoo_update` has 3 main modules - updater, parser and notifier. Updater runs the
+`gentoo-update` has 3 main modules - updater, parser and notifier. Updater runs the
 update script and creates a log file. Parser reads the log file and composes a post-upgrade
 report which notifier then sends via email, IRC bot or
 [mobile app](https://github.com/Lab-Brat/gentoo_update_flutter).
 
-## Features
+<details>
 
-### updater
+<summary>Feature List</summary>
 
-- [x] update security patches from GLSA by default, and optionally update `@world`
-- [x] insert additional flags to `@world` update
-- [x] do not start the update if available disk space is lower than a certain threshold
-- [ ] estimate update time and show package list before the update
+- **updater**
+  - [x] update security patches from GLSA by default, and optionally update `@world`
+  - [x] insert additional flags to `@world` update
+  - [x] do not start the update if available disk space is lower than a certain threshold
+  - [ ] estimate update time
+  - [ ] show package list before the update
+- **parser**
+  - [x] show update status (success/failure) in the report
+  - [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
+  - [ ] detect different errors during an update
+    - [x] blocked Packages
+    - [ ] USE flag conflicts
+    - [ ] issues with Licenses
+    - [ ] network issues during an update
+    - [ ] OOM during an update
+  - [x] show disk usage before/after an update
+- **notifier**
+  - [x] send update report via IRC bot
+  - [x] send update report via email using SendGrid
+  - [ ] send update report via email using local relay
+  - [x] send update report via mobile app
+  - [x] send a short report with only the update status instead of a full report
+- **general**
+  - [x] CLI: add option to choose from which log file to generate a report
+  - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
+  - [ ] comprehensive set of unit tests
 
-### parser
-
-- [x] show update status (success/failure) in the report
-- [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
-- [ ] detect different errors during an update
-  - [x] blocked Packages
-  - [ ] USE flag conflicts
-  - [ ] issues with Licenses
-  - [ ] network issues during an update
-  - [ ] OOM during an update
-- [x] show disk usage before/after an update
-
-### notifier
-
-- [x] send update report via IRC bot
-- [x] send update report via email using SendGrid
-- [ ] send update report via email using local relay
-- [x] send update report via mobile app
-- [x] send a short report with only the update status instead of a full report
-
-### general
-
-- [x] CLI: add option to choose from which log file to generate a report
-- [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
-- [ ] comprehensive set of unit tests
+</details>
 
 ## Installation
 
@@ -138,6 +136,23 @@ export IRC_CHANNEL="#<irc_channel_name>"
 export IRC_BOT_NICKNAME="<bot_name>"
 export IRC_BOT_PASSWORD="<bot_password>"
 gentoo-update report -s irc
+```
+
+- Send the last update report via email:
+
+```bash
+# install Sengrid library
+# need to unmask these packages: dev-python/sendgrid, dev-python/python-http-client, dev-python/starkbank-ecdsa
+emerge --ask dev-python/sendgrid
+
+# export token and other info via env variables
+export SENDGRID_TO='<to_address>'
+export SENDGRID_FROM='<from_address>'
+export SENDGRID_API_KEY='<api_key>'
+
+# send the latest report, or a specific one
+gentoo-update report -s email
+gentoo-update report -r <log_name> -s email
 ```
 
 ## Help

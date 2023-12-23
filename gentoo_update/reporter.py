@@ -8,7 +8,7 @@ and creating a report.
 The module also contains helper classes for parsing log information.
 """
 import sys
-from typing import List
+from typing import List, Optional
 
 from .parser import DiskUsage, LogInfo, PretendError, PretendSection, UpdateSection
 
@@ -18,7 +18,7 @@ class Reporter:
 
     def __init__(self, update_info: LogInfo, short_report: bool) -> None:
         """Initialize Reporter class."""
-        self.info = update_info
+        self.info: LogInfo = update_info
         self.short_report = short_report
 
     def _create_failed_pretend_report(self, pretend_info: PretendSection) -> List[str]:
@@ -36,14 +36,19 @@ class Reporter:
             "==========> Gentoo Update Report <==========",
             "emerge pretend status: FAIL",
         ]
-        pretend_details = pretend_info.pretend_details
-        if pretend_details.error_type == "undefined":
-            report.append("Could not identify error, please check the logs")
-        elif pretend_details.error_type == "Blocked Packages":
-            report.append(f"\nError Type: {pretend_details.error_type}")
-            report.extend(self._report_blocked_packages(pretend_details))
-        report.append("")
-        return report
+        pretend_details: PretendError | None = pretend_info.pretend_details
+
+        if pretend_details:
+            if pretend_details.error_type == "undefined":
+                report.append("Could not identify error, please check the logs")
+            elif pretend_details.error_type == "Blocked Packages":
+                report.append(f"\nError Type: {pretend_details.error_type}")
+                report.extend(self._report_blocked_packages(pretend_details))
+            report.append("")
+            return report
+        else:
+            report = ["pretend_details section was empty"]
+            return report
 
     def _report_blocked_packages(self, pretend_details: PretendError) -> List[str]:
         """Report on Blocked Packages error during emerge pretend.
@@ -63,7 +68,7 @@ class Reporter:
         return blocked_packages_report
 
     def _create_failed_report(
-        self, update_info: UpdateSection, disk_usage_info: DiskUsage
+        self, update_info: Optional[UpdateSection], disk_usage_info: DiskUsage
     ) -> List[str]:
         """Create a report when update fails.
 
@@ -80,7 +85,7 @@ class Reporter:
         return ["Your update is a failure"]
 
     def _create_successful_report(
-        self, update_info: UpdateSection, disk_usage_info: DiskUsage
+        self, update_info: Optional[UpdateSection], disk_usage_info: DiskUsage
     ) -> List[str]:
         """Create a report when update succeeds.
 
@@ -97,8 +102,11 @@ class Reporter:
             "==========> Gentoo Update Report <==========",
             "update status: SUCCESS",
         ]
-        updated_packages = update_info.update_details["updated_packages"]
+        updated_packages = []
+        if update_info:
+            updated_packages = update_info.update_details["updated_packages"]
         other_package_types = False
+
         if updated_packages:
             report.append(r"processed packages:")
             for package in updated_packages:
@@ -126,16 +134,17 @@ class Reporter:
             report.append("")
             report.append("Disk Usage Stats:")
 
-            for before, after in zip(
-                disk_usage_info.before_update, disk_usage_info.after_update
-            ):
-                disk_usage_stats = [
-                    f"Mount Point {before.mount_point}",
-                    f"Free Space {before.free} => {after.free}",
-                    f"Used Space {before.used} => {after.used}",
-                    f"Used (%) {before.percent_used} => {after.percent_used}",
-                ]
-                report += disk_usage_stats
+            if disk_usage_info.before_update and disk_usage_info.after_update:
+                for before, after in zip(
+                    disk_usage_info.before_update, disk_usage_info.after_update
+                ):
+                    disk_usage_stats = [
+                        f"Mount Point {before.mount_point}",
+                        f"Free Space {before.free} => {after.free}",
+                        f"Used Space {before.used} => {after.used}",
+                        f"Used (%) {before.percent_used} => {after.percent_used}",
+                    ]
+                    report += disk_usage_stats
 
         return report
 
@@ -148,27 +157,33 @@ class Reporter:
         """
         info = self.info
         try:
-            disk_usage_info = info.disk_usage
-            pretend_success = info.pretend_emerge.pretend_status
+            disk_usage_info: DiskUsage = info.disk_usage
+            pretend_info: PretendSection | None = info.pretend_emerge
+            update_info: UpdateSection | None = info.update_system
 
-            if pretend_success:
-                update_info = info.update_system
-                update_success = info.update_system.update_status
-            else:
-                pretend_info = info.pretend_emerge
+            if pretend_info:
+                pretend_success = pretend_info.pretend_status
+
                 update_success = False
+                if update_info:
+                    update_success = update_info.update_status
 
-            if self.short_report:
-                update_status = "SUCCESS" if update_success else "FAIL"
-                return [f"update status: {update_status}"]
+                if self.short_report:
+                    update_status = "SUCCESS" if update_success else "FAIL"
+                    return [f"update status: {update_status}"]
 
-            if update_success:
-                report = self._create_successful_report(update_info, disk_usage_info)
-            elif pretend_success and not update_success:
-                report = self._create_failed_report(update_info, disk_usage_info)
+                if update_success:
+                    report = self._create_successful_report(
+                        update_info, disk_usage_info
+                    )
+                elif pretend_success and not update_success:
+                    report = self._create_failed_report(update_info, disk_usage_info)
+                else:
+                    report = self._create_failed_pretend_report(pretend_info)
+                return report
             else:
-                report = self._create_failed_pretend_report(pretend_info)
-            return report
+                report = ["emerge --pretend section was empty"]
+                return report
         except AttributeError:
             print("[Error] Could not create the report, incomplete log file")
             sys.exit(1)

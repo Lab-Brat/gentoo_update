@@ -16,7 +16,7 @@ install_gentoo_update() {
         emerge --quiet-build y app-admin/gentoo_update
 
     # Install python package from PyPi
-    elif [[ "${INSTALL_METHOD}" == 'pip' ]]; then
+    elif [[ "${INSTALL_METHOD}" == 'pypi' ]]; then
         pip install gentoo_update --break-system-packages
 
     # Install python pacakge from source
@@ -37,11 +37,11 @@ run_gentoo_update() {
 
     # Update @world
     elif [[ "${UPDATE_MODE}" == 'full' ]]; then
-        gentoo-update --update-mode full
+        gentoo-update update --update-mode full
 
     # Update @world with all flags
     elif [[ "${UPDATE_MODE}" == 'full_with_all_opts' ]]; then
-        gentoo-update --update-mode full \
+        gentoo-update update --update-mode full \
             --config-update-mode merge \
             --daemon-restart \
             --clean \
@@ -58,7 +58,7 @@ run_gentoo_update() {
 show_update_report() {
     # print the update report
     if [[ "${SHOW_REPORT}" == 'y' ]]; then
-        gentoo-update --report
+        gentoo-update report
     else
         echo "Not printing report"
     fi
@@ -67,7 +67,7 @@ show_update_report() {
 send_report() {
     # send report via irc, email or mobile
     if [[ "${SEND_REPORT}" != 'n' ]]; then
-        gentoo-update --send-report "${SEND_REPORT}"
+        gentoo-update report --send-report "${SEND_REPORT}"
     else
         echo "Not sending report"
     fi

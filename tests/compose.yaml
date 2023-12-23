@@ -4,7 +4,11 @@ services:
   # these are used in the development process
   gentoo_update_glsa_source:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/old_openrc_desktop.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh source security y n"]
+    environment:
+      - SENDGRID_TO="${SENDGRID_TO}"
+      - SENDGRID_FROM="${SENDGRID_FROM}"
+      - SENDGRID_API_KEY="${SENDGRID_API_KEY}"
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh source security y email"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
       - ./logs:/var/log/portage/gentoo-update
@@ -12,7 +16,11 @@ services:
 
   gentoo_update_world_source:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh source full_with_all_opts y n"]
+    environment:
+      - SENDGRID_TO="${SENDGRID_TO}"
+      - SENDGRID_FROM="${SENDGRID_FROM}"
+      - SENDGRID_API_KEY="${SENDGRID_API_KEY}"
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh source full_with_all_opts y email"]
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
       - ./logs:/var/log/portage/gentoo-update
@@ -21,7 +29,7 @@ services:
   # container to test gentoo_update by installing it from PyPI using pip
   gentoo_update_world_pypi:
     build: https://raw.githubusercontent.com/Lab-Brat/gentoo_dockerfiles/main/latest_openrc.Dockerfile
-    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pip full y n"]
+    command: ["/bin/sh", "-c", "/tmp/run_tests.sh pypi full y n"]
     volumes:
       - ./logs:/var/log/portage/gentoo-update
       - ./run_tests.sh:/tmp/run_tests.sh
@@ -38,6 +46,10 @@ services:
   # container for inspection
   gentoo_update_inspect:
     image: gentoo/stage3:latest
+    environment:
+      - SENDGRID_TO="${SENDGRID_TO}"
+      - SENDGRID_FROM="${SENDGRID_FROM}"
+      - SENDGRID_API_KEY="${SENDGRID_API_KEY}"
     command: "sleep infinity"
     volumes:
       - ../../gentoo_update/:/root/gentoo_update_source
