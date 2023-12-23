@@ -1,8 +1,8 @@
 """Unit tests for reporter.py file."""
 
 import unittest
-
 from os import path
+
 from gentoo_update.gentoo_update import generate_report, get_last_log_filename
 from gentoo_update.reporter import Reporter
 
@@ -15,7 +15,9 @@ class TestGentooUpdate(unittest.TestCase):
         test_reporter_path = path.dirname(path.abspath(__file__))
         report_for_tests = f"{test_reporter_path}/logs_for_unit_tests"
         log_filename = get_last_log_filename(report_for_tests)
-        self.report_object = generate_report(report_for_tests, log_filename, short_report=False)
+        self.report_object = generate_report(
+            report_for_tests, log_filename, short_report=False
+        )
         self.report = self.report_object.create_report()
 
     def test_report_object_type(self):
