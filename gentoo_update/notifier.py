@@ -99,7 +99,7 @@ class Notifier:
         mail = Mail(Email(send_from), To(send_to), subject, content)
         mail_json = mail.get()
 
-        response = sendgrid_client.client.mail.send.post(request_body=mail_json) # type: ignore
+        response = sendgrid_client.client.mail.send.post(request_body=mail_json)  # type: ignore
         if response.status_code in ACCEPTED_HTTP_CODES:
             print("email was sent successfully!")
         else:
