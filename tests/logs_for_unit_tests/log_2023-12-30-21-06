@@ -1,0 +1,1701 @@
+[30-Dec-23 21:06:49 INFO] ::: PORTAGE_LOGDIR not set, using default: /var/log/portage/gentoo-update
+[30-Dec-23 21:06:49 INFO] :::
+[30-Dec-23 21:06:49 INFO] ::: {{ VERIFYING AVAILABLE DISK SPACE }}
+[30-Dec-23 21:06:49 INFO] :::
+[30-Dec-23 21:06:49 INFO] ::: There is sufficient free space.
+[30-Dec-23 21:06:49 INFO] ::: Free space: 259.276 GB
+[30-Dec-23 21:06:49 INFO] :::
+[30-Dec-23 21:06:49 INFO] ::: {{ CALCULATE DISK USAGE 1 }}
+[30-Dec-23 21:06:49 INFO] :::
+[30-Dec-23 21:06:49 INFO] ::: Disk usage for / ===> Total=453G, Used=170G, Free=260G, Percent used=40%
+[30-Dec-23 21:06:49 INFO] ::: Warning: mount point none does not exist.
+[30-Dec-23 21:06:49 INFO] :::
+[30-Dec-23 21:06:49 INFO] ::: {{ SYNC PORTAGE TREE }}
+[30-Dec-23 21:06:49 INFO] :::
+[30-Dec-23 21:06:49 INFO] ::: Syncing Portage Tree
+[30-Dec-23 21:06:49 INFO] ::: >>> Syncing repository 'gentoo' into '/var/db/repos/gentoo'...
+[30-Dec-23 21:06:50 INFO] ::: /usr/bin/git fetch origin --depth 1
+[30-Dec-23 21:06:57 INFO] ::: From https://anongit.gentoo.org/git/repo/sync/gentoo
+[30-Dec-23 21:06:57 INFO] :::  + 2b64174fe0...85b5c835f5 master     -> origin/master  (forced update)
+[30-Dec-23 21:06:57 INFO] :::  * Using keys from /usr/share/openpgp-keys/gentoo-release.asc
+[30-Dec-23 21:06:59 INFO] :::  * Refreshing keys via WKD ...                                           [ ok ]
+[30-Dec-23 21:06:59 INFO] :::  * Trusted signature found on top commit
+[30-Dec-23 21:07:02 INFO] ::: /usr/bin/git reset --merge refs/remotes/origin/master
+[30-Dec-23 21:07:03 INFO] ::: === Sync completed for gentoo
+[30-Dec-23 21:07:03 INFO] ::: >>> Syncing repository 'guru' into '/var/db/repos/guru'...
+[30-Dec-23 21:07:03 INFO] ::: /usr/bin/git fetch origin --depth 1
+[30-Dec-23 21:07:06 INFO] ::: From https://github.com/gentoo-mirror/guru
+[30-Dec-23 21:07:06 INFO] :::  + d764d6e8...67bcafd8 master     -> origin/master  (forced update)
+[30-Dec-23 21:07:06 INFO] ::: /usr/bin/git reset --merge refs/remotes/origin/master
+[30-Dec-23 21:07:07 INFO] ::: === Sync completed for guru
+[30-Dec-23 21:07:07 INFO] ::: >>> Syncing repository 'gentoo-zh' into '/var/db/repos/gentoo-zh'...
+[30-Dec-23 21:07:07 INFO] ::: /usr/bin/git fetch origin --depth 1
+[30-Dec-23 21:07:07 INFO] ::: From https://github.com/microcai/gentoo-zh
+[30-Dec-23 21:07:07 INFO] :::  + 92834bc...d6bdc01 master     -> origin/master  (forced update)
+[30-Dec-23 21:07:07 INFO] ::: /usr/bin/git reset --merge refs/remotes/origin/master
+[30-Dec-23 21:07:08 INFO] ::: === Sync completed for gentoo-zh
+[30-Dec-23 21:07:08 INFO] ::: >>> Syncing repository 'brave-overlay' into '/var/db/repos/brave-overlay'...
+[30-Dec-23 21:07:08 INFO] ::: /usr/bin/git fetch origin --depth 1
+[30-Dec-23 21:07:09 INFO] ::: From https://gitlab.com/jason.oliveira/brave-overlay
+[30-Dec-23 21:07:09 INFO] :::  + b9b47ee...b7874f9 master     -> origin/master  (forced update)
+[30-Dec-23 21:07:09 INFO] ::: /usr/bin/git reset --merge refs/remotes/origin/master
+[30-Dec-23 21:07:09 INFO] ::: === Sync completed for brave-overlay
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] ::: Performing Global Updates
+[30-Dec-23 21:07:09 INFO] ::: (Could take a couple of minutes if you have a lot of binary packages.)
+[30-Dec-23 21:07:09 INFO] :::   .='update pass'  *='binary update'  #='/var/db update'  @='/var/db move'
+[30-Dec-23 21:07:09 INFO] :::   s='/var/db SLOT move'  %='binary move'  S='binary SLOT move'
+[30-Dec-23 21:07:09 INFO] :::   p='update /etc/portage/package.*'
+[30-Dec-23 21:07:09 INFO] ::: /var/db/repos/gentoo/profiles/updates/1Q-2023.......................
+[30-Dec-23 21:07:09 INFO] ::: /var/db/repos/gentoo/profiles/updates/2Q-2023...............................
+[30-Dec-23 21:07:09 INFO] ::: /var/db/repos/gentoo/profiles/updates/4Q-2023...........................................
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::  * IMPORTANT: 8 config files in '/etc' need updating.
+[30-Dec-23 21:07:09 INFO] :::  * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[30-Dec-23 21:07:09 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] ::: Action: sync for repo: gentoo, returned code = 0
+[30-Dec-23 21:07:09 INFO] ::: Action: sync for repo: guru, returned code = 0
+[30-Dec-23 21:07:09 INFO] ::: Action: sync for repo: gentoo-zh, returned code = 0
+[30-Dec-23 21:07:09 INFO] ::: Action: sync for repo: brave-overlay, returned code = 0
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::  * An update to portage is available. It is _highly_ recommended
+[30-Dec-23 21:07:09 INFO] :::  * that you update portage now, before any other packages are updated.
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::  * To update portage, run 'emerge --oneshot sys-apps/portage' now.
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] ::: {{ PRETEND EMERGE }}
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] ::: emerging with --pretend...
+[30-Dec-23 21:07:09 INFO] ::: Updating: @world
+[30-Dec-23 21:07:09 INFO] ::: Update command:
+[30-Dec-23 21:07:09 INFO] ::: emerge --verbose --quiet-build --update --newuse --deep  @world --pretend
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] :::  * IMPORTANT: 7 config files in '/etc/portage' need updating.
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] ::: These are the packages that would be merged, in order:
+[30-Dec-23 21:07:09 INFO] :::
+[30-Dec-23 21:07:09 INFO] ::: Calculating dependencies   * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[30-Dec-23 21:07:09 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[30-Dec-23 21:07:27 INFO] ::: ..... done!
+[30-Dec-23 21:07:27 INFO] ::: Dependency resolution took 18.12 s (backtrack: 1/20).
+[30-Dec-23 21:07:27 INFO] :::
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/libffi-3.4.4-r2:0/8::gentoo [3.4.4-r1:0/8::gentoo] USE="-debug (-exec-static-trampoline) -pax-kernel -static-libs -test" ABI_X86="(64) -32 (-x32)" 1331 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/baselayout-2.14-r1::gentoo [2.14::gentoo] USE="(split-usr) -build" 30 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/hwdata-0.376::gentoo [0.375::gentoo] 2320 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/ell-0.58::gentoo [0.56::gentoo] USE="-pie -test" 552 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] acct-group/pipewire-0-r1::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] media-libs/libfreeaptx-0.1.1-r1::gentoo  ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="-avx2" 28 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] net-analyzer/traceroute-2.1.3::gentoo [2.1.1::gentoo] USE="-static" 72 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-kernel/linux-firmware-20231211::gentoo [20231030::gentoo] USE="redistributable -compress-xz -compress-zstd -deduplicate% -initramfs -savedconfig (-unknown-license)" 349708 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/vala-common-0.56.14::gentoo [0.56.8::gentoo] 3910 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] net-libs/libnsl-2.0.1:0/3::gentoo [2.0.0-r1:0/3::gentoo] USE="-static-libs" ABI_X86="(64) -32 (-x32)" 276 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-libs/zlib-1.3-r2:0/1::gentoo [1.3-r1:0/1::gentoo] USE="(split-usr) -minizip -static-libs -verify-sig" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] media-libs/fdk-aac-2.0.2:0/2::gentoo  USE="-examples" ABI_X86="(64) -32 (-x32)" 2819 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] media-libs/tiff-4.6.0:0/6::gentoo [4.5.1:0/6::gentoo] USE="cxx jpeg zlib -jbig -lzma -static-libs -test -verify-sig -webp -zstd" ABI_X86="(64) -32 (-x32)" 2075 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] media-libs/x264-0.0.20231114-r1:0/164::gentoo [0.0.20220222:0/164::gentoo] USE="interlaced threads -opencl -static-libs (-pic%)" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="(-sse%*)" 814 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] media-fonts/fontawesome-6.1.1:0/6::gentoo [5.15.3:0/5::gentoo] USE="X otf -ttf" 13015 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/gobject-introspection-common-1.78.1::gentoo [1.76.1::gentoo] 1036 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-lang/perl-5.38.2-r1:0/5.38::gentoo [5.38.0-r1:0/5.38::gentoo] USE="gdbm -berkdb -debug -doc -ithreads -minimal -quadmath" 13502 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/openssl-3.0.12:0/3::gentoo [3.0.11:0/3::gentoo] USE="asm -fips -ktls -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -verify-sig -weak-ssl-ciphers" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="(sse2)" 14849 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-admin/eselect-1.4.27-r1::gentoo [1.4.27::gentoo] USE="-doc -emacs -vim-syntax" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-eselect/eselect-pinentry-0.7.3::gentoo [0.7.2-r1::gentoo] 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] virtual/perl-Math-BigInt-FastCalc-0.501.300::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] virtual/perl-bignum-0.660.0::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] virtual/perl-Math-BigRat-0.262.400::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] virtual/perl-Math-Complex-1.620.0::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] perl-core/Math-BigInt-1.999.842::gentoo  USE="-examples -test" 2808 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] virtual/perl-Math-BigInt-1.999.842::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] virtual/perl-Unicode-Collate-1.310.0-r1::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] media-libs/libvpx-1.13.1-r1:0/8::gentoo [1.13.1:0/8::gentoo] USE="highbitdepth threads -doc -postproc -static-libs -test" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-auth/passwdqc-2.0.3-r1::gentoo [2.0.3::gentoo] 88 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/kbd-2.6.4::gentoo [2.6.1::gentoo] USE="nls pam (-selinux) -test" 1470 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild   R   ~] dev-ruby/google-protobuf-3.21.12:3::gentoo  USE="-doc -test" RUBY_TARGETS="ruby31 -ruby32 -ruby33%" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild   R   ~] dev-ruby/googleapis-common-protos-types-1.8.0:1::gentoo  USE="-doc -test" RUBY_TARGETS="ruby31 -ruby32 -ruby33%" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-ruby/excon-0.104.0::gentoo [0.93.1::gentoo] USE="-doc -test" RUBY_TARGETS="ruby31 (-ruby32)" 224 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild   R   ~] dev-ruby/grpc-1.54.0::gentoo  USE="-doc -test" RUBY_TARGETS="ruby31 -ruby32 -ruby33%" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/ninja-1.11.1-r3::gentoo [1.11.1-r2::gentoo] USE="-doc -emacs -test" 225 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] app-alternatives/ninja-1::gentoo  USE="reference -samurai" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-fs/fuse-3.16.2:3::gentoo [3.16.1:3::gentoo] USE="suid -test" ABI_X86="(64) -32 (-x32)" 13834 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] gnome-base/gnome-core-libs-44.4:3.0::gentoo [41.3:3.0::gentoo] USE="cups -python" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/iproute2-6.6.0::gentoo [6.5.0::gentoo] USE="iptables (split-usr) -atm -berkdb -bpf -caps -elf -minimal -nfs (-selinux)" 897 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  NS    ] sys-kernel/gentoo-kernel-bin-6.1.67:6.1.67::gentoo [6.1.53-r1:6.1.53::gentoo, 6.1.55:6.1.55::gentoo, 6.1.57:6.1.57::gentoo, 6.1.60:6.1.60::gentoo, 6.1.66:6.1.66::gentoo] USE="initramfs -test" 74952 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] virtual/dist-kernel-6.1.67:0/6.1.67::gentoo [6.1.66:0/6.1.66::gentoo] 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-admin/sudo-1.9.15_p2::gentoo [1.9.14_p3::gentoo] USE="nls pam secure-path sendmail ssl -gcrypt -ldap -offensive -sasl (-selinux) -skey -sssd -verify-sig" 5180 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-editors/vim-core-9.0.2092::gentoo [9.0.1777::gentoo] USE="acl nls -minimal" 16956 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-db/sqlite-3.44.2-r1:3::gentoo [3.43.2:3::gentoo] USE="icu readline -debug -doc -secure-delete -static-libs -tcl -test -tools" ABI_X86="(64) -32 (-x32)" 13741 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/kmod-31::gentoo [30-r1::gentoo] USE="lzma (tools) zlib zstd -debug -doc -pkcs7 -python -static-libs" PYTHON_TARGETS="python3_11 -python3_10" 558 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/debianutils-5.14::gentoo [5.8::gentoo] USE="installkernel -static" 78 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] net-misc/openssh-9.6_p1-r1::gentoo [9.4_p1-r1::gentoo] USE="X pam pie ssl -audit (-debug) -kerberos -ldns -libedit -livecd -security-key (-selinux) -static -test -verify-sig -xmss" 1815 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/colm-0.14.7-r3::gentoo [0.14.7::gentoo] USE="-doc" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-misc/ca-certificates-20230311.3.93::gentoo [20230311.3.90::gentoo] USE="-cacert" 70839 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/ragel-7.0.4-r2::gentoo [7.0.4::gentoo] USE="-doc" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild   R    ] app-emulation/virtualbox-modules-7.0.10:0/7.0::gentoo  USE="strip -dist-kernel -modules-compress% -modules-sign" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] gnome-base/gnome-light-44.4:2.0::gentoo [40.0:2.0::gentoo] USE="cups gnome-shell" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] media-libs/openjpeg-2.5.0-r6:2/7::gentoo [2.5.0-r5:2/7::gentoo] USE="-doc -test" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-text/qpdf-11.6.3-r1:0/11::gentoo [11.6.3:0/11::gentoo] USE="-doc -examples -gnutls -test (-ssl%*)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/spirv-headers-1.3.268::gentoo [1.3.261::gentoo] 455 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/vulkan-headers-1.3.268::gentoo [1.3.261::gentoo] 2084 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] media-libs/libldac-2.0.2.3-r1::gentoo  ABI_X86="(64) -32 (-x32)" 74 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/spirv-tools-1.3.268::gentoo [1.3.261::gentoo] ABI_X86="(64) -32 (-x32)" 3075 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] media-libs/vulkan-loader-1.3.268::gentoo [1.3.261::gentoo] USE="X -layers -wayland" ABI_X86="(64) -32 (-x32)" 1650 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/glslang-1.3.268-r2:0/13::gentoo [1.3.261:0/12::gentoo] ABI_X86="(64) -32 (-x32)" 3678 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-text/ghostscript-gpl-10.02.1:0/10.02::gentoo [10.02.0:0/10.02::gentoo] USE="X cups dbus gtk (unicode) -static-libs" L10N="-de (-ja) -ko -zh-CN -zh-TW" 66423 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] x11-terms/alacritty-0.12.3::gentoo [0.12.2::gentoo] USE="X -debug -wayland" 1986 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  r  U  ] app-text/mupdf-1.23.3:0/1.23.3::gentoo [1.22.0:0/1.22.0::gentoo] USE="X javascript opengl ssl (-drm%*)" 53853 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/gmp-6.3.0-r1:0/10.4::gentoo [6.3.0:0/10.4::gentoo] USE="asm cpudetection cxx -doc -pic -static-libs" ABI_X86="(64) -32 (-x32)" 2046 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-devel/gettext-0.22.4::gentoo [0.21.1::gentoo] USE="acl cxx ncurses nls openmp (xattr%*) -doc -emacs -git -java -static-libs -verify-sig" ABI_X86="(64) -32 (-x32)" 10016 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/libxslt-1.1.39::gentoo [1.1.38::gentoo] USE="crypt -debug -examples -python -static-libs" ABI_X86="(64) -32 (-x32)" PYTHON_TARGETS="python3_11 -python3_10 (-python3_12)" 1542 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/libgpg-error-1.47-r1::gentoo [1.47::gentoo] USE="nls -common-lisp -static-libs -test -verify-sig" ABI_X86="(64) -32 (-x32)" 997 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  NS    ] sys-devel/binutils-2.41-r2:2.41::gentoo [2.40-r9:2.40::gentoo] USE="nls plugins (-cet) -debuginfod -doc -gold -gprofng -hardened% -multitarget -pgo -static-libs -test -vanilla -zstd" 26159 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/elfutils-0.190::gentoo [0.189-r4::gentoo] USE="bzip2 nls utils -debuginfod -lzma -static-libs -test -verify-sig -zstd" ABI_X86="(64) -32 (-x32)" 8949 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/texinfo-7.1-r1::gentoo [7.0.3::gentoo] USE="nls standalone -static" 5416 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-editors/vim-9.0.2092::gentoo [9.0.1777::gentoo] USE="X acl crypt gpm nls sound -cscope -debug -lua -minimal -perl -python -racket -ruby (-selinux) -tcl -terminal -vim-pager" LUA_SINGLE_TARGET="lua5-1 -lua5-3 -lua5-4 -luajit" PYTHON_SINGLE_TARGET="python3_11 -python3_10" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-libs/binutils-libs-2.41-r2:0/2.41.0::gentoo [2.40-r7:0/2.40::gentoo] USE="nls -64-bit-bfd (-cet) -multitarget -static-libs -test" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/dialog-1.3.20231002:0/15::gentoo [1.3.20230209:0/15::gentoo] USE="nls unicode -examples -minimal -verify-sig" 562 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/gawk-5.3.0::gentoo [5.2.2::gentoo] USE="nls readline -mpfr -pma -verify-sig" 3356 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/libksba-1.6.5::gentoo [1.6.4-r1::gentoo] USE="-static-libs -verify-sig" 692 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-arch/libarchive-3.7.2:0/13::gentoo [3.7.1:0/13::gentoo] USE="acl bzip2 e2fsprogs iconv lzma xattr -blake2 -expat -lz4 -lzo -nettle -static-libs -verify-sig -zstd" ABI_X86="(64) -32 (-x32)" 5115 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/groff-1.23.0::gentoo [1.22.4::gentoo] USE="X -examples -uchardet" 7259 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-process/lsof-4.99.0::gentoo [4.98.0-r1::gentoo] USE="-rpc (-selinux)" 1101 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-lang/vala-0.56.14:0.56::gentoo [0.56.8:0.56::gentoo] USE="-test -valadoc" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/libical-3.0.17:0/3::gentoo [3.0.16:0/3::gentoo] USE="glib introspection vala -doc -examples -static-libs -test" 888 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/hatchling-1.20.0::gentoo [1.18.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 745 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/gdbus-codegen-2.78.3::gentoo [2.76.4::gentoo] PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 5197 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/glib-2.78.3:2::gentoo [2.76.4:2::gentoo] USE="dbus elf (mime) sysprof xattr -debug -gtk-doc (-selinux) -static-libs -systemtap -test -utils" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-lang/python-3.11.7:3.11::gentoo [3.11.6:3.11::gentoo] USE="bluetooth ensurepip gdbm ncurses readline sqlite ssl -build -debug -examples -libedit -pgo -test -tk -valgrind -verify-sig (-lto%)" 19612 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/systemd-254.7:0/2::gentoo [254.5-r1:0/2::gentoo] USE="acl cryptsetup dns-over-tls gcrypt kmod lz4 openssl pam pcre policykit resolvconf seccomp (split-usr) sysv-utils zstd -apparmor -audit -boot -cgroup-hybrid -curl -elfutils -fido2 -gnutls -homed -http -idn -importd -iptables -kernel-install -lzma -pkcs11 -pwquality -qrcode -secureboot (-selinux) -test -tpm -ukify -vanilla -xkb" ABI_X86="(64) -32 (-x32)" PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 14075 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] net-wireless/bluez-5.70-r1:0/3::gentoo [5.68:0/3::gentoo] USE="cups mesh obex readline systemd udev -btpclient -debug -deprecated -doc -experimental -extra-tools -midi (-selinux) -test -test-programs" ABI_X86="(64) -32 (-x32)" PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 2286 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/gobject-introspection-1.78.1::gentoo [1.76.1::gentoo] USE="-doctool -gtk-doc -test" PYTHON_SINGLE_TARGET="python3_11 -python3_10" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [blocks b      ] <dev-libs/gobject-introspection-1.78.1 ("<dev-libs/gobject-introspection-1.78.1" is soft blocking dev-libs/gobject-introspection-common-1.78.1)
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/portage-3.0.59::gentoo [3.0.56-r1::gentoo] USE="(ipc) native-extensions rsync-verify xattr -apidoc -build -doc -gentoo-dev (-selinux) -test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 1148 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] net-print/cups-filters-1.28.17-r2::gentoo  USE="dbus exif foomatic jpeg pdf png postscript tiff -ldap -pclm -perl -test -zeroconf" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-util/glib-utils-2.78.3::gentoo [2.76.4::gentoo] PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  r  U  ] x11-base/xorg-server-21.1.10-r1:0/21.1.10::gentoo [21.1.9:0/21.1.9::gentoo] USE="systemd udev xorg -debug (-elogind) -minimal (-selinux) -suid -test -unwind -xcsecurity -xephyr -xnest -xvfb" 4821 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] net-wireless/iwd-2.8-r2::gentoo [2.4::gentoo] USE="client monitor standalone systemd -ofono (-selinux) -wired (-crda%)" CPU_FLAGS_X86="-aes -ssse3" 1043 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-kernel/dracut-059-r7::gentoo [059-r5::gentoo] USE="(-selinux) (-test)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/jaraco-text-3.12.0::gentoo [3.11.1-r1::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 16 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/platformdirs-4.1.0::gentoo [4.0.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 20 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/wheel-0.42.0::gentoo [0.41.3::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 97 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/typing-extensions-4.9.0::gentoo [4.8.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 86 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/pathspec-0.12.1::gentoo [0.11.2::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 50 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/cython-3.0.6::gentoo [3.0.5::gentoo] USE="-debug -doc -test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 2696 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] net-libs/glib-networking-2.78.0::gentoo [2.76.1::gentoo] USE="gnome libproxy ssl -test" ABI_X86="(64) -32 (-x32)" 277 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-lang/spidermonkey-102.15.0:102::gentoo [102.10.0:102::gentoo] USE="jit -clang -debug -lto -test" 475210 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-cpp/glibmm-2.78.0:2.68::gentoo [2.76.0:2.68::gentoo] USE="-debug -gtk-doc -test" ABI_X86="(64) -32 (-x32)" 9076 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/hatch-vcs-0.4.0::gentoo [0.3.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 11 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/argcomplete-3.2.1::gentoo [3.1.6::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 79 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-auth/polkit-123::gentoo [122-r1::gentoo] USE="daemon duktape gtk introspection pam systemd -examples -kde (-selinux) -test" 691 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-python/pygobject-3.46.0:3::gentoo [3.44.1:3::gentoo] USE="cairo -debug -examples -test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 549 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-input-libinput-1.4.0::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] net-libs/webkit-gtk-2.42.3-r410:4.1/0::gentoo [2.42.1-r410:4.1/0::gentoo] USE="X gstreamer introspection jpeg2k jumbo-build keyring lcms pdf (seccomp) spell systemd (-aqua) -avif -examples -gamepad -jpegxl -wayland" 31273 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-amdgpu-23.0.0::gentoo  USE="udev" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-ati-22.0.0::gentoo  USE="udev" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-dummy-0.4.1::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-fbdev-0.5.0-r1::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-nouveau-1.0.17::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-vesa-2.6.0::gentoo  0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-editors/vscode-1.85.1::gentoo [1.84.2::gentoo] USE="-kerberos" 131942 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] app-portage/gentoolkit-0.6.3-r1::gentoo [0.6.3::gentoo] PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] www-client/brave-bin-1.61.109::brave-overlay [1.61.101::brave-overlay] USE="keyring" L10N="af%* am ar bg bn ca cs da de el en-GB en-US es es-419 et fa fi fil fr gu he hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr sv sw ta te th tr uk ur%* vi zh-CN zh-TW" 153822 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] www-client/firefox-bin-121.0:rapid::gentoo [120.0.1:rapid::gentoo] USE="alsa ffmpeg gmp-autoupdate pulseaudio (-selinux) -wayland" L10N="-ach -af -an -ar -ast -az -be -bg -bn -br -bs -ca -ca-valencia -cak -cs -cy -da -de -dsb -el -en-CA -en-GB -eo -es-AR -es-CL -es-ES -es-MX -et -eu -fa -ff -fi -fr -fy -ga -gd -gl -gn -gu -he -hi -hr -hsb -hu -hy -ia -id -is -it -ja -ka -kab -kk -km -kn -ko -lij -lt -lv -mk -mr -ms -my -nb -ne -nl -nn -oc -pa -pl -pt-BR -pt-PT -rm -ro -ru -sco -si -sk -sl -son -sq -sr -sv -ta -te -th -tl -tr -trs -uk -ur -uz -vi -xh -zh-CN -zh-TW" 80179 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] dev-libs/libgee-0.20.6-r1:0.8/2::gentoo [0.20.6:0.8/2::gentoo] USE="introspection" 0 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] gnome-base/gvfs-1.52.1::gentoo [1.50.6::gentoo] USE="cdda gnome-online-accounts http keyring policykit systemd udev udisks -afp -archive -bluray (-elogind) -fuse -google -gphoto2 -ios -mtp -nfs -samba -test -zeroconf" 1204 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] media-video/pipewire-0.3.80:0/0.4::gentoo  USE="X bluetooth dbus gstreamer readline ssl systemd -doc -echo-cancel -extra -ffmpeg -flatpak -gsettings -ieee1394 -jack-client -jack-sdk -liblc3 -lv2 -modemmanager -pipewire-alsa -roc -sound-server (-system-service) -test -v4l -zeroconf" ABI_X86="(64) -32 (-x32)" 1617 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild  N     ] media-video/wireplumber-0.4.14:0/0.4::gentoo  USE="systemd (-elogind) (-system-service) -test" LUA_SINGLE_TARGET="lua5-4 -lua5-3" 317 KiB
+[30-Dec-23 21:07:27 INFO] ::: [ebuild     U  ] sys-apps/xdg-desktop-portal-1.18.2::gentoo [1.16.0-r1::gentoo] USE="seccomp%* systemd -flatpak% -geolocation -test% (-screencast%)" 683 KiB
+[30-Dec-23 21:07:27 INFO] :::
+[30-Dec-23 21:07:27 INFO] ::: Total: 123 packages (95 upgrades, 14 new, 2 in new slots, 12 reinstalls), Size of downloads: 1756159 KiB
+[30-Dec-23 21:07:27 INFO] ::: Conflict: 1 block (all satisfied)
+[30-Dec-23 21:07:27 INFO] :::
+[30-Dec-23 21:07:27 INFO] ::: The following packages are causing rebuilds:
+[30-Dec-23 21:07:27 INFO] :::
+[30-Dec-23 21:07:27 INFO] :::   (x11-base/xorg-server-21.1.10-r1:0/21.1.10::gentoo, ebuild scheduled for merge) causes rebuilds for:
+[30-Dec-23 21:07:27 INFO] :::     (x11-drivers/xf86-video-vesa-2.6.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:27 INFO] :::     (x11-drivers/xf86-video-fbdev-0.5.0-r1:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:27 INFO] :::     (x11-drivers/xf86-video-amdgpu-23.0.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:27 INFO] :::     (x11-drivers/xf86-video-ati-22.0.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:27 INFO] :::     (x11-drivers/xf86-input-libinput-1.4.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:27 INFO] :::     (x11-drivers/xf86-video-nouveau-1.0.17:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:27 INFO] :::     (x11-drivers/xf86-video-dummy-0.4.1:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:27 INFO] :::   (app-text/mupdf-1.23.3:0/1.23.3::gentoo, ebuild scheduled for merge) causes rebuilds for:
+[30-Dec-23 21:07:27 INFO] :::     (net-print/cups-filters-1.28.17-r2:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:29 INFO] ::: emerge pretend was successful, updating...
+[30-Dec-23 21:07:29 INFO] :::
+[30-Dec-23 21:07:29 INFO] ::: {{ UPDATE SYSTEM }}
+[30-Dec-23 21:07:29 INFO] :::
+[30-Dec-23 21:07:29 INFO] ::: emerging...
+[30-Dec-23 21:07:29 INFO] ::: Updating: @world
+[30-Dec-23 21:07:29 INFO] ::: Update command:
+[30-Dec-23 21:07:29 INFO] ::: emerge --verbose --quiet-build --update --newuse --deep  @world
+[30-Dec-23 21:07:29 INFO] :::
+[30-Dec-23 21:07:29 INFO] :::  * IMPORTANT: 7 config files in '/etc/portage' need updating.
+[30-Dec-23 21:07:29 INFO] :::
+[30-Dec-23 21:07:29 INFO] ::: These are the packages that would be merged, in order:
+[30-Dec-23 21:07:29 INFO] :::
+[30-Dec-23 21:07:29 INFO] ::: Calculating dependencies   * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[30-Dec-23 21:07:29 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[30-Dec-23 21:07:47 INFO] ::: .... done!
+[30-Dec-23 21:07:47 INFO] ::: Dependency resolution took 18.15 s (backtrack: 1/20).
+[30-Dec-23 21:07:47 INFO] :::
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/libffi-3.4.4-r2:0/8::gentoo [3.4.4-r1:0/8::gentoo] USE="-debug (-exec-static-trampoline) -pax-kernel -static-libs -test" ABI_X86="(64) -32 (-x32)" 1331 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/baselayout-2.14-r1::gentoo [2.14::gentoo] USE="(split-usr) -build" 30 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/hwdata-0.376::gentoo [0.375::gentoo] 2320 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/ell-0.58::gentoo [0.56::gentoo] USE="-pie -test" 552 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] acct-group/pipewire-0-r1::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] media-libs/libfreeaptx-0.1.1-r1::gentoo  ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="-avx2" 28 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] net-analyzer/traceroute-2.1.3::gentoo [2.1.1::gentoo] USE="-static" 72 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-kernel/linux-firmware-20231211::gentoo [20231030::gentoo] USE="redistributable -compress-xz -compress-zstd -deduplicate% -initramfs -savedconfig (-unknown-license)" 349708 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/vala-common-0.56.14::gentoo [0.56.8::gentoo] 3910 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] net-libs/libnsl-2.0.1:0/3::gentoo [2.0.0-r1:0/3::gentoo] USE="-static-libs" ABI_X86="(64) -32 (-x32)" 276 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-libs/zlib-1.3-r2:0/1::gentoo [1.3-r1:0/1::gentoo] USE="(split-usr) -minizip -static-libs -verify-sig" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] media-libs/fdk-aac-2.0.2:0/2::gentoo  USE="-examples" ABI_X86="(64) -32 (-x32)" 2819 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] media-libs/tiff-4.6.0:0/6::gentoo [4.5.1:0/6::gentoo] USE="cxx jpeg zlib -jbig -lzma -static-libs -test -verify-sig -webp -zstd" ABI_X86="(64) -32 (-x32)" 2075 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] media-libs/x264-0.0.20231114-r1:0/164::gentoo [0.0.20220222:0/164::gentoo] USE="interlaced threads -opencl -static-libs (-pic%)" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="(-sse%*)" 814 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] media-fonts/fontawesome-6.1.1:0/6::gentoo [5.15.3:0/5::gentoo] USE="X otf -ttf" 13015 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/gobject-introspection-common-1.78.1::gentoo [1.76.1::gentoo] 1036 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-lang/perl-5.38.2-r1:0/5.38::gentoo [5.38.0-r1:0/5.38::gentoo] USE="gdbm -berkdb -debug -doc -ithreads -minimal -quadmath" 13502 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/openssl-3.0.12:0/3::gentoo [3.0.11:0/3::gentoo] USE="asm -fips -ktls -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -verify-sig -weak-ssl-ciphers" ABI_X86="(64) -32 (-x32)" CPU_FLAGS_X86="(sse2)" 14849 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-admin/eselect-1.4.27-r1::gentoo [1.4.27::gentoo] USE="-doc -emacs -vim-syntax" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-eselect/eselect-pinentry-0.7.3::gentoo [0.7.2-r1::gentoo] 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] virtual/perl-Math-BigInt-FastCalc-0.501.300::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] virtual/perl-bignum-0.660.0::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] virtual/perl-Math-BigRat-0.262.400::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] virtual/perl-Math-Complex-1.620.0::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] perl-core/Math-BigInt-1.999.842::gentoo  USE="-examples -test" 2808 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] virtual/perl-Math-BigInt-1.999.842::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] virtual/perl-Unicode-Collate-1.310.0-r1::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] media-libs/libvpx-1.13.1-r1:0/8::gentoo [1.13.1:0/8::gentoo] USE="highbitdepth threads -doc -postproc -static-libs -test" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-auth/passwdqc-2.0.3-r1::gentoo [2.0.3::gentoo] 88 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/kbd-2.6.4::gentoo [2.6.1::gentoo] USE="nls pam (-selinux) -test" 1470 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild   R   ~] dev-ruby/google-protobuf-3.21.12:3::gentoo  USE="-doc -test" RUBY_TARGETS="ruby31 -ruby32 -ruby33%" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild   R   ~] dev-ruby/googleapis-common-protos-types-1.8.0:1::gentoo  USE="-doc -test" RUBY_TARGETS="ruby31 -ruby32 -ruby33%" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-ruby/excon-0.104.0::gentoo [0.93.1::gentoo] USE="-doc -test" RUBY_TARGETS="ruby31 (-ruby32)" 224 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild   R   ~] dev-ruby/grpc-1.54.0::gentoo  USE="-doc -test" RUBY_TARGETS="ruby31 -ruby32 -ruby33%" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/ninja-1.11.1-r3::gentoo [1.11.1-r2::gentoo] USE="-doc -emacs -test" 225 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] app-alternatives/ninja-1::gentoo  USE="reference -samurai" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-fs/fuse-3.16.2:3::gentoo [3.16.1:3::gentoo] USE="suid -test" ABI_X86="(64) -32 (-x32)" 13834 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] gnome-base/gnome-core-libs-44.4:3.0::gentoo [41.3:3.0::gentoo] USE="cups -python" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/iproute2-6.6.0::gentoo [6.5.0::gentoo] USE="iptables (split-usr) -atm -berkdb -bpf -caps -elf -minimal -nfs (-selinux)" 897 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  NS    ] sys-kernel/gentoo-kernel-bin-6.1.67:6.1.67::gentoo [6.1.53-r1:6.1.53::gentoo, 6.1.55:6.1.55::gentoo, 6.1.57:6.1.57::gentoo, 6.1.60:6.1.60::gentoo, 6.1.66:6.1.66::gentoo] USE="initramfs -test" 74952 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] virtual/dist-kernel-6.1.67:0/6.1.67::gentoo [6.1.66:0/6.1.66::gentoo] 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-admin/sudo-1.9.15_p2::gentoo [1.9.14_p3::gentoo] USE="nls pam secure-path sendmail ssl -gcrypt -ldap -offensive -sasl (-selinux) -skey -sssd -verify-sig" 5180 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-editors/vim-core-9.0.2092::gentoo [9.0.1777::gentoo] USE="acl nls -minimal" 16956 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-db/sqlite-3.44.2-r1:3::gentoo [3.43.2:3::gentoo] USE="icu readline -debug -doc -secure-delete -static-libs -tcl -test -tools" ABI_X86="(64) -32 (-x32)" 13741 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/kmod-31::gentoo [30-r1::gentoo] USE="lzma (tools) zlib zstd -debug -doc -pkcs7 -python -static-libs" PYTHON_TARGETS="python3_11 -python3_10" 558 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/debianutils-5.14::gentoo [5.8::gentoo] USE="installkernel -static" 78 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] net-misc/openssh-9.6_p1-r1::gentoo [9.4_p1-r1::gentoo] USE="X pam pie ssl -audit (-debug) -kerberos -ldns -libedit -livecd -security-key (-selinux) -static -test -verify-sig -xmss" 1815 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/colm-0.14.7-r3::gentoo [0.14.7::gentoo] USE="-doc" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-misc/ca-certificates-20230311.3.93::gentoo [20230311.3.90::gentoo] USE="-cacert" 70839 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/ragel-7.0.4-r2::gentoo [7.0.4::gentoo] USE="-doc" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild   R    ] app-emulation/virtualbox-modules-7.0.10:0/7.0::gentoo  USE="strip -dist-kernel -modules-compress% -modules-sign" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] gnome-base/gnome-light-44.4:2.0::gentoo [40.0:2.0::gentoo] USE="cups gnome-shell" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] media-libs/openjpeg-2.5.0-r6:2/7::gentoo [2.5.0-r5:2/7::gentoo] USE="-doc -test" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-text/qpdf-11.6.3-r1:0/11::gentoo [11.6.3:0/11::gentoo] USE="-doc -examples -gnutls -test (-ssl%*)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/spirv-headers-1.3.268::gentoo [1.3.261::gentoo] 455 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/vulkan-headers-1.3.268::gentoo [1.3.261::gentoo] 2084 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] media-libs/libldac-2.0.2.3-r1::gentoo  ABI_X86="(64) -32 (-x32)" 74 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/spirv-tools-1.3.268::gentoo [1.3.261::gentoo] ABI_X86="(64) -32 (-x32)" 3075 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] media-libs/vulkan-loader-1.3.268::gentoo [1.3.261::gentoo] USE="X -layers -wayland" ABI_X86="(64) -32 (-x32)" 1650 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/glslang-1.3.268-r2:0/13::gentoo [1.3.261:0/12::gentoo] ABI_X86="(64) -32 (-x32)" 3678 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-text/ghostscript-gpl-10.02.1:0/10.02::gentoo [10.02.0:0/10.02::gentoo] USE="X cups dbus gtk (unicode) -static-libs" L10N="-de (-ja) -ko -zh-CN -zh-TW" 66423 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] x11-terms/alacritty-0.12.3::gentoo [0.12.2::gentoo] USE="X -debug -wayland" 1986 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  r  U  ] app-text/mupdf-1.23.3:0/1.23.3::gentoo [1.22.0:0/1.22.0::gentoo] USE="X javascript opengl ssl (-drm%*)" 53853 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/gmp-6.3.0-r1:0/10.4::gentoo [6.3.0:0/10.4::gentoo] USE="asm cpudetection cxx -doc -pic -static-libs" ABI_X86="(64) -32 (-x32)" 2046 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-devel/gettext-0.22.4::gentoo [0.21.1::gentoo] USE="acl cxx ncurses nls openmp (xattr%*) -doc -emacs -git -java -static-libs -verify-sig" ABI_X86="(64) -32 (-x32)" 10016 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/libxslt-1.1.39::gentoo [1.1.38::gentoo] USE="crypt -debug -examples -python -static-libs" ABI_X86="(64) -32 (-x32)" PYTHON_TARGETS="python3_11 -python3_10 (-python3_12)" 1542 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/libgpg-error-1.47-r1::gentoo [1.47::gentoo] USE="nls -common-lisp -static-libs -test -verify-sig" ABI_X86="(64) -32 (-x32)" 997 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  NS    ] sys-devel/binutils-2.41-r2:2.41::gentoo [2.40-r9:2.40::gentoo] USE="nls plugins (-cet) -debuginfod -doc -gold -gprofng -hardened% -multitarget -pgo -static-libs -test -vanilla -zstd" 26159 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/elfutils-0.190::gentoo [0.189-r4::gentoo] USE="bzip2 nls utils -debuginfod -lzma -static-libs -test -verify-sig -zstd" ABI_X86="(64) -32 (-x32)" 8949 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/texinfo-7.1-r1::gentoo [7.0.3::gentoo] USE="nls standalone -static" 5416 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-editors/vim-9.0.2092::gentoo [9.0.1777::gentoo] USE="X acl crypt gpm nls sound -cscope -debug -lua -minimal -perl -python -racket -ruby (-selinux) -tcl -terminal -vim-pager" LUA_SINGLE_TARGET="lua5-1 -lua5-3 -lua5-4 -luajit" PYTHON_SINGLE_TARGET="python3_11 -python3_10" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-libs/binutils-libs-2.41-r2:0/2.41.0::gentoo [2.40-r7:0/2.40::gentoo] USE="nls -64-bit-bfd (-cet) -multitarget -static-libs -test" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/dialog-1.3.20231002:0/15::gentoo [1.3.20230209:0/15::gentoo] USE="nls unicode -examples -minimal -verify-sig" 562 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/gawk-5.3.0::gentoo [5.2.2::gentoo] USE="nls readline -mpfr -pma -verify-sig" 3356 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/libksba-1.6.5::gentoo [1.6.4-r1::gentoo] USE="-static-libs -verify-sig" 692 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-arch/libarchive-3.7.2:0/13::gentoo [3.7.1:0/13::gentoo] USE="acl bzip2 e2fsprogs iconv lzma xattr -blake2 -expat -lz4 -lzo -nettle -static-libs -verify-sig -zstd" ABI_X86="(64) -32 (-x32)" 5115 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/groff-1.23.0::gentoo [1.22.4::gentoo] USE="X -examples -uchardet" 7259 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-process/lsof-4.99.0::gentoo [4.98.0-r1::gentoo] USE="-rpc (-selinux)" 1101 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-lang/vala-0.56.14:0.56::gentoo [0.56.8:0.56::gentoo] USE="-test -valadoc" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/libical-3.0.17:0/3::gentoo [3.0.16:0/3::gentoo] USE="glib introspection vala -doc -examples -static-libs -test" 888 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/hatchling-1.20.0::gentoo [1.18.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 745 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/gdbus-codegen-2.78.3::gentoo [2.76.4::gentoo] PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 5197 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/glib-2.78.3:2::gentoo [2.76.4:2::gentoo] USE="dbus elf (mime) sysprof xattr -debug -gtk-doc (-selinux) -static-libs -systemtap -test -utils" ABI_X86="(64) -32 (-x32)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-lang/python-3.11.7:3.11::gentoo [3.11.6:3.11::gentoo] USE="bluetooth ensurepip gdbm ncurses readline sqlite ssl -build -debug -examples -libedit -pgo -test -tk -valgrind -verify-sig (-lto%)" 19612 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/systemd-254.7:0/2::gentoo [254.5-r1:0/2::gentoo] USE="acl cryptsetup dns-over-tls gcrypt kmod lz4 openssl pam pcre policykit resolvconf seccomp (split-usr) sysv-utils zstd -apparmor -audit -boot -cgroup-hybrid -curl -elfutils -fido2 -gnutls -homed -http -idn -importd -iptables -kernel-install -lzma -pkcs11 -pwquality -qrcode -secureboot (-selinux) -test -tpm -ukify -vanilla -xkb" ABI_X86="(64) -32 (-x32)" PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 14075 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] net-wireless/bluez-5.70-r1:0/3::gentoo [5.68:0/3::gentoo] USE="cups mesh obex readline systemd udev -btpclient -debug -deprecated -doc -experimental -extra-tools -midi (-selinux) -test -test-programs" ABI_X86="(64) -32 (-x32)" PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 2286 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/gobject-introspection-1.78.1::gentoo [1.76.1::gentoo] USE="-doctool -gtk-doc -test" PYTHON_SINGLE_TARGET="python3_11 -python3_10" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [blocks b      ] <dev-libs/gobject-introspection-1.78.1 ("<dev-libs/gobject-introspection-1.78.1" is soft blocking dev-libs/gobject-introspection-common-1.78.1)
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/portage-3.0.59::gentoo [3.0.56-r1::gentoo] USE="(ipc) native-extensions rsync-verify xattr -apidoc -build -doc -gentoo-dev (-selinux) -test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 1148 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] net-print/cups-filters-1.28.17-r2::gentoo  USE="dbus exif foomatic jpeg pdf png postscript tiff -ldap -pclm -perl -test -zeroconf" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-util/glib-utils-2.78.3::gentoo [2.76.4::gentoo] PYTHON_SINGLE_TARGET="python3_11 -python3_10 (-python3_12)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  r  U  ] x11-base/xorg-server-21.1.10-r1:0/21.1.10::gentoo [21.1.9:0/21.1.9::gentoo] USE="systemd udev xorg -debug (-elogind) -minimal (-selinux) -suid -test -unwind -xcsecurity -xephyr -xnest -xvfb" 4821 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] net-wireless/iwd-2.8-r2::gentoo [2.4::gentoo] USE="client monitor standalone systemd -ofono (-selinux) -wired (-crda%)" CPU_FLAGS_X86="-aes -ssse3" 1043 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-kernel/dracut-059-r7::gentoo [059-r5::gentoo] USE="(-selinux) (-test)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/jaraco-text-3.12.0::gentoo [3.11.1-r1::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 16 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/platformdirs-4.1.0::gentoo [4.0.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 20 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/wheel-0.42.0::gentoo [0.41.3::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 97 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/typing-extensions-4.9.0::gentoo [4.8.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 86 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/pathspec-0.12.1::gentoo [0.11.2::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 50 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/cython-3.0.6::gentoo [3.0.5::gentoo] USE="-debug -doc -test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 2696 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] net-libs/glib-networking-2.78.0::gentoo [2.76.1::gentoo] USE="gnome libproxy ssl -test" ABI_X86="(64) -32 (-x32)" 277 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-lang/spidermonkey-102.15.0:102::gentoo [102.10.0:102::gentoo] USE="jit -clang -debug -lto -test" 475210 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-cpp/glibmm-2.78.0:2.68::gentoo [2.76.0:2.68::gentoo] USE="-debug -gtk-doc -test" ABI_X86="(64) -32 (-x32)" 9076 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/hatch-vcs-0.4.0::gentoo [0.3.0::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 11 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/argcomplete-3.2.1::gentoo [3.1.6::gentoo] USE="-test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 79 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-auth/polkit-123::gentoo [122-r1::gentoo] USE="daemon duktape gtk introspection pam systemd -examples -kde (-selinux) -test" 691 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-python/pygobject-3.46.0:3::gentoo [3.44.1:3::gentoo] USE="cairo -debug -examples -test" PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 549 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-input-libinput-1.4.0::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] net-libs/webkit-gtk-2.42.3-r410:4.1/0::gentoo [2.42.1-r410:4.1/0::gentoo] USE="X gstreamer introspection jpeg2k jumbo-build keyring lcms pdf (seccomp) spell systemd (-aqua) -avif -examples -gamepad -jpegxl -wayland" 31273 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-amdgpu-23.0.0::gentoo  USE="udev" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-ati-22.0.0::gentoo  USE="udev" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-dummy-0.4.1::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-fbdev-0.5.0-r1::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-nouveau-1.0.17::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  rR    ] x11-drivers/xf86-video-vesa-2.6.0::gentoo  0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-editors/vscode-1.85.1::gentoo [1.84.2::gentoo] USE="-kerberos" 131942 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] app-portage/gentoolkit-0.6.3-r1::gentoo [0.6.3::gentoo] PYTHON_TARGETS="python3_11 (-pypy3) -python3_10 (-python3_12)" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] www-client/brave-bin-1.61.109::brave-overlay [1.61.101::brave-overlay] USE="keyring" L10N="af%* am ar bg bn ca cs da de el en-GB en-US es es-419 et fa fi fil fr gu he hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr sv sw ta te th tr uk ur%* vi zh-CN zh-TW" 153822 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] www-client/firefox-bin-121.0:rapid::gentoo [120.0.1:rapid::gentoo] USE="alsa ffmpeg gmp-autoupdate pulseaudio (-selinux) -wayland" L10N="-ach -af -an -ar -ast -az -be -bg -bn -br -bs -ca -ca-valencia -cak -cs -cy -da -de -dsb -el -en-CA -en-GB -eo -es-AR -es-CL -es-ES -es-MX -et -eu -fa -ff -fi -fr -fy -ga -gd -gl -gn -gu -he -hi -hr -hsb -hu -hy -ia -id -is -it -ja -ka -kab -kk -km -kn -ko -lij -lt -lv -mk -mr -ms -my -nb -ne -nl -nn -oc -pa -pl -pt-BR -pt-PT -rm -ro -ru -sco -si -sk -sl -son -sq -sr -sv -ta -te -th -tl -tr -trs -uk -ur -uz -vi -xh -zh-CN -zh-TW" 80179 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] dev-libs/libgee-0.20.6-r1:0.8/2::gentoo [0.20.6:0.8/2::gentoo] USE="introspection" 0 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] gnome-base/gvfs-1.52.1::gentoo [1.50.6::gentoo] USE="cdda gnome-online-accounts http keyring policykit systemd udev udisks -afp -archive -bluray (-elogind) -fuse -google -gphoto2 -ios -mtp -nfs -samba -test -zeroconf" 1204 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] media-video/pipewire-0.3.80:0/0.4::gentoo  USE="X bluetooth dbus gstreamer readline ssl systemd -doc -echo-cancel -extra -ffmpeg -flatpak -gsettings -ieee1394 -jack-client -jack-sdk -liblc3 -lv2 -modemmanager -pipewire-alsa -roc -sound-server (-system-service) -test -v4l -zeroconf" ABI_X86="(64) -32 (-x32)" 1617 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild  N     ] media-video/wireplumber-0.4.14:0/0.4::gentoo  USE="systemd (-elogind) (-system-service) -test" LUA_SINGLE_TARGET="lua5-4 -lua5-3" 317 KiB
+[30-Dec-23 21:07:47 INFO] ::: [ebuild     U  ] sys-apps/xdg-desktop-portal-1.18.2::gentoo [1.16.0-r1::gentoo] USE="seccomp%* systemd -flatpak% -geolocation -test% (-screencast%)" 683 KiB
+[30-Dec-23 21:07:47 INFO] :::
+[30-Dec-23 21:07:47 INFO] ::: Total: 123 packages (95 upgrades, 14 new, 2 in new slots, 12 reinstalls), Size of downloads: 1756159 KiB
+[30-Dec-23 21:07:47 INFO] ::: Conflict: 1 block (all satisfied)
+[30-Dec-23 21:07:47 INFO] :::
+[30-Dec-23 21:07:47 INFO] ::: The following packages are causing rebuilds:
+[30-Dec-23 21:07:47 INFO] :::
+[30-Dec-23 21:07:47 INFO] :::   (x11-base/xorg-server-21.1.10-r1:0/21.1.10::gentoo, ebuild scheduled for merge) causes rebuilds for:
+[30-Dec-23 21:07:47 INFO] :::     (x11-drivers/xf86-video-vesa-2.6.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:47 INFO] :::     (x11-drivers/xf86-video-dummy-0.4.1:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:47 INFO] :::     (x11-drivers/xf86-video-nouveau-1.0.17:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:47 INFO] :::     (x11-drivers/xf86-input-libinput-1.4.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:47 INFO] :::     (x11-drivers/xf86-video-ati-22.0.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:47 INFO] :::     (x11-drivers/xf86-video-amdgpu-23.0.0:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:47 INFO] :::     (x11-drivers/xf86-video-fbdev-0.5.0-r1:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:47 INFO] :::   (app-text/mupdf-1.23.3:0/1.23.3::gentoo, ebuild scheduled for merge) causes rebuilds for:
+[30-Dec-23 21:07:47 INFO] :::     (net-print/cups-filters-1.28.17-r2:0/0::gentoo, ebuild scheduled for merge)
+[30-Dec-23 21:07:48 INFO] ::: >>> Verifying ebuild manifests
+[30-Dec-23 21:07:48 INFO] :::
+[30-Dec-23 21:07:48 INFO] ::: >>> Running pre-merge checks for acct-group/pipewire-0-r1
+[30-Dec-23 21:07:48 INFO] ::: >>> Running pre-merge checks for sys-kernel/linux-firmware-20231211
+[30-Dec-23 21:07:48 INFO] ::: >>> Running pre-merge checks for sys-kernel/gentoo-kernel-bin-6.1.67
+[30-Dec-23 21:07:49 INFO] ::: >>> Running pre-merge checks for net-misc/openssh-9.6_p1-r1
+[30-Dec-23 21:07:49 INFO] ::: >>> Running pre-merge checks for gnome-base/gnome-light-44.4
+[30-Dec-23 21:07:49 INFO] ::: >>> Running pre-merge checks for dev-libs/gmp-6.3.0-r1
+[30-Dec-23 21:13:25 INFO] ::: >>> Running pre-merge checks for sys-devel/gettext-0.22.4
+[30-Dec-23 21:13:26 INFO] ::: >>> Running pre-merge checks for dev-lang/python-3.11.7
+[30-Dec-23 21:13:26 INFO] ::: >>> Running pre-merge checks for sys-apps/systemd-254.7
+[30-Dec-23 21:13:26 INFO] :::  [32m*[0m Determining the location of the kernel source code
+[30-Dec-23 21:13:26 INFO] :::  [32m*[0m Found kernel source directory:
+[30-Dec-23 21:13:26 INFO] :::  [32m*[0m     /usr/src/linux
+[30-Dec-23 21:13:27 INFO] :::  [32m*[0m Found sources for kernel version:
+[30-Dec-23 21:13:27 INFO] :::  [32m*[0m     6.1.66-gentoo-dist
+[30-Dec-23 21:13:27 INFO] :::  [32m*[0m Checking for suitable kernel configuration options ...
+[30-Dec-23 21:13:27 INFO] ::: [A[72C [34;01m[ [32;01mok[34;01m ][0m
+[30-Dec-23 21:13:37 INFO] ::: >>> Running pre-merge checks for sys-apps/portage-3.0.59
+[30-Dec-23 21:13:37 INFO] :::  [32m*[0m Determining the location of the kernel source code
+[30-Dec-23 21:13:37 INFO] :::  [32m*[0m Found kernel source directory:
+[30-Dec-23 21:13:37 INFO] :::  [32m*[0m     /usr/src/linux
+[30-Dec-23 21:13:38 INFO] :::  [32m*[0m Found sources for kernel version:
+[30-Dec-23 21:13:38 INFO] :::  [32m*[0m     6.1.66-gentoo-dist
+[30-Dec-23 21:13:38 INFO] :::  [32m*[0m Checking for suitable kernel configuration options ...
+[30-Dec-23 21:13:38 INFO] ::: [A[72C [34;01m[ [32;01mok[34;01m ][0m
+[30-Dec-23 21:13:38 INFO] ::: >>> Running pre-merge checks for dev-lang/spidermonkey-102.15.0
+[30-Dec-23 21:13:38 INFO] :::  [32m*[0m Checking for at least 3600 MiB disk space at "/var/tmp/portage/dev-lang/spidermonkey-102.15.0/temp" ...
+[30-Dec-23 21:13:38 INFO] ::: [A[72C [34;01m[ [32;01mok[34;01m ][0m
+[30-Dec-23 21:13:38 INFO] ::: >>> Running pre-merge checks for x11-drivers/xf86-input-libinput-1.4.0
+[30-Dec-23 21:13:38 INFO] :::  [32m*[0m Determining the location of the kernel source code
+[30-Dec-23 21:13:38 INFO] :::  [32m*[0m Found kernel source directory:
+[30-Dec-23 21:13:38 INFO] :::  [32m*[0m     /usr/src/linux
+[30-Dec-23 21:13:39 INFO] :::  [32m*[0m Found sources for kernel version:
+[30-Dec-23 21:13:39 INFO] :::  [32m*[0m     6.1.66-gentoo-dist
+[30-Dec-23 21:13:39 INFO] :::  [32m*[0m Checking for suitable kernel configuration options ...
+[30-Dec-23 21:13:39 INFO] ::: [A[72C [34;01m[ [32;01mok[34;01m ][0m
+[30-Dec-23 21:13:39 INFO] ::: >>> Running pre-merge checks for net-libs/webkit-gtk-2.42.3-r410
+[30-Dec-23 21:13:40 INFO] ::: >>> Running pre-merge checks for x11-drivers/xf86-video-ati-22.0.0
+[30-Dec-23 21:13:40 INFO] :::  [32m*[0m Determining the location of the kernel source code
+[30-Dec-23 21:13:40 INFO] :::  [32m*[0m Found kernel source directory:
+[30-Dec-23 21:13:40 INFO] :::  [32m*[0m     /usr/src/linux
+[30-Dec-23 21:13:40 INFO] :::  [32m*[0m Found sources for kernel version:
+[30-Dec-23 21:13:40 INFO] :::  [32m*[0m     6.1.66-gentoo-dist
+[30-Dec-23 21:13:40 INFO] :::  [32m*[0m Checking for suitable kernel configuration options ...
+[30-Dec-23 21:13:40 INFO] ::: [A[72C [34;01m[ [32;01mok[34;01m ][0m
+[30-Dec-23 21:13:40 INFO] ::: >>> Running pre-merge checks for x11-drivers/xf86-video-vesa-2.6.0
+[30-Dec-23 21:13:41 INFO] :::  [32m*[0m Determining the location of the kernel source code
+[30-Dec-23 21:13:41 INFO] :::  [32m*[0m Found kernel source directory:
+[30-Dec-23 21:13:41 INFO] :::  [32m*[0m     /usr/src/linux
+[30-Dec-23 21:13:41 INFO] :::  [32m*[0m Found sources for kernel version:
+[30-Dec-23 21:13:41 INFO] :::  [32m*[0m     6.1.66-gentoo-dist
+[30-Dec-23 21:13:41 INFO] ::: >>> Jobs: 0 of 123 complete, 1 running              Load avg: 0.07, 0.35, 0.53
+[30-Dec-23 21:13:41 INFO] ::: >>> Emerging (1 of 123) dev-libs/libffi-3.4.4-r2::gentoo
+[30-Dec-23 21:13:41 INFO] ::: >>> Jobs: 0 of 123 complete, 1 running              Load avg: 0.07, 0.35, 0.53
+[30-Dec-23 21:13:51 INFO] ::: >>> Installing (1 of 123) dev-libs/libffi-3.4.4-r2::gentoo
+[30-Dec-23 21:13:51 INFO] ::: >>> Jobs: 0 of 123 complete, 1 running              Load avg: 0.29, 0.38, 0.54
+[30-Dec-23 21:13:51 INFO] ::: >>> Jobs: 0 of 123 complete                         Load avg: 0.29, 0.38, 0.54
+[30-Dec-23 21:13:56 INFO] ::: >>> Completed (1 of 123) dev-libs/libffi-3.4.4-r2::gentoo
+[30-Dec-23 21:13:56 INFO] ::: >>> Jobs: 0 of 123 complete                         Load avg: 0.34, 0.39, 0.54
+[30-Dec-23 21:13:56 INFO] ::: >>> Jobs: 1 of 123 complete                         Load avg: 0.34, 0.39, 0.54
+[30-Dec-23 21:13:56 INFO] ::: >>> Jobs: 1 of 123 complete, 1 running              Load avg: 0.34, 0.39, 0.54
+[30-Dec-23 21:13:56 INFO] ::: >>> Emerging (2 of 123) sys-apps/baselayout-2.14-r1::gentoo
+[30-Dec-23 21:13:56 INFO] ::: >>> Jobs: 1 of 123 complete, 1 running              Load avg: 0.34, 0.39, 0.54
+[30-Dec-23 21:14:03 INFO] ::: >>> Installing (2 of 123) sys-apps/baselayout-2.14-r1::gentoo
+[30-Dec-23 21:14:03 INFO] ::: >>> Jobs: 1 of 123 complete, 1 running              Load avg: 0.32, 0.39, 0.54
+[30-Dec-23 21:14:03 INFO] ::: >>> Jobs: 1 of 123 complete                         Load avg: 0.32, 0.39, 0.54
+[30-Dec-23 21:14:08 INFO] ::: >>> Completed (2 of 123) sys-apps/baselayout-2.14-r1::gentoo
+[30-Dec-23 21:14:08 INFO] ::: >>> Jobs: 1 of 123 complete                         Load avg: 0.37, 0.40, 0.54
+[30-Dec-23 21:14:08 INFO] ::: >>> Jobs: 2 of 123 complete                         Load avg: 0.37, 0.40, 0.54
+[30-Dec-23 21:14:08 INFO] ::: >>> Jobs: 2 of 123 complete, 1 running              Load avg: 0.37, 0.40, 0.54
+[30-Dec-23 21:14:08 INFO] ::: >>> Emerging (3 of 123) sys-apps/hwdata-0.376::gentoo
+[30-Dec-23 21:14:08 INFO] ::: >>> Jobs: 2 of 123 complete, 1 running              Load avg: 0.37, 0.40, 0.54
+[30-Dec-23 21:14:13 INFO] ::: >>> Installing (3 of 123) sys-apps/hwdata-0.376::gentoo
+[30-Dec-23 21:14:13 INFO] ::: >>> Jobs: 2 of 123 complete, 1 running              Load avg: 0.42, 0.41, 0.54
+[30-Dec-23 21:14:13 INFO] ::: >>> Jobs: 2 of 123 complete                         Load avg: 0.42, 0.41, 0.54
+[30-Dec-23 21:14:16 INFO] ::: >>> Completed (3 of 123) sys-apps/hwdata-0.376::gentoo
+[30-Dec-23 21:14:16 INFO] ::: >>> Jobs: 2 of 123 complete                         Load avg: 0.47, 0.42, 0.55
+[30-Dec-23 21:14:16 INFO] ::: >>> Jobs: 3 of 123 complete                         Load avg: 0.47, 0.42, 0.55
+[30-Dec-23 21:14:16 INFO] ::: >>> Jobs: 3 of 123 complete, 1 running              Load avg: 0.47, 0.42, 0.55
+[30-Dec-23 21:14:16 INFO] ::: >>> Emerging (4 of 123) dev-libs/ell-0.58::gentoo
+[30-Dec-23 21:14:16 INFO] ::: >>> Jobs: 3 of 123 complete, 1 running              Load avg: 0.47, 0.42, 0.55
+[30-Dec-23 21:14:26 INFO] ::: >>> Installing (4 of 123) dev-libs/ell-0.58::gentoo
+[30-Dec-23 21:14:26 INFO] ::: >>> Jobs: 3 of 123 complete, 1 running              Load avg: 0.64, 0.45, 0.56
+[30-Dec-23 21:14:26 INFO] ::: >>> Jobs: 3 of 123 complete                         Load avg: 0.64, 0.45, 0.56
+[30-Dec-23 21:14:48 INFO] ::: >>> Completed (4 of 123) dev-libs/ell-0.58::gentoo
+[30-Dec-23 21:14:48 INFO] ::: >>> Jobs: 3 of 123 complete                         Load avg: 0.59, 0.46, 0.55
+[30-Dec-23 21:14:48 INFO] ::: >>> Jobs: 4 of 123 complete                         Load avg: 0.59, 0.46, 0.55
+[30-Dec-23 21:14:48 INFO] ::: >>> Jobs: 4 of 123 complete, 1 running              Load avg: 0.59, 0.46, 0.55
+[30-Dec-23 21:14:48 INFO] ::: >>> Emerging (5 of 123) acct-group/pipewire-0-r1::gentoo
+[30-Dec-23 21:14:48 INFO] ::: >>> Jobs: 4 of 123 complete, 1 running              Load avg: 0.59, 0.46, 0.55
+[30-Dec-23 21:14:51 INFO] ::: >>> Installing (5 of 123) acct-group/pipewire-0-r1::gentoo
+[30-Dec-23 21:14:51 INFO] ::: >>> Jobs: 4 of 123 complete, 1 running              Load avg: 0.70, 0.48, 0.56
+[30-Dec-23 21:14:52 INFO] ::: >>> Jobs: 4 of 123 complete                         Load avg: 0.70, 0.48, 0.56
+[30-Dec-23 21:37:53 INFO] ::: >>> Completed (5 of 123) acct-group/pipewire-0-r1::gentoo
+[30-Dec-23 21:37:53 INFO] ::: >>> Jobs: 4 of 123 complete                         Load avg: 0.11, 0.09, 0.18
+[30-Dec-23 21:37:53 INFO] ::: >>> Jobs: 5 of 123 complete                         Load avg: 0.11, 0.09, 0.18
+[30-Dec-23 21:37:53 INFO] ::: >>> Jobs: 5 of 123 complete, 1 running              Load avg: 0.11, 0.09, 0.18
+[30-Dec-23 21:37:53 INFO] ::: >>> Emerging (6 of 123) media-libs/libfreeaptx-0.1.1-r1::gentoo
+[30-Dec-23 21:37:53 INFO] ::: >>> Jobs: 5 of 123 complete, 1 running              Load avg: 0.11, 0.09, 0.18
+[30-Dec-23 21:37:55 INFO] ::: >>> Installing (6 of 123) media-libs/libfreeaptx-0.1.1-r1::gentoo
+[30-Dec-23 21:37:55 INFO] ::: >>> Jobs: 5 of 123 complete, 1 running              Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:37:55 INFO] ::: >>> Jobs: 5 of 123 complete                         Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:37:57 INFO] ::: >>> Completed (6 of 123) media-libs/libfreeaptx-0.1.1-r1::gentoo
+[30-Dec-23 21:37:57 INFO] ::: >>> Jobs: 5 of 123 complete                         Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:37:57 INFO] ::: >>> Jobs: 6 of 123 complete                         Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:37:57 INFO] ::: >>> Jobs: 6 of 123 complete, 1 running              Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:37:57 INFO] ::: >>> Emerging (7 of 123) net-analyzer/traceroute-2.1.3::gentoo
+[30-Dec-23 21:37:57 INFO] ::: >>> Jobs: 6 of 123 complete, 1 running              Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:37:59 INFO] ::: >>> Installing (7 of 123) net-analyzer/traceroute-2.1.3::gentoo
+[30-Dec-23 21:37:59 INFO] ::: >>> Jobs: 6 of 123 complete, 1 running              Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:37:59 INFO] ::: >>> Jobs: 6 of 123 complete                         Load avg: 0.34, 0.14, 0.20
+[30-Dec-23 21:38:02 INFO] ::: >>> Completed (7 of 123) net-analyzer/traceroute-2.1.3::gentoo
+[30-Dec-23 21:38:02 INFO] ::: >>> Jobs: 6 of 123 complete                         Load avg: 0.55, 0.19, 0.21
+[30-Dec-23 21:38:02 INFO] ::: >>> Jobs: 7 of 123 complete                         Load avg: 0.55, 0.19, 0.21
+[30-Dec-23 21:38:02 INFO] ::: >>> Jobs: 7 of 123 complete, 1 running              Load avg: 0.55, 0.19, 0.21
+[30-Dec-23 21:38:02 INFO] ::: >>> Emerging (8 of 123) sys-kernel/linux-firmware-20231211::gentoo
+[30-Dec-23 21:38:02 INFO] ::: >>> Jobs: 7 of 123 complete, 1 running              Load avg: 0.55, 0.19, 0.21
+[30-Dec-23 21:38:27 INFO] ::: >>> Installing (8 of 123) sys-kernel/linux-firmware-20231211::gentoo
+[30-Dec-23 21:38:27 INFO] ::: >>> Jobs: 7 of 123 complete, 1 running              Load avg: 1.33, 0.43, 0.29
+[30-Dec-23 21:38:27 INFO] ::: >>> Jobs: 7 of 123 complete                         Load avg: 1.33, 0.43, 0.29
+[30-Dec-23 21:38:36 INFO] ::: >>> Completed (8 of 123) sys-kernel/linux-firmware-20231211::gentoo
+[30-Dec-23 21:38:36 INFO] ::: >>> Jobs: 7 of 123 complete                         Load avg: 1.92, 0.58, 0.34
+[30-Dec-23 21:38:36 INFO] ::: >>> Jobs: 8 of 123 complete                         Load avg: 1.92, 0.58, 0.34
+[30-Dec-23 21:38:36 INFO] ::: >>> Jobs: 8 of 123 complete, 1 running              Load avg: 1.92, 0.58, 0.34
+[30-Dec-23 21:38:36 INFO] ::: >>> Emerging (9 of 123) dev-libs/vala-common-0.56.14::gentoo
+[30-Dec-23 21:38:36 INFO] ::: >>> Jobs: 8 of 123 complete, 1 running              Load avg: 1.92, 0.58, 0.34
+[30-Dec-23 21:38:39 INFO] ::: >>> Installing (9 of 123) dev-libs/vala-common-0.56.14::gentoo
+[30-Dec-23 21:38:39 INFO] ::: >>> Jobs: 8 of 123 complete, 1 running              Load avg: 1.92, 0.58, 0.34
+[30-Dec-23 21:38:39 INFO] ::: >>> Jobs: 8 of 123 complete                         Load avg: 1.92, 0.58, 0.34
+[30-Dec-23 21:38:41 INFO] ::: >>> Completed (9 of 123) dev-libs/vala-common-0.56.14::gentoo
+[30-Dec-23 21:38:41 INFO] ::: >>> Jobs: 8 of 123 complete                         Load avg: 1.84, 0.59, 0.35
+[30-Dec-23 21:38:41 INFO] ::: >>> Jobs: 9 of 123 complete                         Load avg: 1.84, 0.59, 0.35
+[30-Dec-23 21:38:41 INFO] ::: >>> Jobs: 9 of 123 complete, 1 running              Load avg: 1.84, 0.59, 0.35
+[30-Dec-23 21:38:41 INFO] ::: >>> Emerging (10 of 123) net-libs/libnsl-2.0.1::gentoo
+[30-Dec-23 21:38:41 INFO] ::: >>> Jobs: 9 of 123 complete, 1 running              Load avg: 1.84, 0.59, 0.35
+[30-Dec-23 21:38:46 INFO] ::: >>> Installing (10 of 123) net-libs/libnsl-2.0.1::gentoo
+[30-Dec-23 21:38:46 INFO] ::: >>> Jobs: 9 of 123 complete, 1 running              Load avg: 2.82, 0.81, 0.42
+[30-Dec-23 21:38:46 INFO] ::: >>> Jobs: 9 of 123 complete                         Load avg: 2.82, 0.81, 0.42
+[30-Dec-23 21:38:50 INFO] ::: >>> Completed (10 of 123) net-libs/libnsl-2.0.1::gentoo
+[30-Dec-23 21:38:50 INFO] ::: >>> Jobs: 9 of 123 complete                         Load avg: 2.82, 0.81, 0.42
+[30-Dec-23 21:38:50 INFO] ::: >>> Jobs: 10 of 123 complete                        Load avg: 2.82, 0.81, 0.42
+[30-Dec-23 21:38:50 INFO] ::: >>> Jobs: 10 of 123 complete, 1 running             Load avg: 2.82, 0.81, 0.42
+[30-Dec-23 21:38:50 INFO] ::: >>> Emerging (11 of 123) sys-libs/zlib-1.3-r2::gentoo
+[30-Dec-23 21:38:50 INFO] ::: >>> Jobs: 10 of 123 complete, 1 running             Load avg: 2.82, 0.81, 0.42
+[30-Dec-23 21:38:53 INFO] ::: >>> Installing (11 of 123) sys-libs/zlib-1.3-r2::gentoo
+[30-Dec-23 21:38:53 INFO] ::: >>> Jobs: 10 of 123 complete, 1 running             Load avg: 2.75, 0.83, 0.43
+[30-Dec-23 21:38:53 INFO] ::: >>> Jobs: 10 of 123 complete                        Load avg: 2.75, 0.83, 0.43
+[30-Dec-23 21:38:56 INFO] ::: >>> Completed (11 of 123) sys-libs/zlib-1.3-r2::gentoo
+[30-Dec-23 21:38:56 INFO] ::: >>> Jobs: 10 of 123 complete                        Load avg: 2.61, 0.83, 0.43
+[30-Dec-23 21:38:56 INFO] ::: >>> Jobs: 11 of 123 complete                        Load avg: 2.61, 0.83, 0.43
+[30-Dec-23 21:38:56 INFO] ::: >>> Jobs: 11 of 123 complete, 1 running             Load avg: 2.61, 0.83, 0.43
+[30-Dec-23 21:38:56 INFO] ::: >>> Emerging (12 of 123) media-libs/fdk-aac-2.0.2::gentoo
+[30-Dec-23 21:38:56 INFO] ::: >>> Jobs: 11 of 123 complete, 1 running             Load avg: 2.61, 0.83, 0.43
+[30-Dec-23 21:39:21 INFO] ::: >>> Installing (12 of 123) media-libs/fdk-aac-2.0.2::gentoo
+[30-Dec-23 21:39:21 INFO] ::: >>> Jobs: 11 of 123 complete, 1 running             Load avg: 7.53, 2.18, 0.90
+[30-Dec-23 21:39:21 INFO] ::: >>> Jobs: 11 of 123 complete                        Load avg: 7.53, 2.18, 0.90
+[30-Dec-23 21:39:23 INFO] ::: >>> Completed (12 of 123) media-libs/fdk-aac-2.0.2::gentoo
+[30-Dec-23 21:39:23 INFO] ::: >>> Jobs: 11 of 123 complete                        Load avg: 7.53, 2.18, 0.90
+[30-Dec-23 21:39:23 INFO] ::: >>> Jobs: 12 of 123 complete                        Load avg: 7.53, 2.18, 0.90
+[30-Dec-23 21:39:23 INFO] ::: >>> Jobs: 12 of 123 complete, 1 running             Load avg: 7.53, 2.18, 0.90
+[30-Dec-23 21:39:23 INFO] ::: >>> Emerging (13 of 123) media-libs/tiff-4.6.0::gentoo
+[30-Dec-23 21:39:23 INFO] ::: >>> Jobs: 12 of 123 complete, 1 running             Load avg: 7.53, 2.18, 0.90
+[30-Dec-23 21:39:36 INFO] ::: >>> Installing (13 of 123) media-libs/tiff-4.6.0::gentoo
+[30-Dec-23 21:39:36 INFO] ::: >>> Jobs: 12 of 123 complete, 1 running             Load avg: 6.54, 2.22, 0.93
+[30-Dec-23 21:39:36 INFO] ::: >>> Jobs: 12 of 123 complete                        Load avg: 6.54, 2.22, 0.93
+[30-Dec-23 21:39:39 INFO] ::: >>> Completed (13 of 123) media-libs/tiff-4.6.0::gentoo
+[30-Dec-23 21:39:39 INFO] ::: >>> Jobs: 12 of 123 complete                        Load avg: 6.54, 2.22, 0.93
+[30-Dec-23 21:39:39 INFO] ::: >>> Jobs: 13 of 123 complete                        Load avg: 6.54, 2.22, 0.93
+[30-Dec-23 21:39:39 INFO] ::: >>> Jobs: 13 of 123 complete, 1 running             Load avg: 6.54, 2.22, 0.93
+[30-Dec-23 21:39:39 INFO] ::: >>> Emerging (14 of 123) media-libs/x264-0.0.20231114-r1::gentoo
+[30-Dec-23 21:39:39 INFO] ::: >>> Jobs: 13 of 123 complete, 1 running             Load avg: 6.54, 2.22, 0.93
+[30-Dec-23 21:40:02 INFO] ::: >>> Installing (14 of 123) media-libs/x264-0.0.20231114-r1::gentoo
+[30-Dec-23 21:40:02 INFO] ::: >>> Jobs: 13 of 123 complete, 1 running             Load avg: 7.68, 2.86, 1.18
+[30-Dec-23 21:40:02 INFO] ::: >>> Jobs: 13 of 123 complete                        Load avg: 7.68, 2.86, 1.18
+[30-Dec-23 21:40:05 INFO] ::: >>> Completed (14 of 123) media-libs/x264-0.0.20231114-r1::gentoo
+[30-Dec-23 21:40:05 INFO] ::: >>> Jobs: 13 of 123 complete                        Load avg: 7.15, 2.83, 1.18
+[30-Dec-23 21:40:05 INFO] ::: >>> Jobs: 14 of 123 complete                        Load avg: 7.15, 2.83, 1.18
+[30-Dec-23 21:40:05 INFO] ::: >>> Jobs: 14 of 123 complete, 1 running             Load avg: 7.15, 2.83, 1.18
+[30-Dec-23 21:40:05 INFO] ::: >>> Emerging (15 of 123) media-fonts/fontawesome-6.1.1::gentoo
+[30-Dec-23 21:40:05 INFO] ::: >>> Jobs: 14 of 123 complete, 1 running             Load avg: 7.15, 2.83, 1.18
+[30-Dec-23 21:40:08 INFO] ::: >>> Installing (15 of 123) media-fonts/fontawesome-6.1.1::gentoo
+[30-Dec-23 21:40:08 INFO] ::: >>> Jobs: 14 of 123 complete, 1 running             Load avg: 7.15, 2.83, 1.18
+[30-Dec-23 21:40:08 INFO] ::: >>> Jobs: 14 of 123 complete                        Load avg: 7.15, 2.83, 1.18
+[30-Dec-23 21:40:16 INFO] ::: >>> Completed (15 of 123) media-fonts/fontawesome-6.1.1::gentoo
+[30-Dec-23 21:40:16 INFO] ::: >>> Jobs: 14 of 123 complete                        Load avg: 6.20, 2.77, 1.17
+[30-Dec-23 21:40:16 INFO] ::: >>> Jobs: 15 of 123 complete                        Load avg: 6.20, 2.77, 1.17
+[30-Dec-23 21:40:16 INFO] ::: >>> Jobs: 15 of 123 complete, 1 running             Load avg: 6.20, 2.77, 1.17
+[30-Dec-23 21:40:16 INFO] ::: >>> Emerging (16 of 123) dev-libs/gobject-introspection-common-1.78.1::gentoo
+[30-Dec-23 21:40:16 INFO] ::: >>> Jobs: 15 of 123 complete, 1 running             Load avg: 6.20, 2.77, 1.17
+[30-Dec-23 21:40:18 INFO] ::: >>> Installing (16 of 123) dev-libs/gobject-introspection-common-1.78.1::gentoo
+[30-Dec-23 21:40:18 INFO] ::: >>> Jobs: 15 of 123 complete, 1 running             Load avg: 6.20, 2.77, 1.17
+[30-Dec-23 21:40:18 INFO] ::: >>> Jobs: 15 of 123 complete                        Load avg: 6.20, 2.77, 1.17
+[30-Dec-23 21:40:21 INFO] ::: >>> Completed (16 of 123) dev-libs/gobject-introspection-common-1.78.1::gentoo
+[30-Dec-23 21:40:21 INFO] ::: >>> Jobs: 15 of 123 complete                        Load avg: 5.94, 2.77, 1.18
+[30-Dec-23 21:40:21 INFO] ::: >>> Jobs: 16 of 123 complete                        Load avg: 5.94, 2.77, 1.18
+[30-Dec-23 21:40:21 INFO] ::: >>> Jobs: 16 of 123 complete, 1 running             Load avg: 5.94, 2.77, 1.18
+[30-Dec-23 21:40:21 INFO] ::: >>> Emerging (17 of 123) dev-lang/perl-5.38.2-r1::gentoo
+[30-Dec-23 21:40:21 INFO] ::: >>> Jobs: 16 of 123 complete, 1 running             Load avg: 5.94, 2.77, 1.18
+[30-Dec-23 21:41:59 INFO] ::: >>> Installing (17 of 123) dev-lang/perl-5.38.2-r1::gentoo
+[30-Dec-23 21:41:59 INFO] ::: >>> Jobs: 16 of 123 complete, 1 running             Load avg: 8.44, 4.41, 1.91
+[30-Dec-23 21:41:59 INFO] ::: >>> Jobs: 16 of 123 complete                        Load avg: 8.44, 4.41, 1.91
+[30-Dec-23 21:42:04 INFO] ::: >>> Completed (17 of 123) dev-lang/perl-5.38.2-r1::gentoo
+[30-Dec-23 21:42:04 INFO] ::: >>> Jobs: 16 of 123 complete                        Load avg: 8.00, 4.39, 1.92
+[30-Dec-23 21:42:04 INFO] ::: >>> Jobs: 17 of 123 complete                        Load avg: 8.00, 4.39, 1.92
+[30-Dec-23 21:42:04 INFO] ::: >>> Jobs: 17 of 123 complete, 1 running             Load avg: 8.00, 4.39, 1.92
+[30-Dec-23 21:42:04 INFO] ::: >>> Emerging (18 of 123) dev-libs/openssl-3.0.12::gentoo
+[30-Dec-23 21:42:04 INFO] ::: >>> Jobs: 17 of 123 complete, 1 running             Load avg: 8.00, 4.39, 1.92
+[30-Dec-23 21:43:54 INFO] ::: >>> Installing (18 of 123) dev-libs/openssl-3.0.12::gentoo
+[30-Dec-23 21:43:54 INFO] ::: >>> Jobs: 17 of 123 complete, 1 running             Load avg: 10.2, 6.9, 3.1
+[30-Dec-23 21:43:54 INFO] ::: >>> Jobs: 17 of 123 complete                        Load avg: 10.2, 6.9, 3.1
+[30-Dec-23 21:43:58 INFO] ::: >>> Completed (18 of 123) dev-libs/openssl-3.0.12::gentoo
+[30-Dec-23 21:43:58 INFO] ::: >>> Jobs: 17 of 123 complete                        Load avg: 9.45, 6.81, 3.13
+[30-Dec-23 21:43:58 INFO] ::: >>> Jobs: 18 of 123 complete                        Load avg: 9.45, 6.81, 3.13
+[30-Dec-23 21:43:58 INFO] ::: >>> Jobs: 18 of 123 complete, 1 running             Load avg: 9.45, 6.81, 3.13
+[30-Dec-23 21:43:58 INFO] ::: >>> Emerging (19 of 123) app-admin/eselect-1.4.27-r1::gentoo
+[30-Dec-23 21:43:58 INFO] ::: >>> Jobs: 18 of 123 complete, 1 running             Load avg: 9.45, 6.81, 3.13
+[30-Dec-23 21:44:01 INFO] ::: >>> Installing (19 of 123) app-admin/eselect-1.4.27-r1::gentoo
+[30-Dec-23 21:44:01 INFO] ::: >>> Jobs: 18 of 123 complete, 1 running             Load avg: 8.69, 6.70, 3.12
+[30-Dec-23 21:44:01 INFO] ::: >>> Jobs: 18 of 123 complete                        Load avg: 8.69, 6.70, 3.12
+[30-Dec-23 21:44:04 INFO] ::: >>> Completed (19 of 123) app-admin/eselect-1.4.27-r1::gentoo
+[30-Dec-23 21:44:04 INFO] ::: >>> Jobs: 18 of 123 complete                        Load avg: 8.69, 6.70, 3.12
+[30-Dec-23 21:44:04 INFO] ::: >>> Jobs: 19 of 123 complete                        Load avg: 8.69, 6.70, 3.12
+[30-Dec-23 21:44:04 INFO] ::: >>> Jobs: 19 of 123 complete, 1 running             Load avg: 8.69, 6.70, 3.12
+[30-Dec-23 21:44:04 INFO] ::: >>> Emerging (20 of 123) app-eselect/eselect-pinentry-0.7.3::gentoo
+[30-Dec-23 21:44:04 INFO] ::: >>> Jobs: 19 of 123 complete, 1 running             Load avg: 8.69, 6.70, 3.12
+[30-Dec-23 21:44:06 INFO] ::: >>> Installing (20 of 123) app-eselect/eselect-pinentry-0.7.3::gentoo
+[30-Dec-23 21:44:06 INFO] ::: >>> Jobs: 19 of 123 complete, 1 running             Load avg: 8.23, 6.64, 3.12
+[30-Dec-23 21:44:06 INFO] ::: >>> Jobs: 19 of 123 complete                        Load avg: 8.23, 6.64, 3.12
+[30-Dec-23 21:44:09 INFO] ::: >>> Completed (20 of 123) app-eselect/eselect-pinentry-0.7.3::gentoo
+[30-Dec-23 21:44:09 INFO] ::: >>> Jobs: 19 of 123 complete                        Load avg: 8.23, 6.64, 3.12
+[30-Dec-23 21:44:09 INFO] ::: >>> Jobs: 20 of 123 complete                        Load avg: 8.23, 6.64, 3.12
+[30-Dec-23 21:44:09 INFO] ::: >>> Jobs: 20 of 123 complete, 1 running             Load avg: 8.23, 6.64, 3.12
+[30-Dec-23 21:44:09 INFO] ::: >>> Emerging (21 of 123) virtual/perl-Math-BigInt-FastCalc-0.501.300::gentoo
+[30-Dec-23 21:44:09 INFO] ::: >>> Jobs: 20 of 123 complete, 1 running             Load avg: 8.23, 6.64, 3.12
+[30-Dec-23 21:44:11 INFO] ::: >>> Installing (21 of 123) virtual/perl-Math-BigInt-FastCalc-0.501.300::gentoo
+[30-Dec-23 21:44:11 INFO] ::: >>> Jobs: 20 of 123 complete, 1 running             Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:11 INFO] ::: >>> Jobs: 20 of 123 complete                        Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:12 INFO] ::: >>> Completed (21 of 123) virtual/perl-Math-BigInt-FastCalc-0.501.300::gentoo
+[30-Dec-23 21:44:12 INFO] ::: >>> Jobs: 20 of 123 complete                        Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:12 INFO] ::: >>> Jobs: 21 of 123 complete                        Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:12 INFO] ::: >>> Jobs: 21 of 123 complete, 1 running             Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:12 INFO] ::: >>> Emerging (22 of 123) virtual/perl-bignum-0.660.0::gentoo
+[30-Dec-23 21:44:12 INFO] ::: >>> Jobs: 21 of 123 complete, 1 running             Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:14 INFO] ::: >>> Installing (22 of 123) virtual/perl-bignum-0.660.0::gentoo
+[30-Dec-23 21:44:14 INFO] ::: >>> Jobs: 21 of 123 complete, 1 running             Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:14 INFO] ::: >>> Jobs: 21 of 123 complete                        Load avg: 7.81, 6.58, 3.11
+[30-Dec-23 21:44:16 INFO] ::: >>> Completed (22 of 123) virtual/perl-bignum-0.660.0::gentoo
+[30-Dec-23 21:44:16 INFO] ::: >>> Jobs: 21 of 123 complete                        Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:16 INFO] ::: >>> Jobs: 22 of 123 complete                        Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:16 INFO] ::: >>> Jobs: 22 of 123 complete, 1 running             Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:16 INFO] ::: >>> Emerging (23 of 123) virtual/perl-Math-BigRat-0.262.400::gentoo
+[30-Dec-23 21:44:16 INFO] ::: >>> Jobs: 22 of 123 complete, 1 running             Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:18 INFO] ::: >>> Installing (23 of 123) virtual/perl-Math-BigRat-0.262.400::gentoo
+[30-Dec-23 21:44:18 INFO] ::: >>> Jobs: 22 of 123 complete, 1 running             Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:18 INFO] ::: >>> Jobs: 22 of 123 complete                        Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:20 INFO] ::: >>> Completed (23 of 123) virtual/perl-Math-BigRat-0.262.400::gentoo
+[30-Dec-23 21:44:20 INFO] ::: >>> Jobs: 22 of 123 complete                        Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:20 INFO] ::: >>> Jobs: 23 of 123 complete                        Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:20 INFO] ::: >>> Jobs: 23 of 123 complete, 1 running             Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:20 INFO] ::: >>> Emerging (24 of 123) virtual/perl-Math-Complex-1.620.0::gentoo
+[30-Dec-23 21:44:20 INFO] ::: >>> Jobs: 23 of 123 complete, 1 running             Load avg: 7.27, 6.48, 3.10
+[30-Dec-23 21:44:21 INFO] ::: >>> Installing (24 of 123) virtual/perl-Math-Complex-1.620.0::gentoo
+[30-Dec-23 21:44:21 INFO] ::: >>> Jobs: 23 of 123 complete, 1 running             Load avg: 6.93, 6.42, 3.10
+[30-Dec-23 21:44:21 INFO] ::: >>> Jobs: 23 of 123 complete                        Load avg: 6.93, 6.42, 3.10
+[30-Dec-23 21:44:23 INFO] ::: >>> Completed (24 of 123) virtual/perl-Math-Complex-1.620.0::gentoo
+[30-Dec-23 21:44:23 INFO] ::: >>> Jobs: 23 of 123 complete                        Load avg: 6.93, 6.42, 3.10
+[30-Dec-23 21:44:23 INFO] ::: >>> Jobs: 24 of 123 complete                        Load avg: 6.93, 6.42, 3.10
+[30-Dec-23 21:44:23 INFO] ::: >>> Jobs: 24 of 123 complete, 1 running             Load avg: 6.93, 6.42, 3.10
+[30-Dec-23 21:44:23 INFO] ::: >>> Emerging (25 of 123) perl-core/Math-BigInt-1.999.842::gentoo
+[30-Dec-23 21:44:23 INFO] ::: >>> Jobs: 24 of 123 complete, 1 running             Load avg: 6.93, 6.42, 3.10
+[30-Dec-23 21:44:26 INFO] ::: >>> Installing (25 of 123) perl-core/Math-BigInt-1.999.842::gentoo
+[30-Dec-23 21:44:26 INFO] ::: >>> Jobs: 24 of 123 complete, 1 running             Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:26 INFO] ::: >>> Jobs: 24 of 123 complete                        Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:28 INFO] ::: >>> Completed (25 of 123) perl-core/Math-BigInt-1.999.842::gentoo
+[30-Dec-23 21:44:28 INFO] ::: >>> Jobs: 24 of 123 complete                        Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:28 INFO] ::: >>> Jobs: 25 of 123 complete                        Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:28 INFO] ::: >>> Jobs: 25 of 123 complete, 1 running             Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:28 INFO] ::: >>> Emerging (26 of 123) virtual/perl-Math-BigInt-1.999.842::gentoo
+[30-Dec-23 21:44:28 INFO] ::: >>> Jobs: 25 of 123 complete, 1 running             Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:30 INFO] ::: >>> Installing (26 of 123) virtual/perl-Math-BigInt-1.999.842::gentoo
+[30-Dec-23 21:44:30 INFO] ::: >>> Jobs: 25 of 123 complete, 1 running             Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:30 INFO] ::: >>> Jobs: 25 of 123 complete                        Load avg: 6.45, 6.33, 3.09
+[30-Dec-23 21:44:32 INFO] ::: >>> Completed (26 of 123) virtual/perl-Math-BigInt-1.999.842::gentoo
+[30-Dec-23 21:44:32 INFO] ::: >>> Jobs: 25 of 123 complete                        Load avg: 6.01, 6.25, 3.08
+[30-Dec-23 21:44:32 INFO] ::: >>> Jobs: 26 of 123 complete                        Load avg: 6.01, 6.25, 3.08
+[30-Dec-23 21:44:32 INFO] ::: >>> Jobs: 26 of 123 complete, 1 running             Load avg: 6.01, 6.25, 3.08
+[30-Dec-23 21:44:32 INFO] ::: >>> Emerging (27 of 123) virtual/perl-Unicode-Collate-1.310.0-r1::gentoo
+[30-Dec-23 21:44:32 INFO] ::: >>> Jobs: 26 of 123 complete, 1 running             Load avg: 6.01, 6.25, 3.08
+[30-Dec-23 21:44:33 INFO] ::: >>> Installing (27 of 123) virtual/perl-Unicode-Collate-1.310.0-r1::gentoo
+[30-Dec-23 21:44:33 INFO] ::: >>> Jobs: 26 of 123 complete, 1 running             Load avg: 6.01, 6.25, 3.08
+[30-Dec-23 21:44:33 INFO] ::: >>> Jobs: 26 of 123 complete                        Load avg: 6.01, 6.25, 3.08
+[30-Dec-23 21:44:35 INFO] ::: >>> Completed (27 of 123) virtual/perl-Unicode-Collate-1.310.0-r1::gentoo
+[30-Dec-23 21:44:35 INFO] ::: >>> Jobs: 26 of 123 complete                        Load avg: 5.61, 6.16, 3.07
+[30-Dec-23 21:44:35 INFO] ::: >>> Jobs: 27 of 123 complete                        Load avg: 5.61, 6.16, 3.07
+[30-Dec-23 21:44:35 INFO] ::: >>> Jobs: 27 of 123 complete, 1 running             Load avg: 5.61, 6.16, 3.07
+[30-Dec-23 21:44:35 INFO] ::: >>> Emerging (28 of 123) media-libs/libvpx-1.13.1-r1::gentoo
+[30-Dec-23 21:44:35 INFO] ::: >>> Jobs: 27 of 123 complete, 1 running             Load avg: 5.61, 6.16, 3.07
+[30-Dec-23 21:45:01 INFO] ::: >>> Installing (28 of 123) media-libs/libvpx-1.13.1-r1::gentoo
+[30-Dec-23 21:45:01 INFO] ::: >>> Jobs: 27 of 123 complete, 1 running             Load avg: 7.77, 6.68, 3.33
+[30-Dec-23 21:45:01 INFO] ::: >>> Jobs: 27 of 123 complete                        Load avg: 7.77, 6.68, 3.33
+[30-Dec-23 21:45:04 INFO] ::: >>> Completed (28 of 123) media-libs/libvpx-1.13.1-r1::gentoo
+[30-Dec-23 21:45:04 INFO] ::: >>> Jobs: 27 of 123 complete                        Load avg: 7.77, 6.68, 3.33
+[30-Dec-23 21:45:04 INFO] ::: >>> Jobs: 28 of 123 complete                        Load avg: 7.77, 6.68, 3.33
+[30-Dec-23 21:45:04 INFO] ::: >>> Jobs: 28 of 123 complete, 1 running             Load avg: 7.77, 6.68, 3.33
+[30-Dec-23 21:45:04 INFO] ::: >>> Emerging (29 of 123) sys-auth/passwdqc-2.0.3-r1::gentoo
+[30-Dec-23 21:45:04 INFO] ::: >>> Jobs: 28 of 123 complete, 1 running             Load avg: 7.77, 6.68, 3.33
+[30-Dec-23 21:45:06 INFO] ::: >>> Installing (29 of 123) sys-auth/passwdqc-2.0.3-r1::gentoo
+[30-Dec-23 21:45:06 INFO] ::: >>> Jobs: 28 of 123 complete, 1 running             Load avg: 7.78, 6.70, 3.35
+[30-Dec-23 21:45:06 INFO] ::: >>> Jobs: 28 of 123 complete                        Load avg: 7.78, 6.70, 3.35
+[30-Dec-23 21:45:09 INFO] ::: >>> Completed (29 of 123) sys-auth/passwdqc-2.0.3-r1::gentoo
+[30-Dec-23 21:45:09 INFO] ::: >>> Jobs: 28 of 123 complete                        Load avg: 7.78, 6.70, 3.35
+[30-Dec-23 21:45:09 INFO] ::: >>> Jobs: 29 of 123 complete                        Load avg: 7.78, 6.70, 3.35
+[30-Dec-23 21:45:09 INFO] ::: >>> Jobs: 29 of 123 complete, 1 running             Load avg: 7.78, 6.70, 3.35
+[30-Dec-23 21:45:09 INFO] ::: >>> Emerging (30 of 123) sys-apps/kbd-2.6.4::gentoo
+[30-Dec-23 21:45:09 INFO] ::: >>> Jobs: 29 of 123 complete, 1 running             Load avg: 7.78, 6.70, 3.35
+[30-Dec-23 21:45:19 INFO] ::: >>> Installing (30 of 123) sys-apps/kbd-2.6.4::gentoo
+[30-Dec-23 21:45:19 INFO] ::: >>> Jobs: 29 of 123 complete, 1 running             Load avg: 7.06, 6.58, 3.35
+[30-Dec-23 21:45:19 INFO] ::: >>> Jobs: 29 of 123 complete                        Load avg: 7.06, 6.58, 3.35
+[30-Dec-23 21:45:22 INFO] ::: >>> Completed (30 of 123) sys-apps/kbd-2.6.4::gentoo
+[30-Dec-23 21:45:22 INFO] ::: >>> Jobs: 29 of 123 complete                        Load avg: 6.57, 6.48, 3.33
+[30-Dec-23 21:45:22 INFO] ::: >>> Jobs: 30 of 123 complete                        Load avg: 6.57, 6.48, 3.33
+[30-Dec-23 21:45:22 INFO] ::: >>> Jobs: 30 of 123 complete, 1 running             Load avg: 6.57, 6.48, 3.33
+[30-Dec-23 21:45:22 INFO] ::: >>> Emerging (31 of 123) dev-ruby/google-protobuf-3.21.12::gentoo
+[30-Dec-23 21:45:22 INFO] ::: >>> Jobs: 30 of 123 complete, 1 running             Load avg: 6.57, 6.48, 3.33
+[30-Dec-23 21:45:29 INFO] ::: >>> Installing (31 of 123) dev-ruby/google-protobuf-3.21.12::gentoo
+[30-Dec-23 21:45:29 INFO] ::: >>> Jobs: 30 of 123 complete, 1 running             Load avg: 6.12, 6.39, 3.32
+[30-Dec-23 21:45:29 INFO] ::: >>> Jobs: 30 of 123 complete                        Load avg: 6.12, 6.39, 3.32
+[30-Dec-23 21:45:31 INFO] ::: >>> Completed (31 of 123) dev-ruby/google-protobuf-3.21.12::gentoo
+[30-Dec-23 21:45:31 INFO] ::: >>> Jobs: 30 of 123 complete                        Load avg: 5.71, 6.30, 3.31
+[30-Dec-23 21:45:31 INFO] ::: >>> Jobs: 31 of 123 complete                        Load avg: 5.71, 6.30, 3.31
+[30-Dec-23 21:45:31 INFO] ::: >>> Jobs: 31 of 123 complete, 1 running             Load avg: 5.71, 6.30, 3.31
+[30-Dec-23 21:45:31 INFO] ::: >>> Emerging (32 of 123) dev-ruby/googleapis-common-protos-types-1.8.0::gentoo
+[30-Dec-23 21:45:31 INFO] ::: >>> Jobs: 31 of 123 complete, 1 running             Load avg: 5.71, 6.30, 3.31
+[30-Dec-23 21:45:34 INFO] ::: >>> Installing (32 of 123) dev-ruby/googleapis-common-protos-types-1.8.0::gentoo
+[30-Dec-23 21:45:34 INFO] ::: >>> Jobs: 31 of 123 complete, 1 running             Load avg: 5.71, 6.30, 3.31
+[30-Dec-23 21:45:34 INFO] ::: >>> Jobs: 31 of 123 complete                        Load avg: 5.71, 6.30, 3.31
+[30-Dec-23 21:45:36 INFO] ::: >>> Completed (32 of 123) dev-ruby/googleapis-common-protos-types-1.8.0::gentoo
+[30-Dec-23 21:45:36 INFO] ::: >>> Jobs: 31 of 123 complete                        Load avg: 5.34, 6.22, 3.30
+[30-Dec-23 21:45:36 INFO] ::: >>> Jobs: 32 of 123 complete                        Load avg: 5.34, 6.22, 3.30
+[30-Dec-23 21:45:37 INFO] ::: >>> Jobs: 32 of 123 complete, 1 running             Load avg: 5.34, 6.22, 3.30
+[30-Dec-23 21:45:37 INFO] ::: >>> Emerging (33 of 123) dev-ruby/excon-0.104.0::gentoo
+[30-Dec-23 21:45:37 INFO] ::: >>> Jobs: 32 of 123 complete, 1 running             Load avg: 5.34, 6.22, 3.30
+[30-Dec-23 21:45:39 INFO] ::: >>> Installing (33 of 123) dev-ruby/excon-0.104.0::gentoo
+[30-Dec-23 21:45:39 INFO] ::: >>> Jobs: 32 of 123 complete, 1 running             Load avg: 5.34, 6.22, 3.30
+[30-Dec-23 21:45:39 INFO] ::: >>> Jobs: 32 of 123 complete                        Load avg: 5.34, 6.22, 3.30
+[30-Dec-23 21:45:42 INFO] ::: >>> Completed (33 of 123) dev-ruby/excon-0.104.0::gentoo
+[30-Dec-23 21:45:42 INFO] ::: >>> Jobs: 32 of 123 complete                        Load avg: 4.99, 6.13, 3.28
+[30-Dec-23 21:45:42 INFO] ::: >>> Jobs: 33 of 123 complete                        Load avg: 4.99, 6.13, 3.28
+[30-Dec-23 21:45:42 INFO] ::: >>> Jobs: 33 of 123 complete, 1 running             Load avg: 4.99, 6.13, 3.28
+[30-Dec-23 21:45:42 INFO] ::: >>> Emerging (34 of 123) dev-ruby/grpc-1.54.0::gentoo
+[30-Dec-23 21:45:42 INFO] ::: >>> Jobs: 33 of 123 complete, 1 running             Load avg: 4.99, 6.13, 3.28
+[30-Dec-23 21:49:54 INFO] ::: >>> Installing (34 of 123) dev-ruby/grpc-1.54.0::gentoo
+[30-Dec-23 21:49:54 INFO] ::: >>> Jobs: 33 of 123 complete, 1 running             Load avg: 11.1, 9.4, 5.4
+[30-Dec-23 21:49:54 INFO] ::: >>> Jobs: 33 of 123 complete                        Load avg: 11.1, 9.4, 5.4
+[30-Dec-23 21:49:57 INFO] ::: >>> Completed (34 of 123) dev-ruby/grpc-1.54.0::gentoo
+[30-Dec-23 21:49:57 INFO] ::: >>> Jobs: 33 of 123 complete                        Load avg: 10.3, 9.3, 5.3
+[30-Dec-23 21:49:57 INFO] ::: >>> Jobs: 34 of 123 complete                        Load avg: 10.3, 9.3, 5.3
+[30-Dec-23 21:49:57 INFO] ::: >>> Jobs: 34 of 123 complete, 1 running             Load avg: 10.3, 9.3, 5.3
+[30-Dec-23 21:49:57 INFO] ::: >>> Emerging (35 of 123) dev-util/ninja-1.11.1-r3::gentoo
+[30-Dec-23 21:49:57 INFO] ::: >>> Jobs: 34 of 123 complete, 1 running             Load avg: 10.3, 9.3, 5.3
+[30-Dec-23 21:50:22 INFO] ::: >>> Installing (35 of 123) dev-util/ninja-1.11.1-r3::gentoo
+[30-Dec-23 21:50:22 INFO] ::: >>> Jobs: 34 of 123 complete, 1 running             Load avg: 8.17, 8.86, 5.29
+[30-Dec-23 21:50:22 INFO] ::: >>> Jobs: 34 of 123 complete                        Load avg: 8.17, 8.86, 5.29
+[30-Dec-23 21:50:25 INFO] ::: >>> Completed (35 of 123) dev-util/ninja-1.11.1-r3::gentoo
+[30-Dec-23 21:50:25 INFO] ::: >>> Jobs: 34 of 123 complete                        Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:25 INFO] ::: >>> Jobs: 35 of 123 complete                        Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:25 INFO] ::: >>> Jobs: 35 of 123 complete, 1 running             Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:25 INFO] ::: >>> Emerging (36 of 123) app-alternatives/ninja-1::gentoo
+[30-Dec-23 21:50:25 INFO] ::: >>> Jobs: 35 of 123 complete, 1 running             Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:27 INFO] ::: >>> Installing (36 of 123) app-alternatives/ninja-1::gentoo
+[30-Dec-23 21:50:27 INFO] ::: >>> Jobs: 35 of 123 complete, 1 running             Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:27 INFO] ::: >>> Jobs: 35 of 123 complete                        Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:29 INFO] ::: >>> Completed (36 of 123) app-alternatives/ninja-1::gentoo
+[30-Dec-23 21:50:29 INFO] ::: >>> Jobs: 35 of 123 complete                        Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:29 INFO] ::: >>> Jobs: 36 of 123 complete                        Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:29 INFO] ::: >>> Jobs: 36 of 123 complete, 1 running             Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:29 INFO] ::: >>> Emerging (37 of 123) sys-fs/fuse-3.16.2::gentoo
+[30-Dec-23 21:50:29 INFO] ::: >>> Jobs: 36 of 123 complete, 1 running             Load avg: 7.59, 8.73, 5.27
+[30-Dec-23 21:50:35 INFO] ::: >>> Installing (37 of 123) sys-fs/fuse-3.16.2::gentoo
+[30-Dec-23 21:50:35 INFO] ::: >>> Jobs: 36 of 123 complete, 1 running             Load avg: 7.06, 8.60, 5.25
+[30-Dec-23 21:50:35 INFO] ::: >>> Jobs: 36 of 123 complete                        Load avg: 7.06, 8.60, 5.25
+[30-Dec-23 21:50:38 INFO] ::: >>> Completed (37 of 123) sys-fs/fuse-3.16.2::gentoo
+[30-Dec-23 21:50:38 INFO] ::: >>> Jobs: 36 of 123 complete                        Load avg: 6.58, 8.48, 5.22
+[30-Dec-23 21:50:38 INFO] ::: >>> Jobs: 37 of 123 complete                        Load avg: 6.58, 8.48, 5.22
+[30-Dec-23 21:50:38 INFO] ::: >>> Jobs: 37 of 123 complete, 1 running             Load avg: 6.58, 8.48, 5.22
+[30-Dec-23 21:50:38 INFO] ::: >>> Emerging (38 of 123) gnome-base/gnome-core-libs-44.4::gentoo
+[30-Dec-23 21:50:38 INFO] ::: >>> Jobs: 37 of 123 complete, 1 running             Load avg: 6.58, 8.48, 5.22
+[30-Dec-23 21:50:40 INFO] ::: >>> Installing (38 of 123) gnome-base/gnome-core-libs-44.4::gentoo
+[30-Dec-23 21:50:40 INFO] ::: >>> Jobs: 37 of 123 complete, 1 running             Load avg: 6.58, 8.48, 5.22
+[30-Dec-23 21:50:40 INFO] ::: >>> Jobs: 37 of 123 complete                        Load avg: 6.58, 8.48, 5.22
+[30-Dec-23 21:50:42 INFO] ::: >>> Completed (38 of 123) gnome-base/gnome-core-libs-44.4::gentoo
+[30-Dec-23 21:50:42 INFO] ::: >>> Jobs: 37 of 123 complete                        Load avg: 6.13, 8.35, 5.20
+[30-Dec-23 21:50:42 INFO] ::: >>> Jobs: 38 of 123 complete                        Load avg: 6.13, 8.35, 5.20
+[30-Dec-23 21:50:42 INFO] ::: >>> Jobs: 38 of 123 complete, 1 running             Load avg: 6.13, 8.35, 5.20
+[30-Dec-23 21:50:42 INFO] ::: >>> Emerging (39 of 123) sys-apps/iproute2-6.6.0::gentoo
+[30-Dec-23 21:50:42 INFO] ::: >>> Jobs: 38 of 123 complete, 1 running             Load avg: 6.13, 8.35, 5.20
+[30-Dec-23 21:50:57 INFO] ::: >>> Installing (39 of 123) sys-apps/iproute2-6.6.0::gentoo
+[30-Dec-23 21:50:57 INFO] ::: >>> Jobs: 38 of 123 complete, 1 running             Load avg: 6.36, 8.31, 5.24
+[30-Dec-23 21:50:57 INFO] ::: >>> Jobs: 38 of 123 complete                        Load avg: 6.36, 8.31, 5.24
+[30-Dec-23 21:51:00 INFO] ::: >>> Completed (39 of 123) sys-apps/iproute2-6.6.0::gentoo
+[30-Dec-23 21:51:00 INFO] ::: >>> Jobs: 38 of 123 complete                        Load avg: 6.36, 8.31, 5.24
+[30-Dec-23 21:51:00 INFO] ::: >>> Jobs: 39 of 123 complete                        Load avg: 6.36, 8.31, 5.24
+[30-Dec-23 21:51:00 INFO] ::: >>> Jobs: 39 of 123 complete, 1 running             Load avg: 6.36, 8.31, 5.24
+[30-Dec-23 21:51:00 INFO] ::: >>> Emerging (40 of 123) sys-kernel/gentoo-kernel-bin-6.1.67::gentoo
+[30-Dec-23 21:51:00 INFO] ::: >>> Jobs: 39 of 123 complete, 1 running             Load avg: 6.36, 8.31, 5.24
+[30-Dec-23 21:51:55 INFO] ::: >>> Installing (40 of 123) sys-kernel/gentoo-kernel-bin-6.1.67::gentoo
+[30-Dec-23 21:51:55 INFO] ::: >>> Jobs: 39 of 123 complete, 1 running             Load avg: 5.74, 7.62, 5.19
+[30-Dec-23 21:51:55 INFO] ::: >>> Jobs: 39 of 123 complete                        Load avg: 5.74, 7.62, 5.19
+[30-Dec-23 21:52:51 INFO] ::: >>> Completed (40 of 123) sys-kernel/gentoo-kernel-bin-6.1.67::gentoo
+[30-Dec-23 21:52:51 INFO] ::: >>> Jobs: 39 of 123 complete                        Load avg: 2.89, 6.51, 4.94
+[30-Dec-23 21:52:51 INFO] ::: >>> Jobs: 40 of 123 complete                        Load avg: 2.89, 6.51, 4.94
+[30-Dec-23 21:52:51 INFO] ::: >>> Jobs: 40 of 123 complete, 1 running             Load avg: 2.89, 6.51, 4.94
+[30-Dec-23 21:52:51 INFO] ::: >>> Emerging (41 of 123) virtual/dist-kernel-6.1.67::gentoo
+[30-Dec-23 21:52:51 INFO] ::: >>> Jobs: 40 of 123 complete, 1 running             Load avg: 2.89, 6.51, 4.94
+[30-Dec-23 21:52:53 INFO] ::: >>> Installing (41 of 123) virtual/dist-kernel-6.1.67::gentoo
+[30-Dec-23 21:52:53 INFO] ::: >>> Jobs: 40 of 123 complete, 1 running             Load avg: 2.89, 6.51, 4.94
+[30-Dec-23 21:52:53 INFO] ::: >>> Jobs: 40 of 123 complete                        Load avg: 2.89, 6.51, 4.94
+[30-Dec-23 21:52:56 INFO] ::: >>> Completed (41 of 123) virtual/dist-kernel-6.1.67::gentoo
+[30-Dec-23 21:52:56 INFO] ::: >>> Jobs: 40 of 123 complete                        Load avg: 2.74, 6.42, 4.92
+[30-Dec-23 21:52:56 INFO] ::: >>> Jobs: 41 of 123 complete                        Load avg: 2.74, 6.42, 4.92
+[30-Dec-23 21:52:56 INFO] ::: >>> Jobs: 41 of 123 complete, 1 running             Load avg: 2.74, 6.42, 4.92
+[30-Dec-23 21:52:56 INFO] ::: >>> Emerging (42 of 123) app-admin/sudo-1.9.15_p2::gentoo
+[30-Dec-23 21:52:56 INFO] ::: >>> Jobs: 41 of 123 complete, 1 running             Load avg: 2.74, 6.42, 4.92
+[30-Dec-23 21:53:23 INFO] ::: >>> Installing (42 of 123) app-admin/sudo-1.9.15_p2::gentoo
+[30-Dec-23 21:53:23 INFO] ::: >>> Jobs: 41 of 123 complete, 1 running             Load avg: 3.89, 6.38, 4.95
+[30-Dec-23 21:53:23 INFO] ::: >>> Jobs: 41 of 123 complete                        Load avg: 3.89, 6.38, 4.95
+[30-Dec-23 21:53:26 INFO] ::: >>> Completed (42 of 123) app-admin/sudo-1.9.15_p2::gentoo
+[30-Dec-23 21:53:26 INFO] ::: >>> Jobs: 41 of 123 complete                        Load avg: 3.74, 6.31, 4.93
+[30-Dec-23 21:53:26 INFO] ::: >>> Jobs: 42 of 123 complete                        Load avg: 3.74, 6.31, 4.93
+[30-Dec-23 21:53:26 INFO] ::: >>> Jobs: 42 of 123 complete, 1 running             Load avg: 3.74, 6.31, 4.93
+[30-Dec-23 21:53:26 INFO] ::: >>> Emerging (43 of 123) app-editors/vim-core-9.0.2092::gentoo
+[30-Dec-23 21:53:26 INFO] ::: >>> Jobs: 42 of 123 complete, 1 running             Load avg: 3.74, 6.31, 4.93
+[30-Dec-23 21:53:57 INFO] ::: >>> Installing (43 of 123) app-editors/vim-core-9.0.2092::gentoo
+[30-Dec-23 21:53:57 INFO] ::: >>> Jobs: 42 of 123 complete, 1 running             Load avg: 7.67, 7.03, 5.22
+[30-Dec-23 21:53:57 INFO] ::: >>> Jobs: 42 of 123 complete                        Load avg: 7.67, 7.03, 5.22
+[30-Dec-23 21:54:01 INFO] ::: >>> Completed (43 of 123) app-editors/vim-core-9.0.2092::gentoo
+[30-Dec-23 21:54:01 INFO] ::: >>> Jobs: 42 of 123 complete                        Load avg: 7.14, 6.93, 5.19
+[30-Dec-23 21:54:01 INFO] ::: >>> Jobs: 43 of 123 complete                        Load avg: 7.14, 6.93, 5.19
+[30-Dec-23 21:54:01 INFO] ::: >>> Jobs: 43 of 123 complete, 1 running             Load avg: 7.14, 6.93, 5.19
+[30-Dec-23 21:54:01 INFO] ::: >>> Emerging (44 of 123) dev-db/sqlite-3.44.2-r1::gentoo
+[30-Dec-23 21:54:01 INFO] ::: >>> Jobs: 43 of 123 complete, 1 running             Load avg: 7.14, 6.93, 5.19
+[30-Dec-23 21:54:49 INFO] ::: >>> Installing (44 of 123) dev-db/sqlite-3.44.2-r1::gentoo
+[30-Dec-23 21:54:49 INFO] ::: >>> Jobs: 43 of 123 complete, 1 running             Load avg: 4.30, 6.21, 5.03
+[30-Dec-23 21:54:49 INFO] ::: >>> Jobs: 43 of 123 complete                        Load avg: 4.30, 6.21, 5.03
+[30-Dec-23 21:54:52 INFO] ::: >>> Completed (44 of 123) dev-db/sqlite-3.44.2-r1::gentoo
+[30-Dec-23 21:54:52 INFO] ::: >>> Jobs: 43 of 123 complete                        Load avg: 4.04, 6.12, 5.01
+[30-Dec-23 21:54:52 INFO] ::: >>> Jobs: 44 of 123 complete                        Load avg: 4.04, 6.12, 5.01
+[30-Dec-23 21:54:52 INFO] ::: >>> Jobs: 44 of 123 complete, 1 running             Load avg: 4.04, 6.12, 5.01
+[30-Dec-23 21:54:52 INFO] ::: >>> Emerging (45 of 123) sys-apps/kmod-31::gentoo
+[30-Dec-23 21:54:52 INFO] ::: >>> Jobs: 44 of 123 complete, 1 running             Load avg: 4.04, 6.12, 5.01
+[30-Dec-23 21:55:00 INFO] ::: >>> Installing (45 of 123) sys-apps/kmod-31::gentoo
+[30-Dec-23 21:55:00 INFO] ::: >>> Jobs: 44 of 123 complete, 1 running             Load avg: 3.87, 6.05, 4.99
+[30-Dec-23 21:55:00 INFO] ::: >>> Jobs: 44 of 123 complete                        Load avg: 3.87, 6.05, 4.99
+[30-Dec-23 21:55:03 INFO] ::: >>> Completed (45 of 123) sys-apps/kmod-31::gentoo
+[30-Dec-23 21:55:03 INFO] ::: >>> Jobs: 44 of 123 complete                        Load avg: 3.64, 5.97, 4.97
+[30-Dec-23 21:55:03 INFO] ::: >>> Jobs: 45 of 123 complete                        Load avg: 3.64, 5.97, 4.97
+[30-Dec-23 21:55:03 INFO] ::: >>> Jobs: 45 of 123 complete, 1 running             Load avg: 3.64, 5.97, 4.97
+[30-Dec-23 21:55:03 INFO] ::: >>> Emerging (46 of 123) sys-apps/debianutils-5.14::gentoo
+[30-Dec-23 21:55:03 INFO] ::: >>> Jobs: 45 of 123 complete, 1 running             Load avg: 3.64, 5.97, 4.97
+[30-Dec-23 21:55:08 INFO] ::: >>> Installing (46 of 123) sys-apps/debianutils-5.14::gentoo
+[30-Dec-23 21:55:08 INFO] ::: >>> Jobs: 45 of 123 complete, 1 running             Load avg: 3.43, 5.88, 4.95
+[30-Dec-23 21:55:08 INFO] ::: >>> Jobs: 45 of 123 complete                        Load avg: 3.43, 5.88, 4.95
+[30-Dec-23 21:55:11 INFO] ::: >>> Completed (46 of 123) sys-apps/debianutils-5.14::gentoo
+[30-Dec-23 21:55:11 INFO] ::: >>> Jobs: 45 of 123 complete                        Load avg: 3.40, 5.84, 4.94
+[30-Dec-23 21:55:11 INFO] ::: >>> Jobs: 46 of 123 complete                        Load avg: 3.40, 5.84, 4.94
+[30-Dec-23 21:55:11 INFO] ::: >>> Jobs: 46 of 123 complete, 1 running             Load avg: 3.40, 5.84, 4.94
+[30-Dec-23 21:55:11 INFO] ::: >>> Emerging (47 of 123) net-misc/openssh-9.6_p1-r1::gentoo
+[30-Dec-23 21:55:11 INFO] ::: >>> Jobs: 46 of 123 complete, 1 running             Load avg: 3.40, 5.84, 4.94
+[30-Dec-23 21:55:46 INFO] ::: >>> Installing (47 of 123) net-misc/openssh-9.6_p1-r1::gentoo
+[30-Dec-23 21:55:46 INFO] ::: >>> Jobs: 46 of 123 complete, 1 running             Load avg: 5.30, 5.98, 5.02
+[30-Dec-23 21:55:46 INFO] ::: >>> Jobs: 46 of 123 complete                        Load avg: 5.30, 5.98, 5.02
+[30-Dec-23 21:55:49 INFO] ::: >>> Completed (47 of 123) net-misc/openssh-9.6_p1-r1::gentoo
+[30-Dec-23 21:55:49 INFO] ::: >>> Jobs: 46 of 123 complete                        Load avg: 5.30, 5.98, 5.02
+[30-Dec-23 21:55:49 INFO] ::: >>> Jobs: 47 of 123 complete                        Load avg: 5.30, 5.98, 5.02
+[30-Dec-23 21:55:49 INFO] ::: >>> Jobs: 47 of 123 complete, 1 running             Load avg: 5.30, 5.98, 5.02
+[30-Dec-23 21:55:49 INFO] ::: >>> Emerging (48 of 123) dev-util/colm-0.14.7-r3::gentoo
+[30-Dec-23 21:55:49 INFO] ::: >>> Jobs: 47 of 123 complete, 1 running             Load avg: 5.30, 5.98, 5.02
+[30-Dec-23 21:56:47 INFO] ::: >>> Installing (48 of 123) dev-util/colm-0.14.7-r3::gentoo
+[30-Dec-23 21:56:47 INFO] ::: >>> Jobs: 47 of 123 complete, 1 running             Load avg: 6.53, 6.26, 5.17
+[30-Dec-23 21:56:47 INFO] ::: >>> Jobs: 47 of 123 complete                        Load avg: 6.53, 6.26, 5.17
+[30-Dec-23 21:56:50 INFO] ::: >>> Completed (48 of 123) dev-util/colm-0.14.7-r3::gentoo
+[30-Dec-23 21:56:50 INFO] ::: >>> Jobs: 47 of 123 complete                        Load avg: 6.53, 6.26, 5.17
+[30-Dec-23 21:56:50 INFO] ::: >>> Jobs: 48 of 123 complete                        Load avg: 6.53, 6.26, 5.17
+[30-Dec-23 21:56:50 INFO] ::: >>> Jobs: 48 of 123 complete, 1 running             Load avg: 6.53, 6.26, 5.17
+[30-Dec-23 21:56:50 INFO] ::: >>> Emerging (49 of 123) app-misc/ca-certificates-20230311.3.93::gentoo
+[30-Dec-23 21:56:50 INFO] ::: >>> Jobs: 48 of 123 complete, 1 running             Load avg: 6.53, 6.26, 5.17
+[30-Dec-23 21:56:55 INFO] ::: >>> Installing (49 of 123) app-misc/ca-certificates-20230311.3.93::gentoo
+[30-Dec-23 21:56:55 INFO] ::: >>> Jobs: 48 of 123 complete, 1 running             Load avg: 6.09, 6.17, 5.15
+[30-Dec-23 21:56:55 INFO] ::: >>> Jobs: 48 of 123 complete                        Load avg: 6.09, 6.17, 5.15
+[30-Dec-23 21:56:58 INFO] ::: >>> Completed (49 of 123) app-misc/ca-certificates-20230311.3.93::gentoo
+[30-Dec-23 21:56:58 INFO] ::: >>> Jobs: 48 of 123 complete                        Load avg: 5.68, 6.09, 5.13
+[30-Dec-23 21:56:58 INFO] ::: >>> Jobs: 49 of 123 complete                        Load avg: 5.68, 6.09, 5.13
+[30-Dec-23 21:56:58 INFO] ::: >>> Jobs: 49 of 123 complete, 1 running             Load avg: 5.68, 6.09, 5.13
+[30-Dec-23 21:56:58 INFO] ::: >>> Emerging (50 of 123) dev-util/ragel-7.0.4-r2::gentoo
+[30-Dec-23 21:56:58 INFO] ::: >>> Jobs: 49 of 123 complete, 1 running             Load avg: 5.68, 6.09, 5.13
+[30-Dec-23 21:57:55 INFO] ::: >>> Installing (50 of 123) dev-util/ragel-7.0.4-r2::gentoo
+[30-Dec-23 21:57:55 INFO] ::: >>> Jobs: 49 of 123 complete, 1 running             Load avg: 3.90, 5.54, 5.00
+[30-Dec-23 21:57:55 INFO] ::: >>> Jobs: 49 of 123 complete                        Load avg: 3.75, 5.49, 4.98
+[30-Dec-23 21:57:59 INFO] ::: >>> Completed (50 of 123) dev-util/ragel-7.0.4-r2::gentoo
+[30-Dec-23 21:57:59 INFO] ::: >>> Jobs: 49 of 123 complete                        Load avg: 3.75, 5.49, 4.98
+[30-Dec-23 21:57:59 INFO] ::: >>> Jobs: 50 of 123 complete                        Load avg: 3.75, 5.49, 4.98
+[30-Dec-23 21:57:59 INFO] ::: >>> Jobs: 50 of 123 complete, 1 running             Load avg: 3.75, 5.49, 4.98
+[30-Dec-23 21:57:59 INFO] ::: >>> Emerging (51 of 123) app-emulation/virtualbox-modules-7.0.10::gentoo
+[30-Dec-23 21:57:59 INFO] ::: >>> Jobs: 50 of 123 complete, 1 running             Load avg: 3.75, 5.49, 4.98
+[30-Dec-23 21:58:08 INFO] ::: >>> Installing (51 of 123) app-emulation/virtualbox-modules-7.0.10::gentoo
+[30-Dec-23 21:58:08 INFO] ::: >>> Jobs: 50 of 123 complete, 1 running             Load avg: 3.41, 5.35, 4.94
+[30-Dec-23 21:58:08 INFO] ::: >>> Jobs: 50 of 123 complete                        Load avg: 3.41, 5.35, 4.94
+[30-Dec-23 21:58:12 INFO] ::: >>> Completed (51 of 123) app-emulation/virtualbox-modules-7.0.10::gentoo
+[30-Dec-23 21:58:12 INFO] ::: >>> Jobs: 50 of 123 complete                        Load avg: 3.21, 5.28, 4.92
+[30-Dec-23 21:58:12 INFO] ::: >>> Jobs: 51 of 123 complete                        Load avg: 3.21, 5.28, 4.92
+[30-Dec-23 21:58:12 INFO] ::: >>> Jobs: 51 of 123 complete, 1 running             Load avg: 3.21, 5.28, 4.92
+[30-Dec-23 21:58:12 INFO] ::: >>> Emerging (52 of 123) gnome-base/gnome-light-44.4::gentoo
+[30-Dec-23 21:58:12 INFO] ::: >>> Jobs: 51 of 123 complete, 1 running             Load avg: 3.21, 5.28, 4.92
+[30-Dec-23 21:58:13 INFO] ::: >>> Installing (52 of 123) gnome-base/gnome-light-44.4::gentoo
+[30-Dec-23 21:58:13 INFO] ::: >>> Jobs: 51 of 123 complete, 1 running             Load avg: 3.21, 5.28, 4.92
+[30-Dec-23 21:58:13 INFO] ::: >>> Jobs: 51 of 123 complete                        Load avg: 3.21, 5.28, 4.92
+[30-Dec-23 21:58:16 INFO] ::: >>> Completed (52 of 123) gnome-base/gnome-light-44.4::gentoo
+[30-Dec-23 21:58:16 INFO] ::: >>> Jobs: 51 of 123 complete                        Load avg: 3.04, 5.21, 4.90
+[30-Dec-23 21:58:16 INFO] ::: >>> Jobs: 52 of 123 complete                        Load avg: 3.04, 5.21, 4.90
+[30-Dec-23 21:58:16 INFO] ::: >>> Jobs: 52 of 123 complete, 1 running             Load avg: 3.04, 5.21, 4.90
+[30-Dec-23 21:58:16 INFO] ::: >>> Emerging (53 of 123) media-libs/openjpeg-2.5.0-r6::gentoo
+[30-Dec-23 21:58:16 INFO] ::: >>> Jobs: 52 of 123 complete, 1 running             Load avg: 3.04, 5.21, 4.90
+[30-Dec-23 21:58:25 INFO] ::: >>> Installing (53 of 123) media-libs/openjpeg-2.5.0-r6::gentoo
+[30-Dec-23 21:58:25 INFO] ::: >>> Jobs: 52 of 123 complete, 1 running             Load avg: 4.40, 5.46, 4.98
+[30-Dec-23 21:58:25 INFO] ::: >>> Jobs: 52 of 123 complete                        Load avg: 4.40, 5.46, 4.98
+[30-Dec-23 21:58:28 INFO] ::: >>> Completed (53 of 123) media-libs/openjpeg-2.5.0-r6::gentoo
+[30-Dec-23 21:58:28 INFO] ::: >>> Jobs: 52 of 123 complete                        Load avg: 4.12, 5.38, 4.96
+[30-Dec-23 21:58:28 INFO] ::: >>> Jobs: 53 of 123 complete                        Load avg: 4.12, 5.38, 4.96
+[30-Dec-23 21:58:28 INFO] ::: >>> Jobs: 53 of 123 complete, 1 running             Load avg: 4.12, 5.38, 4.96
+[30-Dec-23 21:58:28 INFO] ::: >>> Emerging (54 of 123) app-text/qpdf-11.6.3-r1::gentoo
+[30-Dec-23 21:58:28 INFO] ::: >>> Jobs: 53 of 123 complete, 1 running             Load avg: 4.12, 5.38, 4.96
+[30-Dec-23 21:59:58 INFO] ::: >>> Installing (54 of 123) app-text/qpdf-11.6.3-r1::gentoo
+[30-Dec-23 21:59:58 INFO] ::: >>> Jobs: 53 of 123 complete, 1 running             Load avg: 14.8, 8.7, 6.2
+[30-Dec-23 21:59:59 INFO] ::: >>> Jobs: 53 of 123 complete                        Load avg: 14.8, 8.7, 6.2
+[30-Dec-23 22:00:02 INFO] ::: >>> Completed (54 of 123) app-text/qpdf-11.6.3-r1::gentoo
+[30-Dec-23 22:00:02 INFO] ::: >>> Jobs: 53 of 123 complete                        Load avg: 13.7, 8.6, 6.2
+[30-Dec-23 22:00:02 INFO] ::: >>> Jobs: 54 of 123 complete                        Load avg: 13.7, 8.6, 6.2
+[30-Dec-23 22:00:02 INFO] ::: >>> Jobs: 54 of 123 complete, 1 running             Load avg: 13.7, 8.6, 6.2
+[30-Dec-23 22:00:02 INFO] ::: >>> Emerging (55 of 123) dev-util/spirv-headers-1.3.268::gentoo
+[30-Dec-23 22:00:02 INFO] ::: >>> Jobs: 54 of 123 complete, 1 running             Load avg: 13.7, 8.6, 6.2
+[30-Dec-23 22:00:04 INFO] ::: >>> Installing (55 of 123) dev-util/spirv-headers-1.3.268::gentoo
+[30-Dec-23 22:00:04 INFO] ::: >>> Jobs: 54 of 123 complete, 1 running             Load avg: 13.7, 8.6, 6.2
+[30-Dec-23 22:00:04 INFO] ::: >>> Jobs: 54 of 123 complete                        Load avg: 13.7, 8.6, 6.2
+[30-Dec-23 22:00:07 INFO] ::: >>> Completed (55 of 123) dev-util/spirv-headers-1.3.268::gentoo
+[30-Dec-23 22:00:07 INFO] ::: >>> Jobs: 54 of 123 complete                        Load avg: 12.7, 8.4, 6.1
+[30-Dec-23 22:00:07 INFO] ::: >>> Jobs: 55 of 123 complete                        Load avg: 12.7, 8.4, 6.1
+[30-Dec-23 22:00:07 INFO] ::: >>> Jobs: 55 of 123 complete, 1 running             Load avg: 12.7, 8.4, 6.1
+[30-Dec-23 22:00:07 INFO] ::: >>> Emerging (56 of 123) dev-util/vulkan-headers-1.3.268::gentoo
+[30-Dec-23 22:00:07 INFO] ::: >>> Jobs: 55 of 123 complete, 1 running             Load avg: 12.7, 8.4, 6.1
+[30-Dec-23 22:00:10 INFO] ::: >>> Installing (56 of 123) dev-util/vulkan-headers-1.3.268::gentoo
+[30-Dec-23 22:00:10 INFO] ::: >>> Jobs: 55 of 123 complete, 1 running             Load avg: 12.7, 8.4, 6.1
+[30-Dec-23 22:00:10 INFO] ::: >>> Jobs: 55 of 123 complete                        Load avg: 12.7, 8.4, 6.1
+[30-Dec-23 22:00:13 INFO] ::: >>> Completed (56 of 123) dev-util/vulkan-headers-1.3.268::gentoo
+[30-Dec-23 22:00:13 INFO] ::: >>> Jobs: 55 of 123 complete                        Load avg: 11.7, 8.3, 6.1
+[30-Dec-23 22:00:13 INFO] ::: >>> Jobs: 56 of 123 complete                        Load avg: 11.7, 8.3, 6.1
+[30-Dec-23 22:00:13 INFO] ::: >>> Jobs: 56 of 123 complete, 1 running             Load avg: 11.7, 8.3, 6.1
+[30-Dec-23 22:00:13 INFO] ::: >>> Emerging (57 of 123) media-libs/libldac-2.0.2.3-r1::gentoo
+[30-Dec-23 22:00:13 INFO] ::: >>> Jobs: 56 of 123 complete, 1 running             Load avg: 11.7, 8.3, 6.1
+[30-Dec-23 22:00:16 INFO] ::: >>> Installing (57 of 123) media-libs/libldac-2.0.2.3-r1::gentoo
+[30-Dec-23 22:00:16 INFO] ::: >>> Jobs: 56 of 123 complete, 1 running             Load avg: 11.1, 8.2, 6.1
+[30-Dec-23 22:00:16 INFO] ::: >>> Jobs: 56 of 123 complete                        Load avg: 11.1, 8.2, 6.1
+[30-Dec-23 22:00:19 INFO] ::: >>> Completed (57 of 123) media-libs/libldac-2.0.2.3-r1::gentoo
+[30-Dec-23 22:00:19 INFO] ::: >>> Jobs: 56 of 123 complete                        Load avg: 11.1, 8.2, 6.1
+[30-Dec-23 22:00:19 INFO] ::: >>> Jobs: 57 of 123 complete                        Load avg: 11.1, 8.2, 6.1
+[30-Dec-23 22:00:19 INFO] ::: >>> Jobs: 57 of 123 complete, 1 running             Load avg: 11.1, 8.2, 6.1
+[30-Dec-23 22:00:19 INFO] ::: >>> Emerging (58 of 123) dev-util/spirv-tools-1.3.268::gentoo
+[30-Dec-23 22:00:19 INFO] ::: >>> Jobs: 57 of 123 complete, 1 running             Load avg: 11.1, 8.2, 6.1
+[30-Dec-23 22:03:21 INFO] ::: >>> Installing (58 of 123) dev-util/spirv-tools-1.3.268::gentoo
+[30-Dec-23 22:03:21 INFO] ::: >>> Jobs: 57 of 123 complete, 1 running             Load avg: 17.5, 13.1, 8.4
+[30-Dec-23 22:03:21 INFO] ::: >>> Jobs: 57 of 123 complete                        Load avg: 17.5, 13.1, 8.4
+[30-Dec-23 22:03:24 INFO] ::: >>> Completed (58 of 123) dev-util/spirv-tools-1.3.268::gentoo
+[30-Dec-23 22:03:24 INFO] ::: >>> Jobs: 57 of 123 complete                        Load avg: 17.5, 13.1, 8.4
+[30-Dec-23 22:03:24 INFO] ::: >>> Jobs: 58 of 123 complete                        Load avg: 17.5, 13.1, 8.4
+[30-Dec-23 22:03:24 INFO] ::: >>> Jobs: 58 of 123 complete, 1 running             Load avg: 17.5, 13.1, 8.4
+[30-Dec-23 22:03:24 INFO] ::: >>> Emerging (59 of 123) media-libs/vulkan-loader-1.3.268::gentoo
+[30-Dec-23 22:03:24 INFO] ::: >>> Jobs: 58 of 123 complete, 1 running             Load avg: 17.5, 13.1, 8.4
+[30-Dec-23 22:03:31 INFO] ::: >>> Installing (59 of 123) media-libs/vulkan-loader-1.3.268::gentoo
+[30-Dec-23 22:03:31 INFO] ::: >>> Jobs: 58 of 123 complete, 1 running             Load avg: 15.1, 12.7, 8.3
+[30-Dec-23 22:03:31 INFO] ::: >>> Jobs: 58 of 123 complete                        Load avg: 15.1, 12.7, 8.3
+[30-Dec-23 22:03:34 INFO] ::: >>> Completed (59 of 123) media-libs/vulkan-loader-1.3.268::gentoo
+[30-Dec-23 22:03:34 INFO] ::: >>> Jobs: 58 of 123 complete                        Load avg: 15.1, 12.7, 8.3
+[30-Dec-23 22:03:34 INFO] ::: >>> Jobs: 59 of 123 complete                        Load avg: 15.1, 12.7, 8.3
+[30-Dec-23 22:03:34 INFO] ::: >>> Jobs: 59 of 123 complete, 1 running             Load avg: 15.1, 12.7, 8.3
+[30-Dec-23 22:03:34 INFO] ::: >>> Emerging (60 of 123) dev-util/glslang-1.3.268-r2::gentoo
+[30-Dec-23 22:03:34 INFO] ::: >>> Jobs: 59 of 123 complete, 1 running             Load avg: 15.1, 12.7, 8.3
+[30-Dec-23 22:04:16 INFO] ::: >>> Installing (60 of 123) dev-util/glslang-1.3.268-r2::gentoo
+[30-Dec-23 22:04:16 INFO] ::: >>> Jobs: 59 of 123 complete, 1 running             Load avg: 13.4, 12.7, 8.5
+[30-Dec-23 22:04:16 INFO] ::: >>> Jobs: 59 of 123 complete                        Load avg: 13.4, 12.7, 8.5
+[30-Dec-23 22:04:19 INFO] ::: >>> Completed (60 of 123) dev-util/glslang-1.3.268-r2::gentoo
+[30-Dec-23 22:04:19 INFO] ::: >>> Jobs: 59 of 123 complete                        Load avg: 13.4, 12.7, 8.5
+[30-Dec-23 22:04:19 INFO] ::: >>> Jobs: 60 of 123 complete                        Load avg: 13.4, 12.7, 8.5
+[30-Dec-23 22:04:19 INFO] ::: >>> Jobs: 60 of 123 complete, 1 running             Load avg: 13.4, 12.7, 8.5
+[30-Dec-23 22:04:19 INFO] ::: >>> Emerging (61 of 123) app-text/ghostscript-gpl-10.02.1::gentoo
+[30-Dec-23 22:04:19 INFO] ::: >>> Jobs: 60 of 123 complete, 1 running             Load avg: 13.4, 12.7, 8.5
+[30-Dec-23 22:07:53 INFO] ::: >>> Installing (61 of 123) app-text/ghostscript-gpl-10.02.1::gentoo
+[30-Dec-23 22:07:53 INFO] ::: >>> Jobs: 60 of 123 complete, 1 running             Load avg: 18.6, 15.6, 10.5
+[30-Dec-23 22:07:53 INFO] ::: >>> Jobs: 60 of 123 complete                        Load avg: 18.6, 15.6, 10.5
+[30-Dec-23 22:07:56 INFO] ::: >>> Completed (61 of 123) app-text/ghostscript-gpl-10.02.1::gentoo
+[30-Dec-23 22:07:56 INFO] ::: >>> Jobs: 60 of 123 complete                        Load avg: 17.1, 15.4, 10.5
+[30-Dec-23 22:07:56 INFO] ::: >>> Jobs: 61 of 123 complete                        Load avg: 17.1, 15.4, 10.5
+[30-Dec-23 22:07:56 INFO] ::: >>> Jobs: 61 of 123 complete, 1 running             Load avg: 17.1, 15.4, 10.5
+[30-Dec-23 22:07:56 INFO] ::: >>> Emerging (62 of 123) x11-terms/alacritty-0.12.3::gentoo
+[30-Dec-23 22:07:56 INFO] ::: >>> Jobs: 61 of 123 complete, 1 running             Load avg: 17.1, 15.4, 10.5
+[30-Dec-23 22:09:14 INFO] ::: >>> Installing (62 of 123) x11-terms/alacritty-0.12.3::gentoo
+[30-Dec-23 22:09:14 INFO] ::: >>> Jobs: 61 of 123 complete, 1 running             Load avg: 7.3, 12.9, 10.0
+[30-Dec-23 22:09:14 INFO] ::: >>> Jobs: 61 of 123 complete                        Load avg: 7.3, 12.9, 10.0
+[30-Dec-23 22:09:18 INFO] ::: >>> Completed (62 of 123) x11-terms/alacritty-0.12.3::gentoo
+[30-Dec-23 22:09:18 INFO] ::: >>> Jobs: 61 of 123 complete                        Load avg: 6.8, 12.7, 9.9
+[30-Dec-23 22:09:18 INFO] ::: >>> Jobs: 62 of 123 complete                        Load avg: 6.8, 12.7, 9.9
+[30-Dec-23 22:09:18 INFO] ::: >>> Jobs: 62 of 123 complete, 1 running             Load avg: 6.8, 12.7, 9.9
+[30-Dec-23 22:09:18 INFO] ::: >>> Emerging (63 of 123) app-text/mupdf-1.23.3::gentoo
+[30-Dec-23 22:09:18 INFO] ::: >>> Jobs: 62 of 123 complete, 1 running             Load avg: 6.8, 12.7, 9.9
+[30-Dec-23 22:09:57 INFO] ::: >>> Installing (63 of 123) app-text/mupdf-1.23.3::gentoo
+[30-Dec-23 22:09:57 INFO] ::: >>> Jobs: 62 of 123 complete, 1 running             Load avg: 9.4, 12.8, 10.1
+[30-Dec-23 22:09:57 INFO] ::: >>> Jobs: 62 of 123 complete                        Load avg: 9.4, 12.8, 10.1
+[30-Dec-23 22:10:01 INFO] ::: >>> Completed (63 of 123) app-text/mupdf-1.23.3::gentoo
+[30-Dec-23 22:10:01 INFO] ::: >>> Jobs: 62 of 123 complete                        Load avg: 8.7, 12.6, 10.0
+[30-Dec-23 22:10:01 INFO] ::: >>> Jobs: 63 of 123 complete                        Load avg: 8.7, 12.6, 10.0
+[30-Dec-23 22:10:01 INFO] ::: >>> Jobs: 63 of 123 complete, 1 running             Load avg: 8.7, 12.6, 10.0
+[30-Dec-23 22:10:01 INFO] ::: >>> Emerging (64 of 123) dev-libs/gmp-6.3.0-r1::gentoo
+[30-Dec-23 22:10:01 INFO] ::: >>> Jobs: 63 of 123 complete, 1 running             Load avg: 8.7, 12.6, 10.0
+[30-Dec-23 22:10:31 INFO] ::: >>> Installing (64 of 123) dev-libs/gmp-6.3.0-r1::gentoo
+[30-Dec-23 22:10:31 INFO] ::: >>> Jobs: 63 of 123 complete, 1 running             Load avg: 10.0, 12.5, 10.1
+[30-Dec-23 22:10:31 INFO] ::: >>> Jobs: 63 of 123 complete                        Load avg: 10.0, 12.5, 10.1
+[30-Dec-23 22:10:35 INFO] ::: >>> Completed (64 of 123) dev-libs/gmp-6.3.0-r1::gentoo
+[30-Dec-23 22:10:35 INFO] ::: >>> Jobs: 63 of 123 complete                        Load avg: 10.0, 12.5, 10.1
+[30-Dec-23 22:10:35 INFO] ::: >>> Jobs: 64 of 123 complete                        Load avg: 10.0, 12.5, 10.1
+[30-Dec-23 22:10:35 INFO] ::: >>> Jobs: 64 of 123 complete, 1 running             Load avg: 10.0, 12.5, 10.1
+[30-Dec-23 22:10:35 INFO] ::: >>> Emerging (65 of 123) sys-devel/gettext-0.22.4::gentoo
+[30-Dec-23 22:10:35 INFO] ::: >>> Jobs: 64 of 123 complete, 1 running             Load avg: 10.0, 12.5, 10.1
+[30-Dec-23 22:12:44 INFO] ::: >>> Installing (65 of 123) sys-devel/gettext-0.22.4::gentoo
+[30-Dec-23 22:12:44 INFO] ::: >>> Jobs: 64 of 123 complete, 1 running             Load avg: 5.58, 9.71, 9.36
+[30-Dec-23 22:12:44 INFO] ::: >>> Jobs: 64 of 123 complete                        Load avg: 5.58, 9.71, 9.36
+[30-Dec-23 22:12:47 INFO] ::: >>> Completed (65 of 123) sys-devel/gettext-0.22.4::gentoo
+[30-Dec-23 22:12:47 INFO] ::: >>> Jobs: 64 of 123 complete                        Load avg: 5.21, 9.57, 9.31
+[30-Dec-23 22:12:47 INFO] ::: >>> Jobs: 65 of 123 complete                        Load avg: 5.21, 9.57, 9.31
+[30-Dec-23 22:12:47 INFO] ::: >>> Jobs: 65 of 123 complete, 1 running             Load avg: 5.21, 9.57, 9.31
+[30-Dec-23 22:12:47 INFO] ::: >>> Emerging (66 of 123) dev-libs/libxslt-1.1.39::gentoo
+[30-Dec-23 22:12:47 INFO] ::: >>> Jobs: 65 of 123 complete, 1 running             Load avg: 5.21, 9.57, 9.31
+[30-Dec-23 22:12:55 INFO] ::: >>> Installing (66 of 123) dev-libs/libxslt-1.1.39::gentoo
+[30-Dec-23 22:12:55 INFO] ::: >>> Jobs: 65 of 123 complete, 1 running             Load avg: 4.88, 9.42, 9.27
+[30-Dec-23 22:12:55 INFO] ::: >>> Jobs: 65 of 123 complete                        Load avg: 4.88, 9.42, 9.27
+[30-Dec-23 22:12:58 INFO] ::: >>> Completed (66 of 123) dev-libs/libxslt-1.1.39::gentoo
+[30-Dec-23 22:12:58 INFO] ::: >>> Jobs: 65 of 123 complete                        Load avg: 4.57, 9.28, 9.22
+[30-Dec-23 22:12:58 INFO] ::: >>> Jobs: 66 of 123 complete                        Load avg: 4.57, 9.28, 9.22
+[30-Dec-23 22:12:58 INFO] ::: >>> Jobs: 66 of 123 complete, 1 running             Load avg: 4.57, 9.28, 9.22
+[30-Dec-23 22:12:58 INFO] ::: >>> Emerging (67 of 123) dev-libs/libgpg-error-1.47-r1::gentoo
+[30-Dec-23 22:12:58 INFO] ::: >>> Jobs: 66 of 123 complete, 1 running             Load avg: 4.57, 9.28, 9.22
+[30-Dec-23 22:13:13 INFO] ::: >>> Installing (67 of 123) dev-libs/libgpg-error-1.47-r1::gentoo
+[30-Dec-23 22:13:13 INFO] ::: >>> Jobs: 66 of 123 complete, 1 running             Load avg: 3.94, 8.91, 9.10
+[30-Dec-23 22:13:13 INFO] ::: >>> Jobs: 66 of 123 complete                        Load avg: 3.94, 8.91, 9.10
+[30-Dec-23 22:13:16 INFO] ::: >>> Completed (67 of 123) dev-libs/libgpg-error-1.47-r1::gentoo
+[30-Dec-23 22:13:16 INFO] ::: >>> Jobs: 66 of 123 complete                        Load avg: 3.94, 8.91, 9.10
+[30-Dec-23 22:13:16 INFO] ::: >>> Jobs: 67 of 123 complete                        Load avg: 3.94, 8.91, 9.10
+[30-Dec-23 22:13:16 INFO] ::: >>> Jobs: 67 of 123 complete, 1 running             Load avg: 3.94, 8.91, 9.10
+[30-Dec-23 22:13:16 INFO] ::: >>> Emerging (68 of 123) sys-devel/binutils-2.41-r2::gentoo
+[30-Dec-23 22:13:16 INFO] ::: >>> Jobs: 67 of 123 complete, 1 running             Load avg: 3.94, 8.91, 9.10
+[30-Dec-23 22:14:12 INFO] ::: >>> Installing (68 of 123) sys-devel/binutils-2.41-r2::gentoo
+[30-Dec-23 22:14:12 INFO] ::: >>> Jobs: 67 of 123 complete, 1 running             Load avg: 4.98, 8.32, 8.88
+[30-Dec-23 22:14:12 INFO] ::: >>> Jobs: 67 of 123 complete                        Load avg: 4.98, 8.32, 8.88
+[30-Dec-23 22:14:14 INFO] ::: >>> Completed (68 of 123) sys-devel/binutils-2.41-r2::gentoo
+[30-Dec-23 22:14:14 INFO] ::: >>> Jobs: 67 of 123 complete                        Load avg: 4.98, 8.32, 8.88
+[30-Dec-23 22:14:14 INFO] ::: >>> Jobs: 68 of 123 complete                        Load avg: 4.98, 8.32, 8.88
+[30-Dec-23 22:14:14 INFO] ::: >>> Jobs: 68 of 123 complete, 1 running             Load avg: 4.98, 8.32, 8.88
+[30-Dec-23 22:14:14 INFO] ::: >>> Emerging (69 of 123) dev-libs/elfutils-0.190::gentoo
+[30-Dec-23 22:14:14 INFO] ::: >>> Jobs: 68 of 123 complete, 1 running             Load avg: 4.98, 8.32, 8.88
+[30-Dec-23 22:14:37 INFO] ::: >>> Installing (69 of 123) dev-libs/elfutils-0.190::gentoo
+[30-Dec-23 22:14:37 INFO] ::: >>> Jobs: 68 of 123 complete, 1 running             Load avg: 5.24, 8.11, 8.80
+[30-Dec-23 22:14:37 INFO] ::: >>> Jobs: 68 of 123 complete                        Load avg: 5.24, 8.11, 8.80
+[30-Dec-23 22:14:40 INFO] ::: >>> Completed (69 of 123) dev-libs/elfutils-0.190::gentoo
+[30-Dec-23 22:14:40 INFO] ::: >>> Jobs: 68 of 123 complete                        Load avg: 5.24, 8.11, 8.80
+[30-Dec-23 22:14:40 INFO] ::: >>> Jobs: 69 of 123 complete                        Load avg: 5.24, 8.11, 8.80
+[30-Dec-23 22:14:40 INFO] ::: >>> Jobs: 69 of 123 complete, 1 running             Load avg: 5.24, 8.11, 8.80
+[30-Dec-23 22:14:40 INFO] ::: >>> Emerging (70 of 123) sys-apps/texinfo-7.1-r1::gentoo
+[30-Dec-23 22:14:40 INFO] ::: >>> Jobs: 69 of 123 complete, 1 running             Load avg: 5.24, 8.11, 8.80
+[30-Dec-23 22:15:03 INFO] ::: >>> Installing (70 of 123) sys-apps/texinfo-7.1-r1::gentoo
+[30-Dec-23 22:15:03 INFO] ::: >>> Jobs: 69 of 123 complete, 1 running             Load avg: 5.06, 7.82, 8.69
+[30-Dec-23 22:15:04 INFO] ::: >>> Jobs: 69 of 123 complete                        Load avg: 5.06, 7.82, 8.69
+[30-Dec-23 22:15:07 INFO] ::: >>> Completed (70 of 123) sys-apps/texinfo-7.1-r1::gentoo
+[30-Dec-23 22:15:07 INFO] ::: >>> Jobs: 69 of 123 complete                        Load avg: 4.73, 7.71, 8.64
+[30-Dec-23 22:15:07 INFO] ::: >>> Jobs: 70 of 123 complete                        Load avg: 4.73, 7.71, 8.64
+[30-Dec-23 22:15:07 INFO] ::: >>> Jobs: 70 of 123 complete, 1 running             Load avg: 4.73, 7.71, 8.64
+[30-Dec-23 22:15:07 INFO] ::: >>> Emerging (71 of 123) app-editors/vim-9.0.2092::gentoo
+[30-Dec-23 22:15:07 INFO] ::: >>> Jobs: 70 of 123 complete, 1 running             Load avg: 4.73, 7.71, 8.64
+[30-Dec-23 22:15:37 INFO] ::: >>> Installing (71 of 123) app-editors/vim-9.0.2092::gentoo
+[30-Dec-23 22:15:37 INFO] ::: >>> Jobs: 70 of 123 complete, 1 running             Load avg: 8.30, 8.29, 8.81
+[30-Dec-23 22:15:37 INFO] ::: >>> Jobs: 70 of 123 complete                        Load avg: 8.30, 8.29, 8.81
+[30-Dec-23 22:15:44 INFO] ::: >>> Completed (71 of 123) app-editors/vim-9.0.2092::gentoo
+[30-Dec-23 22:15:44 INFO] ::: >>> Jobs: 70 of 123 complete                        Load avg: 7.64, 8.16, 8.76
+[30-Dec-23 22:15:44 INFO] ::: >>> Jobs: 71 of 123 complete                        Load avg: 7.64, 8.16, 8.76
+[30-Dec-23 22:15:44 INFO] ::: >>> Jobs: 71 of 123 complete, 1 running             Load avg: 7.64, 8.16, 8.76
+[30-Dec-23 22:15:44 INFO] ::: >>> Emerging (72 of 123) sys-libs/binutils-libs-2.41-r2::gentoo
+[30-Dec-23 22:15:44 INFO] ::: >>> Jobs: 71 of 123 complete, 1 running             Load avg: 7.64, 8.16, 8.76
+[30-Dec-23 22:16:18 INFO] ::: >>> Installing (72 of 123) sys-libs/binutils-libs-2.41-r2::gentoo
+[30-Dec-23 22:16:18 INFO] ::: >>> Jobs: 71 of 123 complete, 1 running             Load avg: 6.14, 7.71, 8.59
+[30-Dec-23 22:16:18 INFO] ::: >>> Jobs: 71 of 123 complete                        Load avg: 6.14, 7.71, 8.59
+[30-Dec-23 22:16:22 INFO] ::: >>> Completed (72 of 123) sys-libs/binutils-libs-2.41-r2::gentoo
+[30-Dec-23 22:16:22 INFO] ::: >>> Jobs: 71 of 123 complete                        Load avg: 5.73, 7.60, 8.55
+[30-Dec-23 22:16:22 INFO] ::: >>> Jobs: 72 of 123 complete                        Load avg: 5.73, 7.60, 8.55
+[30-Dec-23 22:16:22 INFO] ::: >>> Jobs: 72 of 123 complete, 1 running             Load avg: 5.73, 7.60, 8.55
+[30-Dec-23 22:16:22 INFO] ::: >>> Emerging (73 of 123) dev-util/dialog-1.3.20231002::gentoo
+[30-Dec-23 22:16:22 INFO] ::: >>> Jobs: 72 of 123 complete, 1 running             Load avg: 5.73, 7.60, 8.55
+[30-Dec-23 22:16:32 INFO] ::: >>> Installing (73 of 123) dev-util/dialog-1.3.20231002::gentoo
+[30-Dec-23 22:16:32 INFO] ::: >>> Jobs: 72 of 123 complete, 1 running             Load avg: 5.00, 7.38, 8.47
+[30-Dec-23 22:16:32 INFO] ::: >>> Jobs: 72 of 123 complete                        Load avg: 5.00, 7.38, 8.47
+[30-Dec-23 22:16:35 INFO] ::: >>> Completed (73 of 123) dev-util/dialog-1.3.20231002::gentoo
+[30-Dec-23 22:16:35 INFO] ::: >>> Jobs: 72 of 123 complete                        Load avg: 5.00, 7.38, 8.47
+[30-Dec-23 22:16:35 INFO] ::: >>> Jobs: 73 of 123 complete                        Load avg: 5.00, 7.38, 8.47
+[30-Dec-23 22:16:35 INFO] ::: >>> Jobs: 73 of 123 complete, 1 running             Load avg: 5.00, 7.38, 8.47
+[30-Dec-23 22:16:35 INFO] ::: >>> Emerging (74 of 123) sys-apps/gawk-5.3.0::gentoo
+[30-Dec-23 22:16:35 INFO] ::: >>> Jobs: 73 of 123 complete, 1 running             Load avg: 5.00, 7.38, 8.47
+[30-Dec-23 22:16:51 INFO] ::: >>> Installing (74 of 123) sys-apps/gawk-5.3.0::gentoo
+[30-Dec-23 22:16:51 INFO] ::: >>> Jobs: 73 of 123 complete, 1 running             Load avg: 4.58, 7.13, 8.36
+[30-Dec-23 22:16:51 INFO] ::: >>> Jobs: 73 of 123 complete                        Load avg: 4.58, 7.13, 8.36
+[30-Dec-23 22:16:55 INFO] ::: >>> Completed (74 of 123) sys-apps/gawk-5.3.0::gentoo
+[30-Dec-23 22:16:55 INFO] ::: >>> Jobs: 73 of 123 complete                        Load avg: 4.58, 7.13, 8.36
+[30-Dec-23 22:16:55 INFO] ::: >>> Jobs: 74 of 123 complete                        Load avg: 4.58, 7.13, 8.36
+[30-Dec-23 22:16:55 INFO] ::: >>> Jobs: 74 of 123 complete, 1 running             Load avg: 4.58, 7.13, 8.36
+[30-Dec-23 22:16:55 INFO] ::: >>> Emerging (75 of 123) dev-libs/libksba-1.6.5::gentoo
+[30-Dec-23 22:16:55 INFO] ::: >>> Jobs: 74 of 123 complete, 1 running             Load avg: 4.58, 7.13, 8.36
+[30-Dec-23 22:17:04 INFO] ::: >>> Installing (75 of 123) dev-libs/libksba-1.6.5::gentoo
+[30-Dec-23 22:17:04 INFO] ::: >>> Jobs: 74 of 123 complete, 1 running             Load avg: 4.91, 7.11, 8.34
+[30-Dec-23 22:17:04 INFO] ::: >>> Jobs: 74 of 123 complete                        Load avg: 4.91, 7.11, 8.34
+[30-Dec-23 22:17:08 INFO] ::: >>> Completed (75 of 123) dev-libs/libksba-1.6.5::gentoo
+[30-Dec-23 22:17:08 INFO] ::: >>> Jobs: 74 of 123 complete                        Load avg: 4.60, 7.01, 8.30
+[30-Dec-23 22:17:08 INFO] ::: >>> Jobs: 75 of 123 complete                        Load avg: 4.60, 7.01, 8.30
+[30-Dec-23 22:17:08 INFO] ::: >>> Jobs: 75 of 123 complete, 1 running             Load avg: 4.60, 7.01, 8.30
+[30-Dec-23 22:17:08 INFO] ::: >>> Emerging (76 of 123) app-arch/libarchive-3.7.2::gentoo
+[30-Dec-23 22:17:08 INFO] ::: >>> Jobs: 75 of 123 complete, 1 running             Load avg: 4.60, 7.01, 8.30
+[30-Dec-23 22:17:30 INFO] ::: >>> Installing (76 of 123) app-arch/libarchive-3.7.2::gentoo
+[30-Dec-23 22:17:30 INFO] ::: >>> Jobs: 75 of 123 complete, 1 running             Load avg: 5.48, 7.02, 8.27
+[30-Dec-23 22:17:30 INFO] ::: >>> Jobs: 75 of 123 complete                        Load avg: 5.48, 7.02, 8.27
+[30-Dec-23 22:17:34 INFO] ::: >>> Completed (76 of 123) app-arch/libarchive-3.7.2::gentoo
+[30-Dec-23 22:17:34 INFO] ::: >>> Jobs: 75 of 123 complete                        Load avg: 5.12, 6.92, 8.24
+[30-Dec-23 22:17:34 INFO] ::: >>> Jobs: 76 of 123 complete                        Load avg: 5.12, 6.92, 8.24
+[30-Dec-23 22:17:34 INFO] ::: >>> Jobs: 76 of 123 complete, 1 running             Load avg: 5.12, 6.92, 8.24
+[30-Dec-23 22:17:34 INFO] ::: >>> Emerging (77 of 123) sys-apps/groff-1.23.0::gentoo
+[30-Dec-23 22:17:34 INFO] ::: >>> Jobs: 76 of 123 complete, 1 running             Load avg: 5.12, 6.92, 8.24
+[30-Dec-23 22:18:02 INFO] ::: >>> Installing (77 of 123) sys-apps/groff-1.23.0::gentoo
+[30-Dec-23 22:18:02 INFO] ::: >>> Jobs: 76 of 123 complete, 1 running             Load avg: 6.26, 7.02, 8.23
+[30-Dec-23 22:18:02 INFO] ::: >>> Jobs: 76 of 123 complete                        Load avg: 6.26, 7.02, 8.23
+[30-Dec-23 22:18:06 INFO] ::: >>> Completed (77 of 123) sys-apps/groff-1.23.0::gentoo
+[30-Dec-23 22:18:06 INFO] ::: >>> Jobs: 76 of 123 complete                        Load avg: 6.26, 7.02, 8.23
+[30-Dec-23 22:18:06 INFO] ::: >>> Jobs: 77 of 123 complete                        Load avg: 6.26, 7.02, 8.23
+[30-Dec-23 22:18:06 INFO] ::: >>> Jobs: 77 of 123 complete, 1 running             Load avg: 6.26, 7.02, 8.23
+[30-Dec-23 22:18:06 INFO] ::: >>> Emerging (78 of 123) sys-process/lsof-4.99.0::gentoo
+[30-Dec-23 22:18:06 INFO] ::: >>> Jobs: 77 of 123 complete, 1 running             Load avg: 6.26, 7.02, 8.23
+[30-Dec-23 22:18:13 INFO] ::: >>> Installing (78 of 123) sys-process/lsof-4.99.0::gentoo
+[30-Dec-23 22:18:13 INFO] ::: >>> Jobs: 77 of 123 complete, 1 running             Load avg: 5.85, 6.91, 8.18
+[30-Dec-23 22:18:13 INFO] ::: >>> Jobs: 77 of 123 complete                        Load avg: 5.85, 6.91, 8.18
+[30-Dec-23 22:18:16 INFO] ::: >>> Completed (78 of 123) sys-process/lsof-4.99.0::gentoo
+[30-Dec-23 22:18:16 INFO] ::: >>> Jobs: 77 of 123 complete                        Load avg: 5.46, 6.81, 8.14
+[30-Dec-23 22:18:16 INFO] ::: >>> Jobs: 78 of 123 complete                        Load avg: 5.46, 6.81, 8.14
+[30-Dec-23 22:18:16 INFO] ::: >>> Jobs: 78 of 123 complete, 1 running             Load avg: 5.46, 6.81, 8.14
+[30-Dec-23 22:18:16 INFO] ::: >>> Emerging (79 of 123) dev-lang/vala-0.56.14::gentoo
+[30-Dec-23 22:18:16 INFO] ::: >>> Jobs: 78 of 123 complete, 1 running             Load avg: 5.46, 6.81, 8.14
+[30-Dec-23 22:18:51 INFO] ::: >>> Installing (79 of 123) dev-lang/vala-0.56.14::gentoo
+[30-Dec-23 22:18:51 INFO] ::: >>> Jobs: 78 of 123 complete, 1 running             Load avg: 8.25, 7.38, 8.29
+[30-Dec-23 22:18:51 INFO] ::: >>> Jobs: 78 of 123 complete                        Load avg: 8.25, 7.38, 8.29
+[30-Dec-23 22:18:54 INFO] ::: >>> Completed (79 of 123) dev-lang/vala-0.56.14::gentoo
+[30-Dec-23 22:18:54 INFO] ::: >>> Jobs: 78 of 123 complete                        Load avg: 7.59, 7.26, 8.24
+[30-Dec-23 22:18:54 INFO] ::: >>> Jobs: 79 of 123 complete                        Load avg: 7.59, 7.26, 8.24
+[30-Dec-23 22:18:54 INFO] ::: >>> Jobs: 79 of 123 complete, 1 running             Load avg: 7.59, 7.26, 8.24
+[30-Dec-23 22:18:54 INFO] ::: >>> Emerging (80 of 123) dev-libs/libical-3.0.17::gentoo
+[30-Dec-23 22:18:54 INFO] ::: >>> Jobs: 79 of 123 complete, 1 running             Load avg: 7.59, 7.26, 8.24
+[30-Dec-23 22:19:06 INFO] ::: >>> Installing (80 of 123) dev-libs/libical-3.0.17::gentoo
+[30-Dec-23 22:19:06 INFO] ::: >>> Jobs: 79 of 123 complete, 1 running             Load avg: 6.58, 7.05, 8.16
+[30-Dec-23 22:19:06 INFO] ::: >>> Jobs: 79 of 123 complete                        Load avg: 6.21, 6.97, 8.13
+[30-Dec-23 22:19:10 INFO] ::: >>> Completed (80 of 123) dev-libs/libical-3.0.17::gentoo
+[30-Dec-23 22:19:10 INFO] ::: >>> Jobs: 79 of 123 complete                        Load avg: 6.21, 6.97, 8.13
+[30-Dec-23 22:19:10 INFO] ::: >>> Jobs: 80 of 123 complete                        Load avg: 6.21, 6.97, 8.13
+[30-Dec-23 22:19:10 INFO] ::: >>> Jobs: 80 of 123 complete, 1 running             Load avg: 6.21, 6.97, 8.13
+[30-Dec-23 22:19:10 INFO] ::: >>> Emerging (81 of 123) dev-python/hatchling-1.20.0::gentoo
+[30-Dec-23 22:19:10 INFO] ::: >>> Jobs: 80 of 123 complete, 1 running             Load avg: 6.21, 6.97, 8.13
+[30-Dec-23 22:19:13 INFO] ::: >>> Installing (81 of 123) dev-python/hatchling-1.20.0::gentoo
+[30-Dec-23 22:19:13 INFO] ::: >>> Jobs: 80 of 123 complete, 1 running             Load avg: 5.79, 6.87, 8.09
+[30-Dec-23 22:19:13 INFO] ::: >>> Jobs: 80 of 123 complete                        Load avg: 5.79, 6.87, 8.09
+[30-Dec-23 22:19:16 INFO] ::: >>> Completed (81 of 123) dev-python/hatchling-1.20.0::gentoo
+[30-Dec-23 22:19:16 INFO] ::: >>> Jobs: 80 of 123 complete                        Load avg: 5.79, 6.87, 8.09
+[30-Dec-23 22:19:16 INFO] ::: >>> Jobs: 81 of 123 complete                        Load avg: 5.79, 6.87, 8.09
+[30-Dec-23 22:19:16 INFO] ::: >>> Jobs: 81 of 123 complete, 1 running             Load avg: 5.79, 6.87, 8.09
+[30-Dec-23 22:19:16 INFO] ::: >>> Emerging (82 of 123) dev-util/gdbus-codegen-2.78.3::gentoo
+[30-Dec-23 22:19:16 INFO] ::: >>> Jobs: 81 of 123 complete, 1 running             Load avg: 5.79, 6.87, 8.09
+[30-Dec-23 22:19:19 INFO] ::: >>> Installing (82 of 123) dev-util/gdbus-codegen-2.78.3::gentoo
+[30-Dec-23 22:19:19 INFO] ::: >>> Jobs: 81 of 123 complete, 1 running             Load avg: 5.49, 6.79, 8.06
+[30-Dec-23 22:19:19 INFO] ::: >>> Jobs: 81 of 123 complete                        Load avg: 5.49, 6.79, 8.06
+[30-Dec-23 22:19:22 INFO] ::: >>> Completed (82 of 123) dev-util/gdbus-codegen-2.78.3::gentoo
+[30-Dec-23 22:19:22 INFO] ::: >>> Jobs: 81 of 123 complete                        Load avg: 5.13, 6.69, 8.02
+[30-Dec-23 22:19:22 INFO] ::: >>> Jobs: 82 of 123 complete                        Load avg: 5.13, 6.69, 8.02
+[30-Dec-23 22:19:22 INFO] ::: >>> Jobs: 82 of 123 complete, 1 running             Load avg: 5.13, 6.69, 8.02
+[30-Dec-23 22:19:22 INFO] ::: >>> Emerging (83 of 123) dev-libs/glib-2.78.3::gentoo
+[30-Dec-23 22:19:22 INFO] ::: >>> Jobs: 82 of 123 complete, 1 running             Load avg: 5.13, 6.69, 8.02
+[30-Dec-23 22:19:55 INFO] ::: >>> Installing (83 of 123) dev-libs/glib-2.78.3::gentoo
+[30-Dec-23 22:19:55 INFO] ::: >>> Jobs: 82 of 123 complete, 1 running             Load avg: 9.03, 7.41, 8.21
+[30-Dec-23 22:19:55 INFO] ::: >>> Jobs: 82 of 123 complete                        Load avg: 9.03, 7.41, 8.21
+[30-Dec-23 22:19:58 INFO] ::: >>> Completed (83 of 123) dev-libs/glib-2.78.3::gentoo
+[30-Dec-23 22:19:58 INFO] ::: >>> Jobs: 82 of 123 complete                        Load avg: 8.38, 7.30, 8.17
+[30-Dec-23 22:19:58 INFO] ::: >>> Jobs: 83 of 123 complete                        Load avg: 8.38, 7.30, 8.17
+[30-Dec-23 22:19:58 INFO] ::: >>> Jobs: 83 of 123 complete, 1 running             Load avg: 8.38, 7.30, 8.17
+[30-Dec-23 22:19:58 INFO] ::: >>> Emerging (84 of 123) dev-lang/python-3.11.7::gentoo
+[30-Dec-23 22:19:58 INFO] ::: >>> Jobs: 83 of 123 complete, 1 running             Load avg: 8.38, 7.30, 8.17
+[30-Dec-23 22:21:12 INFO] ::: >>> Installing (84 of 123) dev-lang/python-3.11.7::gentoo
+[30-Dec-23 22:21:12 INFO] ::: >>> Jobs: 83 of 123 complete, 1 running             Load avg: 6.66, 7.13, 8.05
+[30-Dec-23 22:21:12 INFO] ::: >>> Jobs: 83 of 123 complete                        Load avg: 6.66, 7.13, 8.05
+[30-Dec-23 22:21:17 INFO] ::: >>> Completed (84 of 123) dev-lang/python-3.11.7::gentoo
+[30-Dec-23 22:21:17 INFO] ::: >>> Jobs: 83 of 123 complete                        Load avg: 6.21, 7.02, 8.01
+[30-Dec-23 22:21:17 INFO] ::: >>> Jobs: 84 of 123 complete                        Load avg: 6.21, 7.02, 8.01
+[30-Dec-23 22:21:17 INFO] ::: >>> Jobs: 84 of 123 complete, 1 running             Load avg: 6.21, 7.02, 8.01
+[30-Dec-23 22:21:17 INFO] ::: >>> Emerging (85 of 123) sys-apps/systemd-254.7::gentoo
+[30-Dec-23 22:21:17 INFO] ::: >>> Jobs: 84 of 123 complete, 1 running             Load avg: 6.21, 7.02, 8.01
+[30-Dec-23 22:22:57 INFO] ::: >>> Installing (85 of 123) sys-apps/systemd-254.7::gentoo
+[30-Dec-23 22:22:57 INFO] ::: >>> Jobs: 84 of 123 complete, 1 running             Load avg: 12.7, 9.4, 8.8
+[30-Dec-23 22:22:58 INFO] ::: >>> Jobs: 84 of 123 complete                        Load avg: 12.7, 9.4, 8.8
+[30-Dec-23 22:23:02 INFO] ::: >>> Completed (85 of 123) sys-apps/systemd-254.7::gentoo
+[30-Dec-23 22:23:02 INFO] ::: >>> Jobs: 84 of 123 complete                        Load avg: 11.8, 9.2, 8.7
+[30-Dec-23 22:23:02 INFO] ::: >>> Jobs: 85 of 123 complete                        Load avg: 11.8, 9.2, 8.7
+[30-Dec-23 22:23:02 INFO] ::: >>> Jobs: 85 of 123 complete, 1 running             Load avg: 11.8, 9.2, 8.7
+[30-Dec-23 22:23:02 INFO] ::: >>> Emerging (86 of 123) net-wireless/bluez-5.70-r1::gentoo
+[30-Dec-23 22:23:02 INFO] ::: >>> Jobs: 85 of 123 complete, 1 running             Load avg: 11.8, 9.2, 8.7
+[30-Dec-23 22:23:33 INFO] ::: >>> Installing (86 of 123) net-wireless/bluez-5.70-r1::gentoo
+[30-Dec-23 22:23:33 INFO] ::: >>> Jobs: 85 of 123 complete, 1 running             Load avg: 12.8, 9.7, 8.9
+[30-Dec-23 22:23:33 INFO] ::: >>> Jobs: 85 of 123 complete                        Load avg: 12.8, 9.7, 8.9
+[30-Dec-23 22:23:36 INFO] ::: >>> Completed (86 of 123) net-wireless/bluez-5.70-r1::gentoo
+[30-Dec-23 22:23:36 INFO] ::: >>> Jobs: 85 of 123 complete                        Load avg: 11.9, 9.6, 8.9
+[30-Dec-23 22:23:36 INFO] ::: >>> Jobs: 86 of 123 complete                        Load avg: 11.9, 9.6, 8.9
+[30-Dec-23 22:23:36 INFO] ::: >>> Jobs: 86 of 123 complete, 1 running             Load avg: 11.9, 9.6, 8.9
+[30-Dec-23 22:23:36 INFO] ::: >>> Emerging (87 of 123) dev-libs/gobject-introspection-1.78.1::gentoo
+[30-Dec-23 22:23:36 INFO] ::: >>> Jobs: 86 of 123 complete, 1 running             Load avg: 11.9, 9.6, 8.9
+[30-Dec-23 22:23:55 INFO] ::: >>> Installing (87 of 123) dev-libs/gobject-introspection-1.78.1::gentoo
+[30-Dec-23 22:23:55 INFO] ::: >>> Jobs: 86 of 123 complete, 1 running             Load avg: 11.6, 9.6, 8.9
+[30-Dec-23 22:23:55 INFO] ::: >>> Jobs: 86 of 123 complete                        Load avg: 11.6, 9.6, 8.9
+[30-Dec-23 22:23:58 INFO] ::: >>> Completed (87 of 123) dev-libs/gobject-introspection-1.78.1::gentoo
+[30-Dec-23 22:23:58 INFO] ::: >>> Jobs: 86 of 123 complete                        Load avg: 10.7, 9.5, 8.9
+[30-Dec-23 22:23:58 INFO] ::: >>> Jobs: 87 of 123 complete                        Load avg: 10.7, 9.5, 8.9
+[30-Dec-23 22:23:58 INFO] ::: >>> Jobs: 87 of 123 complete, 1 running             Load avg: 10.7, 9.5, 8.9
+[30-Dec-23 22:23:58 INFO] ::: >>> Emerging (88 of 123) sys-apps/portage-3.0.59::gentoo
+[30-Dec-23 22:23:58 INFO] ::: >>> Jobs: 87 of 123 complete, 1 running             Load avg: 10.7, 9.5, 8.9
+[30-Dec-23 22:24:05 INFO] ::: >>> Installing (88 of 123) sys-apps/portage-3.0.59::gentoo
+[30-Dec-23 22:24:05 INFO] ::: >>> Jobs: 87 of 123 complete, 1 running             Load avg: 10.0, 9.4, 8.8
+[30-Dec-23 22:24:05 INFO] ::: >>> Jobs: 87 of 123 complete                        Load avg: 10.0, 9.4, 8.8
+[30-Dec-23 22:24:10 INFO] ::: >>> Completed (88 of 123) sys-apps/portage-3.0.59::gentoo
+[30-Dec-23 22:24:10 INFO] ::: >>> Jobs: 87 of 123 complete                        Load avg: 9.31, 9.24, 8.78
+[30-Dec-23 22:24:10 INFO] ::: >>> Jobs: 88 of 123 complete                        Load avg: 9.31, 9.24, 8.78
+[30-Dec-23 22:24:10 INFO] ::: >>> Jobs: 88 of 123 complete, 1 running             Load avg: 9.31, 9.24, 8.78
+[30-Dec-23 22:24:10 INFO] ::: >>> Emerging (89 of 123) net-print/cups-filters-1.28.17-r2::gentoo
+[30-Dec-23 22:24:10 INFO] ::: >>> Jobs: 88 of 123 complete, 1 running             Load avg: 9.31, 9.24, 8.78
+[30-Dec-23 22:24:27 INFO] ::: >>> Installing (89 of 123) net-print/cups-filters-1.28.17-r2::gentoo
+[30-Dec-23 22:24:27 INFO] ::: >>> Jobs: 88 of 123 complete, 1 running             Load avg: 9.65, 9.32, 8.81
+[30-Dec-23 22:24:27 INFO] ::: >>> Jobs: 88 of 123 complete                        Load avg: 9.65, 9.32, 8.81
+[30-Dec-23 22:24:30 INFO] ::: >>> Completed (89 of 123) net-print/cups-filters-1.28.17-r2::gentoo
+[30-Dec-23 22:24:30 INFO] ::: >>> Jobs: 88 of 123 complete                        Load avg: 9.65, 9.32, 8.81
+[30-Dec-23 22:24:30 INFO] ::: >>> Jobs: 89 of 123 complete                        Load avg: 9.65, 9.32, 8.81
+[30-Dec-23 22:24:30 INFO] ::: >>> Jobs: 89 of 123 complete, 1 running             Load avg: 9.65, 9.32, 8.81
+[30-Dec-23 22:24:30 INFO] ::: >>> Emerging (90 of 123) dev-util/glib-utils-2.78.3::gentoo
+[30-Dec-23 22:24:30 INFO] ::: >>> Jobs: 89 of 123 complete, 1 running             Load avg: 9.65, 9.32, 8.81
+[30-Dec-23 22:24:33 INFO] ::: >>> Installing (90 of 123) dev-util/glib-utils-2.78.3::gentoo
+[30-Dec-23 22:24:33 INFO] ::: >>> Jobs: 89 of 123 complete, 1 running             Load avg: 8.96, 9.18, 8.77
+[30-Dec-23 22:24:33 INFO] ::: >>> Jobs: 89 of 123 complete                        Load avg: 8.96, 9.18, 8.77
+[30-Dec-23 22:24:36 INFO] ::: >>> Completed (90 of 123) dev-util/glib-utils-2.78.3::gentoo
+[30-Dec-23 22:24:36 INFO] ::: >>> Jobs: 89 of 123 complete                        Load avg: 8.96, 9.18, 8.77
+[30-Dec-23 22:24:36 INFO] ::: >>> Jobs: 90 of 123 complete                        Load avg: 8.96, 9.18, 8.77
+[30-Dec-23 22:24:36 INFO] ::: >>> Jobs: 90 of 123 complete, 1 running             Load avg: 8.96, 9.18, 8.77
+[30-Dec-23 22:24:36 INFO] ::: >>> Emerging (91 of 123) x11-base/xorg-server-21.1.10-r1::gentoo
+[30-Dec-23 22:24:36 INFO] ::: >>> Jobs: 90 of 123 complete, 1 running             Load avg: 8.96, 9.18, 8.77
+[30-Dec-23 22:25:13 INFO] ::: >>> Installing (91 of 123) x11-base/xorg-server-21.1.10-r1::gentoo
+[30-Dec-23 22:25:13 INFO] ::: >>> Jobs: 90 of 123 complete, 1 running             Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:13 INFO] ::: >>> Jobs: 90 of 123 complete                        Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:16 INFO] ::: >>> Completed (91 of 123) x11-base/xorg-server-21.1.10-r1::gentoo
+[30-Dec-23 22:25:16 INFO] ::: >>> Jobs: 90 of 123 complete                        Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:16 INFO] ::: >>> Jobs: 91 of 123 complete                        Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:16 INFO] ::: >>> Jobs: 91 of 123 complete, 1 running             Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:16 INFO] ::: >>> Emerging (92 of 123) net-wireless/iwd-2.8-r2::gentoo
+[30-Dec-23 22:25:16 INFO] ::: >>> Jobs: 91 of 123 complete, 1 running             Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:25 INFO] ::: >>> Installing (92 of 123) net-wireless/iwd-2.8-r2::gentoo
+[30-Dec-23 22:25:25 INFO] ::: >>> Jobs: 91 of 123 complete, 1 running             Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:25 INFO] ::: >>> Jobs: 91 of 123 complete                        Load avg: 12.1, 10.0, 9.1
+[30-Dec-23 22:25:29 INFO] ::: >>> Completed (92 of 123) net-wireless/iwd-2.8-r2::gentoo
+[30-Dec-23 22:25:29 INFO] ::: >>> Jobs: 91 of 123 complete                        Load avg: 11.2, 9.9, 9.0
+[30-Dec-23 22:25:29 INFO] ::: >>> Jobs: 92 of 123 complete                        Load avg: 11.2, 9.9, 9.0
+[30-Dec-23 22:25:29 INFO] ::: >>> Jobs: 92 of 123 complete, 1 running             Load avg: 11.2, 9.9, 9.0
+[30-Dec-23 22:25:29 INFO] ::: >>> Emerging (93 of 123) sys-kernel/dracut-059-r7::gentoo
+[30-Dec-23 22:25:29 INFO] ::: >>> Jobs: 92 of 123 complete, 1 running             Load avg: 11.2, 9.9, 9.0
+[30-Dec-23 22:25:34 INFO] ::: >>> Installing (93 of 123) sys-kernel/dracut-059-r7::gentoo
+[30-Dec-23 22:25:34 INFO] ::: >>> Jobs: 92 of 123 complete, 1 running             Load avg: 10.4, 9.7, 9.0
+[30-Dec-23 22:25:34 INFO] ::: >>> Jobs: 92 of 123 complete                        Load avg: 10.4, 9.7, 9.0
+[30-Dec-23 22:25:39 INFO] ::: >>> Completed (93 of 123) sys-kernel/dracut-059-r7::gentoo
+[30-Dec-23 22:25:39 INFO] ::: >>> Jobs: 92 of 123 complete                        Load avg: 9.63, 9.59, 8.95
+[30-Dec-23 22:25:39 INFO] ::: >>> Jobs: 93 of 123 complete                        Load avg: 9.63, 9.59, 8.95
+[30-Dec-23 22:25:39 INFO] ::: >>> Jobs: 93 of 123 complete, 1 running             Load avg: 9.63, 9.59, 8.95
+[30-Dec-23 22:25:39 INFO] ::: >>> Emerging (94 of 123) dev-python/jaraco-text-3.12.0::gentoo
+[30-Dec-23 22:25:39 INFO] ::: >>> Jobs: 93 of 123 complete, 1 running             Load avg: 9.63, 9.59, 8.95
+[30-Dec-23 22:25:42 INFO] ::: >>> Installing (94 of 123) dev-python/jaraco-text-3.12.0::gentoo
+[30-Dec-23 22:25:42 INFO] ::: >>> Jobs: 93 of 123 complete, 1 running             Load avg: 9.18, 9.49, 8.92
+[30-Dec-23 22:25:42 INFO] ::: >>> Jobs: 93 of 123 complete                        Load avg: 9.18, 9.49, 8.92
+[30-Dec-23 22:25:45 INFO] ::: >>> Completed (94 of 123) dev-python/jaraco-text-3.12.0::gentoo
+[30-Dec-23 22:25:45 INFO] ::: >>> Jobs: 93 of 123 complete                        Load avg: 9.18, 9.49, 8.92
+[30-Dec-23 22:25:45 INFO] ::: >>> Jobs: 94 of 123 complete                        Load avg: 9.18, 9.49, 8.92
+[30-Dec-23 22:25:45 INFO] ::: >>> Jobs: 94 of 123 complete, 1 running             Load avg: 9.18, 9.49, 8.92
+[30-Dec-23 22:25:45 INFO] ::: >>> Emerging (95 of 123) dev-python/platformdirs-4.1.0::gentoo
+[30-Dec-23 22:25:45 INFO] ::: >>> Jobs: 94 of 123 complete, 1 running             Load avg: 9.18, 9.49, 8.92
+[30-Dec-23 22:25:47 INFO] ::: >>> Installing (95 of 123) dev-python/platformdirs-4.1.0::gentoo
+[30-Dec-23 22:25:47 INFO] ::: >>> Jobs: 94 of 123 complete, 1 running             Load avg: 8.52, 9.35, 8.88
+[30-Dec-23 22:25:48 INFO] ::: >>> Jobs: 94 of 123 complete                        Load avg: 8.52, 9.35, 8.88
+[30-Dec-23 22:25:51 INFO] ::: >>> Completed (95 of 123) dev-python/platformdirs-4.1.0::gentoo
+[30-Dec-23 22:25:51 INFO] ::: >>> Jobs: 94 of 123 complete                        Load avg: 8.52, 9.35, 8.88
+[30-Dec-23 22:25:51 INFO] ::: >>> Jobs: 95 of 123 complete                        Load avg: 8.52, 9.35, 8.88
+[30-Dec-23 22:25:51 INFO] ::: >>> Jobs: 95 of 123 complete, 1 running             Load avg: 8.52, 9.35, 8.88
+[30-Dec-23 22:25:51 INFO] ::: >>> Emerging (96 of 123) dev-python/wheel-0.42.0::gentoo
+[30-Dec-23 22:25:51 INFO] ::: >>> Jobs: 95 of 123 complete, 1 running             Load avg: 8.52, 9.35, 8.88
+[30-Dec-23 22:25:54 INFO] ::: >>> Installing (96 of 123) dev-python/wheel-0.42.0::gentoo
+[30-Dec-23 22:25:54 INFO] ::: >>> Jobs: 95 of 123 complete, 1 running             Load avg: 8.16, 9.26, 8.86
+[30-Dec-23 22:25:54 INFO] ::: >>> Jobs: 95 of 123 complete                        Load avg: 8.16, 9.26, 8.86
+[30-Dec-23 22:25:57 INFO] ::: >>> Completed (96 of 123) dev-python/wheel-0.42.0::gentoo
+[30-Dec-23 22:25:57 INFO] ::: >>> Jobs: 95 of 123 complete                        Load avg: 7.58, 9.13, 8.81
+[30-Dec-23 22:25:57 INFO] ::: >>> Jobs: 96 of 123 complete                        Load avg: 7.58, 9.13, 8.81
+[30-Dec-23 22:25:57 INFO] ::: >>> Jobs: 96 of 123 complete, 1 running             Load avg: 7.58, 9.13, 8.81
+[30-Dec-23 22:25:57 INFO] ::: >>> Emerging (97 of 123) dev-python/typing-extensions-4.9.0::gentoo
+[30-Dec-23 22:25:57 INFO] ::: >>> Jobs: 96 of 123 complete, 1 running             Load avg: 7.58, 9.13, 8.81
+[30-Dec-23 22:25:59 INFO] ::: >>> Installing (97 of 123) dev-python/typing-extensions-4.9.0::gentoo
+[30-Dec-23 22:25:59 INFO] ::: >>> Jobs: 96 of 123 complete, 1 running             Load avg: 7.58, 9.13, 8.81
+[30-Dec-23 22:25:59 INFO] ::: >>> Jobs: 96 of 123 complete                        Load avg: 7.58, 9.13, 8.81
+[30-Dec-23 22:26:02 INFO] ::: >>> Completed (97 of 123) dev-python/typing-extensions-4.9.0::gentoo
+[30-Dec-23 22:26:02 INFO] ::: >>> Jobs: 96 of 123 complete                        Load avg: 7.22, 9.02, 8.78
+[30-Dec-23 22:26:02 INFO] ::: >>> Jobs: 97 of 123 complete                        Load avg: 7.22, 9.02, 8.78
+[30-Dec-23 22:26:02 INFO] ::: >>> Jobs: 97 of 123 complete, 1 running             Load avg: 7.22, 9.02, 8.78
+[30-Dec-23 22:26:02 INFO] ::: >>> Emerging (98 of 123) dev-python/pathspec-0.12.1::gentoo
+[30-Dec-23 22:26:02 INFO] ::: >>> Jobs: 97 of 123 complete, 1 running             Load avg: 7.22, 9.02, 8.78
+[30-Dec-23 22:26:05 INFO] ::: >>> Installing (98 of 123) dev-python/pathspec-0.12.1::gentoo
+[30-Dec-23 22:26:05 INFO] ::: >>> Jobs: 97 of 123 complete, 1 running             Load avg: 7.22, 9.02, 8.78
+[30-Dec-23 22:26:05 INFO] ::: >>> Jobs: 97 of 123 complete                        Load avg: 7.22, 9.02, 8.78
+[30-Dec-23 22:26:08 INFO] ::: >>> Completed (98 of 123) dev-python/pathspec-0.12.1::gentoo
+[30-Dec-23 22:26:08 INFO] ::: >>> Jobs: 97 of 123 complete                        Load avg: 6.72, 8.89, 8.74
+[30-Dec-23 22:26:08 INFO] ::: >>> Jobs: 98 of 123 complete                        Load avg: 6.72, 8.89, 8.74
+[30-Dec-23 22:26:08 INFO] ::: >>> Jobs: 98 of 123 complete, 1 running             Load avg: 6.72, 8.89, 8.74
+[30-Dec-23 22:26:08 INFO] ::: >>> Emerging (99 of 123) dev-python/cython-3.0.6::gentoo
+[30-Dec-23 22:26:08 INFO] ::: >>> Jobs: 98 of 123 complete, 1 running             Load avg: 6.72, 8.89, 8.74
+[30-Dec-23 22:26:58 INFO] ::: >>> Installing (99 of 123) dev-python/cython-3.0.6::gentoo
+[30-Dec-23 22:26:58 INFO] ::: >>> Jobs: 98 of 123 complete, 1 running             Load avg: 4.77, 8.06, 8.47
+[30-Dec-23 22:26:58 INFO] ::: >>> Jobs: 98 of 123 complete                        Load avg: 4.77, 8.06, 8.47
+[30-Dec-23 22:27:01 INFO] ::: >>> Completed (99 of 123) dev-python/cython-3.0.6::gentoo
+[30-Dec-23 22:27:01 INFO] ::: >>> Jobs: 98 of 123 complete                        Load avg: 4.77, 8.06, 8.47
+[30-Dec-23 22:27:01 INFO] ::: >>> Jobs: 99 of 123 complete                        Load avg: 4.77, 8.06, 8.47
+[30-Dec-23 22:27:01 INFO] ::: >>> Jobs: 99 of 123 complete, 1 running             Load avg: 4.77, 8.06, 8.47
+[30-Dec-23 22:27:01 INFO] ::: >>> Emerging (100 of 123) net-libs/glib-networking-2.78.0::gentoo
+[30-Dec-23 22:27:01 INFO] ::: >>> Jobs: 99 of 123 complete, 1 running             Load avg: 4.77, 8.06, 8.47
+[30-Dec-23 22:27:05 INFO] ::: >>> Installing (100 of 123) net-libs/glib-networking-2.78.0::gentoo
+[30-Dec-23 22:27:05 INFO] ::: >>> Jobs: 99 of 123 complete, 1 running             Load avg: 4.54, 7.96, 8.43
+[30-Dec-23 22:27:06 INFO] ::: >>> Jobs: 99 of 123 complete                        Load avg: 4.54, 7.96, 8.43
+[30-Dec-23 22:27:09 INFO] ::: >>> Completed (100 of 123) net-libs/glib-networking-2.78.0::gentoo
+[30-Dec-23 22:27:09 INFO] ::: >>> Jobs: 99 of 123 complete                        Load avg: 4.26, 7.85, 8.39
+[30-Dec-23 22:27:09 INFO] ::: >>> Jobs: 100 of 123 complete                       Load avg: 4.26, 7.85, 8.39
+[30-Dec-23 22:27:09 INFO] ::: >>> Jobs: 100 of 123 complete, 1 running            Load avg: 4.26, 7.85, 8.39
+[30-Dec-23 22:27:09 INFO] ::: >>> Emerging (101 of 123) dev-lang/spidermonkey-102.15.0::gentoo
+[30-Dec-23 22:27:09 INFO] ::: >>> Jobs: 100 of 123 complete, 1 running            Load avg: 4.26, 7.85, 8.39
+[30-Dec-23 22:30:55 INFO] ::: >>> Installing (101 of 123) dev-lang/spidermonkey-102.15.0::gentoo
+[30-Dec-23 22:30:55 INFO] ::: >>> Jobs: 100 of 123 complete, 1 running            Load avg: 13.9, 12.1, 10.0
+[30-Dec-23 22:30:55 INFO] ::: >>> Jobs: 100 of 123 complete                       Load avg: 13.9, 12.1, 10.0
+[30-Dec-23 22:31:01 INFO] ::: >>> Completed (101 of 123) dev-lang/spidermonkey-102.15.0::gentoo
+[30-Dec-23 22:31:01 INFO] ::: >>> Jobs: 100 of 123 complete                       Load avg: 12.8, 11.9, 10.0
+[30-Dec-23 22:31:01 INFO] ::: >>> Jobs: 101 of 123 complete                       Load avg: 12.8, 11.9, 10.0
+[30-Dec-23 22:31:01 INFO] ::: >>> Jobs: 101 of 123 complete, 1 running            Load avg: 12.8, 11.9, 10.0
+[30-Dec-23 22:31:01 INFO] ::: >>> Emerging (102 of 123) dev-cpp/glibmm-2.78.0::gentoo
+[30-Dec-23 22:31:01 INFO] ::: >>> Jobs: 101 of 123 complete, 1 running            Load avg: 12.8, 11.9, 10.0
+[30-Dec-23 22:31:55 INFO] ::: >>> Installing (102 of 123) dev-cpp/glibmm-2.78.0::gentoo
+[30-Dec-23 22:31:55 INFO] ::: >>> Jobs: 101 of 123 complete, 1 running            Load avg: 16.4, 13.0, 10.5
+[30-Dec-23 22:31:55 INFO] ::: >>> Jobs: 101 of 123 complete                       Load avg: 16.4, 13.0, 10.5
+[30-Dec-23 22:31:58 INFO] ::: >>> Completed (102 of 123) dev-cpp/glibmm-2.78.0::gentoo
+[30-Dec-23 22:31:58 INFO] ::: >>> Jobs: 101 of 123 complete                       Load avg: 15.2, 12.8, 10.4
+[30-Dec-23 22:31:58 INFO] ::: >>> Jobs: 102 of 123 complete                       Load avg: 15.2, 12.8, 10.4
+[30-Dec-23 22:31:58 INFO] ::: >>> Jobs: 102 of 123 complete, 1 running            Load avg: 15.2, 12.8, 10.4
+[30-Dec-23 22:31:58 INFO] ::: >>> Emerging (103 of 123) dev-python/hatch-vcs-0.4.0::gentoo
+[30-Dec-23 22:31:58 INFO] ::: >>> Jobs: 102 of 123 complete, 1 running            Load avg: 15.2, 12.8, 10.4
+[30-Dec-23 22:32:01 INFO] ::: >>> Installing (103 of 123) dev-python/hatch-vcs-0.4.0::gentoo
+[30-Dec-23 22:32:01 INFO] ::: >>> Jobs: 102 of 123 complete, 1 running            Load avg: 15.2, 12.8, 10.4
+[30-Dec-23 22:32:01 INFO] ::: >>> Jobs: 102 of 123 complete                       Load avg: 15.2, 12.8, 10.4
+[30-Dec-23 22:32:04 INFO] ::: >>> Completed (103 of 123) dev-python/hatch-vcs-0.4.0::gentoo
+[30-Dec-23 22:32:04 INFO] ::: >>> Jobs: 102 of 123 complete                       Load avg: 14.1, 12.6, 10.4
+[30-Dec-23 22:32:04 INFO] ::: >>> Jobs: 103 of 123 complete                       Load avg: 14.1, 12.6, 10.4
+[30-Dec-23 22:32:04 INFO] ::: >>> Jobs: 103 of 123 complete, 1 running            Load avg: 14.1, 12.6, 10.4
+[30-Dec-23 22:32:04 INFO] ::: >>> Emerging (104 of 123) dev-python/argcomplete-3.2.1::gentoo
+[30-Dec-23 22:32:04 INFO] ::: >>> Jobs: 103 of 123 complete, 1 running            Load avg: 14.1, 12.6, 10.4
+[30-Dec-23 22:32:08 INFO] ::: >>> Installing (104 of 123) dev-python/argcomplete-3.2.1::gentoo
+[30-Dec-23 22:32:08 INFO] ::: >>> Jobs: 103 of 123 complete, 1 running            Load avg: 13.2, 12.4, 10.3
+[30-Dec-23 22:32:08 INFO] ::: >>> Jobs: 103 of 123 complete                       Load avg: 13.2, 12.4, 10.3
+[30-Dec-23 22:32:11 INFO] ::: >>> Completed (104 of 123) dev-python/argcomplete-3.2.1::gentoo
+[30-Dec-23 22:32:11 INFO] ::: >>> Jobs: 103 of 123 complete                       Load avg: 13.2, 12.4, 10.3
+[30-Dec-23 22:32:11 INFO] ::: >>> Jobs: 104 of 123 complete                       Load avg: 13.2, 12.4, 10.3
+[30-Dec-23 22:32:11 INFO] ::: >>> Jobs: 104 of 123 complete, 1 running            Load avg: 13.2, 12.4, 10.3
+[30-Dec-23 22:32:11 INFO] ::: >>> Emerging (105 of 123) sys-auth/polkit-123::gentoo
+[30-Dec-23 22:32:11 INFO] ::: >>> Jobs: 104 of 123 complete, 1 running            Load avg: 13.2, 12.4, 10.3
+[30-Dec-23 22:32:18 INFO] ::: >>> Installing (105 of 123) sys-auth/polkit-123::gentoo
+[30-Dec-23 22:32:18 INFO] ::: >>> Jobs: 104 of 123 complete, 1 running            Load avg: 11.3, 12.1, 10.2
+[30-Dec-23 22:32:18 INFO] ::: >>> Jobs: 104 of 123 complete                       Load avg: 11.3, 12.1, 10.2
+[30-Dec-23 22:32:21 INFO] ::: >>> Completed (105 of 123) sys-auth/polkit-123::gentoo
+[30-Dec-23 22:32:21 INFO] ::: >>> Jobs: 104 of 123 complete                       Load avg: 11.3, 12.1, 10.2
+[30-Dec-23 22:32:21 INFO] ::: >>> Jobs: 105 of 123 complete                       Load avg: 11.3, 12.1, 10.2
+[30-Dec-23 22:32:21 INFO] ::: >>> Jobs: 105 of 123 complete, 1 running            Load avg: 11.3, 12.1, 10.2
+[30-Dec-23 22:32:21 INFO] ::: >>> Emerging (106 of 123) dev-python/pygobject-3.46.0::gentoo
+[30-Dec-23 22:32:21 INFO] ::: >>> Jobs: 105 of 123 complete, 1 running            Load avg: 11.3, 12.1, 10.2
+[30-Dec-23 22:32:28 INFO] ::: >>> Installing (106 of 123) dev-python/pygobject-3.46.0::gentoo
+[30-Dec-23 22:32:28 INFO] ::: >>> Jobs: 105 of 123 complete, 1 running            Load avg: 9.8, 11.7, 10.1
+[30-Dec-23 22:32:28 INFO] ::: >>> Jobs: 105 of 123 complete                       Load avg: 9.8, 11.7, 10.1
+[30-Dec-23 22:32:31 INFO] ::: >>> Completed (106 of 123) dev-python/pygobject-3.46.0::gentoo
+[30-Dec-23 22:32:31 INFO] ::: >>> Jobs: 105 of 123 complete                       Load avg: 9.8, 11.7, 10.1
+[30-Dec-23 22:32:31 INFO] ::: >>> Jobs: 106 of 123 complete                       Load avg: 9.8, 11.7, 10.1
+[30-Dec-23 22:32:31 INFO] ::: >>> Jobs: 106 of 123 complete, 1 running            Load avg: 9.8, 11.7, 10.1
+[30-Dec-23 22:32:31 INFO] ::: >>> Emerging (107 of 123) x11-drivers/xf86-input-libinput-1.4.0::gentoo
+[30-Dec-23 22:32:31 INFO] ::: >>> Jobs: 106 of 123 complete, 1 running            Load avg: 9.8, 11.7, 10.1
+[30-Dec-23 22:32:38 INFO] ::: >>> Installing (107 of 123) x11-drivers/xf86-input-libinput-1.4.0::gentoo
+[30-Dec-23 22:32:38 INFO] ::: >>> Jobs: 106 of 123 complete, 1 running            Load avg: 8.6, 11.4, 10.0
+[30-Dec-23 22:32:38 INFO] ::: >>> Jobs: 106 of 123 complete                       Load avg: 8.6, 11.4, 10.0
+[30-Dec-23 22:32:41 INFO] ::: >>> Completed (107 of 123) x11-drivers/xf86-input-libinput-1.4.0::gentoo
+[30-Dec-23 22:32:41 INFO] ::: >>> Jobs: 106 of 123 complete                       Load avg: 8.6, 11.4, 10.0
+[30-Dec-23 22:32:41 INFO] ::: >>> Jobs: 107 of 123 complete                       Load avg: 8.6, 11.4, 10.0
+[30-Dec-23 22:32:41 INFO] ::: >>> Jobs: 107 of 123 complete, 1 running            Load avg: 8.6, 11.4, 10.0
+[30-Dec-23 22:32:41 INFO] ::: >>> Emerging (108 of 123) net-libs/webkit-gtk-2.42.3-r410::gentoo
+[30-Dec-23 22:32:41 INFO] ::: >>> Jobs: 107 of 123 complete, 1 running            Load avg: 8.6, 11.4, 10.0
+[31-Dec-23 00:02:54 INFO] ::: >>> Installing (108 of 123) net-libs/webkit-gtk-2.42.3-r410::gentoo
+[31-Dec-23 00:02:54 INFO] ::: >>> Jobs: 107 of 123 complete, 1 running            Load avg: 9.5, 17.1, 19.1
+[31-Dec-23 00:02:54 INFO] ::: >>> Jobs: 107 of 123 complete                       Load avg: 9.5, 17.1, 19.1
+[31-Dec-23 00:03:00 INFO] ::: >>> Completed (108 of 123) net-libs/webkit-gtk-2.42.3-r410::gentoo
+[31-Dec-23 00:03:00 INFO] ::: >>> Jobs: 107 of 123 complete                       Load avg: 8.3, 16.6, 18.9
+[31-Dec-23 00:03:00 INFO] ::: >>> Jobs: 108 of 123 complete                       Load avg: 8.3, 16.6, 18.9
+[31-Dec-23 00:03:00 INFO] ::: >>> Jobs: 108 of 123 complete, 1 running            Load avg: 8.3, 16.6, 18.9
+[31-Dec-23 00:03:00 INFO] ::: >>> Emerging (109 of 123) x11-drivers/xf86-video-amdgpu-23.0.0::gentoo
+[31-Dec-23 00:03:00 INFO] ::: >>> Jobs: 108 of 123 complete, 1 running            Load avg: 8.3, 16.6, 18.9
+[31-Dec-23 00:03:07 INFO] ::: >>> Installing (109 of 123) x11-drivers/xf86-video-amdgpu-23.0.0::gentoo
+[31-Dec-23 00:03:07 INFO] ::: >>> Jobs: 108 of 123 complete, 1 running            Load avg: 7.8, 16.3, 18.8
+[31-Dec-23 00:03:07 INFO] ::: >>> Jobs: 108 of 123 complete                       Load avg: 7.8, 16.3, 18.8
+[31-Dec-23 00:03:10 INFO] ::: >>> Completed (109 of 123) x11-drivers/xf86-video-amdgpu-23.0.0::gentoo
+[31-Dec-23 00:03:10 INFO] ::: >>> Jobs: 108 of 123 complete                       Load avg: 7.8, 16.3, 18.8
+[31-Dec-23 00:03:10 INFO] ::: >>> Jobs: 109 of 123 complete                       Load avg: 7.8, 16.3, 18.8
+[31-Dec-23 00:03:10 INFO] ::: >>> Jobs: 109 of 123 complete, 1 running            Load avg: 7.8, 16.3, 18.8
+[31-Dec-23 00:03:10 INFO] ::: >>> Emerging (110 of 123) x11-drivers/xf86-video-ati-22.0.0::gentoo
+[31-Dec-23 00:03:10 INFO] ::: >>> Jobs: 109 of 123 complete, 1 running            Load avg: 7.8, 16.3, 18.8
+[31-Dec-23 00:03:19 INFO] ::: >>> Installing (110 of 123) x11-drivers/xf86-video-ati-22.0.0::gentoo
+[31-Dec-23 00:03:19 INFO] ::: >>> Jobs: 109 of 123 complete, 1 running            Load avg: 8.4, 16.2, 18.7
+[31-Dec-23 00:03:20 INFO] ::: >>> Jobs: 109 of 123 complete                       Load avg: 8.4, 16.2, 18.7
+[31-Dec-23 00:03:23 INFO] ::: >>> Completed (110 of 123) x11-drivers/xf86-video-ati-22.0.0::gentoo
+[31-Dec-23 00:03:23 INFO] ::: >>> Jobs: 109 of 123 complete                       Load avg: 7.8, 15.9, 18.6
+[31-Dec-23 00:03:23 INFO] ::: >>> Jobs: 110 of 123 complete                       Load avg: 7.8, 15.9, 18.6
+[31-Dec-23 00:03:23 INFO] ::: >>> Jobs: 110 of 123 complete, 1 running            Load avg: 7.8, 15.9, 18.6
+[31-Dec-23 00:03:23 INFO] ::: >>> Emerging (111 of 123) x11-drivers/xf86-video-dummy-0.4.1::gentoo
+[31-Dec-23 00:03:23 INFO] ::: >>> Jobs: 110 of 123 complete, 1 running            Load avg: 7.8, 15.9, 18.6
+[31-Dec-23 00:03:28 INFO] ::: >>> Installing (111 of 123) x11-drivers/xf86-video-dummy-0.4.1::gentoo
+[31-Dec-23 00:03:28 INFO] ::: >>> Jobs: 110 of 123 complete, 1 running            Load avg: 7.3, 15.7, 18.5
+[31-Dec-23 00:03:28 INFO] ::: >>> Jobs: 110 of 123 complete                       Load avg: 7.3, 15.7, 18.5
+[31-Dec-23 00:03:31 INFO] ::: >>> Completed (111 of 123) x11-drivers/xf86-video-dummy-0.4.1::gentoo
+[31-Dec-23 00:03:31 INFO] ::: >>> Jobs: 110 of 123 complete                       Load avg: 6.8, 15.4, 18.4
+[31-Dec-23 00:03:31 INFO] ::: >>> Jobs: 111 of 123 complete                       Load avg: 6.8, 15.4, 18.4
+[31-Dec-23 00:03:31 INFO] ::: >>> Jobs: 111 of 123 complete, 1 running            Load avg: 6.8, 15.4, 18.4
+[31-Dec-23 00:03:31 INFO] ::: >>> Emerging (112 of 123) x11-drivers/xf86-video-fbdev-0.5.0-r1::gentoo
+[31-Dec-23 00:03:31 INFO] ::: >>> Jobs: 111 of 123 complete, 1 running            Load avg: 6.8, 15.4, 18.4
+[31-Dec-23 00:03:36 INFO] ::: >>> Installing (112 of 123) x11-drivers/xf86-video-fbdev-0.5.0-r1::gentoo
+[31-Dec-23 00:03:36 INFO] ::: >>> Jobs: 111 of 123 complete, 1 running            Load avg: 6.6, 15.3, 18.4
+[31-Dec-23 00:03:36 INFO] ::: >>> Jobs: 111 of 123 complete                       Load avg: 6.6, 15.3, 18.4
+[31-Dec-23 00:03:39 INFO] ::: >>> Completed (112 of 123) x11-drivers/xf86-video-fbdev-0.5.0-r1::gentoo
+[31-Dec-23 00:03:39 INFO] ::: >>> Jobs: 111 of 123 complete                       Load avg: 6.6, 15.3, 18.4
+[31-Dec-23 00:03:39 INFO] ::: >>> Jobs: 112 of 123 complete                       Load avg: 6.6, 15.3, 18.4
+[31-Dec-23 00:03:39 INFO] ::: >>> Jobs: 112 of 123 complete, 1 running            Load avg: 6.6, 15.3, 18.4
+[31-Dec-23 00:03:39 INFO] ::: >>> Emerging (113 of 123) x11-drivers/xf86-video-nouveau-1.0.17::gentoo
+[31-Dec-23 00:03:39 INFO] ::: >>> Jobs: 112 of 123 complete, 1 running            Load avg: 6.6, 15.3, 18.4
+[31-Dec-23 00:03:46 INFO] ::: >>> Installing (113 of 123) x11-drivers/xf86-video-nouveau-1.0.17::gentoo
+[31-Dec-23 00:03:46 INFO] ::: >>> Jobs: 112 of 123 complete, 1 running            Load avg: 6.0, 14.9, 18.2
+[31-Dec-23 00:03:46 INFO] ::: >>> Jobs: 112 of 123 complete                       Load avg: 6.0, 14.9, 18.2
+[31-Dec-23 00:03:49 INFO] ::: >>> Completed (113 of 123) x11-drivers/xf86-video-nouveau-1.0.17::gentoo
+[31-Dec-23 00:03:49 INFO] ::: >>> Jobs: 112 of 123 complete                       Load avg: 6.0, 14.9, 18.2
+[31-Dec-23 00:03:49 INFO] ::: >>> Jobs: 113 of 123 complete                       Load avg: 6.0, 14.9, 18.2
+[31-Dec-23 00:03:49 INFO] ::: >>> Jobs: 113 of 123 complete, 1 running            Load avg: 6.0, 14.9, 18.2
+[31-Dec-23 00:03:49 INFO] ::: >>> Emerging (114 of 123) x11-drivers/xf86-video-vesa-2.6.0::gentoo
+[31-Dec-23 00:03:49 INFO] ::: >>> Jobs: 113 of 123 complete, 1 running            Load avg: 6.0, 14.9, 18.2
+[31-Dec-23 00:03:55 INFO] ::: >>> Installing (114 of 123) x11-drivers/xf86-video-vesa-2.6.0::gentoo
+[31-Dec-23 00:03:55 INFO] ::: >>> Jobs: 113 of 123 complete, 1 running            Load avg: 5.8, 14.7, 18.1
+[31-Dec-23 00:03:55 INFO] ::: >>> Jobs: 113 of 123 complete                       Load avg: 5.8, 14.7, 18.1
+[31-Dec-23 00:03:58 INFO] ::: >>> Completed (114 of 123) x11-drivers/xf86-video-vesa-2.6.0::gentoo
+[31-Dec-23 00:03:58 INFO] ::: >>> Jobs: 113 of 123 complete                       Load avg: 5.4, 14.4, 18.0
+[31-Dec-23 00:03:58 INFO] ::: >>> Jobs: 114 of 123 complete                       Load avg: 5.4, 14.4, 18.0
+[31-Dec-23 00:03:58 INFO] ::: >>> Jobs: 114 of 123 complete, 1 running            Load avg: 5.4, 14.4, 18.0
+[31-Dec-23 00:03:58 INFO] ::: >>> Emerging (115 of 123) app-editors/vscode-1.85.1::gentoo
+[31-Dec-23 00:03:58 INFO] ::: >>> Jobs: 114 of 123 complete, 1 running            Load avg: 5.4, 14.4, 18.0
+[31-Dec-23 00:04:04 INFO] ::: >>> Installing (115 of 123) app-editors/vscode-1.85.1::gentoo
+[31-Dec-23 00:04:04 INFO] ::: >>> Jobs: 114 of 123 complete, 1 running            Load avg: 5.1, 14.2, 17.9
+[31-Dec-23 00:04:04 INFO] ::: >>> Jobs: 114 of 123 complete                       Load avg: 5.1, 14.2, 17.9
+[31-Dec-23 00:04:08 INFO] ::: >>> Completed (115 of 123) app-editors/vscode-1.85.1::gentoo
+[31-Dec-23 00:04:08 INFO] ::: >>> Jobs: 114 of 123 complete                       Load avg: 4.8, 14.0, 17.8
+[31-Dec-23 00:04:08 INFO] ::: >>> Jobs: 115 of 123 complete                       Load avg: 4.8, 14.0, 17.8
+[31-Dec-23 00:04:08 INFO] ::: >>> Jobs: 115 of 123 complete, 1 running            Load avg: 4.8, 14.0, 17.8
+[31-Dec-23 00:04:08 INFO] ::: >>> Emerging (116 of 123) app-portage/gentoolkit-0.6.3-r1::gentoo
+[31-Dec-23 00:04:08 INFO] ::: >>> Jobs: 115 of 123 complete, 1 running            Load avg: 4.8, 14.0, 17.8
+[31-Dec-23 00:04:13 INFO] ::: >>> Installing (116 of 123) app-portage/gentoolkit-0.6.3-r1::gentoo
+[31-Dec-23 00:04:13 INFO] ::: >>> Jobs: 115 of 123 complete, 1 running            Load avg: 4.5, 13.8, 17.7
+[31-Dec-23 00:04:13 INFO] ::: >>> Jobs: 115 of 123 complete                       Load avg: 4.5, 13.8, 17.7
+[31-Dec-23 00:04:16 INFO] ::: >>> Completed (116 of 123) app-portage/gentoolkit-0.6.3-r1::gentoo
+[31-Dec-23 00:04:16 INFO] ::: >>> Jobs: 115 of 123 complete                       Load avg: 4.4, 13.6, 17.7
+[31-Dec-23 00:04:16 INFO] ::: >>> Jobs: 116 of 123 complete                       Load avg: 4.4, 13.6, 17.7
+[31-Dec-23 00:04:16 INFO] ::: >>> Jobs: 116 of 123 complete, 1 running            Load avg: 4.4, 13.6, 17.7
+[31-Dec-23 00:04:16 INFO] ::: >>> Emerging (117 of 123) www-client/brave-bin-1.61.109::brave-overlay
+[31-Dec-23 00:04:16 INFO] ::: >>> Jobs: 116 of 123 complete, 1 running            Load avg: 4.4, 13.6, 17.7
+[31-Dec-23 00:04:22 INFO] ::: >>> Installing (117 of 123) www-client/brave-bin-1.61.109::brave-overlay
+[31-Dec-23 00:04:22 INFO] ::: >>> Jobs: 116 of 123 complete, 1 running            Load avg: 4.5, 13.5, 17.6
+[31-Dec-23 00:04:22 INFO] ::: >>> Jobs: 116 of 123 complete                       Load avg: 4.5, 13.5, 17.6
+[31-Dec-23 00:04:27 INFO] ::: >>> Completed (117 of 123) www-client/brave-bin-1.61.109::brave-overlay
+[31-Dec-23 00:04:27 INFO] ::: >>> Jobs: 116 of 123 complete                       Load avg: 4.5, 13.3, 17.5
+[31-Dec-23 00:04:27 INFO] ::: >>> Jobs: 117 of 123 complete                       Load avg: 4.5, 13.3, 17.5
+[31-Dec-23 00:04:27 INFO] ::: >>> Jobs: 117 of 123 complete, 1 running            Load avg: 4.5, 13.3, 17.5
+[31-Dec-23 00:04:27 INFO] ::: >>> Emerging (118 of 123) www-client/firefox-bin-121.0::gentoo
+[31-Dec-23 00:04:27 INFO] ::: >>> Jobs: 117 of 123 complete, 1 running            Load avg: 4.5, 13.3, 17.5
+[31-Dec-23 00:04:36 INFO] ::: >>> Installing (118 of 123) www-client/firefox-bin-121.0::gentoo
+[31-Dec-23 00:04:36 INFO] ::: >>> Jobs: 117 of 123 complete, 1 running            Load avg: 4.0, 12.9, 17.4
+[31-Dec-23 00:04:36 INFO] ::: >>> Jobs: 117 of 123 complete                       Load avg: 4.0, 12.9, 17.4
+[31-Dec-23 00:04:40 INFO] ::: >>> Completed (118 of 123) www-client/firefox-bin-121.0::gentoo
+[31-Dec-23 00:04:40 INFO] ::: >>> Jobs: 117 of 123 complete                       Load avg: 4.0, 12.9, 17.4
+[31-Dec-23 00:04:40 INFO] ::: >>> Jobs: 118 of 123 complete                       Load avg: 4.0, 12.9, 17.4
+[31-Dec-23 00:04:40 INFO] ::: >>> Jobs: 118 of 123 complete, 1 running            Load avg: 4.0, 12.9, 17.4
+[31-Dec-23 00:04:40 INFO] ::: >>> Emerging (119 of 123) dev-libs/libgee-0.20.6-r1::gentoo
+[31-Dec-23 00:04:40 INFO] ::: >>> Jobs: 118 of 123 complete, 1 running            Load avg: 4.0, 12.9, 17.4
+[31-Dec-23 00:04:54 INFO] ::: >>> Installing (119 of 123) dev-libs/libgee-0.20.6-r1::gentoo
+[31-Dec-23 00:04:54 INFO] ::: >>> Jobs: 118 of 123 complete, 1 running            Load avg: 6.4, 13.0, 17.3
+[31-Dec-23 00:04:54 INFO] ::: >>> Jobs: 118 of 123 complete                       Load avg: 6.4, 13.0, 17.3
+[31-Dec-23 00:04:57 INFO] ::: >>> Completed (119 of 123) dev-libs/libgee-0.20.6-r1::gentoo
+[31-Dec-23 00:04:57 INFO] ::: >>> Jobs: 118 of 123 complete                       Load avg: 5.9, 12.8, 17.2
+[31-Dec-23 00:04:57 INFO] ::: >>> Jobs: 119 of 123 complete                       Load avg: 5.9, 12.8, 17.2
+[31-Dec-23 00:04:57 INFO] ::: >>> Jobs: 119 of 123 complete, 1 running            Load avg: 5.9, 12.8, 17.2
+[31-Dec-23 00:04:57 INFO] ::: >>> Emerging (120 of 123) gnome-base/gvfs-1.52.1::gentoo
+[31-Dec-23 00:04:57 INFO] ::: >>> Jobs: 119 of 123 complete, 1 running            Load avg: 5.9, 12.8, 17.2
+[31-Dec-23 00:05:11 INFO] ::: >>> Installing (120 of 123) gnome-base/gvfs-1.52.1::gentoo
+[31-Dec-23 00:05:11 INFO] ::: >>> Jobs: 119 of 123 complete, 1 running            Load avg: 7.6, 12.9, 17.2
+[31-Dec-23 00:05:11 INFO] ::: >>> Jobs: 119 of 123 complete                       Load avg: 7.6, 12.9, 17.2
+[31-Dec-23 00:05:15 INFO] ::: >>> Completed (120 of 123) gnome-base/gvfs-1.52.1::gentoo
+[31-Dec-23 00:05:15 INFO] ::: >>> Jobs: 119 of 123 complete                       Load avg: 7.6, 12.9, 17.2
+[31-Dec-23 00:05:15 INFO] ::: >>> Jobs: 120 of 123 complete                       Load avg: 7.6, 12.9, 17.2
+[31-Dec-23 00:05:15 INFO] ::: >>> Jobs: 120 of 123 complete, 1 running            Load avg: 7.6, 12.9, 17.2
+[31-Dec-23 00:05:15 INFO] ::: >>> Emerging (121 of 123) media-video/pipewire-0.3.80::gentoo
+[31-Dec-23 00:05:15 INFO] ::: >>> Jobs: 120 of 123 complete, 1 running            Load avg: 7.6, 12.9, 17.2
+[31-Dec-23 00:06:15 INFO] ::: >>> Installing (121 of 123) media-video/pipewire-0.3.80::gentoo
+[31-Dec-23 00:06:15 INFO] ::: >>> Jobs: 120 of 123 complete, 1 running            Load avg: 14.8, 13.9, 17.3
+[31-Dec-23 00:06:15 INFO] ::: >>> Jobs: 120 of 123 complete                       Load avg: 14.8, 13.9, 17.3
+[31-Dec-23 00:06:18 INFO] ::: >>> Completed (121 of 123) media-video/pipewire-0.3.80::gentoo
+[31-Dec-23 00:06:18 INFO] ::: >>> Jobs: 120 of 123 complete                       Load avg: 13.7, 13.7, 17.2
+[31-Dec-23 00:06:18 INFO] ::: >>> Jobs: 121 of 123 complete                       Load avg: 13.7, 13.7, 17.2
+[31-Dec-23 00:06:18 INFO] ::: >>> Jobs: 121 of 123 complete, 1 running            Load avg: 13.7, 13.7, 17.2
+[31-Dec-23 00:06:18 INFO] ::: >>> Emerging (122 of 123) media-video/wireplumber-0.4.14::gentoo
+[31-Dec-23 00:06:18 INFO] ::: >>> Jobs: 121 of 123 complete, 1 running            Load avg: 13.7, 13.7, 17.2
+[31-Dec-23 00:06:27 INFO] ::: >>> Installing (122 of 123) media-video/wireplumber-0.4.14::gentoo
+[31-Dec-23 00:06:27 INFO] ::: >>> Jobs: 121 of 123 complete, 1 running            Load avg: 11.8, 13.3, 17.0
+[31-Dec-23 00:06:27 INFO] ::: >>> Jobs: 121 of 123 complete                       Load avg: 11.8, 13.3, 17.0
+[31-Dec-23 00:06:30 INFO] ::: >>> Completed (122 of 123) media-video/wireplumber-0.4.14::gentoo
+[31-Dec-23 00:06:30 INFO] ::: >>> Jobs: 121 of 123 complete                       Load avg: 11.8, 13.3, 17.0
+[31-Dec-23 00:06:30 INFO] ::: >>> Jobs: 122 of 123 complete                       Load avg: 11.8, 13.3, 17.0
+[31-Dec-23 00:06:30 INFO] ::: >>> Jobs: 122 of 123 complete, 1 running            Load avg: 11.8, 13.3, 17.0
+[31-Dec-23 00:06:30 INFO] ::: >>> Emerging (123 of 123) sys-apps/xdg-desktop-portal-1.18.2::gentoo
+[31-Dec-23 00:06:30 INFO] ::: >>> Jobs: 122 of 123 complete, 1 running            Load avg: 11.8, 13.3, 17.0
+[31-Dec-23 00:06:52 INFO] ::: >>> Installing (123 of 123) sys-apps/xdg-desktop-portal-1.18.2::gentoo
+[31-Dec-23 00:06:52 INFO] ::: >>> Jobs: 122 of 123 complete, 1 running            Load avg: 10.5, 12.9, 16.8
+[31-Dec-23 00:06:52 INFO] ::: >>> Jobs: 122 of 123 complete                       Load avg: 10.5, 12.9, 16.8
+[31-Dec-23 00:06:55 INFO] ::: >>> Completed (123 of 123) sys-apps/xdg-desktop-portal-1.18.2::gentoo
+[31-Dec-23 00:06:55 INFO] ::: >>> Jobs: 122 of 123 complete                       Load avg: 10.5, 12.9, 16.8
+[31-Dec-23 00:06:55 INFO] ::: >>> Jobs: 123 of 123 complete                       Load avg: 10.5, 12.9, 16.8
+[31-Dec-23 00:06:55 INFO] :::
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package acct-group/pipewire-0-r1:
+[31-Dec-23 00:06:55 INFO] :::  * Adding group pipewire
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package sys-kernel/linux-firmware-20231211:
+[31-Dec-23 00:06:55 INFO] :::  * Your configuration for sys-kernel/linux-firmware-20231211 has been saved in
+[31-Dec-23 00:06:55 INFO] :::  * "/etc/portage/savedconfig/sys-kernel/linux-firmware-20231211" for your editing pleasure.
+[31-Dec-23 00:06:55 INFO] :::  * You can edit these files by hand and remerge this package with
+[31-Dec-23 00:06:55 INFO] :::  * USE=savedconfig to customise the configuration.
+[31-Dec-23 00:06:55 INFO] :::  * You can rename this file/directory to one of the following for
+[31-Dec-23 00:06:55 INFO] :::  * its configuration to apply to multiple versions:
+[31-Dec-23 00:06:55 INFO] :::  * ${PORTAGE_CONFIGROOT}/etc/portage/savedconfig/
+[31-Dec-23 00:06:55 INFO] :::  * [${CTARGET}|${CHOST}|""]/${CATEGORY}/[${PF}|${P}|${PN}]
+[31-Dec-23 00:06:55 INFO] :::  * If you are only interested in particular firmware files, edit the saved
+[31-Dec-23 00:06:55 INFO] :::  * configfile and remove those that you do not want.
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package app-alternatives/ninja-1:
+[31-Dec-23 00:06:55 INFO] :::  * This package will overwrite one or more files that may belong to other
+[31-Dec-23 00:06:55 INFO] :::  * packages (see list below). You can use a command such as `portageq
+[31-Dec-23 00:06:55 INFO] :::  * owners / <filename>` to identify the installed package that owns a
+[31-Dec-23 00:06:55 INFO] :::  * file. If portageq reports that only one package owns a file then do
+[31-Dec-23 00:06:55 INFO] :::  * NOT file a bug report. A bug report is only useful if it identifies at
+[31-Dec-23 00:06:55 INFO] :::  * least two or more packages that are known to install the same file(s).
+[31-Dec-23 00:06:55 INFO] :::  * If a collision occurs and you can not explain where the file came from
+[31-Dec-23 00:06:55 INFO] :::  * then you should simply ignore the collision since there is not enough
+[31-Dec-23 00:06:55 INFO] :::  * information to determine if a real problem exists. Please do NOT file
+[31-Dec-23 00:06:55 INFO] :::  * a bug report at https://bugs.gentoo.org/ unless you report exactly
+[31-Dec-23 00:06:55 INFO] :::  * which two packages install the same file(s). See
+[31-Dec-23 00:06:55 INFO] :::  * https://wiki.gentoo.org/wiki/Knowledge_Base:Blockers for tips on how
+[31-Dec-23 00:06:55 INFO] :::  * to solve the problem. And once again, please do NOT file a bug report
+[31-Dec-23 00:06:55 INFO] :::  * unless you have completely understood the above message.
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Detected file collision(s):
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * 	/usr/bin/ninja
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Searching all installed packages for file collisions...
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Press Ctrl-C to Stop
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * None of the installed packages claim the file(s).
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Package 'app-alternatives/ninja-1' merged despite file collisions. If
+[31-Dec-23 00:06:55 INFO] :::  * necessary, refer to your elog messages for the whole content of the
+[31-Dec-23 00:06:55 INFO] :::  * above message.
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package app-admin/sudo-1.9.15_p2:
+[31-Dec-23 00:06:55 INFO] :::  * To use the -A (askpass) option, you need to install a compatible
+[31-Dec-23 00:06:55 INFO] :::  * password program from the following list. Starred packages will
+[31-Dec-23 00:06:55 INFO] :::  * automatically register for the use with sudo (but will not force
+[31-Dec-23 00:06:55 INFO] :::  * the -A option):
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  *  [*] net-misc/ssh-askpass-fullscreen
+[31-Dec-23 00:06:55 INFO] :::  *      net-misc/x11-ssh-askpass
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * You can override the choice by setting the SUDO_ASKPASS environmnent
+[31-Dec-23 00:06:55 INFO] :::  * variable to the program you want to use.
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package gnome-base/gnome-light-44.4:
+[31-Dec-23 00:06:55 INFO] :::  * Please remember to look at https://wiki.gentoo.org/wiki/Project:GNOME
+[31-Dec-23 00:06:55 INFO] :::  * for information about the project and documentation.
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package app-text/ghostscript-gpl-10.02.0:
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Directory symlink(s) may need protection:
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * 	/usr/share/ghostscript/10.02.0/Resource/CMap
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Use the UNINSTALL_IGNORE variable to exempt specific symlinks
+[31-Dec-23 00:06:55 INFO] :::  * from the following search (see the make.conf man page).
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Searching all installed packages for files installed via above symlink(s)...
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * The above directory symlink(s) are all safe to remove. Removing them now...
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package sys-kernel/dracut-059-r7:
+[31-Dec-23 00:06:55 INFO] :::  * Install additional packages for optional runtime features:
+[31-Dec-23 00:06:55 INFO] :::  *   sys-fs/btrfs-progs for Scan for Btrfs on block devices
+[31-Dec-23 00:06:55 INFO] :::  *   app-shells/dash for Allows use of dash instead of default bash (on your own risk)
+[31-Dec-23 00:06:55 INFO] :::  *   sys-apps/busybox for Allows use of busybox instead of default bash (on your own risk)
+[31-Dec-23 00:06:55 INFO] :::  *   sys-block/open-iscsi for Support iSCSI
+[31-Dec-23 00:06:55 INFO] :::  *   sys-fs/lvm2[lvm] for Support Logical Volume Manager
+[31-Dec-23 00:06:55 INFO] :::  *   sys-fs/mdadm for Support MD devices, also known as software RAID devices
+[31-Dec-23 00:06:55 INFO] :::  *   sys-fs/dmraid for Support MD devices, also known as software RAID devices
+[31-Dec-23 00:06:55 INFO] :::  *   sys-fs/multipath-tools for Support Device Mapper multipathing
+[31-Dec-23 00:06:55 INFO] :::  *   >=sys-boot/plymouth-0.8.5-r5 for Plymouth boot splash
+[31-Dec-23 00:06:55 INFO] :::  *   sys-block/nbd for Support network block devices
+[31-Dec-23 00:06:55 INFO] :::  *   net-fs/nfs-utils for Support NFS
+[31-Dec-23 00:06:55 INFO] :::  *   net-nds/rpcbind for Support NFS
+[31-Dec-23 00:06:55 INFO] :::  *   app-admin/rsyslog for Enable logging with rsyslog
+[31-Dec-23 00:06:55 INFO] :::  *   app-crypt/tpm2-tools for Support TPM 2.0 TSS
+[31-Dec-23 00:06:55 INFO] :::  *   sys-apps/biosdevname for Support BIOS-given device names
+[31-Dec-23 00:06:55 INFO] :::  *   sys-apps/nvme-cli for Support network NVMe
+[31-Dec-23 00:06:55 INFO] :::  *   sys-apps/rng-tools for Enable rngd service to help generating entropy early during boot
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package net-libs/webkit-gtk-2.42.3-r410:
+[31-Dec-23 00:06:55 INFO] :::  * Install additional packages for optional runtime features:
+[31-Dec-23 00:06:55 INFO] :::  *   media-plugins/gst-plugins-dash for (MPEG-)DASH support
+[31-Dec-23 00:06:55 INFO] :::  *   media-plugins/gst-plugins-hls for HTTP-Live-Streaming support
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package www-client/brave-bin-1.61.109:
+[31-Dec-23 00:06:55 INFO] :::  * If upgrading from 1.50.x release or earlier, note that Brave has changed the format of the
+[31-Dec-23 00:06:55 INFO] :::  * password file, and ALL YOUR OLD PASSWORDS WILL NOT WORK.
+[31-Dec-23 00:06:55 INFO] :::  * YOUR BRAVE REWARDS WILL NOT WORK EITHER.
+[31-Dec-23 00:06:55 INFO] :::  * The solution is to temporarily downgrade back to 1.50.x (legacy ebuild provided),
+[31-Dec-23 00:06:55 INFO] :::  * so you can export passwords from Brave's Password Manager.
+[31-Dec-23 00:06:55 INFO] :::  * once you're back in a newer build, import passwords from inside Brave's Password Manager,
+[31-Dec-23 00:06:55 INFO] :::  * and select the file you saved.
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package www-client/firefox-bin-121.0:
+[31-Dec-23 00:06:55 INFO] :::  * Optional programs for extra features:
+[31-Dec-23 00:06:55 INFO] :::  *   app-accessibility/speech-dispatcher for speech syntesis (text-to-speech) support
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package media-video/pipewire-0.3.80:
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * USE=sound-server is disabled! If you want PipeWire to provide
+[31-Dec-23 00:06:55 INFO] :::  * your sound, please enable it. See the wiki at
+[31-Dec-23 00:06:55 INFO] :::  * https://wiki.gentoo.org/wiki/PipeWire#Replacing_PulseAudio
+[31-Dec-23 00:06:55 INFO] :::  * for more details.
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * For latest tips and tricks, troubleshooting information, and documentation
+[31-Dec-23 00:06:55 INFO] :::  * in general, please refer to https://wiki.gentoo.org/wiki/PipeWire
+[31-Dec-23 00:06:55 INFO] :::  *
+[31-Dec-23 00:06:55 INFO] :::  * The following can be installed for optional runtime features:
+[31-Dec-23 00:06:55 INFO] :::  *   sys-auth/rtkit for restricted realtime capabilities via D-Bus
+[31-Dec-23 00:06:55 INFO] :::  * Messages for package media-video/wireplumber-0.4.14:
+[31-Dec-23 00:06:55 INFO] :::  * pipewire-media-session.service is no longer installed. You must switch
+[31-Dec-23 00:06:55 INFO] :::  * to wireplumber.service user unit before your next logout/reboot:
+[31-Dec-23 00:06:55 INFO] :::  * systemctl --user disable pipewire-media-session.service
+[31-Dec-23 00:06:55 INFO] :::  * systemctl --user --force enable wireplumber.service
+[31-Dec-23 00:06:55 INFO] :::  * Regenerating GNU info directory index...
+[31-Dec-23 00:06:56 INFO] :::  * Processed 112 info files.
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] :::  * IMPORTANT: 10 config files in '/etc' need updating.
+[31-Dec-23 00:06:56 INFO] :::  * See the CONFIGURATION FILES and CONFIGURATION FILES UPDATE TOOLS
+[31-Dec-23 00:06:56 INFO] :::  * sections of the emerge man page to learn how to update config files.
+[31-Dec-23 00:06:56 INFO] ::: update was successful
+[31-Dec-23 00:06:56 ERROR] :::  * After world updates, it is important to remove obsolete packages with
+[31-Dec-23 00:06:56 ERROR] :::  * emerge --depclean. Refer to `man emerge` for more information.
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: {{ UPDATE SYSTEM CONFIGURATION FILES }}
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: Ignoring configuration update for now...
+[31-Dec-23 00:06:56 INFO] ::: Please UPDATE IT MANUALLY LATER
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: {{ CLEAN UP }}
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: Clean up is not enabled.
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: {{ RESTART SERVICES }}
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: app-admin/needrestart is not installed
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: {{ READ ELOGS }}
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: not reading elogs
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: {{ READ NEWS }}
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: not reading news
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: {{ CALCULATE DISK USAGE 2 }}
+[31-Dec-23 00:06:56 INFO] :::
+[31-Dec-23 00:06:56 INFO] ::: Disk usage for / ===> Total=453G, Used=173G, Free=257G, Percent used=41%
+[31-Dec-23 00:06:56 INFO] ::: Warning: mount point none does not exist.
+[31-Dec-23 00:06:56 INFO] ::: gentoo-update is done! Log:file: /var/log/portage/gentoo-update/log_2023-12-30-21-06
