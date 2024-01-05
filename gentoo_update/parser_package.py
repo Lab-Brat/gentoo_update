@@ -200,6 +200,7 @@ class PackageParser:
             elif "uninstall" in update_status:
                 package = self._parse_package_uninstall(split_package_string)
 
-            packages.append(package)
+            if package:
+                packages.append(package)
 
         return packages
