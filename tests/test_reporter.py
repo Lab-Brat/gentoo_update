@@ -3,7 +3,10 @@
 import unittest
 from os import path
 
-from gentoo_update.gentoo_update import generate_report, get_last_log_filename
+from gentoo_update.gentoo_update import (
+    generate_report,
+    get_available_log_files,
+)
 from gentoo_update.reporter import Reporter
 
 
@@ -13,25 +16,25 @@ class TestGentooUpdate(unittest.TestCase):
     def setUp(self):
         """Initialize test prerequisites."""
         test_reporter_path = path.dirname(path.abspath(__file__))
-        report_for_tests = f"{test_reporter_path}/logs_for_unit_tests"
-        log_filename = get_last_log_filename(report_for_tests)
-        self.report_object = generate_report(
-            report_for_tests, log_filename, short_report=False
+        logs_for_tests = f"{test_reporter_path}/logs_for_unit_tests"
+        log_1, log_2 = get_available_log_files(logs_for_tests, 2)
+        self.report_object_1 = generate_report(
+            logs_for_tests, log_1, short_report=False
         )
-        self.report = self.report_object.create_report()
+        self.report_1 = self.report_object_1.create_report()
 
-    def test_report_object_type(self):
+    def test_report_object_type_1(self):
         """Test if the report_object is of type Reporter."""
-        self.assertIs(type(self.report_object), Reporter)
+        self.assertIs(type(self.report_object_1), Reporter)
 
-    def test_report_status(self):
+    def test_report_status_1(self):
         """Test if the report status is SUCCESS."""
-        status = self.report[1].split(" ")[-1]
+        status = self.report_1[1].split(" ")[-1]
         self.assertEqual(status, "SUCCESS")
 
-    def test_report_packages(self):
+    def test_report_packages_1(self):
         """Test if the report lists the expected packages."""
-        packages = sum([pkg.split(" ", 1)[1:] for pkg in self.report[3:7]], [])
+        packages = sum([pkg.split(" ", 1)[1:] for pkg in self.report_1[3:7]], [])
         correct_package_list = [
             "dev-libs/openssl 3.0.10:0/3->3.0.11:0/3",
             "net-fs/samba 4.18.4-r1->4.18.8",
@@ -40,9 +43,9 @@ class TestGentooUpdate(unittest.TestCase):
         ]
         self.assertEqual(packages, correct_package_list)
 
-    def test_disk_usage(self):
+    def test_disk_usage_1(self):
         """Test if the report shows the expected disk usage."""
-        disk_usage = self.report[-4::]
+        disk_usage = self.report_1[-4::]
         correct_disk_usage = [
             "Mount Point /",
             "Free Space 253G => 253G",
