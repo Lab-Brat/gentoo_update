@@ -18,7 +18,7 @@ from .reporter import Reporter
 from .shell_runner import ShellRunner
 
 current_path = os.path.dirname(os.path.realpath(__file__))
-#sys.tracebacklimit = -1
+# sys.tracebacklimit = -1
 
 
 def create_cli() -> argparse.Namespace:
@@ -214,8 +214,8 @@ def initiate_log_directory(make_conf) -> Tuple[str, List[str]]:
     return log_dir, log_dir_messages
 
 
-def show_available_reports(log_dir: str, last_n_logs: int) -> None:
-    """Short last n reports in the log directory.
+def get_available_log_files(log_dir: str, last_n_logs: int) -> List:
+    """Short last n log files in the log directory.
 
     Args
     ----
@@ -230,10 +230,7 @@ def show_available_reports(log_dir: str, last_n_logs: int) -> None:
     if not log_filesnames:
         raise ValueError(f"No log files found in the directory {log_dir}")
 
-    logs = log_filesnames[-last_n_logs:]
-    print(f"The last {last_n_logs} log file filenames")
-    for log in logs:
-        print(log)
+    return log_filesnames[-last_n_logs:]
 
 
 def get_last_log_filename(log_dir: str) -> str:
@@ -312,7 +309,10 @@ def main() -> None:
         )
     elif args.command == "report":
         if args.last_n_logs:
-            show_available_reports(log_dir, args.last_n_logs)
+            logs = get_available_log_files(log_dir, args.last_n_logs)
+            print(f"The last {args.last_n_logs} log file filenames")
+            for log in logs:
+                print(log)
         elif args.send_report in ["irc", "email", "mobile"]:
             log_filename = (
                 get_last_log_filename(log_dir) if args.report == "LAST" else args.report
