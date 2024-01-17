@@ -18,7 +18,7 @@ from .reporter import Reporter
 from .shell_runner import ShellRunner
 
 current_path = os.path.dirname(os.path.realpath(__file__))
-# sys.tracebacklimit = -1
+sys.tracebacklimit = -1
 
 
 def create_cli() -> argparse.Namespace:
