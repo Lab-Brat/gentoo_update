@@ -107,9 +107,14 @@ class Reporter:
         for package in packages:
             if package.package_type == "ebuild" and package.update_status == "Update":
                 package_groups["updated"].append(package)
-            elif package.package_type == "ebuild" and package.update_status == "NewPackage":
+            elif (
+                package.package_type == "ebuild"
+                and package.update_status == "NewPackage"
+            ):
                 package_groups["new"].append(package)
-            elif package.package_type == "ebuild" and package.update_status == "ReEmerge":
+            elif (
+                package.package_type == "ebuild" and package.update_status == "ReEmerge"
+            ):
                 package_groups["reemerged"].append(package)
             elif package.package_type == "ebuild":
                 package_groups["other"].append(package)
@@ -118,6 +123,25 @@ class Reporter:
 
         return package_groups
 
+    def _append_packages_to_report(
+        self, report: List, packages: List, first_line: str, newv=False
+    ) -> List:
+        """ """
+        if packages == []:
+            return report
+
+        report.append("")
+        report.append(first_line)
+        for package in packages:
+            package_name = package.package_name
+            old_version = package.old_version
+            if newv:
+                new_version = package.new_version
+                report.append(f"--- {package_name} {old_version}->{new_version}")
+            else:
+                report.append(f"--- {package_name} {old_version}")
+
+        return report
 
     def _create_successful_report(
         self, update_info: Optional[UpdateSection], disk_usage_info: DiskUsage
@@ -140,40 +164,22 @@ class Reporter:
         packages = []
         if update_info:
             packages = update_info.update_details["updated_packages"]
-        other_package_types = False
 
         if packages:
             package_groups = self._sort_packages_into_categories(packages)
 
-            report.append("")
-            report.append(r"updated packages:")
-            for package in package_groups["updated"]:
-                package_name = package.package_name
-                new_version = package.new_version
-                old_version = package.old_version
-                report.append(f"--- {package_name} {old_version}->{new_version}")
-
-            report.append("")
-            report.append(r"installed new packages:")
-            for package in package_groups["new"]:
-                package_name = package.package_name
-                old_version = package.old_version
-                report.append(f"--- {package_name} {old_version}")
-
-            report.append("")
-            report.append(r"re-emerged packages:")
-            for package in package_groups["reemerged"]:
-                package_name = package.package_name
-                old_version = package.old_version
-                report.append(f"--- {package_name} {old_version}")
-
-            report.append("")
-            report.append(r"other packages:")
-            for package in package_groups["other"]:
-                package_name = package.package_name
-                new_version = package.new_version
-                old_version = package.old_version
-                report.append(f"--- {package_name} {old_version}->{new_version}")
+            report = self._append_packages_to_report(
+                report, package_groups["updated"], "updated packages:", True
+            )
+            report = self._append_packages_to_report(
+                report, package_groups["new"], "installed new packages"
+            )
+            report = self._append_packages_to_report(
+                report, package_groups["reemerged"], "re-emerged packages:"
+            )
+            report = self._append_packages_to_report(
+                report, package_groups["other"], "other packages:", True
+            )
 
             if package_groups["other_types"]:
                 report.append("")
