@@ -8,7 +8,7 @@ and creating a report.
 The module also contains helper classes for parsing log information.
 """
 import sys
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from .parser import DiskUsage, LogInfo, PretendError, PretendSection, UpdateSection
 
@@ -84,6 +84,41 @@ class Reporter:
         # do failed report processing
         return ["Your update is a failure"]
 
+    def _sort_packages_into_categories(self, packages: List) -> Dict:
+        """Sort packages into 4 categories.
+        Categories: Updated, New, Re-emerged and other packages.
+
+        Args:
+        ----
+            packages: List of packages.
+
+        Returns:
+        -------
+            Dict: Dictionary containing sorted packages.
+        """
+        package_groups = {
+            "updated": [],
+            "new": [],
+            "reemerged": [],
+            "other": [],
+            "other_types": False,
+        }
+
+        for package in packages:
+            if package.package_type == "ebuild" and package.update_status == "Update":
+                package_groups["updated"].append(package)
+            elif package.package_type == "ebuild" and package.update_status == "NewPackage":
+                package_groups["new"].append(package)
+            elif package.package_type == "ebuild" and package.update_status == "ReEmerge":
+                package_groups["reemerged"].append(package)
+            elif package.package_type == "ebuild":
+                package_groups["other"].append(package)
+            else:
+                package_groups["other_types"] = True
+
+        return package_groups
+
+
     def _create_successful_report(
         self, update_info: Optional[UpdateSection], disk_usage_info: DiskUsage
     ) -> List[str]:
@@ -102,28 +137,17 @@ class Reporter:
             "==========> Gentoo Update Report <==========",
             "update status: SUCCESS",
         ]
-        updated_packages = []
+        packages = []
         if update_info:
-            updated_packages = update_info.update_details["updated_packages"]
+            packages = update_info.update_details["updated_packages"]
         other_package_types = False
 
-        if updated_packages:
-            updated, new, reemerged, other = [], [], [], []
-            for package in updated_packages:
-                if package.package_type == "ebuild" and package.update_status == "Update":
-                    updated.append(package)
-                elif package.package_type == "ebuild" and package.update_status == "NewPackage":
-                    new.append(package)
-                elif package.package_type == "ebuild" and package.update_status == "ReEmerge":
-                    reemerged.append(package)
-                elif package.package_type == "ebuild":
-                    other.append(package)
-                else:
-                    other_package_types = True
+        if packages:
+            package_groups = self._sort_packages_into_categories(packages)
 
             report.append("")
             report.append(r"updated packages:")
-            for package in updated:
+            for package in package_groups["updated"]:
                 package_name = package.package_name
                 new_version = package.new_version
                 old_version = package.old_version
@@ -131,30 +155,30 @@ class Reporter:
 
             report.append("")
             report.append(r"installed new packages:")
-            for package in new:
+            for package in package_groups["new"]:
                 package_name = package.package_name
                 old_version = package.old_version
                 report.append(f"--- {package_name} {old_version}")
 
             report.append("")
             report.append(r"re-emerged packages:")
-            for package in reemerged:
+            for package in package_groups["reemerged"]:
                 package_name = package.package_name
                 old_version = package.old_version
                 report.append(f"--- {package_name} {old_version}")
 
             report.append("")
             report.append(r"other packages:")
-            for package in other:
+            for package in package_groups["other"]:
                 package_name = package.package_name
                 new_version = package.new_version
                 old_version = package.old_version
                 report.append(f"--- {package_name} {old_version}->{new_version}")
 
-            if other_package_types:
+            if package_groups["other_types"]:
                 report.append("")
                 report.append("Non-ebuild packages")
-                for package in updated_packages:
+                for package in packages:
                     if package.package_type == "blocks":
                         package_name = package.package_name
                         blocked_package = package.blocked_package
