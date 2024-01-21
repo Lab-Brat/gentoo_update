@@ -108,15 +108,48 @@ class Reporter:
         other_package_types = False
 
         if updated_packages:
-            report.append(r"processed packages:")
+            updated, new, reemerged, other = [], [], [], []
             for package in updated_packages:
-                if package.package_type == "ebuild":
-                    package_name = package.package_name
-                    new_version = package.new_version
-                    old_version = package.old_version
-                    report.append(f"--- {package_name} {old_version}->{new_version}")
+                if package.package_type == "ebuild" and package.update_status == "Update":
+                    updated.append(package)
+                elif package.package_type == "ebuild" and package.update_status == "NewPackage":
+                    new.append(package)
+                elif package.package_type == "ebuild" and package.update_status == "ReEmerge":
+                    reemerged.append(package)
+                elif package.package_type == "ebuild":
+                    other.append(package)
                 else:
                     other_package_types = True
+
+            report.append("")
+            report.append(r"updated packages:")
+            for package in updated:
+                package_name = package.package_name
+                new_version = package.new_version
+                old_version = package.old_version
+                report.append(f"--- {package_name} {old_version}->{new_version}")
+
+            report.append("")
+            report.append(r"installed new packages:")
+            for package in new:
+                package_name = package.package_name
+                old_version = package.old_version
+                report.append(f"--- {package_name} {old_version}")
+
+            report.append("")
+            report.append(r"re-emerged packages:")
+            for package in reemerged:
+                package_name = package.package_name
+                old_version = package.old_version
+                report.append(f"--- {package_name} {old_version}")
+
+            report.append("")
+            report.append(r"other packages:")
+            for package in other:
+                package_name = package.package_name
+                new_version = package.new_version
+                old_version = package.old_version
+                report.append(f"--- {package_name} {old_version}->{new_version}")
 
             if other_package_types:
                 report.append("")
