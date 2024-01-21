@@ -50,6 +50,30 @@ class PackageParser:
 
         return split_package_string
 
+    def _determine_update_status(self, update_status: str) -> str:
+        """Determine what happens to the package during update
+
+        Args:
+        ----
+            update_status: String with following format - [ebuild  rR    ]
+
+        Returns:
+        -------
+            status: Simplified package status.
+        """
+        status = ""
+        match update_status:
+            case str(x) if "N" in x:
+                status += "NewPackage"
+            case str(x) if "R" in x:
+                status += "ReEmerge"
+            case str(x) if "U" in x:
+                status += "Update"
+            case _:
+                status += "Undefined"
+
+        return status
+
     def _parse_package_ebuild(self, split_package_string: List) -> PackageInfo:
         """Parse ebuild information.
 
@@ -64,7 +88,7 @@ class PackageParser:
             PackageInfo: PackageInfo object with processed information
         """
         package_type = "ebuild"
-        update_status = split_package_string[0]
+        update_status = self._determine_update_status(split_package_string[0])
         package_base_info = split_package_string[1]
         repo = package_base_info.split("::")[1]
         name_newversion = package_base_info.split("::")[0]
