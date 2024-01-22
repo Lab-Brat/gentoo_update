@@ -123,7 +123,19 @@ class Reporter:
     def _append_packages_to_report(
         self, report: List, packages: List, first_line: str, newv=False
     ) -> List:
-        """ """
+        """Append packages from different categories into final report.
+
+        Args:
+        ----
+            report: Partially filled out report.
+            packages: A list of packages in one category.
+            first_line: A title for the category.
+            newv: If the new version of a package needs to be present in the output.
+
+        Returns:
+        -------
+            report: Report with a new section added.
+        """
         if packages == []:
             return report
 
