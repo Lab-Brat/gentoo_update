@@ -51,7 +51,7 @@ class PackageParser:
         return split_package_string
 
     def _determine_update_status(self, update_status: str) -> str:
-        """Determine what happens to the package during update
+        """Determine what happens to the package during update.
 
         Args:
         ----

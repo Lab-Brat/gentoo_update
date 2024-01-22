@@ -86,6 +86,7 @@ class Reporter:
 
     def _sort_packages_into_categories(self, packages: List) -> Dict:
         """Sort packages into 4 categories.
+
         Categories: Updated, New, Re-emerged and other packages.
 
         Args:
