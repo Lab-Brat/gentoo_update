@@ -106,19 +106,15 @@ class Reporter:
         }
 
         for package in packages:
-            if package.package_type == "ebuild" and package.update_status == "Update":
-                package_groups["updated"].append(package)
-            elif (
-                package.package_type == "ebuild"
-                and package.update_status == "NewPackage"
-            ):
-                package_groups["new"].append(package)
-            elif (
-                package.package_type == "ebuild" and package.update_status == "ReEmerge"
-            ):
-                package_groups["reemerged"].append(package)
-            elif package.package_type == "ebuild":
-                package_groups["other"].append(package)
+            if package.package_type == "ebuild":
+                if package.update_status == "Update":
+                    package_groups["updated"].append(package)
+                elif package.update_status == "NewPackage":
+                    package_groups["new"].append(package)
+                elif package.update_status == "ReEmerge":
+                    package_groups["reemerged"].append(package)
+                else:
+                    package_groups["other"].append(package)
             else:
                 package_groups["other_types"] = True
 
