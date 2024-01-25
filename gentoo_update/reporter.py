@@ -143,12 +143,12 @@ class Reporter:
         report.append(first_line)
         for package in packages:
             package_name = package.package_name
-            old_version = package.old_version
+            new_version = package.new_version
             if newv:
-                new_version = package.new_version
+                old_version = package.old_version
                 report.append(f"--- {package_name} {old_version}->{new_version}")
             else:
-                report.append(f"--- {package_name} {old_version}")
+                report.append(f"--- {package_name} {new_version}")
 
         return report
 
