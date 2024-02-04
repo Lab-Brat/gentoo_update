@@ -45,8 +45,9 @@ class TestGentooUpdate(unittest.TestCase):
 
     def test_report_packages_1(self):
         """Test if the report lists the expected packages."""
-        packages = sum([pkg.split(" ", 1)[1:] for pkg in self.report_1[3:7]], [])
+        packages = [package.replace("--- ", "") for package in self.report_1[3:-6]]
         correct_package_list = [
+            "updated packages:",
             "dev-libs/openssl 3.0.10:0/3->3.0.11:0/3",
             "net-fs/samba 4.18.4-r1->4.18.8",
             "net-libs/nghttp2 1.51.0:0/1.14->1.57.0:0/1.14",
@@ -56,7 +57,7 @@ class TestGentooUpdate(unittest.TestCase):
 
     def test_report_packages_2(self):
         """Test if the report lists the expected packages."""
-        packages = self.report_2[2:-5]
+        packages = [package.replace("--- ", "") for package in self.report_2[3:-6]]
         correct_package_list = report_2_packages
         self.assertEqual(packages, correct_package_list)
 
@@ -75,13 +76,12 @@ class TestGentooUpdate(unittest.TestCase):
         """Test if the report shows the expected disk usage."""
         disk_usage = self.report_2[-4::]
         correct_disk_usage = [
-            'Mount Point /',
-            'Free Space 260G => 257G',
-            'Used Space 170G => 173G',
-            'Used (%) 40% => 41%'
+            "Mount Point /",
+            "Free Space 260G => 257G",
+            "Used Space 170G => 173G",
+            "Used (%) 40% => 41%",
         ]
         self.assertEqual(disk_usage, correct_disk_usage)
-
 
 
 if __name__ == "__main__":
