@@ -7,6 +7,7 @@ and creating a report.
 
 The module also contains helper classes for parsing log information.
 """
+
 import sys
 from typing import Dict, List, Optional
 
