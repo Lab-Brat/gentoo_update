@@ -29,7 +29,7 @@ report which notifier then sends via email, IRC bot or
   - [x] show update status (success/failure) in the report
   - [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
   - [ ] detect different errors during an update
-    - [x] blocked Packages
+    - [x] blocked packages
     - [ ] USE flag conflicts
     - [ ] issues with Licenses
     - [ ] network issues during an update
@@ -43,8 +43,9 @@ report which notifier then sends via email, IRC bot or
   - [x] send a short report with only the update status instead of a full report
 - **general**
   - [x] CLI: add option to choose from which log file to generate a report
-  - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
-  - [ ] comprehensive set of unit tests
+  - [ ] CLI: add emoji to console output like in k3s
+  - [ ] export report in machine readible output (JSON, YAML, TOML)
+  - [ ] comprehensive set of unit tests (test coverage > 50%)
 
 </details>
 
