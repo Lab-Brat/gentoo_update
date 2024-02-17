@@ -1,9 +1,5 @@
 # Gentoo Updater
 
-> :warning: **Important Update:** Version 0.2.2 introduces breaking changes.
-> The CLI has been completely rewritten and now features a subcommands structure.
-> Please review the updated README below to understand the changes and ensure a smooth transition.  
-
 `gentoo-update` is a tool that automates updates on Gentoo Linux.
 By default it only installs security updates from [GLSA](https://security.gentoo.org/glsa/),
 but it can also be used to update all packages on the system, i.e. `@world`.
@@ -33,7 +29,7 @@ report which notifier then sends via email, IRC bot or
   - [x] show update status (success/failure) in the report
   - [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
   - [ ] detect different errors during an update
-    - [x] blocked Packages
+    - [x] blocked packages
     - [ ] USE flag conflicts
     - [ ] issues with Licenses
     - [ ] network issues during an update
@@ -47,8 +43,9 @@ report which notifier then sends via email, IRC bot or
   - [x] send a short report with only the update status instead of a full report
 - **general**
   - [x] CLI: add option to choose from which log file to generate a report
-  - [ ] CI/CD pipeline that will run `gentoo_update` on newly published stage3 Docker containers
-  - [ ] comprehensive set of unit tests
+  - [ ] CLI: add emoji to console output like in k3s
+  - [ ] export report in machine readible output (JSON, YAML, TOML)
+  - [ ] comprehensive set of unit tests (test coverage > 50%)
 
 </details>
 
