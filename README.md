@@ -25,6 +25,7 @@ report which notifier then sends via email, IRC bot or
   - [x] do not start the update if available disk space is lower than a certain threshold
   - [ ] estimate update time
   - [ ] show package list before the update
+  - [ ] control Portage niceness
 - **parser**
   - [x] show update status (success/failure) in the report
   - [x] show package info after successful update: ebuilds, blocks, uninstalls etc.
