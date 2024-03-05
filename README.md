@@ -45,8 +45,9 @@ report which notifier then sends via email, IRC bot or
 - **general**
   - [x] CLI: add option to choose from which log file to generate a report
   - [ ] CLI: add emoji to console output like in k3s
-  - [ ] Use configuration file to configure the app (see #28)
+  - [ ] use configuration file to configure the app (see #28)
   - [ ] export report in machine readible output (JSON, YAML, TOML)
+  - [ ] run update on a filesystem snapshot (see #33)
   - [ ] comprehensive set of unit tests (test coverage > 50%)
 
 </details>
