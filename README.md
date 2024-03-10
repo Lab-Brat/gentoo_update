@@ -162,9 +162,9 @@ gentoo-update report -r <log_name> -s email
 echo -e "Subject: Gentoo Update Report\n\n$(gentoo-update report)" | msmtp -a default <target-email>@gmail.com
 ```
 
-| ℹ️  In this example `msmtp` is used, I wrote a small blog post showing how can it be set up,
-| ℹ️  you can find it [here](https://labbrat.net/blog/send_emails_from_terminal/).
-| ℹ️  But any other tool can be used, such as `mail`, `mailx`, `sendmail` and even `postfix`.
+> ℹ️  In this example `msmtp` is used, I wrote a small blog post showing how can it be set up,
+> you can find it [here](https://labbrat.net/blog/send_emails_from_terminal/).
+> But any other tool can be used, such as `mail`, `mailx`, `sendmail` and even `postfix`.
 
 ## Help
 
