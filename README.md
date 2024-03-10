@@ -63,8 +63,8 @@ eselect repository enable guru
 emerge --sync
 ```
 
-All packages in GURU overlay must have `~arch` keyword, more on it in 
-`The Regulations` section in the [documentation](https://wiki.gentoo.org/wiki/Project:GURU). 
+All packages in GURU overlay must have `~arch` keyword, more on it in
+`The Regulations` section in the [documentation](https://wiki.gentoo.org/wiki/Project:GURU).
 For example, on amd64 architecture it can be added via:
 
 ```bash
@@ -156,11 +156,15 @@ gentoo-update report -s email
 gentoo-update report -r <log_name> -s email
 ```
 
-- Send the last update report via email (local relay). In this example `msmtp` is used, I wrote a small blog post showing how can it be set up, you can find it [here](https://labbrat.net/blog/send_emails_from_terminal/). But any other tool can be used, such as `mail`, `mailx`, `sendmail` and even `postfix`. Command:
+- Send the last update report via email (local relay):
 
 ```bash
 echo -e "Subject: Gentoo Update Report\n\n$(gentoo-update report)" | msmtp -a default <target-email>@gmail.com
 ```
+
+| ℹ️  In this example `msmtp` is used, I wrote a small blog post showing how can it be set up,
+| ℹ️  you can find it [here](https://labbrat.net/blog/send_emails_from_terminal/).
+| ℹ️  But any other tool can be used, such as `mail`, `mailx`, `sendmail` and even `postfix`.
 
 ## Help
 
