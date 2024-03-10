@@ -39,7 +39,7 @@ report which notifier then sends via email, IRC bot or
 - **notifier**
   - [x] send update report via IRC bot
   - [x] send update report via email using SendGrid
-  - [ ] send update report via email using local relay
+  - [x] send update report via email using local relay
   - [x] send update report via mobile app
   - [x] send a short report with only the update status instead of a full report
 - **general**
@@ -63,8 +63,9 @@ eselect repository enable guru
 emerge --sync
 ```
 
-All packages in GURU overlay need an `~arch` keyword.
-For example, on amd64 architecture add it using:
+All packages in GURU overlay must have `~arch` keyword, more on it in 
+`The Regulations` section in the [documentation](https://wiki.gentoo.org/wiki/Project:GURU). 
+For example, on amd64 architecture it can be added via:
 
 ```bash
 echo 'app-admin/gentoo_update ~amd64' > /etc/portage/package.accept_keywords/gentoo_update
@@ -138,7 +139,7 @@ export IRC_BOT_PASSWORD="<bot_password>"
 gentoo-update report -s irc
 ```
 
-- Send the last update report via email:
+- Send the last update report via email (SendGrid API):
 
 ```bash
 # install Sengrid library
@@ -167,4 +168,4 @@ Information on testing can be found in tests directory [readme](tests/README.md)
 
 To get help or request additional features feel free to create an issue in this GitHub repo.
 Or just contact me directly via email at [labbrat_social@pm.me](mailto:labbrat_social@pm.me) or on IRC.
-I am also in most of the #gentoo IRC groups and my nick there is #LabBrat.
+I am in most of the #gentoo IRC groups and my nick there is #LabBrat.
